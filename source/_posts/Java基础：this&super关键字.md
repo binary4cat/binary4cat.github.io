@@ -78,7 +78,7 @@ class Person {
 }
 ```
 
-### this在构造方法调用的内存图
+### this在构造方法调用的内存
 ```Java
 class Person {
 	private int age;
@@ -101,7 +101,7 @@ class PersonDemo {
 }
 ```
 	
-- 构造方法调用的原理图
+- 构造方法调用的过程
 	1. 先执行main方法，main方法压栈，执行其中的new Person(“张三”,23);
 	2. 堆内存中开辟空间，并为其分配内存地址0x001，，紧接着成员变量默认初始化（name=null  age = 0）；
 	3. 拥有两个参数的构造方法（Person（String nm , int a））压栈，在这个构造方法中有一个隐式的this，因为构造方法是给对象初始化的，那个对象调用到这个构造方法，this就指向堆中的那个对象。

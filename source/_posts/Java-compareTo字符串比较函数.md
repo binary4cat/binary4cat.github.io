@@ -10,6 +10,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ### 调用方式：
 `int compareTo(String)`
 compareTo函数可以直接使用String类型的变量调用，参数是需要比较的另一个字符串，返回值是一个int类型。
+<!--more-->
 ### 关于返回值的三种判断   
 `s1.compareTo(s2)//s1是原字符串，s2是参数字符串` 
 返回值计算方式：*原减参*    

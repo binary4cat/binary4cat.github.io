@@ -8,7 +8,7 @@ description: Java基础：this&super关键字
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
 ### 为什么要有构造方法？
-- 构造方法的作用:
+- 构造方法的作用: 
 	- 在new的同时给成员变量赋值,给对象属性进行初始化。
 			
 ### 构造方法的定义和运行特点

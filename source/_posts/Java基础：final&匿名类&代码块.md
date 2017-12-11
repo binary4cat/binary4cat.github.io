@@ -73,7 +73,7 @@ class Demo {
 ### 匿名对象
 - 匿名对象的概述
 	- 匿名对象是指创建对象时，只有创建对象的语句，却没有把对象地址值赋值给某个变量。
-	```Java
+```Java
 	public class Person{
 		public void eat(){
 			System.out.println();
@@ -83,7 +83,7 @@ class Demo {
 	Person p = new Person();
 	//创建一个匿名对象
 	new Person();
-	```	
+```	
 			 
 ### 内部类
 - 内部类的概述

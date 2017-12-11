@@ -1,12 +1,12 @@
 ---
 title: Java基础：String类
-date: 2017-05-21 22:13:33
+date: 2017-05-20 23:58:14
 categories: Java
 tags: Java基础
 permalink:
-description: Java基础：String类
+description: Java基础：String
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
----
+---		
 ### String类的概念和不变性
 - String类的概念和不变性
 	- String类

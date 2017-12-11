@@ -18,6 +18,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 - Object类中的equals方法
 	- 用于比较两个对象是否相同，Object类中就是使用两个对象的内存地址在比较。
 	- Object类中的`equals`方法内部使用的就是`==`比较运算符。
+<!--more-->
 ```Java
 public class Person { //默认继承Object类
 	private String name;

@@ -15,7 +15,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 - `StringBuffer`和`String`的区别
 	- `String`是一个不可变的字符序列
 	- `StringBuffer`是一个可变的字符序列
-
+<!--more-->
 ### StringBuffer类的方法
 - StringBuffer类的方法
 	- 方法介绍

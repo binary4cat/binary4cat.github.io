@@ -21,6 +21,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 		//final修饰说明value是常量,一旦创建,就不能被改变,value一旦被初始化成某个数组,将永远指向这个数组,不可能再指向其它的数组了
 		private final char value[]
 		```		
+<!--more-->
 ```Java
 /*
 *   String类特点:

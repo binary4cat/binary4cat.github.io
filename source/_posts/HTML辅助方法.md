@@ -10,7 +10,7 @@ description: HTML辅助方法
 
 ### 超链接：Html.ActionLink
 　　`@Html.ActionLink()`用于产生超链接。并且链接的文字部分会自动的进行HTML编码(HtmlEncode)。
-<!--more-->
+<!--more-->  
 **Html.ActionLink()方法重载**:
 　　`@Html.ActionLink("链接文字","Action_Name")`：该语法生成的超链接，点击后会跳转到“Action_Name(控制器方法)”所指向的Action。由于这里并没有指定“Controller”的名字，所以会指向默认(该页面所属)的控制器。
 　　`@Html.ActionLink("链接文字","Action_Name","Controller_Name")`：如要将链接指向其他控制器(不是当前页面所属)时，应该在第三参数中注明控制器的名称。

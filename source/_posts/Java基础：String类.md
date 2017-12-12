@@ -44,6 +44,7 @@ public class StringDemo {
 			- 在内存中只有一个对象。这个对象在字符串常量池中
 		- `String s4 = new String("abc");`
 			- 在内存中有两个对象。一个new的对象在堆中，一个字符串本身对象，在字符串常量池中
+
 ```Java
 public class StringDemo2 {
 	public static void main(String[] args) {
@@ -64,6 +65,7 @@ public class StringDemo2 {
 		- `public String(byte[] bytes)`:把字节数组转成字符串
 		- `public String(byte[] bytes,int index,int length)`:把字节数组的一部分转成字符串			
 		- `public String(String original)`:把字符串常量值转成字符串
+
 ```Java
 public class StringDemo3 {
 	public static void main(String[] args) {

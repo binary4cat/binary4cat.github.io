@@ -16,6 +16,8 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 		- 其实就是说一旦这个字符串确定了，那么就会在内存区域中就生成了这个字符串。字符串本身不能改变，但str变量中记录的地址值是可以改变的。
 		- 源码分析,String类底层采用的是字符数组:    
 <!--more-->
+
+
 ```Java  
 /*
 *   String类特点:

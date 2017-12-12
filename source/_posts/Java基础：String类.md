@@ -15,14 +15,14 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 		- 字符串是常量,在创建之后不能更改
 		- 其实就是说一旦这个字符串确定了，那么就会在内存区域中就生成了这个字符串。字符串本身不能改变，但str变量中记录的地址值是可以改变的。
 		- 源码分析,String类底层采用的是字符数组:    
-<!--more-->
+
 ```Java
 //private 修饰说明value只能在String类内部使用,而且又没有提供get方法,所以外部无法获取value数组,就无法改变数组中元素的值
 //final修饰说明value是常量,一旦创建,就不能被改变,value一旦被初始化成某个数组,将永远指向这个数组,不可能再指向其它的数组了
 private final char value[]
-```	
+```	 
 
-```Java
+```Java  
 /*
 *   String类特点:
 *   一切都是对象,字符串事物 "" 也是对象

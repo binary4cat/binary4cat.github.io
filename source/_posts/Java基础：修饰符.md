@@ -17,7 +17,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 | 同一包中(子类与无关类) | ✔      | ✔         | ✔       |         |
 | 不同包的子类       | ✔      | ✔         |         |         |
 | 不同包中的无关类     | ✔      |           |         |         |
-
+<!--more-->
 - 要想仅能在本类中访问使用`private`修饰；
 - 要想本包中的类都可以访问不加修饰符即可；
 - 要想本包中的类与其他包中的子类可以访问使用`protected`修饰

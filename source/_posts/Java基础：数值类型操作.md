@@ -7,6 +7,13 @@ permalink:
 description: Java基础：数值类型操作
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [Math类的方法](#math类的方法)
+- [BigInteger类概述和构造方法](#biginteger类概述和构造方法)
+- [BigDecimal类操作高精度数据](#bigdecimal类操作高精度数据)
+
+<!-- /TOC -->
 ### Math类的方法
 - `public static double sqrt(double a)`
     - 返回参数的平方根  
@@ -16,6 +23,8 @@ double d = Math.sqrt(7);
    	System.out.println(d);  //输出：2.6457513110645907
 }
 ```
+
+
 <!--more-->
 - `static double pow(double a, double b)`
     - 返回a的b次方  
@@ -25,6 +34,8 @@ public static void function(){
    	System.out.println(d); //输出：8.0
 }
 ```
+
+
 - `static double floor(double d)`
 	- 返回小于或者等于参数d的最大整数(地板函数)    
 ```Java
@@ -32,7 +43,9 @@ public static void function(){
    	double d = Math.floor(1.5);
    	System.out.println(d);  //输出：1.0
 }
-``` 
+```
+
+
 - `static double ceil(double d)`
 	- 返回大于或者等于参数d的最小整数(天花板函数)   
 
@@ -41,7 +54,9 @@ public static void function(){
    	double d = Math.ceil(1.1);
    	System.out.println(d);   //输出：2.0
 }
-``` 
+```
+
+
 - `static int abs(int i)`
 	- 获取参数的绝对值   
 
@@ -52,6 +67,8 @@ public static void function(){
 }
 ```
 
+
+
 - `static double round(doubl d)`
     - 获取参数的四舍五入,取整数    
 
@@ -61,6 +78,8 @@ public static void function(){
   	System.out.println(d);  //输出：1.0
 }
 ```
+
+
 
 - `static double random()`
     - 返回随机数 0.0-1.0之间   
@@ -73,6 +92,7 @@ public static void function(){
   	}
 }
 ```
+
 
 ### BigInteger类概述和构造方法
 - BigInteger类概述和构造方法
@@ -90,6 +110,8 @@ public static void function(){
    	System.out.println(b1);
 }
 ```
+
+
 - BigInteger类四则运算
 ```Java
 public static void function_1(){
@@ -113,6 +135,8 @@ public static void function_1(){
 	System.out.println(bigDiv);
 }
 ```
+
+
 ### BigDecimal类操作高精度数据
 - BigDecimal类概述
     - BigDecimal可以操作超大型的浮点数据，提供高精度的浮点运算
@@ -129,6 +153,8 @@ System.out.println(1.015 * 100);//101.49999999999999
 System.out.println(1.301 / 100);//0.013009999999999999
 
 ```
+
+
 - BigDecimal类实现加法减法乘法
 ```Java
 public static void function(){
@@ -151,6 +177,8 @@ public static void function(){
   	System.out.println(bigMul);  //输出：101.500
 }
 ```
+
+
 - BigDecimal类实现除法
     - `divide(BigDecimal divisor, int scale, int roundingMode)`
         - int scale : 保留几位小数

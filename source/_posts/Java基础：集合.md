@@ -20,7 +20,7 @@ photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.
     - 数组的长度是固定的。集合的长度是可变的
     - 集合中存储的元素必须是引用类型数据(基本类型可以使用包装类，Java内部自动帮我们做了拆装箱操作)
 
-
+<!--more-->
 ### 集合继承关系图
 ![](http://ww1.sinaimg.cn/large/c55a7aeely1fmeyzdwjidj20nc08wmxf.jpg)
 

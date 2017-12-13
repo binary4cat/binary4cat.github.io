@@ -7,6 +7,17 @@ permalink:
 description: Java基础：修饰符
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [权限修饰符](#权限修饰符)
+- [常用来修饰类、方法、变量的修饰符如下：](#常用来修饰类方法变量的修饰符如下)
+- [不能同时使用的修饰符](#不能同时使用的修饰符)
+    - [修饰类能够使用的修饰符：](#修饰类能够使用的修饰符)
+- [修饰成员变量能够使用的修饰符：](#修饰成员变量能够使用的修饰符)
+- [修饰构造方法能够使用的修饰符：](#修饰构造方法能够使用的修饰符)
+- [修饰成员方法能够使用的修饰符：](#修饰成员方法能够使用的修饰符)
+
+<!-- /TOC -->
 ### 权限修饰符
 - 权限修饰符有哪些
 	- 在Java中提供了四种访问权限，使用不同的访问权限时，被修饰的内容会有不同的访问权限  
@@ -47,6 +58,8 @@ class Test2{}
 public final class Test3{}
 public abstract class Test4{}
 ```
+
+
 ### 修饰成员变量能够使用的修饰符：
 - `public` : 公共的
 - `protected` : 受保护的
@@ -63,6 +76,8 @@ private int i4 = 100; //最常用的方式
 public final int i5 = 100;
 public static int i6 = 100;
 ```
+
+
 ### 修饰构造方法能够使用的修饰符：
 - `public` : 公共的
 - `protected` : 受保护的
@@ -75,6 +90,8 @@ protected Test(){}
 Test(){}
 private Test(){}
 ```
+
+
 ### 修饰成员方法能够使用的修饰符：
 - `public` : 公共的
 - `protected` : 受保护的
@@ -93,3 +110,4 @@ public final void method5(){}
 public static void method6(){}//最常用的方式
 public abstract void method7();//最常用的方式
 ```
+

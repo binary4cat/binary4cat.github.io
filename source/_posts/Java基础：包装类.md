@@ -9,6 +9,17 @@ permalink:
 description: Java基础：JAVA基本类型和包装类
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [JAVA的包装类](#java的包装类)
+- [Java中的包装器类有两个主要的目的：](#java中的包装器类有两个主要的目的)
+- [包装类共同的方法](#包装类共同的方法)
+- [装箱和拆箱](#装箱和拆箱)
+    - [定义](#定义)
+    - [实现机制](#实现机制)
+- [面试问题](#面试问题)
+
+<!-- /TOC -->
 > 转载自：[http://alexyyek.github.io/2014/12/29/wrapperClass/](http://alexyyek.github.io/2014/12/29/wrapperClass/)
 
 ## JAVA的包装类

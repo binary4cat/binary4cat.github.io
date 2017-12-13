@@ -7,6 +7,14 @@ permalink:
 description: Java基础：Object类
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [Object类概述](#object类概述)
+- [equals方法比较内存地址](#equals方法比较内存地址)
+- [重写equals方法](#重写equals方法)
+- [重写toString方法](#重写tostring方法)
+
+<!-- /TOC -->
 ### Object类概述
 - Object类概述
 	- 类层次结构的根类
@@ -55,7 +63,8 @@ public class TestEquals {
 		System.out.println(p.equals(p2));   //输出：false
 	}
 }
-```	
+```
+
 
 ### 重写equals方法
 - 重写equals方法
@@ -116,6 +125,8 @@ public class TestEquals {
 	}
 }			
 ```
+
+
 ### 重写toString方法
 - 重写toString方法
 	- 为什么要重写toString方法
@@ -143,3 +154,4 @@ public class TestToString {
 	}
 }
 ```
+

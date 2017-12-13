@@ -7,6 +7,14 @@ permalink:
 description: Java基础：String类
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [String类的概念和不变性](#string类的概念和不变性)
+- [String类创建方式和比较](#string类创建方式和比较)
+- [String类构造方法](#string类构造方法)
+- [String类的其他方法](#string类的其他方法)
+
+<!-- /TOC -->
 ### String类的概念和不变性
 - String类的概念和不变性
 	- String类
@@ -36,7 +44,9 @@ public class StringDemo {
 		System.out.println(str);
 	}
 }
-```			
+```
+
+
 ### String类创建方式和比较
 - String类创建方式和比较
 	- 创建对象的数量比较
@@ -57,7 +67,9 @@ public class StringDemo2 {
 		System.out.println(str1.equals(str2));//true
 	}
 }
-```						
+```
+
+
 ### String类构造方法
 - String类构造方法
 	- 常见构造方法
@@ -128,7 +140,8 @@ public class StringDemo {
 	}
 }
 ```
-		
+
+
 ### String类的其他方法			
 - String类的其他方法
 	- 方法介绍
@@ -162,6 +175,8 @@ public static void StringFunction(){
 	System.out.println(b2);   //true
 }
 ```
+
+
 ```Java				
 /*
 * char[] toCharArray() 将字符串转成字符数组
@@ -176,6 +191,8 @@ public static void StringFunction(){
 		}
 	}
 ```
+
+
 ```Java				
 /*
 *  byte[] getBytes() 将字符串转成字节数组
@@ -192,6 +209,8 @@ public static void StringFunction(){
 	//输出：49，50，51，52，53，54
 }
 ```
+
+
 ```Java				
 /*
 *  int indexOf(char ch)
@@ -205,6 +224,8 @@ public static void StringFunction(){
 	System.out.println(index);   //输出:-1
 }
 ```
+
+
 ```Java				
 /*
 *  boolean contains (String s)
@@ -217,6 +238,8 @@ public static void StringFunction(){
 	System.out.println(b); //输出true
 }
 ```
+
+
 ```Java				
 /*
 * boolean endsWith(String prefix)
@@ -229,6 +252,8 @@ public static void StringFunction(){
 	System.out.println(b);  //输出：true
 }
 ```
+
+
 ```Java				
 /*
 * boolean startsWith(String prefix)  
@@ -243,6 +268,8 @@ public static void StringFunction(){
 	System.out.println(b);  //输出：false
 }
 ```
+
+
 ```Java				
 /*
 *  String substring(int beginIndex,int endIndex) 获取字符串的一部分
@@ -262,6 +289,8 @@ public static void StringFunction(){
 	System.out.println(str2);  //输出：ijd
 }
 ```
+
+
 ```Java				
 /*
 *  int length() 返回字符串的长度

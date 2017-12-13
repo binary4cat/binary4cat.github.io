@@ -52,8 +52,7 @@ public class ArrayList extends AbstractList implements List{
     - 集合中的元素,转成一个数组中的元素, 集合转成数组   
 
 
-  
-```Java     
+```Java 
 public static void function() {
     Collection<String> cet = new ArrayList<String>();
     cet.add("hai");
@@ -64,7 +63,7 @@ public static void function() {
         System.out.println(objs[i]);
     }
 }
-```    
+```
 
 
 - `public abstract int size();` 

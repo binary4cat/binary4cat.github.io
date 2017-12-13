@@ -3,7 +3,7 @@ title: Java基础：Iterator迭代器
 date: 2017-06-03 19:43:42
 categories: Java
 tags: Java基础
-permalink:
+permalink: 
 description: Iterator迭代器概述和应用
 photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png
 ---
@@ -16,7 +16,7 @@ photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.
    
     - 每种集合的底层的数据结构不同,例如ArrayList是数组,LinkedList底层是链表,但是无论使用那种集合,我们都会有判断是否有元素
      以及取出里面的元素的动作,那么Java为我们提供一个迭代器定义了统一的判断元素和取元素的方法 。
-
+<!--more-->
 ### 迭代器的实现原理
 - 迭代器的实现原理:Collection接口定义了一个方法`Iterator  iterator()`,实现类重写这个方法就可以返回一个实现`Iterator`接口的对象，该对象就可以对集合中的元素进行迭代。
     - 接口`Iterator` : 两个抽象方法

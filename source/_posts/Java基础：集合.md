@@ -34,7 +34,7 @@ interface List extends Collection {
 }
 public class ArrayList extends AbstractList implements List{
 }
-```   
+```      
 
 
 - 集合继承体系
@@ -52,7 +52,7 @@ public class ArrayList extends AbstractList implements List{
     - 集合中的元素,转成一个数组中的元素, 集合转成数组
 
 
-```Java
+```Java    
 public static void function() {
     Collection<String> cet = new ArrayList<String>();
     cet.add("hai");
@@ -63,7 +63,7 @@ public static void function() {
         System.out.println(objs[i]);
     }
 }
-```
+```   
 
 - `public abstract int size();` 
     - 返回泛型集合中有多少个元素
@@ -76,9 +76,9 @@ System.out.println(collection.size()); // 输出：2
 ```
 
 > java中的三种获取长度的方式：
->> length属性：针对数组的长度获取，可以获取一个数组的长度。
->> length()方法：针对字符串String的，获取字符串中含有多少个字符。
->> size()方法：针对泛型集合，获取泛型集合中有多少个元素。
+    `length`属性：针对数组的长度获取，可以获取一个数组的长度。
+    `length()`方法：针对字符串`String`的，获取字符串中含有多少个字符。
+    `size()`方法：针对泛型集合，获取泛型集合中有多少个元素。
 
 - `boolean contains(Object o)`
     - 判断对象是否存在于集合中,对象存在返回true

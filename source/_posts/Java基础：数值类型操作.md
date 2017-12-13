@@ -9,7 +9,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
 ### Math类的方法
 - `public static double sqrt(double a)`
-    - 返回参数的平方根
+    - 返回参数的平方根  
 ```Java
 public static void function(){
 double d = Math.sqrt(7);
@@ -26,16 +26,15 @@ public static void function(){
 }
 ```
 - `static double floor(double d)`
-	- 返回小于或者等于参数d的最大整数(地板函数)
+	- 返回小于或者等于参数d的最大整数(地板函数)    
 ```Java
 public static void function(){
    	double d = Math.floor(1.5);
    	System.out.println(d);  //输出：1.0
 }
 ``` 
-
 - `static double ceil(double d)`
-	- 返回大于或者等于参数d的最小整数(天花板函数)
+	- 返回大于或者等于参数d的最小整数(天花板函数)   
 
 ```Java
 public static void function(){
@@ -43,9 +42,8 @@ public static void function(){
    	System.out.println(d);   //输出：2.0
 }
 ``` 
-
 - `static int abs(int i)`
-	- 获取参数的绝对值
+	- 获取参数的绝对值   
 
 ```Java
 public static void function(){
@@ -55,7 +53,7 @@ public static void function(){
 ```
 
 - `static double round(doubl d)`
-    - 获取参数的四舍五入,取整数
+    - 获取参数的四舍五入,取整数    
 
 ```Java
 public static void function(){
@@ -65,7 +63,7 @@ public static void function(){
 ```
 
 - `static double random()`
-    - 返回随机数 0.0-1.0之间
+    - 返回随机数 0.0-1.0之间   
 
 ```Java
 public static void function(){

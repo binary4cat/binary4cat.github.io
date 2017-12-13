@@ -32,33 +32,41 @@ public static void function(){
    	double d = Math.floor(1.5);
    	System.out.println(d);  //输出：1.0
 }
-```  
+``` 
+
 - `static double ceil(double d)`
 	- 返回大于或者等于参数d的最小整数(天花板函数)
+
 ```Java
 public static void function(){
    	double d = Math.ceil(1.1);
    	System.out.println(d);   //输出：2.0
 }
-```   
+``` 
+
 - `static int abs(int i)`
 	- 获取参数的绝对值
+
 ```Java
 public static void function(){
    	int i = Math.abs(-3);
    	System.out.println(i); //输出：3
 }
 ```
+
 - `static double round(doubl d)`
     - 获取参数的四舍五入,取整数
+
 ```Java
 public static void function(){
   	double d = Math.round(1.4999); 
   	System.out.println(d);  //输出：1.0
 }
 ```
+
 - `static double random()`
     - 返回随机数 0.0-1.0之间
+
 ```Java
 public static void function(){
   	for(int i = 0 ; i < 10 ;i++){
@@ -67,6 +75,7 @@ public static void function(){
   	}
 }
 ```
+
 ### BigInteger类概述和构造方法
 - BigInteger类概述和构造方法
     - BigInteger类可以对超大的数值进行操作(远超long类型的最大长度)

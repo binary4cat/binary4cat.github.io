@@ -27,7 +27,7 @@ photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.
     - 例如:ArrayList<String> al=new ArrayList<String>();
     - 编译后:ArrayList al = new ArrayList();
 - 泛型只是在编译期进行的类型安全检查机制，避免程序可能发生的错误。
-
+<!--more-->
 ### 泛型类
 - 定义格式：
 ```java

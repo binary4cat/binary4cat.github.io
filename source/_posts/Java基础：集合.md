@@ -34,7 +34,7 @@ interface List extends Collection {
 }
 public class ArrayList extends AbstractList implements List{
 }
-```      
+```
 
 
 - 集合继承体系

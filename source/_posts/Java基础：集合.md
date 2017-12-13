@@ -49,10 +49,11 @@ public class ArrayList extends AbstractList implements List{
 ### 集合Collection的方法
 - 集合Collection的方法,是集合中所有实现类必须拥有的方法
 - `Object[] toArray()`  
-    - 集合中的元素,转成一个数组中的元素, 集合转成数组
+    - 集合中的元素,转成一个数组中的元素, 集合转成数组   
 
 
-```Java    
+  
+```Java     
 public static void function() {
     Collection<String> cet = new ArrayList<String>();
     cet.add("hai");
@@ -63,7 +64,8 @@ public static void function() {
         System.out.println(objs[i]);
     }
 }
-```   
+```    
+
 
 - `public abstract int size();` 
     - 返回泛型集合中有多少个元素

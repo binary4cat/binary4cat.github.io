@@ -9,22 +9,22 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
 ### Math类的方法
 - `public static double sqrt(double a)`
-	- 返回参数的平方根
+    - 返回参数的平方根
 ```Java
 public static void function(){
-   	double d = Math.sqrt(7);
+double d = Math.sqrt(7);
    	System.out.println(d);  //输出：2.6457513110645907
 }
-``` 
-- `static double pow(double a, double b)` 
-	- 返回a的b次方  	
+```
+<!--more-->
+- `static double pow(double a, double b)`
+    - 返回a的b次方  
 ```Java
 public static void function(){
    	double d = Math.pow(2, 3);
    	System.out.println(d); //输出：8.0
 }
-``` 
-<!--more-->
+```
 - `static double floor(double d)`
 	- 返回小于或者等于参数d的最大整数(地板函数)
 ```Java
@@ -50,7 +50,7 @@ public static void function(){
 }
 ```
 - `static double round(doubl d)`
-	- 获取参数的四舍五入,取整数
+    - 获取参数的四舍五入,取整数
 ```Java
 public static void function(){
   	double d = Math.round(1.4999); 
@@ -58,7 +58,7 @@ public static void function(){
 }
 ```
 - `static double random()`
-	- 返回随机数 0.0-1.0之间
+    - 返回随机数 0.0-1.0之间
 ```Java
 public static void function(){
   	for(int i = 0 ; i < 10 ;i++){
@@ -67,10 +67,10 @@ public static void function(){
   	}
 }
 ```
-### BigInteger类概述和构造方法   
+### BigInteger类概述和构造方法
 - BigInteger类概述和构造方法
-	- BigInteger类可以对超大的数值进行操作(远超long类型的最大长度)
-	- 构造方法中传递的字符串参数不允许出现数字以外的字符
+    - BigInteger类可以对超大的数值进行操作(远超long类型的最大长度)
+    - 构造方法中传递的字符串参数不允许出现数字以外的字符
 ```Java
 /*
 * BigInteger类的构造方法
@@ -83,7 +83,7 @@ public static void function(){
    	System.out.println(b1);
 }
 ```
-### BigInteger类四则运算 
+- BigInteger类四则运算
 ```Java
 public static void function_1(){
 	BigInteger b1 = new BigInteger("5665464516451051581613661405146");
@@ -107,10 +107,11 @@ public static void function_1(){
 }
 ```
 ### BigDecimal类操作高精度数据
-- BigDecimal类概述 
-	- BigDecimal可以操作超大型的浮点数据，提供高精度的浮点运算
+- BigDecimal类概述
+    - BigDecimal可以操作超大型的浮点数据，提供高精度的浮点运算
+
 - 反例：
-```Java    
+```Java
 /*
 * 下列计算结构都不是我们想象中的精度运算
 * 原因: 计算机二进制中,表示浮点数不精确造成
@@ -118,9 +119,10 @@ public static void function_1(){
 System.out.println(0.09 + 0.01);//0.09999999999999999
 System.out.println(1.0 - 0.32);//0.6799999999999999
 System.out.println(1.015 * 100);//101.49999999999999
-System.out.println(1.301 / 100);//0.013009999999999999 
+System.out.println(1.301 / 100);//0.013009999999999999
+
 ```
-### BigDecimal类实现加法减法乘法  
+- BigDecimal类实现加法减法乘法
 ```Java
 public static void function(){
   	BigDecimal b1 =  new BigDecimal("0.09");
@@ -142,14 +144,14 @@ public static void function(){
   	System.out.println(bigMul);  //输出：101.500
 }
 ```
-### BigDecimal类实现除法
-- `divide(BigDecimal divisor, int scale, int roundingMode)`
-	- int scale : 保留几位小数
-	- int roundingMode : 保留模式
-		- static int ROUND_UP  向上+1
-		- static int ROUND_DOWN 直接舍去
-		- static int ROUND_HALF_UP  >= 0.5 向上+1
-		- static int ROUND_HALF_DOWN   > 0.5 向上+1 ,否则直接舍去
+- BigDecimal类实现除法
+    - `divide(BigDecimal divisor, int scale, int roundingMode)`
+        - int scale : 保留几位小数
+        - int roundingMode : 保留模式
+            - `static int ROUND_UP` 向上+1
+            - `static int ROUND_DOWN` 直接舍去
+            - `static int ROUND_HALF_UP` >= 0.5 向上+1
+            - `static int ROUND_HALF_DOWN` > 0.5 向上+1 ,否则直接舍去
 ```Java
 public static void function_1(){
 	BigDecimal b1 = new BigDecimal("1.1314");

@@ -7,6 +7,16 @@ permalink:
 description: Java基础：正则表达式
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmdrn8b8i8j20go0dejrs.jpg
 ---
+<!-- TOC -->
+
+- [正则表达式的概念和作用](#正则表达式的概念和作用)
+- [正则表达式语法规则](#正则表达式语法规则)
+- [正则表达式相关的String类方法](#正则表达式相关的string类方法)
+- [匹配示例](#匹配示例)
+- [切割示例](#切割示例)
+- [替换示例](#替换示例)
+
+<!-- /TOC -->
 ### 正则表达式的概念和作用
 - 正则表达式的概述
 	- 正则表达式也是一个字符串，用来定义匹配规则，在Pattern类中有简单的规则定义。可以结合字符串类的方法使用。
@@ -83,7 +93,8 @@ public static void checkQQ(){
 	boolean b = QQ.matches("[1-9][\\d]{4,9}");
 	System.out.println(b); //输出：true
 }
-```	
+```
+
 
 ### 切割示例
 ```Java
@@ -99,6 +110,8 @@ public static void splitExample(){
 	}
 }
 ```
+
+
 ```Java				
 /*
 * String类方法split对字符串进行切割
@@ -112,6 +125,8 @@ public static void splitExample(){
 	}
 }
 ```
+
+
 ```Java				
 /*
 *  String类方法split对字符串进行切割
@@ -126,7 +141,8 @@ public static void splitExample(){
 	}
 }	
 ```
-			
+
+
 ### 替换示例
 ```Java
 /*
@@ -138,4 +154,4 @@ public static void replaceExample(){
 	str = str.replaceAll("[\\d]+", "jd");
 	System.out.println(str);  //输出haijd
 }
-```	
+```

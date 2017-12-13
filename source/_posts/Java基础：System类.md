@@ -7,6 +7,15 @@ permalink:
 description: System类
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
+
+- [System类方法currentTimeMillis](#system类方法currenttimemillis)
+- [System类方法exit](#system类方法exit)
+- [System类方法gc](#system类方法gc)
+- [System类方法getProperties](#system类方法getproperties)
+- [System类方法arraycopy](#system类方法arraycopy)
+
+<!-- /TOC -->
 ### System类方法currentTimeMillis
 - System类方法`currentTimeMillis()`:获取系统当前的毫秒值
 ```Java
@@ -23,7 +32,9 @@ public static void function(){
     long end = System.currentTimeMillis();//当前时间y-1970年1月1日零时零分零秒
     System.out.println(end - start);//当前时间y-当前时间x 
 }
-``` 
+```
+
+
 <!--more-->
 ### System类方法exit 
 - System类方法`exit()`方法
@@ -40,6 +51,8 @@ public static void function(){
 	}
 }
 ```
+
+
 ### System类方法gc 
 - System类方法gc
 	- 调用垃圾回收，直接回收所有对象。
@@ -68,6 +81,8 @@ public static void function(){
     System.gc(); //调用垃圾回收，回收对象。
 }
 ```
+
+
 ### System类方法getProperties 
 - System类方法getProperties
 	- 获取当前操作系统的相关属性数据
@@ -80,6 +95,8 @@ public static void function(){
     System.out.println(System.getProperties());
 }
 ```
+
+
 ![](http://ww1.sinaimg.cn/large/c55a7aeely1fmeb40nxj7j20fo0hrgm8.jpg)   
 ### System类方法arraycopy
 - System类方法arraycopy：
@@ -103,3 +120,4 @@ public static void function(){
 	}
 }
 ```
+

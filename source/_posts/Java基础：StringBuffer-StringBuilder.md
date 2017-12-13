@@ -7,7 +7,13 @@ permalink:
 description: Java基础：StringBuffer&StringBuilder
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
+<!-- TOC -->
 
+- [StringBuffer特点可变字符数组](#stringbuffer特点可变字符数组)
+- [StringBuffer类的方法](#stringbuffer类的方法)
+- [StringBuilder类](#stringbuilder类)
+
+<!-- /TOC -->
 ### StringBuffer特点可变字符数组
 - `StringBuffe`r类概述
 	- 线程安全的可变字符序列 
@@ -42,6 +48,8 @@ public static void StringBufferFunc(){
 	System.out.println(s);  //输出：haijd12345
 }
 ```
+
+
 ```Java				
 /*
 *  StringBuffer类的方法
@@ -54,6 +62,8 @@ public static void StringBufferFunc(){
 	System.out.println(buffer);  //输出：djiah
 }
 ```
+
+
 ```Java				
 /*
 *  StringBuffer类方法
@@ -67,6 +77,8 @@ public static void StringBufferFunc(){
 	System.out.println(buffer);  //输出：haijiandong
 }
 ```
+
+
 ```Java				
 /*
 *  StringBuffer类方法 insert
@@ -80,6 +92,8 @@ public static void StringBufferFunc(){
 	System.out.println(buffer);  //输出：hai110jd
 }
 ```
+
+
 ```Java
 /*
 * StringBuffer类方法
@@ -93,6 +107,8 @@ public static void StringBufferFunc(){
 	System.out.println(buffer);   //输出：hjd
 }
 ```
+
+
 ```Java				
 /*
 *   StringBuffer类方法
@@ -105,7 +121,8 @@ public static void StringBufferFunc(){
 	System.out.println(buffer);   //输出：6falsehai110
 }
 ```
-		
+
+
 ### StringBuilder类
 - `StringBuffer`和`StringBuilder`的区别
 	- `StringBuffer`是jdk1.0版本的,是线程安全的,效率低

@@ -32,254 +32,79 @@ public static void main(String[] args){
 }
 ```
 
-  
-### 哈希表的数据结构
-    A:哈希表的数据结构:(参见图解)
-       
-        加载因子:表中填入的记录数/哈希表的长度
-        例如:
-        加载因子是0.75 代表:
-          数组中的16个位置,其中存入16*0.75=12个元素
 
-        如果在存入第十三个(>12)元素,导致存储链子过长,会降低哈希表的性能,那么此时会扩充哈希表(在哈希),底层会开辟一个长度为原长度2倍的数组,把老元素拷贝到新数组中,再把新元素添加数组中
-          
-        当存入元素数量>哈希表长度*加载因子,就要扩容,因此加载因子决定扩容时机
-
-###12字符串对象的哈希值
-      A:字符串对象的哈希值
-      /*
-       *  对象的哈希值,普通的十进制整数
-       *  父类Object,方法 public int hashCode() 计算结果int整数
-       */
-      public class HashDemo {
-        public static void main(String[] args) {
-          Person p = new Person();
-          int i = p.hashCode();
-          System.out.println(i);
-        
-          String s1 = new String("abc");
-          String s2 = new String("abc");
-          System.out.println(s1.hashCode());
-          System.out.println(s2.hashCode());
-          
-          /*System.out.println("重地".hashCode());
-          System.out.println("通话".hashCode());*/
-        }
-      }
-     
-      //String类重写hashCode()方法
-      //字符串都会存储在底层的value数组中{'a','b','c'}
-      public int hashCode() {
-              int h = hash;//hash初值为0
-              if (h == 0 && value.length > 0) {
-                  char val[] = value;
-
-                  for (int i = 0; i < value.length; i++) {
-                      h = 31 * h + val[i];
-                  }
-                  hash = h;
-              }
-              return h;
-          }
-
-        
-###13哈希表的存储过程
-   A:哈希表的存储过程
-     public static void main(String[] args) {
-        HashSet<String> set = new HashSet<String>();
-        set.add(new String("abc"));
-        set.add(new String("abc"));
-        set.add(new String("bbc"));
-        set.add(new String("bbc"));
-        System.out.println(set); 
-    }
-
-  存取原理:
-    每存入一个新的元素都要走以下三步:
-
-    1.首先调用本类的hashCode()方法算出哈希值
-
-    2.在容器中找是否与新元素哈希值相同的老元素,
-      如果没有直接存入
-      如果有转到第三步
-    
-    3.新元素会与该索引位置下的老元素利用equals方法一一对比
-      一旦新元素.equals(老元素)返回true,停止对比,说明重复,不再存入
-      如果与该索引位置下的老元素都通过equals方法对比返回false,说明没有重复,存入
- 
-=======================第四节课开始=============================================
-###14哈希表的存储自定义对象
-   A:哈希表的存储自定义对象
-     /*
-      *  HashSet集合的自身特点:
-      *    底层数据结构,哈希表
-      *    存储,取出都比较快
-      *    线程不安全,运行速度快
-      */
-     public class HashSetDemo1 {
-      public static void main(String[] args) {
-        
-        //将Person对象中的姓名,年龄,相同数据,看作同一个对象
-        //判断对象是否重复,依赖对象自己的方法 hashCode,equals
-        HashSet<Person> setPerson = new HashSet<Person>();
-        setPerson.add(new Person("a",11));
-        setPerson.add(new Person("b",10));
-        setPerson.add(new Person("b",10));
-        setPerson.add(new Person("c",25));
-        setPerson.add(new Person("d",19));
-        setPerson.add(new Person("e",17));//每个对象的地址值都不同,调用Obejct类的hashCode方法返回不同哈希值,直接存入
-        System.out.println(setPerson);
-      }
-     }
-    
-    public class Person {
-      private String name;
-      private int age;
-      
-      public String getName() {
-        return name;
-      }
-      public void setName(String name) {
-        this.name = name;
-      }
-      public int getAge() {
-        return age;
-      }
-      public void setAge(int age) {
-        this.age = age;
-      }
-      public Person(String name, int age) {
-        super();
-        this.name = name;
-        this.age = age;
-      }
-      public Person(){}
-      
-      public String toString(){
-        return name+".."+age;
-      }
-      
-
-
-     }
-
-
-      
-
-###15自定义对象重写hashCode和equals
-	 A:自定义对象重写hashCode和equals
-	  /*
-          *  HashSet集合的自身特点:
-          *    底层数据结构,哈希表
-          *    存储,取出都比较快
-          *    线程不安全,运行速度快
-          */
-         public class HashSetDemo1 {
-          public static void main(String[] args) {
-            
-            //将Person对象中的姓名,年龄,相同数据,看作同一个对象
-            //判断对象是否重复,依赖对象自己的方法 hashCode,equals
-            HashSet<Person> setPerson = new HashSet<Person>();
-            setPerson.add(new Person("a",11));
-            setPerson.add(new Person("b",10));
-            setPerson.add(new Person("b",10));
-            setPerson.add(new Person("c",25));
-            setPerson.add(new Person("d",19));
-            setPerson.add(new Person("e",17));
-            System.out.println(setPerson);
-          }
-         }
-        
-        public class Person {
-          private String name;
-          private int age;
-
-          /*
-           *  没有做重写父类,每次运行结果都是不同整数
-           *  如果子类重写父类的方法,哈希值,自定义的
-           *  存储到HashSet集合的依据
-           *   
-           *  尽可能让不同的属性值产生不同的哈希值,这样就不用再调用equals方法去比较属性
-           *
-           */
-          public int hashCode(){
-            return name.hashCode()+age*55;
-          }
-          //方法equals重写父类,保证和父类相同
-          //public boolean equals(Object obj){}
-          public boolean equals(Object obj){
-            if(this == obj)
-              return true;
-            if(obj == null)
-              return false;
-            if(obj instanceof Person){
-              Person p = (Person)obj;
-              return name.equals(p.name) && age==p.age;
-            }
-            return false;
-          }
-          
-          public String getName() {
-            return name;
-          }
-          public void setName(String name) {
-            this.name = name;
-          }
-          public int getAge() {
-            return age;
-          }
-          public void setAge(int age) {
-            this.age = age;
-          }
-          public Person(String name, int age) {
-            super();
-            this.name = name;
-            this.age = age;
-          }
-          public Person(){}
-          
-          public String toString(){
-            return name+".."+age;
-          }
-          
-
-
-         }
-
-
-
-###16LinkedHashSet集合
-  A:LinkedHashSet集合
-    /*
-     *   LinkedHashSet 基于链表的哈希表实现
-     *   继承自HashSet
-     *   
-     *   LinkedHashSet 自身特性,具有顺序,存储和取出的顺序相同的
-     *   线程不安全的集合,运行速度块
+### 字符串对象的哈希值
+- 计算对象的散列值，String类重写了父类Object的hashCode方法
+```java
+/**
+     * Returns a hash code for this string. The hash code for a
+     * {@code String} object is computed as
+     * <blockquote><pre>
+     * s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+     * </pre></blockquote>
+     * using {@code int} arithmetic, where {@code s[i]} is the
+     * <i>i</i>th character of the string, {@code n} is the length of
+     * the string, and {@code ^} indicates exponentiation.
+     * (The hash value of the empty string is zero.)
+     *
+     * @return  a hash code value for this object.
      */
-    public class LinkedHashSetDemo {
-      
-      public static void main(String[] args) {
-        LinkedHashSet<Integer> link = new LinkedHashSet<Integer>();
-        link.add(123);
-        link.add(44);
-        link.add(33);
-        link.add(33);
-        link.add(66);
-        link.add(11);
-        System.out.println(link);
-      }
+    public int hashCode() {
+        int h = hash;
+        if (h == 0 && value.length > 0) {
+            char val[] = value;
+
+            for (int i = 0; i < value.length; i++) {
+                //val字节数组在这里记录了字符串的所有字符，在计算的时候转成了ASCII码参与运算。
+                h = 31 * h + val[i];  
+            }
+            hash = h;
+        }
+        return h;
     }
+```
+- String类重写的hashCode返回一串数字
+```java
+String s1 = new String("abc");
+String s2 = new String("abc");
+System.out.println(s1.hashCode());  //输出：96354
+System.out.println(s2.hashCode());  //输出：96354
+        
+System.out.println("哈哈".hashCode());   //输出：694528
+System.out.println("呵呵".hashCode());   //输出：691872
+```
 
 
-###17ArrayList,HashSet判断对象是否重复的原因
-  A:ArrayList,HashSet判断对象是否重复的原因
-     a:ArrayList的contains方法原理:底层依赖于equals方法
-       ArrayList的contains方法会使用调用方法时，
-         传入的元素的equals方法依次与集合中的旧元素所比较，
-         从而根据返回的布尔值判断是否有重复元素。
-         此时，当ArrayList存放自定义类型时，由于自定义类型在未重写equals方法前，
-         判断是否重复的依据是地址值，所以如果想根据内容判断是否为重复元素，需要重写元素的equals方法。
+### HashSet的存储过程
+1. 首先调用当前数据类型本类的hashCode()方法算出哈希值(自定义类型调用的是Object的方法，也可以自己重写hashCode方法)
+2. 在map容器中找是否与新元素哈希值相同的已有元素
+  - 如果没有直接存入
+  - 如果有转到第三步
+3. 新元素会与该索引位置下的已有元素利用equals方法一一对比
+  - 新元素.equals(已有元素)返回true，则停止对比，说明重复，不再存入
+  - 如果与该索引位置下的已有元素都通过equals方法对比返回false,说明没有重复，存入容器
+
+
+### LinkedHashSet集合
+- LinkedHashSet是Set的一个实现，LinkedHashSet继承于HashSet，并且其内部是通过LinkedHashMap来实现的。
+- LinkedHashSet具有顺序，也就是怎么存进去的怎么拿出来，顺序不会乱。
+- LinkedHashSet是线程不安全的，也就是说会有两个线程操作同一个LinkedHashSet集合的情况发生。
+```Java
+public static void function() {
+    LinkedHashSet<String> lsh=new LinkedHashSet<String>();
+    lsh.add("a1");
+    lsh.add("a2");
+    lsh.add("a3");
+    for (String string : lsh) {
+			System.out.println(string);  //输出：a1 a2 a3
+		}
+}
+```
+
+### ArrayList,HashSet判断对象是否重复
+- ArrayList的contains方法底层依赖于equals方法
+  - ArrayList的contains方法在执行时，会使用调用方法时传入的元素(类型)的equals方法依次与集合中的已有元素进行比较，根据返回的Boolean值判断是否有重复元素。
+- 当ArrayList存放自定义类型(对象)时，如果自定义类型没有重写equals方法，判断存入的对象是否重复的依据是对象在堆中的地址值，所以如果想根据对象的属性等内容判断是否为重复元素，就应该重写元素的equals方法。
     
      b:HashSet的add()方法和contains方法()底层都依赖 hashCode()方法与equals方法()
 

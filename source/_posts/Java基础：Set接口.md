@@ -7,6 +7,17 @@ permalink:
 description: Java种的Set接口
 photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png
 ---
+<!-- TOC -->
+
+- [Set接口](#set接口)
+- [实现类HashSet的存储和迭代](#实现类hashset的存储和迭代)
+- [字符串对象的哈希值](#字符串对象的哈希值)
+- [HashSet的存储过程](#hashset的存储过程)
+- [LinkedHashSet集合](#linkedhashset集合)
+- [ArrayList,HashSet判断对象是否重复](#arraylisthashset判断对象是否重复)
+- [hashCode和equals方法](#hashcode和equals方法)
+
+<!-- /TOC -->
 ### Set接口
 - Set接口的特点
     - Set接口是不能包含重复元素的集合。
@@ -103,43 +114,17 @@ public static void function() {
 
 ### ArrayList,HashSet判断对象是否重复
 - ArrayList的contains方法底层依赖于equals方法
-  - ArrayList的contains方法在执行时，会使用调用方法时传入的元素(类型)的equals方法依次与集合中的已有元素进行比较，根据返回的Boolean值判断是否有重复元素。
-- 当ArrayList存放自定义类型(对象)时，如果自定义类型没有重写equals方法，判断存入的对象是否重复的依据是对象在堆中的地址值，所以如果想根据对象的属性等内容判断是否为重复元素，就应该重写元素的equals方法。
-    
-     b:HashSet的add()方法和contains方法()底层都依赖 hashCode()方法与equals方法()
-
-      Set集合不能存放重复元素，其添加方法在添加时会判断是否有重复元素，有重复不添加，没重复则添加。
-      HashSet集合由于是无序的，其判断唯一的依据是元素类型的hashCode与equals方法的返回结果。规则如下：
-      先判断新元素与集合内已经有的旧元素的HashCode值
-       如果不同，说明是不同元素，添加到集合。
-       如果相同，再判断equals比较结果。返回true则相同元素；返回false则不同元素，添加到集合。
-      所以，使用HashSet存储自定义类型，如果没有重写该类的hashCode与equals方法，则判断重复时，使用的是地址值，如果想通过内容比较元素是否相同，需要重写该元素类的hashcode与equals方法。
+    - ArrayList的contains方法在执行时，会使用调用方法时传入的元素(类型)的equals方法依次与集合中的已有元素进行比较，根据返回的Boolean值判断是否有重复元素。
+    - 当ArrayList存放自定义类型(对象)时，如果自定义类型没有重写equals方法，判断存入的对象是否重复的依据是对象在堆中的地址值，所以如果想根据对象的属性等内容判断是否为重复元素，就应该重写元素的equals方法。
 
 
- 
-###18hashCode和equals方法的面试题 
- A:hashCode和equals的面试题
- /*
-  *   两个对象  Person  p1 p2
-  *   问题: 如果两个对象的哈希值相同 p1.hashCode()==p2.hashCode()
-  *        两个对象的equals一定返回true吗  p1.equals(p2) 一定是true吗
-  *        正确答案:不一定
-  *        
-  *        如果两个对象的equals方法返回true,p1.equals(p2)==true
-  *        两个对象的哈希值一定相同吗
-  *        正确答案: 一定
-  */  
- 在 Java 应用程序执行期间，
- 1.如果根据 equals(Object) 方法，两个对象是相等的，那么对这两个对象中的每个对象调用 hashCode 方法都必须生成相同的整数结果。 
- 2.如果根据 equals(java.lang.Object) 方法，两个对象不相等，那么对这两个对象中的任一对象上调用 hashCode 方法不 要求一定生成不同的整数结果。 
-    
-    两个对象不同(对象属性值不同) equals返回false=====>两个对象调用hashCode()方法哈希值相同
-    
-    两个对象调用hashCode()方法哈希值不同=====>equals返回true
+- HashSet的`add()`方法和`contains方法()`底层都依赖`hashCode()`方法与`equals()`方法
+    - HashSet集合由于是无序的，其判断唯一的依据是元素类型的`hashCode`与`equals`方法的返回结果:
+        - 先判断新元素与集合内已有元素的`HashCode`值
+        - 如果不同，说明是不同元素，添加到集合。
+        - 如果相同，再判断equals比较结果。返回true则相同元素；返回false则不同元素，添加到集合。
+    - 使用HashSet存储自定义类型，如果没有重写该类的hashCode与equals方法，则判断重复时，使用的是地址值，如果想通过内容比较元素是否相同，需要重写该元素类的`hashcode`与`equals`方法。
 
 
-    两个对象不同(对象属性值不同) equals返回false=====>两个对象调用hashCode()方法哈希值不同
-    
-    两个对象调用hashCode()方法哈希值相同=====>equals返回true
-   
-   所以说两个对象哈希值无论相同还是不同,equals都可能返回true
+### hashCode和equals方法
+> [推荐阅读](http://www.cnblogs.com/Qian123/p/5703507.html)

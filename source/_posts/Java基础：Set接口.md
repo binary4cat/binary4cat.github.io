@@ -25,7 +25,8 @@ photos: http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.
 
 ### 实现类HashSet的存储和迭代
 - HashSet (哈希表)无序集合,存储和取出的顺序不同,没有索引,不存储重复元素
-- 内部使用的`map`存储的，添加操作在内部实现是当作map的key存储的，所以不会出现重复元素。
+- 内部使用的`map`存储的，添加操作在内部实现是当作map的key存储的，所以不会出现重复元素。 
+<!--more-->
 ```java
 public static void main(String[] args){
 	Set<String> set=new HashSet<String>();

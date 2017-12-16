@@ -14,6 +14,14 @@ rss: /atom.xml
 
 since: 2013
 
+# 关于页面的设置
+user_name: 海建东
+user_description: 我只想做的更好
+user_introduction: 一只热爱生活的猿
+user_location: China Beijing
+user_position: 码农
+user_tags: .Net Java Golang JavaString HTML... #技能标签
+
 # Set default keywords (Use a comma to separate)
 keywords: ""
 
@@ -31,12 +39,12 @@ avatar:
   url: https://hexo.io/logo.svg
   
 
-# AboutPage background
-about_big_image: [css/images/pose.jpg, https://source.unsplash.com/collection/954550/1920x1080]
+# 关于页面的背景大图，可以逗号分隔写多个[xxx,xxx,xxx]
+about_big_image: [https://source.unsplash.com/collection/954550/1920x1080]
 
 
-# Homepage thumbnail
-random_thumb: false
+# Homepage thumbnail  主页的随机封面
+random_thumb: true
 
 
 # Post Article's Content
@@ -84,7 +92,7 @@ search:
 # comment ShortName, you can choose only ONE to display.
 gentie_productKey: #your-gentie-product-key
 duoshuo_shortname:
-disqus_shortname: 
+disqus_shortname: HaijdBlog
 livere_shortname: 
 uyan_uid: 
 wumii: 
@@ -93,7 +101,7 @@ wumii:
 # Available value:
 #    default | normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night bright
 
 
 

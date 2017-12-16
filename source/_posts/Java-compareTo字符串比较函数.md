@@ -5,7 +5,8 @@ categories: Java
 tags: Java基础
 permalink: Java-compareTo-String-Function
 description: compareTo字符串比较函数
-photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
+photos: 
+- http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg
 ---
 ### 调用方式：
 `int compareTo(String)`

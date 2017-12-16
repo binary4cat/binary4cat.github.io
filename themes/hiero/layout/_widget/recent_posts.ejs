@@ -1,7 +1,11 @@
 <% if (site.posts.length){ %>
   <div class="widget_athemes_tabs">
     <ul id="widget-tab" class="clearfix widget-tab-nav">
-      <li class="active"><a><%= __('recent_posts') %></a></li>
+      <li class="active">
+        <a>
+          <%= __('recent_posts') %>
+        </a>
+      </li>
     </ul>
     <div class="widget">
       <ul>
@@ -10,20 +14,36 @@
 
             <% if (post.photos != ""){ %>
               <div class="widget-entry-thumbnail">
-                <a href="<%- url_for(post.path) %>" title="<% post.title %>"><img width="50" height="50" src="<%= post.photos[0] %>" class="attachment-thumb-small size-thumb-small wp-post-image" alt="preview-16" title="<% post.title %>"></a>
+                <a href="<%- url_for(post.path) %>" title="<% post.title %>">
+                  <img width="50" height="50" src="<%= post.photos[0] %>" class="attachment-thumb-small size-thumb-small wp-post-image"
+                    alt="preview-16" title="<% post.title %>">
+                </a>
               </div>
               <div class="widget-entry-summary">
-            <% } else { %>
-              <div class="widget-entry-summary" style="margin: 0;">
-            <% } %>
+                <% } else { %>
+                  <div class="widget-entry-thumbnail">
+                    <a href="<%- url_for(post.path) %>" title="<% post.title %>">
+                      <img width="50" height="50" src="http://lorempixel.com/500/350/cats/<%- Math.ceil(Math.random() * 10) %>"
+                        class="attachment-thumb-small size-thumb-small wp-post-image" alt="preview-16" title="<% post.title %>">
+                    </a>
+                  </div>
+                  <!-- <div class="widget-entry-summary" style="margin: 0;"> -->
+                      <div class="widget-entry-summary">
+                    <% } %>
 
-              <h6 style="margin: 0;"><a href="<%- url_for(post.path) %>"><%= post.title || '(no title)' %></a></h6>
-              <span><%= date(post.date, 'MMMM D, YYYY') %></span>
-            </div>
+                      <h6 style="margin: 0;">
+                        <a href="<%- url_for(post.path) %>">
+                          <%= post.title || '(no title)' %>
+                        </a>
+                      </h6>
+                      <span>
+                        <%= date(post.date, 'MMMM D, YYYY') %>
+                      </span>
+                  </div>
 
           </li>
-        <% }) %>
+          <% }) %>
       </ul>
+      </div>
     </div>
-  </div>
-<% } %>
+    <% } %>

@@ -7,7 +7,21 @@ permalink:
 description: Java文件操作File类介绍
 photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmswz37pb7j20b408cweg.jpg
 ---
+<!-- TOC -->
 
+- [File类概述](#file类概述)
+- [File类静态的成员变量](#file类静态的成员变量)
+- [File类构造方法](#file类构造方法)
+- [File类创建文件](#file类创建文件)
+- [File类创建目录](#file类创建目录)
+- [File类删除功能](#file类删除功能)
+- [File类获取功能](#file类获取功能)
+- [File类判断功能](#file类判断功能)
+- [File类list获取功能](#file类list获取功能)
+- [文件过滤器](#文件过滤器)
+- [递归遍历全目录](#递归遍历全目录)
+
+<!-- /TOC -->
 ### File类概述
 - `File`类是文件和目录路径名的抽象表示形式
 - Java中把文件或者文件夹都封装成File对象
@@ -19,7 +33,7 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmswz37pb7j20b408cweg.jpg
 - `separator`
     - 分隔同一个路径中的不同目录的分隔符(例如Windows中为`\`，Linux中为`/`)
 
-
+<!--more-->
 ### File类构造方法
 - `File(String pathname)`
     - 通过将给定路径名字符串转换为一个File对象,之后可以使用File中的方法

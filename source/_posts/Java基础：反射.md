@@ -26,34 +26,34 @@ photos: http://ww1.sinaimg.cn/large/c55a7aeely1fmswz37pb7j20b408cweg.jpg
 <!-- /TOC -->
 ## 反射
 ### 反射定义
-	- Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取信息以及动态调用对象的方法的功能称为Java语言的反射机制。
-    - 要想解剖一个类,必须先要获取到该类的字节码文件对象。而解剖使用的就是Class类中的方法.所以先要获取到每一个字节码文件对应的Class类型的对象。
+- Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取信息以及动态调用对象的方法的功能称为Java语言的反射机制。
+- 要想解剖一个类,必须先要获取到该类的字节码文件对象。而解剖使用的就是Class类中的方法.所以先要获取到每一个字节码文件对应的Class类型的对象。
 ### Class类
-	- Class类及Class对象：
-		- 要想解剖一个类，必须先了解Class对象。
-		- 阅读API的`Class`类得知，`Class`没有公共构造方法。`Class`对象是在加载类时由JVM以及通过调用类加载器中的`defineClass`方法自动构造的。
-	- 获得Class对象
-		1. 通过Object类中的getClass()方法
-            ```java
-            User user = new User();
-			Class c1 = user.getClass();
-            ```
-        2. 通过`类名.class`获取到字节码文件对象（任意数据类型都具备一个class静态属性）。
-            ```java
-            Class c2 = User.class;
-            ```
-        3. 通过Class类中的方法（将类名作为字符串传递给Class类中的静态方法forName即可）。
-			```java
-            Class c3 = Class.forName("User");
-            ```
+- Class类及Class对象：
+	- 要想解剖一个类，必须先了解Class对象。
+	- 阅读API的`Class`类得知，`Class`没有公共构造方法。`Class`对象是在加载类时由JVM以及通过调用类加载器中的`defineClass`方法自动构造的。
+- 获得Class对象
+	1. 通过Object类中的getClass()方法
+    ```java
+    User user = new User();
+	Class c1 = user.getClass();
+    ```
+    2. 通过`类名.class`获取到字节码文件对象（任意数据类型都具备一个class静态属性）。
+    ```java
+    Class c2 = User.class;
+    ```
+    3. 通过Class类中的方法（将类名作为字符串传递给Class类中的静态方法forName即可）。
+	```java
+    Class c3 = Class.forName("User");
+    ```
 
 
 ### 通过反射获取无参构造函数并使用
-	- 获取对象的无参构造函数
-		`public Constructor<?>[] getConstructors()`:获取所有的public构造函数
-		`public Constructor<T> getConstructor()`：获取无参构造函数 
-    - 运行无参构造函数
-		`public T newInstance()`
+- 获取对象的无参构造函数
+	`public Constructor<?>[] getConstructors()`:获取所有的public构造函数
+	`public Constructor<T> getConstructor()`：获取无参构造函数 
+- 运行无参构造函数
+	`public T newInstance()`
 ```java
 Class c=Class.forName("Demo.Person");
 Constructor constructor=c.getConstructor();

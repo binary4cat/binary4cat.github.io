@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Go语言标准库-fmt  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    23 August 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Go语言标准库-fmt</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1503503176164&amp;di=3178bb0b334068f911022455b9f48b80&amp;imgtype=0&amp;src=http%3A%2F%2F7viirv.com1.z0.glb.clouddn.com%2Fgolang.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-fmt包">1. fmt包</a>
+<ul>
+<li><a href="#1-1-printf函数">1.1. printf函数</a>
+<ul>
+<li><a href="#1-1-1-示例类型和变量">1.1.1. 示例类型和变量</a></li>
+<li><a href="#1-1-2-普通占位符">1.1.2. 普通占位符</a></li>
+<li><a href="#1-1-3-布尔占位符">1.1.3. 布尔占位符</a></li>
+<li><a href="#1-1-4-整数占位符">1.1.4. 整数占位符</a></li>
+<li><a href="#1-1-5-浮点数和复数的组成部分-实部和虚部">1.1.5. 浮点数和复数的组成部分（实部和虚部）</a></li>
+<li><a href="#1-1-6-字符串与字节切片">1.1.6. 字符串与字节切片</a></li>
+<li><a href="#1-1-7-指针">1.1.7. 指针</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-fmt包">1. fmt包</h1>
+
+<ul>
+<li>fmt包实现了类似c语言的<code>printf</code>和<code>scanf</code>函数，实现格式化I/O函数。</li>
+</ul>
+
+<h2 id="1-1-printf函数">1.1. printf函数</h2>
+
+<h3 id="1-1-1-示例类型和变量">1.1.1. 示例类型和变量</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">type</span> Human <span style="color:#8be9fd;font-style:italic">struct</span>{
+    Name <span style="color:#8be9fd">string</span>
+}
+
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    <span style="color:#8be9fd;font-style:italic">var</span> people = Human{Name:<span style="color:#f1fa8c">&#34;zhangsan&#34;</span>}
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="1-1-2-普通占位符">1.1.2. 普通占位符</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%v</code></td>
+<td align="left">相应值的默认格式</td>
+<td align="left"><code>Printf(&quot;%v&quot;,people)</code></td>
+<td align="left"><code>{zhangsan}</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%+v</code></td>
+<td align="left">打印结构体时，会添加字段名显示</td>
+<td align="left"><code>Printf(&quot;%+v&quot;,people)</code></td>
+<td align="left"><code>{Name:zhangsan}</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%#v</code></td>
+<td align="left">相应值的Go语法表示</td>
+<td align="left"><code>Printf(&quot;%#v&quot;,people)</code></td>
+<td align="left"><code>main.Human{Name:zhangsan}</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%T</code></td>
+<td align="left">相应值*类型*的Go语法表示</td>
+<td align="left"><code>Printf(&quot;%T&quot;,people)</code></td>
+<td align="left"><code>main.Human</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%%</code></td>
+<td align="left">表示输出一个%(类似转义符)</td>
+<td align="left"><code>Printf(&quot;%%&quot;)</code></td>
+<td align="left"><code>%</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="1-1-3-布尔占位符">1.1.3. 布尔占位符</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%t</code></td>
+<td align="left">输出<code>true</code>或<code>false</code></td>
+<td align="left"><code>Printf(&quot;%t&quot;,true)</code></td>
+<td align="left"><code>true</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="1-1-4-整数占位符">1.1.4. 整数占位符</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%b</code></td>
+<td align="left">二进制表示</td>
+<td align="left"><code>Printf(&quot;%b&quot;,5)</code></td>
+<td align="left"><code>101</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%d</code></td>
+<td align="left">十进制表示</td>
+<td align="left"><code>Printf(&quot;%d&quot;,0x12)</code></td>
+<td align="left"><code>18</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%o</code></td>
+<td align="left">八进制表示</td>
+<td align="left"><code>Printf(&quot;%o&quot;,10)</code></td>
+<td align="left"><code>12</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%x</code></td>
+<td align="left">小写的十六进制表示</td>
+<td align="left"><code>Printf(&quot;%x&quot;,13)</code></td>
+<td align="left"><code>d</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%X</code></td>
+<td align="left">大写的十六进制表示</td>
+<td align="left"><code>Printf(&quot;%X&quot;,13)</code></td>
+<td align="left"><code>D</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="1-1-5-浮点数和复数的组成部分-实部和虚部">1.1.5. 浮点数和复数的组成部分（实部和虚部）</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%b</code></td>
+<td align="left">打印整型的二进制</td>
+<td align="left"><code>Printf(&quot;%b&quot;,10)</code></td>
+<td align="left"><code>1010</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%e</code></td>
+<td align="left">科学计数法，例如：<code>-1234.456e+78</code></td>
+<td align="left"><code>Printf(&quot;%e&quot;,11.909)</code></td>
+<td align="left"><code>1.190900e+01</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%E</code></td>
+<td align="left">科学计数法，例如：<code>-1234.456E+78</code></td>
+<td align="left"><code>Printf(&quot;%e&quot;,11.909)</code></td>
+<td align="left"><code>1.190900E+01</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%f</code></td>
+<td align="left">有小数点后面补足0</td>
+<td align="left"><code>Printf(&quot;%f&quot;,10.2)</code></td>
+<td align="left"><code>10.200000</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%g</code></td>
+<td align="left">还原<code>%e</code>或<code>%E</code>输出的科学计数法类型的内容</td>
+<td align="left"><code>Printf(&quot;%g&quot;,1.190900E+01)</code></td>
+<td align="left"><code>11.909</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="1-1-6-字符串与字节切片">1.1.6. 字符串与字节切片</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%U</code></td>
+<td align="left">Unicode格式：<code>U+1234</code>，等同于<code>U+%04X</code></td>
+<td align="left"><code>Printf(&quot;%U&quot;,0x4E2D)</code></td>
+<td align="left"><code>U+4E2D</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%c</code></td>
+<td align="left">相应Unicode码所表示的字符</td>
+<td align="left"><code>Printf(&quot;%c&quot;,0x4E2D)</code></td>
+<td align="left"><code>中</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%s</code></td>
+<td align="left">输出字符串表示(接受<code>string</code>、<code>[]byte</code>类型)</td>
+<td align="left"><code>Printf(&quot;%s&quot;,[]byte(&quot;Go语言&quot;))</code></td>
+<td align="left"><code>Go语言</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%q</code></td>
+<td align="left">单引号包括的字符字面值，由Go语法安全转义(参数为Unicode编码时)</td>
+<td align="left"><code>Printf(&quot;%q&quot;,0x4E2D)</code></td>
+<td align="left"><code>'中'</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%q</code></td>
+<td align="left">双引号包括的字符字面值，由Go语法安全转义(参数为string)</td>
+<td align="left"><code>Printf(&quot;%q&quot;,&quot;hehe&quot;)</code></td>
+<td align="left"><code>hehe</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%x</code></td>
+<td align="left">值为字符串时，输出字符的编码(小写)</td>
+<td align="left"><code>Printf(&quot;%x&quot;,&quot;Go语言&quot;)</code></td>
+<td align="left"><code>476fe8afade8a880</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%X</code></td>
+<td align="left">值为字符串时，输出字符的编码(大写)</td>
+<td align="left"><code>Printf(&quot;%X&quot;,&quot;Go语言&quot;)</code></td>
+<td align="left"><code>476FE8AFADE8A880</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="1-1-7-指针">1.1.7. 指针</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">占位符</th>
+<th align="left">说明</th>
+<th align="left">举例</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>%p</code></td>
+<td align="left">输出带0x的指针</td>
+<td align="left"><code>Printf(&quot;%p&quot;,&amp;people)</code></td>
+<td align="left"><code>0xc042040400</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>%#p</code></td>
+<td align="left">输出不带0x的指针</td>
+<td align="left"><code>Printf(&quot;%#p&quot;,&amp;people)</code></td>
+<td align="left"><code>c042040400</code></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>转载<a href="http://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.3.html">Go语言中文网</a>，重新编辑</li>
+</ul>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/golang%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%A4%84%E7%90%86/" id="next">
+                &larr; <span class="nav-title nav-title-next">Golang文本编码处理</span> 
+            </a>  
+        <a rel="prev" href="/golang/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" id="prev">
+            <span class="nav-title nav-title-prev">Go语言基础知识</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

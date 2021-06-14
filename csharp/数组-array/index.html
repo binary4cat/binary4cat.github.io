@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>数组(array)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    07 June 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">数组(array)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-数组">1. 数组</a></li>
+<li><a href="#2-定义">2. 定义</a></li>
+<li><a href="#3-数组的类型">3. 数组的类型</a></li>
+<li><a href="#4-数组是对象">4. 数组是对象</a></li>
+<li><a href="#5-一维数组和矩形数组">5. 一维数组和矩形数组</a>
+<ul>
+<li><a href="#5-1-声明一维数组或矩形数组">5.1. 声明一维数组或矩形数组</a></li>
+<li><a href="#5-2-实例化一维数组或矩形数组">5.2. 实例化一维数组或矩形数组</a></li>
+<li><a href="#5-3-访问数组元素">5.3. 访问数组元素</a></li>
+<li><a href="#5-4-初始化数组">5.4. 初始化数组</a></li>
+<li><a href="#5-5-显式初始化一维数组">5.5. 显式初始化一维数组</a></li>
+<li><a href="#5-6-显式初始化矩形数组">5.6. 显式初始化矩形数组</a></li>
+<li><a href="#5-7-快捷语法">5.7. 快捷语法</a></li>
+</ul></li>
+<li><a href="#6-交错数组">6. 交错数组</a>
+<ul>
+<li><a href="#6-1-声明交错数组">6.1. 声明交错数组</a></li>
+<li><a href="#6-2-实例化交错数组">6.2. 实例化交错数组</a></li>
+<li><a href="#6-3-交错数组中的子数组">6.3. 交错数组中的子数组</a></li>
+</ul></li>
+<li><a href="#7-foreach语句在数组的使用">7. foreach语句在数组的使用</a></li>
+<li><a href="#8-迭代变量是只读的">8. 迭代变量是只读的</a></li>
+<li><a href="#9-数组协变">9. 数组协变</a></li>
+<li><a href="#10-array继承的有用成员">10. Array继承的有用成员</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-数组">1. 数组</h1>
+
+<p>　　<strong>数组实际上是由一个变量名称表示的一组同类型的数据元素</strong>，每一个元素都可以通过变量名称和一个或多个方括号中的索引名称来访问，例如：<code>MyArray[1]</code>。</p>
+
+<h1 id="2-定义">2. 定义</h1>
+
+<p>　　■ 元素：数组中<strong>独立的数据项</strong>被称为元素。数组的所有元素必须是相同类型的，或继承自相同的类型。
+　　■ 秩/维度：数组可以有任何为正数的维度数(也就是几维数组的意思，例如二维数组的秩等于2)，数组的维度数称为秩(rank)。
+　　■ 维度长度：数组的每一个维度有一个长度，就是这个方向的位置个数。
+　　■ 数组长度：数组的所有维度中的元素的总和称为数组的长度。</p>
+
+<p>c#数组的要点：
+　　■ 数组一旦被创建大小就固定了。c#不支持动态数组。
+　　■ 数组索引号是从0开始的。
+<img src="/image/cSharp/cSharp89.png" alt="" /></p>
+
+<h1 id="3-数组的类型">3. 数组的类型</h1>
+
+<p>　　c#提供了两种类型的数组：
+　　■ 一维数组可以认为是单行元素或元素向量。
+　　■ 多维数组是由主向量中的位置组成的，每一个位置本身又是一个数组，称为*子数组(sub-array)*。子数组向量中的位置本身又是一个子数组。
+　　　　□ 矩形数组(rectangular array)：
+　　　　　　● 某个维度所有的子数组有相同长度的多维数组。
+　　　　　　● 不管有多少维度，总是使用一组方括号。<code>myArray[2,4,5]</code>
+　　　　□ 交错数组(jagged array)：
+　　　　　　● 每一个子数组都是独立数组的多维度数组。
+　　　　　　● 可以有不同长度的子数组。
+　　　　　　● 为数组的每一个维度使用一对方括号。<code>jagArray[2][4][5]</code>
+<img src="/image/cSharp/cSharp90.png" alt="" /></p>
+
+<h1 id="4-数组是对象">4. 数组是对象</h1>
+
+<p>　　<strong>数组实例是从System.Array继承的对象</strong>。数组从BCL基类继承了很多有用的方法：
+　　■ Rank：返回数组维度数的属性。
+　　■ Length：返回数组的长度(数组中所有元素的个数)的属性。</p>
+
+<p>　　<strong>数组是引用类型</strong>，数组对象本身总是存在堆上，引用存在栈或堆上。
+<img src="/image/cSharp/cSharp91.png" alt="" />
+　　
+　　数组是引用类型，但是数组的元素可以是引用类型，也可以是值类型。
+　　■ 如果存储的元素都是值类型，数组被称为<strong>值类型数组</strong>。
+　　■ 如果存储在数组中的元素都是引用类型对象，数组被称为<strong>引用类型数组</strong>。
+<img src="/image/cSharp/cSharp92.png" alt="" /></p>
+
+<h1 id="5-一维数组和矩形数组">5. 一维数组和矩形数组</h1>
+
+<h2 id="5-1-声明一维数组或矩形数组">5.1. 声明一维数组或矩形数组</h2>
+
+<p>　　声明一维数组或矩形数组，可以在类型后使用一对方括号：<code>int[] myIntArray;</code>
+　　★ 方括号内的逗号是<strong>秩说明符</strong>，它指定了数组的维度数，没有逗号代表一维数组，有一个逗号表示二维数组……</p>
+
+<p>　　矩形数组：
+　　■ 可以使用任意多的秩说明符。
+　　■ 不能在数组类型区域中放数组维度长度，秩是数组类型的一部分，而维度长度不是类型的一部分。
+　　■ 数组声明后，维度数就固定了，但是维度长度直到数组实例化时才会被确定。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,,]</span> arr;    <span style="color:#6272a4">//数组类型：三维整型数组
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> arr1;    <span style="color:#6272a4">//数组类型：二维整型数组
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">long</span><span style="color:#50fa7b">[,,]</span> arr2;  <span style="color:#6272a4">//数组类型：三维long数组
+</span><span style="color:#6272a4"></span>
+<span style="color:#8be9fd">long</span><span style="color:#50fa7b">[2,3,4]</span> secondArray;   //编译错误，不允许指定维度长度。</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="5-2-实例化一维数组或矩形数组">5.2. 实例化一维数组或矩形数组</h2>
+
+<p>　　使用<strong>数组创建表达式</strong>实例化数组，数组创建表达式由new运算符构成，后面是基类名称和一对方括号。<strong>方括号中以逗号分隔每一个维度的长度</strong>。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> arr2 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[4]</span>;    <span style="color:#6272a4">//四个元素的整型数组
+</span><span style="color:#6272a4"></span>MyClass<span style="color:#50fa7b">[]</span> mcArr = <span style="color:#ff79c6">new</span> MyClass<span style="color:#50fa7b">[4]</span>;   <span style="color:#6272a4">//四个元素的MyClass(自定义类型)数组
+</span><span style="color:#6272a4"></span>
+<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,,]</span> arr3 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3,6,2]</span>;   //三维数组，数组长度是：<span style="color:#bd93f9">3</span>*<span style="color:#bd93f9">6</span>*<span style="color:#bd93f9">2</span>=<span style="color:#bd93f9">36</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp93.png" alt="" /></p>
+
+<h2 id="5-3-访问数组元素">5.3. 访问数组元素</h2>
+
+<p>　　在数组中使用整型值作为索引来访问数组元素。
+　　■ 每一个维度的索引从0开始。
+　　■ 方括号内的索引在数组名称之后。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> intArr1 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[15]</span>;   <span style="color:#6272a4">//声明数组长度为15的一维数组
+</span><span style="color:#6272a4"></span>intArr1<span style="color:#50fa7b">[2]</span> = <span style="color:#bd93f9">10</span>;               <span style="color:#6272a4">//向数组的第3个元素赋值
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span> var1 = intArr1<span style="color:#50fa7b">[2]</span>;         <span style="color:#6272a4">//从数组第3个元素读取值
+</span><span style="color:#6272a4"></span>
+<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> intArr2 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[5,10]</span>;<span style="color:#6272a4">//声明二维数组
+</span><span style="color:#6272a4"></span>intArr2<span style="color:#50fa7b">[2,3]</span> = <span style="color:#bd93f9">7</span>;              <span style="color:#6272a4">//向数组赋值
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span> var2 = intArr2<span style="color:#50fa7b">[2,3]</span>;       //从数组读取值</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="5-4-初始化数组">5.4. 初始化数组</h2>
+
+<p>　　当数组被创建之后，数组中的每一个元素都会被自动的初始化为类型的默认值：整型默认值是0，浮点型的默认值是0.0，布尔型的默认值为false，引用类型的默认值是null。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> intArr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[4]</span>;</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp94.png" alt="" /></p>
+
+<h2 id="5-5-显式初始化一维数组">5.5. 显式初始化一维数组</h2>
+
+<p>　　对一维数组，我们可以在数组实例化的时候显式的设置初始值。
+　　■ 初始值必须以逗号分隔，并封闭在一组花括号内。
+　　■ 维度长度是可选的，因为编译器可以通过初始化值的个数来推断长度。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> intArr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> {<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">40</span>};</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp95.png" alt="" /></p>
+
+<h2 id="5-6-显式初始化矩形数组">5.6. 显式初始化矩形数组</h2>
+
+<p>　　■ 矩形数组中每一个初始值向量必须封闭在花括号内。
+　　■ 除了初始值，每一个维度的初始化列表和组成部分必须使用逗号分隔。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> intArr2 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> {{<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">1</span>},{<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">10</span>},{<span style="color:#bd93f9">11</span>,<span style="color:#bd93f9">9</span>}};</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp96.png" alt="" /></p>
+
+<h2 id="5-7-快捷语法">5.7. 快捷语法</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> arr1 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span>{<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">30</span>};
+<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> arr1 = {<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">30</span>};
+
+<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> arr2 = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[2,3]</span>{{<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">3</span>},{<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">11</span>,<span style="color:#bd93f9">12</span>}};
+<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> arr2 = {{<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">3</span>},{<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">11</span>,<span style="color:#bd93f9">12</span>}};</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-交错数组">6. 交错数组</h1>
+
+<p>　　交错数组是数组的数组。交错数组的子数组可以有不同数目的元素。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//声明并创建顶层数组
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][]</span> jagArr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3][]</span>;  <span style="color:#6272a4">//声明三个int数组的数组
+</span><span style="color:#6272a4">//声明并创建子数组
+</span><span style="color:#6272a4"></span>...</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp97.png" alt="" /></p>
+
+<h2 id="6-1-声明交错数组">6.1. 声明交错数组</h2>
+
+<p>　　交错数组的声明语法要求每一个维度都有一对独立的方括号。交错数组变量声明中的方括号数决定了数组的秩。
+　　■ 交错数组可以有任何大于1的维度。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][]</span> SomeArr;     <span style="color:#6272a4">//秩等于2
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][][]</span> OtherArr;  //秩等于<span style="color:#bd93f9">3</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>　　不能再声明语句中初始化最高级别数组之外的数组</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][]</span> jagArr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3][]</span>;   <span style="color:#6272a4">//三个子数组的顶层数组
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][]</span> jagArr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3][4]</span>;  //编译错误，不允许初始化顶层以外的数组</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="6-2-实例化交错数组">6.2. 实例化交错数组</h2>
+
+<p>　　由于交错数组是独立数组的数组，所以每一个数组都必须独立创建：
+　　① 首先实例化顶层数组。
+　　② 其次分别实例化每一个子数组，把新建子数组的引用赋值给包含它们的数组的合适元素。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][]</span> Arr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3][]</span>;              <span style="color:#6272a4">//1、实例化顶层数组
+</span><span style="color:#6272a4"></span>
+Arr<span style="color:#50fa7b">[0]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> {<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">30</span>};           <span style="color:#6272a4">//2、实例化子数组
+</span><span style="color:#6272a4"></span>Arr<span style="color:#50fa7b">[1]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> {<span style="color:#bd93f9">40</span>,<span style="color:#bd93f9">50</span>,<span style="color:#bd93f9">60</span>,<span style="color:#bd93f9">70</span>};        <span style="color:#6272a4">//3、实例化子数组
+</span><span style="color:#6272a4"></span>Arr<span style="color:#50fa7b">[2]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> {<span style="color:#bd93f9">80</span>,<span style="color:#bd93f9">90</span>,<span style="color:#bd93f9">100</span>,<span style="color:#bd93f9">110</span>,<span style="color:#bd93f9">120</span>};  //<span style="color:#bd93f9">4</span>、实例化子数组</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp98.png" alt="" /></p>
+
+<h2 id="6-3-交错数组中的子数组">6.3. 交错数组中的子数组</h2>
+
+<p>　　交错数组中的子数组本身就是数组，因此交错数组中也可能有矩形数组。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[][,]</span> Arr = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[3][,]</span>;   <span style="color:#6272a4">//实例化带有三个二维数组的交错数组
+</span><span style="color:#6272a4"></span>
+Arr<span style="color:#50fa7b">[0]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> {{<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">20</span>},{<span style="color:#bd93f9">100</span>,<span style="color:#bd93f9">200</span>}};
+Arr<span style="color:#50fa7b">[1]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> {{<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">40</span>,<span style="color:#bd93f9">50</span>},{<span style="color:#bd93f9">300</span>,<span style="color:#bd93f9">400</span>,<span style="color:#bd93f9">500</span>}};
+Arr<span style="color:#50fa7b">[2]</span> = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[,]</span> {{<span style="color:#bd93f9">60</span>,<span style="color:#bd93f9">70</span>,<span style="color:#bd93f9">80</span>,<span style="color:#bd93f9">90</span>},{<span style="color:#bd93f9">600</span>,<span style="color:#bd93f9">700</span>,<span style="color:#bd93f9">800</span>,<span style="color:#bd93f9">900</span>}};</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp99.png" alt="" /></p>
+
+<h1 id="7-foreach语句在数组的使用">7. foreach语句在数组的使用</h1>
+
+<p>　　■ 迭代变量是临时的，只读的，并且和数组中元素的类型相同。foreach使用迭代变量来连续表示数组中的每一个元素。
+　　■ foreach语句的工作方式：
+　　　　□ 从数组的第一个元素开始遍历并把它赋值给迭代变量。
+　　　　□ 然后执行语句主体(以大括号包裹的内容)，在主体中，把当前遍历到的一个数组元素使用迭代变量表示，该元素是只读的。
+　　　　□ 在主体执行之后，foreach语句选择下一个数组元素，并重复这些过程。</p>
+
+<h1 id="8-迭代变量是只读的">8. 迭代变量是只读的</h1>
+
+<p>　　因为迭代变量是只读的，所以在foreach中不能实现修改数组元素值的功能。这个只读属性对于值类型数组和引用类型数组来说效果是不一样的。
+　　★ 对于值类型数组和引用类型数组来说，迭代变量都是不能被改变的。但是例外的是，引用类型存储的是数据的引用，但是数据本身并没有和迭代变量有联系，所以我们可以在foreach中修改数据本身。</p>
+
+<p><strong>值类型数组</strong>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> arr1 = {<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">11</span>,<span style="color:#bd93f9">12</span>,<span style="color:#bd93f9">13</span>};
+<span style="color:#ff79c6">foreach</span>(<span style="color:#8be9fd">var</span> item <span style="color:#ff79c6">in</span> arr1)
+{
+    item++;    <span style="color:#6272a4">//错误！！编译时会抛出错误
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>引用类型数组</strong>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> MyField = <span style="color:#bd93f9">0</span>;
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        MyClass<span style="color:#50fa7b">[]</span> mc = <span style="color:#ff79c6">new</span> MyClass<span style="color:#50fa7b">[4]</span>;  <span style="color:#6272a4">//创建引用类型数组
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">for</span>(<span style="color:#8be9fd">int</span> i =<span style="color:#bd93f9">0</span>;i&lt;<span style="color:#bd93f9">4</span>;i++)   <span style="color:#6272a4">//初始化数组
+</span><span style="color:#6272a4"></span>        {
+             mc<span style="color:#50fa7b">[i]</span> = <span style="color:#ff79c6">new</span> MyClass();  <span style="color:#6272a4">//创建类对象
+</span><span style="color:#6272a4"></span>             mc<span style="color:#50fa7b">[i]</span>.MyField = i;      
+        }
+        <span style="color:#ff79c6">foreach</span>(<span style="color:#8be9fd">var</span> item <span style="color:#ff79c6">in</span> mc)
+        {
+            item.MyFiled+=<span style="color:#bd93f9">10</span>;     <span style="color:#6272a4">//遍历修改数据本身，引用没有发生变化
+</span><span style="color:#6272a4"></span>        }
+        <span style="color:#ff79c6">foreach</span>(<span style="color:#8be9fd">var</span> item <span style="color:#ff79c6">in</span> mc)
+        {
+            Console.WriteLine(item);
+        }
+        Console.ReadKey();
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="9-数组协变">9. 数组协变</h1>
+
+<p>　　在下面情况下，即使某一个对象和数组的类型不相同，我们也可以把它赋值给数组元素：
+　　■ 数组是引用类型数组。
+　　■ 在赋值的对象或者类型之间有隐式转换或强制转换。</p>
+
+<p>　　★ 由于派生类和基类之间默认是含有隐式的转换的，所以总是可以将一个派生类的对象赋值给基类数组元素。
+<img src="/image/cSharp/cSharp100.png" alt="" />
+　　 👉 值类型数组没有协变。</p>
+
+<h1 id="10-array继承的有用成员">10. Array继承的有用成员</h1>
+
+<p>　　c#数组从System.Array类继承，有很多有用的属性和方法：
+<img src="/image/cSharp/cSharp101.png" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%8F%8D%E5%B0%84-reflection/" id="next">
+                &larr; <span class="nav-title nav-title-next">反射(reflection)</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E6%9E%9A%E4%B8%BE-enumerate/" id="prev">
+            <span class="nav-title nav-title-prev">枚举(enumerate)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

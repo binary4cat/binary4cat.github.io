@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学习之道s on Haijd&#39;s Blog</title>
+    <link>/%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/</link>
+    <description>Recent content in 学习之道s on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Oct 2017 23:53:11 +0800</lastBuildDate>
+    
+	<atom:link href="/%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何阅读源码总结</title>
+      <link>/%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 19 Oct 2017 23:53:11 +0800</pubDate>
+      
+      <guid>/%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%81%93/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;p&gt;思维导图&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

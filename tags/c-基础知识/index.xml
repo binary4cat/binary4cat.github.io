@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C#基础知识 on Haijd&#39;s Blog</title>
+    <link>/tags/c-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+    <description>Recent content in C#基础知识 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 Apr 2016 22:35:06 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/c-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Guid.ToString()的格式化重载</title>
+      <link>/csharp/guid-tostring-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E9%87%8D%E8%BD%BD/</link>
+      <pubDate>Wed, 20 Apr 2016 22:35:06 +0800</pubDate>
+      
+      <guid>/csharp/guid-tostring-%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E9%87%8D%E8%BD%BD/</guid>
+      <description>&lt;p&gt;以下内容参考&lt;a href=&#34;https://msdn.microsoft.com/zh-cn/library/97af8hh4.aspx&#34;&gt;msdn&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-格式化guid的值&#34;&gt;1. 格式化Guid的值&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;code&gt;Guid.ToString();&lt;/code&gt;这个方法有一个重载，接收一个string类型的参数，这个参数有固定值：“N”、“D”、“B”、“P”或“X”。
+　　分别表示：
+　　&lt;code&gt;N&lt;/code&gt;:返回32位数字，比如：00000000000000000000000000000000
+　　&lt;code&gt;D&lt;/code&gt;:返回由连字符分隔的32位数字，比如：00000000-0000-0000-0000-000000000000
+　　&lt;code&gt;B&lt;/code&gt;:返回在大括号中、由连字符分隔的32位数字，比如：{00000000-0000-0000-0000-000000000000}
+　　&lt;code&gt;P&lt;/code&gt;:返回在圆括号中、由连字符分隔的32位数字，比如：(00000000-0000-0000-0000-000000000000)
+　　&lt;code&gt;X&lt;/code&gt;:返回括在大括号中的4个十六进制，其中第四个值是括在大括号中的8个十六进制值的子集，比如：{0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>c#中yield的用法</title>
+      <link>/csharp/c-%E4%B8%ADyield%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <pubDate>Sat, 26 Mar 2016 17:01:24 +0800</pubDate>
+      
+      <guid>/csharp/c-%E4%B8%ADyield%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <description>&lt;p&gt;　　记录一下c#中的一个关键字&lt;code&gt;yield&lt;/code&gt;的用法，之前基本没怎么用过这个算是语法糖的关键字，最近做了一个小的机构账号管理项目，读取DataReader对象数据时，每一次都得Add到集合中，记得以前见过有人用过这个方法，写起来很方便，所以学习了一下，记录下来以备查看。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-之前查找数据库数据的部分代码&#34;&gt;1. 之前查找数据库数据的部分代码&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;public&lt;/span&gt; List&amp;lt;Organization&amp;gt; OrgModel=&lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; List&amp;lt;Organization&amp;gt;();
+&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt; sqlText=&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;select * from Organization&amp;#34;&lt;/span&gt;;
+&lt;span style=&#34;color:#8be9fd&#34;&gt;var&lt;/span&gt; dataTable = SqlHelper.ExecuteReader(sqlText);
+            &lt;span style=&#34;color:#ff79c6&#34;&gt;if&lt;/span&gt; (dataTable.HasRows)
+            {
+                &lt;span style=&#34;color:#ff79c6&#34;&gt;while&lt;/span&gt; (dataTable.Read())
+                {
+                    Organization org = &lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; Organization();
+                    org.org_code = dataTable&lt;span style=&#34;color:#50fa7b&#34;&gt;[&amp;#34;org_code&amp;#34;]&lt;/span&gt;.ToString();
+                    org.org_name = dataTable&lt;span style=&#34;color:#50fa7b&#34;&gt;[&amp;#34;org_name&amp;#34;]&lt;/span&gt;.ToString();
+                    org.org_acount = dataTable&lt;span style=&#34;color:#50fa7b&#34;&gt;[&amp;#34;org_acount&amp;#34;]&lt;/span&gt;.ToString();
+                    org.org_password = dataTable&lt;span style=&#34;color:#50fa7b&#34;&gt;[&amp;#34;org_password&amp;#34;]&lt;/span&gt;.ToString();
+                    OrgModel.Add(org);
+                }
+            }
+            &lt;span style=&#34;color:#ff79c6&#34;&gt;return&lt;/span&gt; orgModel;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>委托使用案例</title>
+      <link>/csharp/%E5%A7%94%E6%89%98%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/</link>
+      <pubDate>Tue, 01 Mar 2016 23:43:54 +0800</pubDate>
+      
+      <guid>/csharp/%E5%A7%94%E6%89%98%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/</guid>
+      <description>&lt;p&gt;把下面集合中字符串小于&lt;code&gt;&amp;quot;6&amp;quot;&lt;/code&gt;的结果查找并打印出来：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;List&amp;lt;&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt;&amp;gt; strList = &lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; List&amp;lt;&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt;&amp;gt;() { 
+                &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;3&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;9&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;32&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;7&amp;#34;&lt;/span&gt;
+};&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;首先排除掉&lt;code&gt;foreach&lt;/code&gt;等做法，我们使用List集合自带的方法实现：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;26
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;27
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;28
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;29
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;30
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;31
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;using&lt;/span&gt; System;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;using&lt;/span&gt; System.Collections.Generic;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;using&lt;/span&gt; System.Linq;
+
+&lt;span style=&#34;color:#ff79c6&#34;&gt;namespace&lt;/span&gt; Delegate7
+{
+    &lt;span style=&#34;color:#ff79c6&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#50fa7b&#34;&gt;Program&lt;/span&gt;
+    {
+        &lt;span style=&#34;color:#ff79c6&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;void&lt;/span&gt; Main(&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#50fa7b&#34;&gt;[]&lt;/span&gt; args)
+        {
+            List&amp;lt;&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt;&amp;gt; strList = &lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; List&amp;lt;&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt;&amp;gt;()
+            {
+                &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;3&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;9&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;32&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;7&amp;#34;&lt;/span&gt;
+            };
+
+            &lt;span style=&#34;color:#6272a4&#34;&gt;//&amp;#34;Where&amp;#34;方法的内部执行：遍历strList集合，将集合中的每一个元素拿出来，传入委托去执行，
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#6272a4&#34;&gt;//如果委托返回true，那就把该元素拿出来，然后把所有符合条件的元素组成新的集合返回。
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#8be9fd&#34;&gt;var&lt;/span&gt; resultList = strList.Where(
+                &lt;span style=&#34;color:#ff79c6&#34;&gt;delegate&lt;/span&gt; (&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt; s) 
+                {
+                    &lt;span style=&#34;color:#ff79c6&#34;&gt;return&lt;/span&gt; s.CompareTo(&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;6&amp;#34;&lt;/span&gt;) &amp;lt; &lt;span style=&#34;color:#bd93f9&#34;&gt;0&lt;/span&gt;;
+                });
+
+            &lt;span style=&#34;color:#ff79c6&#34;&gt;foreach&lt;/span&gt; (&lt;span style=&#34;color:#8be9fd&#34;&gt;var&lt;/span&gt; item &lt;span style=&#34;color:#ff79c6&#34;&gt;in&lt;/span&gt; resultList)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadKey();
+        }
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>委托内部构造</title>
+      <link>/csharp/%E5%A7%94%E6%89%98%E5%86%85%E9%83%A8%E6%9E%84%E9%80%A0/</link>
+      <pubDate>Tue, 01 Mar 2016 22:37:32 +0800</pubDate>
+      
+      <guid>/csharp/%E5%A7%94%E6%89%98%E5%86%85%E9%83%A8%E6%9E%84%E9%80%A0/</guid>
+      <description>&lt;h1 id=&#34;1-委托的内部构造&#34;&gt;1. 委托的内部构造&lt;/h1&gt;
+
+&lt;p&gt;　　委托的内部构造是什么样的？
+　　在一个委托对象被创建后，该委托的内部由三部分组成：&amp;rdquo;_methodPtr(方法指针)&amp;ldquo;、&amp;rdquo;_target(目标对象)&amp;ldquo;、&amp;rdquo;委托链(多播委托时才有，否则为空)&amp;ldquo;，具体的构造我们画张图来看看：
+&lt;img src=&#34;http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1hridcavej20is0d874l.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>string类常用函数和属性</title>
+      <link>/csharp/string%E7%B1%BB%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Wed, 03 Feb 2016 01:25:40 +0800</pubDate>
+      
+      <guid>/csharp/string%E7%B1%BB%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>&lt;h1 id=&#34;1-字符串的特殊性&#34;&gt;1. 字符串的特殊性&lt;/h1&gt;
+
+&lt;p&gt;　　1、字符串的不可变性，当我们在给字符串进行重新赋值、拼接、累加的过程中，都会在内存的堆空间中重新开辟一块新的空间。
+　　2、我们可以将字符串看做是一个&lt;code&gt;char&lt;/code&gt;类型的数组。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-字符串常用函数&#34;&gt;2. 字符串常用函数：&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;ToCharArray();&lt;/code&gt; 将字符串转换成一个char类型的数组：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>文件流操作流程代码</title>
+      <link>/csharp/%E6%96%87%E4%BB%B6%E6%B5%81%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%BB%A3%E7%A0%81/</link>
+      <pubDate>Tue, 27 Jan 2015 15:24:33 +0800</pubDate>
+      
+      <guid>/csharp/%E6%96%87%E4%BB%B6%E6%B5%81%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%BB%A3%E7%A0%81/</guid>
+      <description>&lt;h1 id=&#34;使用filestream来读取数据&#34;&gt;使用FileStream来读取数据&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;26
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;27
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;28
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//FileStream StreamReader和StreamWriter
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//FileStream用来操作字节
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//使用FileStream来读取一个文本文件 IO
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#6272a4&#34;&gt;//1、创建FileStream对象
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//第一个参数用来指定操作文件的路径
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//第二个参数用来指定系统打开文件的方式
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//第三个参数用来指定我们要对数据的操作
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;            
+&lt;span style=&#34;color:#ff79c6&#34;&gt;using&lt;/span&gt; (FileStream fsRead = &lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; FileStream(&lt;span style=&#34;color:#f1fa8c&#34;&gt;@&amp;#34;C:\Users\SpringRain\Desktop\我是数据1.txt&amp;#34;&lt;/span&gt;, FileMode.OpenOrCreate, FileAccess.Read))
+{
+
+&lt;span style=&#34;color:#6272a4&#34;&gt;//2、设置缓冲区的大小 5M
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#8be9fd&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#50fa7b&#34;&gt;[]&lt;/span&gt; buffer = &lt;span style=&#34;color:#ff79c6&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#8be9fd&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#50fa7b&#34;&gt;[1024 * 1024 * 5]&lt;/span&gt;;
+
+&lt;span style=&#34;color:#6272a4&#34;&gt;//3、开始读取数据
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#8be9fd&#34;&gt;int&lt;/span&gt; r = fsRead.Read(buffer, &lt;span style=&#34;color:#bd93f9&#34;&gt;0&lt;/span&gt;, buffer.Length);
+
+&lt;span style=&#34;color:#6272a4&#34;&gt;//4、去缓冲区中获得我们需要的数据
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt; s = Encoding.Default.GetString(buffer, &lt;span style=&#34;color:#bd93f9&#34;&gt;0&lt;/span&gt;, r);
+     Console.WriteLine(s);
+
+&lt;span style=&#34;color:#6272a4&#34;&gt;//5、释放资源 流所占用的资源GC不能释放 需要我么自己手动的释放  
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//写在using里面就不许要我们自己去手动释放资源了
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#6272a4&#34;&gt;//fsRead.Dispose();
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#6272a4&#34;&gt;//fsRead.Close();
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;     Console.ReadKey();
+} &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

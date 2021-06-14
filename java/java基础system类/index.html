@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：System类  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    28 May 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：System类</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-system类方法currenttimemillis">1. System类方法currentTimeMillis</a></li>
+<li><a href="#2-system类方法exit">2. System类方法exit</a></li>
+<li><a href="#3-system类方法gc">3. System类方法gc</a></li>
+<li><a href="#4-system类方法getproperties">4. System类方法getProperties</a></li>
+<li><a href="#5-system类方法arraycopy">5. System类方法arraycopy</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-system类方法currenttimemillis">1. System类方法currentTimeMillis</h1>
+
+<ul>
+<li>System类方法<code>currentTimeMillis()</code>:获取系统当前的毫秒值</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  获取系统当前毫秒值
+</span><span style="color:#6272a4">*  static long currentTimeMillis()
+</span><span style="color:#6272a4">*  对程序执行时间测试
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    <span style="color:#8be9fd">long</span> start <span style="color:#ff79c6">=</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentTimeMillis</span><span style="color:#ff79c6">();</span><span style="color:#6272a4">//当前时间x-1970年1月1日零时零分零秒
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0 <span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> 10000<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++){</span>
+      	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#8be9fd">long</span> end <span style="color:#ff79c6">=</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentTimeMillis</span><span style="color:#ff79c6">();</span><span style="color:#6272a4">//当前时间y-1970年1月1日零时零分零秒
+</span><span style="color:#6272a4"></span>    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>end <span style="color:#ff79c6">-</span> start<span style="color:#ff79c6">);</span><span style="color:#6272a4">//当前时间y-当前时间x 
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-system类方法exit">2. System类方法exit</h1>
+
+<ul>
+<li>System类方法<code>exit()</code>方法
+
+<ul>
+<li>退出虚拟机，所有程序全停止</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  退出虚拟机,所有程序全停止
+</span><span style="color:#6272a4">*  static void exit(0)
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+	<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">true</span><span style="color:#ff79c6">){</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">);</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">exit</span><span style="color:#ff79c6">(</span>0<span style="color:#ff79c6">);</span> <span style="color:#6272a4">//0表示正常终止，其他的代表异常终止。
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-system类方法gc">3. System类方法gc</h1>
+
+<ul>
+<li>System类方法gc
+
+<ul>
+<li>调用垃圾回收，直接回收所有对象。</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#6272a4">//此方法会在对象被回收时执行一次
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">finalize</span><span style="color:#ff79c6">(){</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;垃圾收取了&#34;</span><span style="color:#ff79c6">);</span>
+     <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  JVM在内存中,收取对象的垃圾
+</span><span style="color:#6272a4">*  当没有更多引用指向该对象时,会自动调用垃圾回收机制回收堆中的对象
+</span><span style="color:#6272a4">*  同时调用回收对象所属类的finalize方法()
+</span><span style="color:#6272a4">*  static void gc()
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">new</span> Test<span style="color:#ff79c6">();</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">gc</span><span style="color:#ff79c6">();</span> <span style="color:#6272a4">//调用垃圾回收，回收对象。
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-system类方法getproperties">4. System类方法getProperties</h1>
+
+<ul>
+<li>System类方法getProperties
+
+<ul>
+<li>获取当前操作系统的相关属性数据</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  获取当前操作系统的属性:例如操作系统名称,
+</span><span style="color:#6272a4">*  static Properties getProperties() 
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getProperties</span><span style="color:#ff79c6">());</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmeb40nxj7j20fo0hrgm8.jpg" alt="" /></p>
+
+<h1 id="5-system类方法arraycopy">5. System类方法arraycopy</h1>
+
+<ul>
+<li>System类方法arraycopy：
+
+<ul>
+<li>用来实现将源数组部分元素复制到目标数组的指定位置
+<br /></li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">* System类方法,复制数组
+</span><span style="color:#6272a4">* arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
+</span><span style="color:#6272a4">* Object src, 要复制的源数组
+</span><span style="color:#6272a4">* int srcPos, 数组源的起始索引
+</span><span style="color:#6272a4">* Object dest,复制后的目标数组
+</span><span style="color:#6272a4">* int destPos,目标数组起始索引 
+</span><span style="color:#6272a4">* int length, 复制几个
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+	String<span style="color:#ff79c6">[]</span> olds<span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;j&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;d&#34;</span><span style="color:#ff79c6">};</span>
+	String<span style="color:#ff79c6">[]</span> news<span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;h&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;i&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;&#34;</span><span style="color:#ff79c6">};</span>  <span style="color:#6272a4">//因为下面的拷贝中，我们从索引3的位置拷贝了两个元素，所以总共有5个元素，要注意拷贝后的数组的长度，否则会发生数组越界的异常
+</span><span style="color:#6272a4"></span>	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">arraycopy</span><span style="color:#ff79c6">(</span>olds<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> news<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>String n <span style="color:#ff79c6">:</span> news<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：h a i j d
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B%E6%93%8D%E4%BD%9C/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：数值类型操作</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80%E5%8C%85%E8%A3%85%E7%B1%BB/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：JAVA基本类型和包装类</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

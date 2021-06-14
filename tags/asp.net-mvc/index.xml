@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asp.net Mvc on Haijd&#39;s Blog</title>
+    <link>/tags/asp.net-mvc/</link>
+    <description>Recent content in Asp.net Mvc on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 Feb 2017 00:39:03 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net-mvc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用CsvHelper导入导出csv文件</title>
+      <link>/csharp/%E4%BD%BF%E7%94%A8csvhelper%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sat, 25 Feb 2017 00:39:03 +0800</pubDate>
+      
+      <guid>/csharp/%E4%BD%BF%E7%94%A8csvhelper%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;今天记录一下使用&lt;a href=&#34;https://github.com/JoshClose/CsvHelper&#34;&gt;CsvHelper&lt;/a&gt;导入导出CSV文件的方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-csv介绍&#34;&gt;1. CSV介绍&lt;/h1&gt;
+
+&lt;p&gt;　　csv文件是一种纯文本存储的文件格式，行和列分别用逗号和换行来代替，可以直接使用Excel打开。在代码中可以直接使用&lt;code&gt;TextWrite&lt;/code&gt; 操作，比较方便快速。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-csvhelper&#34;&gt;2. CsvHelper&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-项目介绍&#34;&gt;2.1. 项目介绍：&lt;/h2&gt;
+
+&lt;p&gt;　　github主页：&lt;a href=&#34;https://github.com/JoshClose/CsvHelper&#34;&gt;https://github.com/JoshClose/CsvHelper&lt;/a&gt;
+　　文档：&lt;a href=&#34;http://joshclose.github.io/CsvHelper/&#34;&gt;http://joshclose.github.io/CsvHelper/&lt;/a&gt;
+　　wiki：&lt;a href=&#34;https://github.com/JoshClose/CsvHelper/wiki&#34;&gt;https://github.com/JoshClose/CsvHelper/wiki&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>EF code first简单示例</title>
+      <link>/csharp/ef-code-first%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Wed, 13 Apr 2016 20:35:53 +0800</pubDate>
+      
+      <guid>/csharp/ef-code-first%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B/</guid>
+      <description>&lt;p&gt;　　一个简单的MVC5+EF6小demo，演示mvc和ef的简单编写流程。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-创建项目&#34;&gt;1. 创建项目&lt;/h1&gt;
+
+&lt;p&gt;　　1、选择.Net Farmework版本为4.5以上的，这里我选择4.5.2
+　　2、选择模板，选择&lt;strong&gt;Empty&lt;/strong&gt;，勾选MVC引用：&lt;img src=&#34;http://ww1.sinaimg.cn/mw690/c55a7aeegw1f2v56p11fvj20m80h8tc1.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

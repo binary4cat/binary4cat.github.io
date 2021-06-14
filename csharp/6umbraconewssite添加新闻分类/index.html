@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>6、UmbracoNewsSite：添加新闻分类  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    06 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">6、UmbracoNewsSite：添加新闻分类</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　上一篇做了一个简单的首页，在导航条上添加了几个新闻板块，接下来我们就添加这几个新闻板块的页面。</p>
+
+<p>　　开始我们还是需要创建<strong>Document Types</strong>用来展示新闻列表。我们先做好规划，新闻列表只需要把新闻标题和图片展示出来就可以了，。</p>
+
+<p>我们创建这个新闻列表的文档类型，同样是在<strong>Setting&ndash;&gt; Document Types</strong>下面创建，创建一个名为<strong>News List</strong>的文档类型。注意这时的创建菜单中出现了一个选项 “*Master Document Type*”,这个选项的作用是如果你的这个模板的某些数据是继承自其他模板的，就选择那个模板为Master模板。之前没有出现是因为只有一个<strong>Home</strong>模板。我们的新闻页面是独立的，不需要继承，所以默认选择 “*none&hellip;*”。
+<img src="/image/umbraco/backoffice22.png" alt="" /></p>
+
+<p>　　首先创建一个名为<strong>Info</strong>的Tabs，然后添加一个<strong>Section Name</strong>的属性，用来编辑新闻列表的种类。
+<img src="/image/umbraco/backoffice23.png" alt="" /></p>
+
+<p>　　打开<strong>Home</strong>文档类型下，进入<strong>Structure</strong>选项卡中，将*Allow at root*后面的选项勾选上，作用是将<strong>Home</strong>类型设置成根节点；然后将*Allowed chile node types*后面*News List*勾选上，作用是允许<strong>News List</strong>作为<strong>Home</strong>的子节点。
+<img src="/image/umbraco/backoffice24.png" alt="" /></p>
+
+<p>　　我们回到<strong>Content</strong>功能节点，点击“<strong>首页</strong>”后面的三个小圆点按钮，可以看到我们刚刚创建的<strong>News List</strong>类型已经可以使用了。如果这里没有出现<strong>News List</strong>类型的选项，而是一些提示，那么尝试刷新一下页面，如果还没有看看<strong>Home</strong>文档类型设置里里面是否将<strong>News List</strong>类型勾选为<strong>Home</strong>类型的子节点，记得保存。
+<img src="/image/umbraco/backoffice25.png" alt="" /></p>
+
+<p>　　创建之后，进入设置界面，第一个文本框是设置这个节点的名称，而且也是网页在进入这个节点时的网址，所以一般使用英文比较好一点，因为网址中出现中文路径可能会出问题，也不太好看。
+<img src="/image/umbraco/backoffice26.png" alt="" /></p>
+
+<p>　　按照同样的方法，设置其他几个节点。
+<img src="/image/umbraco/backoffice27.png" alt="" /></p>
+
+<p>　　接下来我们将这几个页面分别链接到，上一篇中编写的首页导航条按钮中。
+　　回到<strong>Templates</strong>中，将<strong>Master</strong>中的代码改造一下，绑定几个新闻链接，将bootstrap导航条的代码改成：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;navbar navbar-inverse navbar-fixed-top&#34;</span>&gt;
+        &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;container&#34;</span>&gt;
+            &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;navbar-header&#34;</span>&gt;
+                &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;navbar-toggle&#34;</span> <span style="color:#50fa7b">data-toggle</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;collapse&#34;</span> <span style="color:#50fa7b">data-target</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;.navbar-collapse&#34;</span>&gt;
+                    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;icon-bar&#34;</span>&gt;&lt;/<span style="color:#ff79c6">span</span>&gt;
+                    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;icon-bar&#34;</span>&gt;&lt;/<span style="color:#ff79c6">span</span>&gt;
+                    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;icon-bar&#34;</span>&gt;&lt;/<span style="color:#ff79c6">span</span>&gt;
+                &lt;/<span style="color:#ff79c6">button</span>&gt;
+                &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-align:center&#34;</span>&gt;
+                    &lt;<span style="color:#ff79c6">a</span> <span style="color:#50fa7b">href</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;@home.Url&#34;</span>&gt;
+                        &lt;<span style="color:#ff79c6">image</span> <span style="color:#50fa7b">src</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;@(home.siteLogo)&#34;</span> /&gt;
+                    &lt;/<span style="color:#ff79c6">a</span>&gt;
+                &lt;/<span style="color:#ff79c6">div</span>&gt;
+            &lt;/<span style="color:#ff79c6">div</span>&gt;
+            &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;navbar-collapse collapse&#34;</span>&gt;
+                &lt;<span style="color:#ff79c6">ul</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;nav navbar-nav&#34;</span>&gt;
+                    @if (home.Children.Any())
+                    {
+                        foreach (var childPage in home.Children)
+                        {
+                            &lt;<span style="color:#ff79c6">li</span>&gt;&lt;<span style="color:#ff79c6">a</span> <span style="color:#50fa7b">href</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;@childPage.Url&#34;</span>&gt;@childPage.sectionName&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;/<span style="color:#ff79c6">li</span>&gt;
+                        }
+                    }
+                &lt;/<span style="color:#ff79c6">ul</span>&gt;
+                &lt;<span style="color:#ff79c6">ul</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;nav navbar-nav pull-right&#34;</span>&gt;
+                    &lt;<span style="color:#ff79c6">li</span>&gt;&lt;<span style="color:#ff79c6">a</span>&gt;登陆&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;/<span style="color:#ff79c6">li</span>&gt;
+                    &lt;<span style="color:#ff79c6">li</span>&gt;&lt;<span style="color:#ff79c6">a</span>&gt;注册&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;/<span style="color:#ff79c6">li</span>&gt;
+                &lt;/<span style="color:#ff79c6">ul</span>&gt;
+            &lt;/<span style="color:#ff79c6">div</span>&gt;
+
+        &lt;/<span style="color:#ff79c6">div</span>&gt;
+    &lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　解释一下上面的代码，主要是<code>@if(home.Children.Any(){......})</code>这段代码，<code>home</code>是当前网页的对象，<code>home.Children</code>是当前页面的子页面，也就是<strong>Home</strong>节点下的子节点，就是我们刚才设置的几个<strong>News List</strong>类型的节点。</p>
+
+<p>　　这时我们已经可以对导航条上的按钮进行点击了，而且可以进行正确的跳转，因为没有内容，而且没有将<strong>News List</strong>的templates设置master模板，所以页面什么都没有。
+<img src="/image/umbraco/backoffice28.png" alt="" />
+<img src="/image/umbraco/backoffice29.png" alt="" />
+<img src="/image/umbraco/backoffice30.png" alt="" />
+<img src="/image/umbraco/backoffice31.png" alt="" /></p>
+
+<p>　　进入<strong>Templates</strong>功能节点，打开<strong>News List</strong>，将Master template选项设置成<strong>Master</strong>。并且保存起来。
+<img src="/image/umbraco/backoffice32.png" alt="" /></p>
+
+<p>　　然后在<strong>News List</strong>中添加一行示例代码。如下图：
+<img src="/image/umbraco/backoffice33.png" alt="" /></p>
+
+<p>　　现在就可以看到我们需要的效果了：
+<img src="/image/umbraco/backoffice34.png" alt="" />
+<img src="/image/umbraco/backoffice35.png" alt="" />
+<img src="/image/umbraco/backoffice36.png" alt="" />
+<img src="/image/umbraco/backoffice37.png" alt="" /></p>
+
+<p>　　下一篇我们添加新闻详细内容页面，并且在将其展示在新闻列表页面中。
+　　</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/7umbraconewssite%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85%E9%A1%B5%E5%92%8C%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/" id="next">
+                &larr; <span class="nav-title nav-title-next">7、UmbracoNewsSite：新闻详情页</span> 
+            </a>  
+        <a rel="prev" href="/csharp/5umbraconewssite%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9/" id="prev">
+            <span class="nav-title nav-title-prev">5、UmbracoNewsSite：添加css和js文件</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

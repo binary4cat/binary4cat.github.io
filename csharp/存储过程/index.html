@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>存储过程  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    26 March 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">存储过程</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是存储过程">1. 什么是存储过程</a></li>
+<li><a href="#2-存储过程的优点">2. 存储过程的优点</a></li>
+<li><a href="#3-存储过程的种类">3. 存储过程的种类</a></li>
+<li><a href="#4-创建存储过程">4. 创建存储过程</a>
+<ul>
+<li><a href="#4-1-代码示例">4.1. 代码示例：</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么是存储过程">1. 什么是存储过程</h1>
+
+<p>　　调用<a href="http://baike.baidu.com/link?url=c2abUFqhD2LK7x4of_AqDRsR9zA_O8N7DSr-IK1oY_7C8_0OxNX-3mVmBfbPpYo5yhMm8nUGydsNQV0NJ73EL_">百度百科</a>的解释:存储过程（Stored Procedure）是在大型数据库系统中，一组为了完成特定功能的SQL 语句集，存储在数据库中，经过第一次编译后再次调用不需要再次编译，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。存储过程是数据库中的一个重要对象，任何一个设计良好的数据库应用程序都应该用到存储过程。
+　　简单来说，存储过程就像是c#中的<strong>方法</strong>，该方法实现某一特定的功能，在需要的地方直接调用就行了。而且该方法还是单例的。
+　　存储过程不仅仅是一组SQL语句的组合，存储过程和一般的SQL语句还是有区别的。
+　　</p>
+
+<p>当我们使用SQL Server数据库帮助我们建立网站或应用软件时，Transaction-SQL是一种主要的编程语言，使用SQL语句(Transaction-SQL)编程有两种方法：
+　　① 在本地存储SQL语句编写的代码，通过程序连接数据库，对SQL Server进行操作。
+　　② 把部分复杂或重用的SQL语句封装成存储过程，存储在SQL Server数据库中，然后通过程序去调用存储过程即可。而且还可以在存储过程中调用另一个存储过程。</p>
+
+<h1 id="2-存储过程的优点">2. 存储过程的优点</h1>
+
+<p>　　1.存储过程只在创建时进行编译，以后每次执行都不需要重新编译，而一般SQL语句每执行一次就编译一次，所以存储过程可以提高数据库的执行速度。
+　　2.对数据库进行复杂操作时(比如对多张表进行SELECT、INSERT、UPDATE、DELETE)，可将此复杂操作封装成存储过程，然后结合数据库中的事物处理一起使用。
+　　3.存储过程可以复用，从而减少开发人员的工作量。
+　　4.安全性高，可以设定操作此存储过程的用户权限。
+　　5.使用时只需要传输调用语句，而非多条SQL语句，减少网络流量，降低网络负载。</p>
+
+<h1 id="3-存储过程的种类">3. 存储过程的种类</h1>
+
+<p>　　1.系统存储过程：以<code>SP_</code>开头，用来进行系统的各项设定、取得信息、相关管理，比如<code>SP_help</code>就是取得指定对象的相关信息。
+　　2.扩展存储过程：以<code>XP_</code>开头，用来调用操作系统提供的功能，<code>exec master ..XP_cmdshell 'ping 120.110.119:12306'</code>
+　　3.用户自定的存储过程，也就是这篇博客所说的存储过程。</p>
+
+<h1 id="4-创建存储过程">4. 创建存储过程</h1>
+
+<p>创建语法：
+　　create proc usp_name
+　　形参列表(形参名称以@符号开头，参数类型在后)
+　　as
+　　  方法体
+　　go</p>
+
+<p>调用语法：
+　　exec 存储过程名称 实参,实参,实参&hellip;</p>
+
+<p>　　<text style="color:red">在调用的时候要三个对应：类型对应、数量对应、顺序对应。<text/></p>
+
+<h2 id="4-1-代码示例">4.1. 代码示例：</h2>
+
+<p><strong>获取所有员工信息</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">go</span>
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;usp_getAllStaffInfo&#39;</span>)
+    <span style="color:#ff79c6">drop</span> proc usp_getAllStaffInfo
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#ff79c6">create</span> <span style="color:#ff79c6">procedure</span> usp_getAllStuInfo
+<span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Staff
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#6272a4">--调用存储过程
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">execute</span> usp_getAllStaffInfo</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>查询指定性别的员工信息</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">go</span>
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;usp_GetStaffInfoBySex&#39;</span>)
+    <span style="color:#ff79c6">drop</span> proc usp_GetStaffInfoBySex
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#ff79c6">create</span> PROC usp_GetStaffInfoBySex
+<span style="color:#ff79c6">@</span>sex <span style="color:#ff79c6">nchar</span>(<span style="color:#bd93f9">1</span>)   
+<span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Staff <span style="color:#ff79c6">where</span> Sex<span style="color:#ff79c6">=@</span>sex
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#6272a4">--调用存储过程
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">EXEC</span> usp_GetStaffInfoBySex <span style="color:#f1fa8c">&#39;男&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>获取指定部门和性别的员工信息</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">go</span>
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;usp_GetStaffInfoBySexForClass&#39;</span>)
+    <span style="color:#ff79c6">drop</span> PROC usp_GetStaffInfoBySexForClass
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#ff79c6">create</span> PROC usp_GetStaffInfoBySexForClass
+<span style="color:#ff79c6">@</span>className nvarchar(<span style="color:#bd93f9">20</span>)
+<span style="color:#ff79c6">@</span>sex ncahr(<span style="color:#bd93f9">1</span>)<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;男&#39;</span>   <span style="color:#6272a4">--有默认值的形参
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">declare</span> <span style="color:#ff79c6">@</span>classId <span style="color:#8be9fd;font-style:italic">int</span>   <span style="color:#6272a4">--声明一个存储部门ID的变量
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">set</span> <span style="color:#ff79c6">@</span>classId<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">select</span> classId <span style="color:#ff79c6">from</span> Company <span style="color:#ff79c6">where</span> className<span style="color:#ff79c6">=@</span>className)
+    <span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Staff <span style="color:#ff79c6">where</span> Sex<span style="color:#ff79c6">=@</span>sex <span style="color:#ff79c6">and</span> classId<span style="color:#ff79c6">=@</span>classId
+<span style="color:#ff79c6">go</span>
+
+<span style="color:#6272a4">--调用存储过程
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">EXEC</span> usp_GetStaffInfoBySexForClass <span style="color:#ff79c6">@</span>classId<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;.NET部&#39;</span>,<span style="color:#ff79c6">@</span>sex<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;男&#39;</span>
+<span style="color:#ff79c6">EXEC</span> usp_GetStaffInfoBySexForClass <span style="color:#f1fa8c">&#39;.NET部&#39;</span>,<span style="color:#f1fa8c">&#39;男&#39;</span>
+<span style="color:#ff79c6">EXEC</span> usp_GetStaffInfoBySexForClass <span style="color:#ff79c6">default</span>,<span style="color:#f1fa8c">&#39;.NET部&#39;</span>    <span style="color:#6272a4">--不需要改变默认值就是用default关键字</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>返回指定性别员工人数和总人数</strong>
+　　<code>output</code>参数相当于c#中的<code>out</code>参数，用于将参数返回，所以在调用的时候需要声明变量去接收。注意在接收的时候，接收的变量后也要有<code>output</code>参数。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">go</span>
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;usp_GetStaffManAndStaffCount&#39;</span>)
+<span style="color:#ff79c6">create</span> proc usp_GetStaffManAndStaffCount
+    <span style="color:#ff79c6">@</span>sex <span style="color:#ff79c6">nchar</span>(<span style="color:#bd93f9">1</span>),
+    <span style="color:#ff79c6">@</span>SexCount <span style="color:#8be9fd;font-style:italic">int</span> <span style="color:#ff79c6">output</span>,
+    <span style="color:#ff79c6">@</span><span style="color:#ff79c6">count</span> <span style="color:#8be9fd;font-style:italic">int</span> <span style="color:#ff79c6">output</span>
+<span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">set</span> <span style="color:#ff79c6">@</span>SexCount<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">from</span> Staff <span style="color:#ff79c6">where</span> Sex<span style="color:#ff79c6">=@</span>sex)
+    <span style="color:#ff79c6">set</span> <span style="color:#ff79c6">@</span><span style="color:#ff79c6">count</span><span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">from</span> Staff)
+
+
+<span style="color:#6272a4">--调用存储过程
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">declare</span> <span style="color:#ff79c6">@</span>manCount <span style="color:#8be9fd;font-style:italic">int</span>,<span style="color:#ff79c6">@</span>sumCount <span style="color:#8be9fd;font-style:italic">int</span>
+<span style="color:#ff79c6">exec</span> usp_GetStaffManAndStaffCount <span style="color:#f1fa8c">&#39;男&#39;</span>,<span style="color:#ff79c6">@</span>manCount <span style="color:#ff79c6">output</span>,<span style="color:#ff79c6">@</span>sumCount <span style="color:#ff79c6">output</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>🎫 <strong>一个分页存储过程</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;usp_pageing&#39;</span>)
+    <span style="color:#ff79c6">drop</span> proc usp_pageing
+
+<span style="color:#ff79c6">create</span> proc usp_pageing
+    <span style="color:#ff79c6">@</span>totalPage <span style="color:#8be9fd;font-style:italic">int</span> <span style="color:#ff79c6">output</span>,   <span style="color:#6272a4">--总页数
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">@</span>pageIndex <span style="color:#8be9fd;font-style:italic">int</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>,   <span style="color:#6272a4">--当前的页码数，默认从1开始
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">@</span>pageCount <span style="color:#8be9fd;font-style:italic">int</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">10</span>   <span style="color:#6272a4">--每页显示的条目数
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> (<span style="color:#ff79c6">select</span> ROW_NUMBER() over(<span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> newsCreateDate) id, <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> News) item <span style="color:#ff79c6">where</span> item.Id<span style="color:#ff79c6">&gt;</span>(<span style="color:#ff79c6">@</span>pageIndex<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)<span style="color:#ff79c6">*@</span>pageCount <span style="color:#ff79c6">and</span> item.Id<span style="color:#ff79c6">&lt;=</span>(<span style="color:#ff79c6">@</span>pageIndex<span style="color:#ff79c6">*@</span>pageCount)
+    <span style="color:#ff79c6">set</span> <span style="color:#ff79c6">@</span>totalPage<span style="color:#ff79c6">=</span>ceiling((<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">from</span> News)<span style="color:#ff79c6">*</span><span style="color:#bd93f9">1</span>.<span style="color:#bd93f9">0</span><span style="color:#ff79c6">/@</span>pageCount)   <span style="color:#6272a4">--ceiling函数为向上四舍五入，如：ceiling(1.45,0) = 2;ceiling(1.55,0)=2</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/asp-net%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%93%8D%E4%BD%9C/" id="next">
+                &larr; <span class="nav-title nav-title-next">ASP.NET存储过程操作</span> 
+            </a>  
+        <a rel="prev" href="/csharp/asp-net%E4%B8%AD%E7%9A%84url%E9%87%8D%E5%86%99/" id="prev">
+            <span class="nav-title nav-title-prev">ASP.NET中的Url重写</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

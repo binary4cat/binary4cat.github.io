@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>微信公众号开发 on Haijd&#39;s Blog</title>
+    <link>/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 微信公众号开发 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 15 Mar 2017 20:33:03 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>微信JSSDK的使用</title>
+      <link>/csharp/%E5%BE%AE%E4%BF%A1jssdk%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Wed, 15 Mar 2017 20:33:03 +0800</pubDate>
+      
+      <guid>/csharp/%E5%BE%AE%E4%BF%A1jssdk%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;1-概述和官方文档&#34;&gt;1. 概述和官方文档&lt;/h1&gt;
+
+&lt;p&gt;　　使用微信JSSDK可以在网页中调用手机的拍照语音、定位等手机系统功能，还可以定制微信分享、扫一扫、卡券、支付等微信功能。
+　　官方文档：&lt;a href=&#34;http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html&#34;&gt;http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html&lt;/a&gt;
+　　&lt;/p&gt;
+
+&lt;h1 id=&#34;2-调用步骤&#34;&gt;2. 调用步骤&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-绑定域名&#34;&gt;2.1. 绑定域名&lt;/h2&gt;
+
+&lt;p&gt;　　首先进入&lt;a href=&#34;http://mp.weixin.qq.com/&#34;&gt;微信公众号后台&lt;/a&gt;，进入公众号设置=&amp;gt;功能设置=&amp;gt;JS接口安全域名设置：在这里可以设置三个调用的JSSDK的域名，然后将提示信息注意事项3中的&lt;a href=&#34;https://mp.weixin.qq.com/cgi-bin/mpverifytxt?lang=zh_CN&amp;amp;token=1492992380&#34;&gt;文件下载&lt;/a&gt;下来，放到网站的根目录下，点击保存，微信会自动测试是否设置成功。&lt;/p&gt;
+
+&lt;h2 id=&#34;2-2-页面引入js文件&#34;&gt;2.2. 页面引入JS文件&lt;/h2&gt;
+
+&lt;p&gt;　　在需要使用到JSSDK的页面引入微信提供的js文件，可以支持https协议，下载：&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

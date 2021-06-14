@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>在ashx页中使用Session  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    20 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">在ashx页中使用Session</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-正文">1. 正文</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　</p>
+
+<h1 id="1-正文">1. 正文</h1>
+
+<p>　　在ashx中使用Session不能直接<code>context.Session[&quot;sessionName&quot;]=value;</code> ,需要引入一个命名空间和继承一个接口。
+　　命名空间：<code>using System.Web.SessionState;</code>  作用：“IRequiresSessionState”接口的命名空间
+　　接口：<code>IRequiresSessionState</code>    作用:指定目标 HTTP 处理程序需要对会话状态值具有读写访问权</p>
+
+<p><code>IRequiresSessionState</code>：这是一个<strong>标记接口</strong>，没有任何方法。指定目标 HTTP 处理程序需要对会话状态值具有读写访问权。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/c-%E4%B8%ADyield%E7%9A%84%E7%94%A8%E6%B3%95/" id="next">
+                &larr; <span class="nav-title nav-title-next">c#中yield的用法</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%A7%94%E6%89%98%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/" id="prev">
+            <span class="nav-title nav-title-prev">委托使用案例</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

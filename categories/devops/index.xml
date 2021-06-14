@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Devops on Haijd&#39;s Blog</title>
+    <link>/categories/devops/</link>
+    <description>Recent content in Devops on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Feb 2019 14:00:48 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gitlab&#43;Jenkins实现CI/CD</title>
+      <link>/devops/gitlab&#43;jenkins%E5%AE%9E%E7%8E%B0cicd/</link>
+      <pubDate>Sun, 10 Feb 2019 14:00:48 +0800</pubDate>
+      
+      <guid>/devops/gitlab&#43;jenkins%E5%AE%9E%E7%8E%B0cicd/</guid>
+      <description>概述 在这篇文章中，演示一个简单的持续集成的案例，使用Windows的Linux子系统部署Gitlab和Jenkins，实现一套自动测试、自动部署的系统，本次的内容没有涉及到Docker部署，下一篇文章将介绍全部使用Docker部署的持续集成。
+系统 安装部署使用的系统为Windows下的Linux子系统，具体的系统信息： 安装Jenkins 安装到Ubuntu系统 安装repository key到操作系统：
+1  wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -   添加包源到sources.list中：
+1  sudo sh -c &amp;#39;echo deb http://pkg.jenkins.io/debian-stable binary/ &amp;gt; /etc/apt/sources.list.d/jenkins.list&amp;#39;   更新apt新仓库
+1  sudo apt update   最后安装Jenkins
+1  sudo apt install jenkins   启动jenkins
+1  sudo service jenkins start   如果显示[OK]那么说明Jenkins启动成功了，Jenkins不需要数据库，所以现在可以直接在浏览器中浏览了，在浏览器中打开地址http://your-domian:8080。
+配置Jenkins 第一步会提示输入一段密钥： 直接按照提示打开该文件即可：
+1  sudo vi /var/lib/jenkins/secrets/initialAdminPassword   如果提示没有权限，则需要将该文件的权限赋予当前的用户：</description>
+    </item>
+    
+  </channel>
+</rss>

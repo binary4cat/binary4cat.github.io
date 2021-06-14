@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>7、UmbracoNewsSite：新闻详情页  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    07 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">7、UmbracoNewsSite：新闻详情页</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　这一篇我们创建一个新闻详情页文档类型，然后尝试编辑新闻内容。</p>
+
+<p>　　首先确定新闻详情页需要什么？应该有新闻标题、新闻内容、新闻简介、新闻缩略图；其中后两个是为了在新闻列表展示该新闻信息设置的。确定了这些，现在就可以开始编写了。</p>
+
+<p>打开<strong>Document Types</strong>节点新建一个名为<strong>News Post</strong>的新文档类型，<strong>Master Document Type</strong>同样选择*none&hellip;*。
+　　接着创建两个Tabs，分别是<strong>Info</strong>和<strong>Content</strong>。
+<img src="/image/umbraco/backoffice38.png" alt="" /></p>
+
+<p>　　然后分别设置需要的几个属性：注意用来设置新闻内容的属性<strong>Content</strong>的数据类型设置为<em>Richtext Editor</em>(富文本编辑器);其次我们先不设置新闻缩略图这个属性，因为我们需要去对图片的数据类型做一些修改，控制图片的大小和名称。
+<img src="/image/umbraco/backoffice39.png" alt="" /></p>
+
+<p>　　现在去修改设置图片数据类型。打开<strong>Developer</strong>节点，点击<strong>Data Types</strong>节点后面的三个小圆点按钮，新建一个名为<strong>Featured Image</strong>的新数据类型，并且选择属性编辑器为<strong>Image Cropper</strong>。
+　　解释一下Umbraco中的数据类型(Data Types)：Umbraco中的数据类型都是Umbraco自己定义的，使用的时候只能选择，而不能去新创建一个新的数据类型，那么你会问，那我们刚刚创建的这个也是新的啊？这个确实是新的，但是就算是新的，也必须选择使用什么类型的数据类型作为属性编辑器，也就是<strong>Property editor</strong>这个选项的作用，可以理解为继承的关系吧，Umbraco定义的数据类型都是父类，我们需要一个子类去干实际完成的事，只要继承父类的一些特征就可以了，这就是我们在这里为什么编写新的数据类型的原因，为了让功能更加的细分。
+<img src="/image/umbraco/backoffice40.png" alt="" /></p>
+
+<p>　　然后点击<strong>Add new crop</strong>按钮，编辑别名(存储到数据库中的字段名)和图片大小，最后先点击<strong>Save crop</strong>按钮保存编辑，然后点击<strong>Save</strong>按钮保存。
+<img src="/image/umbraco/backoffice41.png" alt="" /></p>
+
+<p>　　现在我们可以设置新闻缩略图这个属性了，回到<strong>News Post</strong>文档类型，编辑<strong>News Image</strong>属性。
+<img src="/image/umbraco/backoffice42.png" alt="" /></p>
+
+<p>　　然后将<strong>News Post</strong>类型设置成<strong>News List</strong>类型的子类型，因为内容详情是存在于新闻列表下面的。
+<img src="/image/umbraco/backoffice44.png" alt="" /></p>
+
+<p>　　接下来去<strong>Templates</strong>节点下编写新闻详情页具体展现的代码。
+　　先打开<strong>News Post</strong>模板，然后将母板页设置为<strong>Master</strong>。
+<img src="/image/umbraco/backoffice43.png" alt="" /></p>
+
+<p>　　然后编写具体的代码，在<strong>News Post</strong>模板中添加如下代码：
+　　解释一下这几个方法的使用：<code>CurrentPage</code>是获得当前页面的所有数据，也就是当前页面所在的文档类型的所有属性，这是一个动态类型，只能在内容发布后才能获取到实际的值；<code>GetPropertyValue</code>方法可以获取对应的名称的属性的值，需要一个字符串(属性名称)作为参数；<code>CreateData</code>是一个只读属性，用来获取当前页面创建的时间；<code>CreatorName</code>是一个只读属性，用来获取当前页面的创建者。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = &#34;Master.cshtml&#34;;
+}
+&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;container&#34;</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;padding-top:30px&#34;</span>&gt;
+	&lt;<span style="color:#ff79c6">h3</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-align:center&#34;</span>&gt;@CurrentPage.GetPropertyValue(&#34;title&#34;)&lt;/<span style="color:#ff79c6">h3</span>&gt;
+	&lt;<span style="color:#ff79c6">p</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-align:center&#34;</span>&gt;时间：@CurrentPage.CreateDate.ToLongDateString() 作者：@CurrentPage.CreatorName.ToString()&lt;/<span style="color:#ff79c6">p</span>&gt;
+	&lt;<span style="color:#ff79c6">hr</span>/&gt;
+	@CurrentPage.GetPropertyValue(&#34;content&#34;)
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　代码编写完成后，我们回到内容编辑节点<strong>Content</strong>，点击<strong>keji</strong>后面的三个小圆点按钮，创建一个<strong>News Post</strong>类型的页面，编辑所需要的内容。如下：
+<img src="/image/umbraco/backoffice45.png" alt="" />
+<img src="/image/umbraco/backoffice46.png" alt="" /></p>
+
+<p>　　点击<strong>Save and publish</strong>按钮，但是这时，我们还不能直接去浏览这条新闻，因为还没有设置任何可以指向这条新闻的链接。但是为了查看效果，我们可以点击<strong>Properties</strong>选项卡中的<strong>Link to document</strong>后面的地址，这样就可以查看效果了。
+<img src="/image/umbraco/backoffice47.png" alt="" /></p>
+
+<p>　　最后的效果如下：
+<img src="/image/umbraco/backoffice48.png" alt="" /></p>
+
+<p>　　下一篇我们将新闻添加到新闻列表页中，这样就可以方便的查看新闻了。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/8umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%97%E8%A1%A8/" id="next">
+                &larr; <span class="nav-title nav-title-next">8、UmbracoNewsSite：添加新闻列表</span> 
+            </a>  
+        <a rel="prev" href="/csharp/6umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%86%E7%B1%BB/" id="prev">
+            <span class="nav-title nav-title-prev">6、UmbracoNewsSite：添加新闻分类</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

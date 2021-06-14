@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Angular知识点汇总(2)：路由系统  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    13 October 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Angular知识点汇总(2)：路由系统</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-简介">1. 简介</a></li>
+<li><a href="#2-生成带路由的项目">2. 生成带路由的项目</a></li>
+<li><a href="#3-routes-routeroutlet-routerlink">3. Routes/RouterOutlet/RouterLink</a>
+<ul>
+<li><a href="#3-1-配置路由参数">3.1. 配置路由参数</a></li>
+<li><a href="#3-2-绑定路由地址">3.2. 绑定路由地址</a></li>
+<li><a href="#3-3-路由通配符">3.3. 路由通配符</a></li>
+</ul></li>
+<li><a href="#4-router">4. Router</a>
+<ul>
+<li><a href="#4-1-按钮点击跳转">4.1. 按钮点击跳转</a></li>
+<li><a href="#4-2-路由传递参数">4.2. 路由传递参数</a>
+<ul>
+<li><a href="#4-2-1-在查询字符串中传递参数">4.2.1. 在查询字符串中传递参数</a></li>
+<li><a href="#4-2-2-在路由路径中传递参数">4.2.2. 在路由路径中传递参数</a></li>
+</ul></li>
+<li><a href="#4-3-上面组件中获取参数的问题">4.3. 上面组件中获取参数的问题</a></li>
+</ul></li>
+<li><a href="#5-重定向路由">5. 重定向路由</a>
+<ul>
+<li><a href="#5-1-场景">5.1. 场景</a></li>
+<li><a href="#5-2-示例">5.2. 示例</a></li>
+</ul></li>
+<li><a href="#6-子路由">6. 子路由</a></li>
+<li><a href="#7-辅助路由">7. 辅助路由</a>
+<ul>
+<li><a href="#辅助路由介绍">辅助路由介绍</a></li>
+<li><a href="#辅助路由的编写">辅助路由的编写</a></li>
+<li><a href="#在辅助路由跳转时控制主路由显示">在辅助路由跳转时控制主路由显示</a></li>
+</ul></li>
+<li><a href="#8-路由守卫">8. 路由守卫</a>
+<ul>
+<li><a href="#路由守卫简介">路由守卫简介</a></li>
+<li><a href="#实现路由守卫功能的要点">实现路由守卫功能的要点</a></li>
+<li><a href="#canactivate"><code>CanActivate</code></a></li>
+<li><a href="#candeactivate"><code>CanDeactivate</code></a></li>
+<li><a href="#resolve"><code>Resolve</code></a></li>
+</ul></li>
+<li><a href="#9-简化版路由绑定方式">9. 简化版路由绑定方式</a></li>
+<li><a href="#10-参考资料">10. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-简介">1. 简介</h1>
+
+<p>　　路由系统是Angular应用中不可或缺的组成，组件之间的导航关系都需要使用路由来进行规范，接下来先看一下Angular中的几个不同的路由对象，以及其作用：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">路由对象</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>Routes</code></td>
+<td align="left">路由数据配置对象，保存URL与组件之间的映射关系</td>
+</tr>
+
+<tr>
+<td align="left"><code>RouterOutlet</code></td>
+<td align="left">一个做占位符作用的指令，表示路由组件的内容在此展示</td>
+</tr>
+
+<tr>
+<td align="left"><code>Router</code></td>
+<td align="left">在应用运行时期可以操作路由的对象，例如跳转到其他的组件操作</td>
+</tr>
+
+<tr>
+<td align="left"><code>RouterLink</code></td>
+<td align="left">在HTML标签中声明导航URL的指令</td>
+</tr>
+
+<tr>
+<td align="left"><code>ActivatedRoute</code></td>
+<td align="left">保存着当前激活路由数据的对象，可以用它获取路由地址、路由参数等</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="2-生成带路由的项目">2. 生成带路由的项目</h1>
+
+<p>下面我们使用例子讲解各个路由的使用，重新生成一个带路由模板的基架项目：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng new my-project-route --routing   <span style="color:#6272a4"># routing参数可以生成一个带路由模块的项目</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>使用带<code>routing</code>参数生成的项目会在<code>src/app</code>文件夹下面多出来一个文件<code>app-routing.module.ts</code>，应用中用到的路由都在这里进行配置。</p>
+
+<p>也可以使用命令在已有项目中生成一个路由模块(同样生成名称为<code>app-routing</code>的路由模块)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng generate module app-routing --flat --module<span style="color:#ff79c6">=</span>app</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成的模块文件中有下面代码，需要自行增加导入代码(<a href="https://www.angular.cn/tutorial/toh-pt5#add-routes">查看这里</a>)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { NgModule }             from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+<span style="color:#ff79c6">import</span> { RouterModule, Routes } from <span style="color:#f1fa8c">&#39;@angular/router&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  exports<span style="color:#ff79c6">:</span> [ RouterModule ]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppRoutingModule {}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-routes-routeroutlet-routerlink">3. Routes/RouterOutlet/RouterLink</h1>
+
+<p>为了演示首先生成两个组件：home/article:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g component home
+ng g component article</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-1-配置路由参数">3.1. 配置路由参数</h2>
+
+<p>然后我们配置一个路由，在根路由(根链接)下展示<code>home</code>组件，在<code>home</code>组件中可以跳转到<code>article</code>组件：
+打开<code>app-routing.module.ts</code>，填入下面内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { ArticleComponent } from <span style="color:#f1fa8c">&#39;./article/article.component&#39;</span>;
+<span style="color:#ff79c6">import</span> { HomeComponent } from <span style="color:#f1fa8c">&#39;./home/home.component&#39;</span>;
+<span style="color:#ff79c6">import</span> { NgModule } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+<span style="color:#ff79c6">import</span> { Routes, RouterModule } from <span style="color:#f1fa8c">&#39;@angular/router&#39;</span>;
+
+<span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, component: <span style="color:#8be9fd">HomeComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>}
+];
+
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  imports<span style="color:#ff79c6">:</span> [RouterModule.forRoot(routes)],
+  exports<span style="color:#ff79c6">:</span> [RouterModule]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppRoutingModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>路由是作为Angular模块的形式存在的，所以这里导入了<code>RouterModule</code>模块，然后在模块装饰器中import了<code>RouterModule</code>并且初始化了路由的配置<code>routes</code>。</li>
+<li><code>Routes</code>需要一个数组参数，其中是多个对象：
+
+<ul>
+<li><code>path</code>：表示该路由的访问路径，注意前面不需要加&rdquo;<code>/</code>&ldquo;。</li>
+<li><code>component</code>：表示该链接映射的组件，当路由到当前链接时，就会渲染该组件的内容。</li>
+</ul></li>
+</ul>
+
+<h2 id="3-2-绑定路由地址">3.2. 绑定路由地址</h2>
+
+<p>首先将<code>home</code>组件绑定到根组件中：
+<code>app.component.html</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;这是根组件中显示的标题&lt;/<span style="color:#ff79c6">h1</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/&#39;]&#34; &gt;主页&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/<span style="color:#50fa7b">article</span>&#39;]&#34;&gt;文章&lt;/<span style="color:#ff79c6">a</span>&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>[routerLink]</code>：这个中括号<code>[]</code>表示属性绑定，将一个数组绑定给<code>RouterLink</code>这个指令，最终会生成一个路由链接。绑定路由链接的方式还有一种简化的，我们在最后会说一下，因为<code>[routerLink]</code>这种属性绑定的方式更加灵活，自定义的能力更强，我们以这种方式作为例子，具体使用中可以根据需要选择。</li>
+<li>这里绑定路径的时候需要注意的是在路径前面需要加上“<code>/</code>”，否则就会找不到页面。</li>
+<li><code>&lt;router-outlet</code>：该标签的作用是组件内容占位符，也就是当前路由的组件内容显示在这个位置。</li>
+</ul>
+
+<p>然后分别修改<code>home</code>和<code>article</code>模板中的内容，以作区分。<code>ng serve</code>浏览一下看看效果：<br />
+<img src="/image/Snipaste_2018-10-13_21-44-02.png" alt="主页" />
+<img src="/image/Snipaste_2018-10-13_21-44-40.png" alt="文章页" /></p>
+
+<h2 id="3-3-路由通配符">3.3. 路由通配符</h2>
+
+<p>路由通配符是配置一个可以被任何<code>path</code>命中的路由参数，作用是当用户输入了一个在路由参数中未配置的<code>path</code>时，可以跳到一个指定的404页面，可以有更好的用户体验。
+为此我们生成一个专门的404组件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g component notfound</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后我们在<code>app-routing-module.ts</code>文件中配置通配符：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  ...
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;**&#39;</span>, component: <span style="color:#8be9fd">NotfoundComponent</span>}
+];
+...</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在此我们新增加了一个<code>path</code>为<code>**</code>的路由参数，<code>**</code>表示可以匹配所有的路径。</li>
+<li>因为Angular的路由是从数组的0元素开始往后匹配的，所以<strong>通配符配置必须放在最后一个</strong>。</li>
+</ul>
+
+<p>我们在notfound组件的模板加一个文字，看看效果：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;
+  您访问的页面不存在，请返回&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/&#39;]&#34; &gt;首页&lt;/<span style="color:#ff79c6">a</span>&gt;
+&lt;/<span style="color:#ff79c6">h1</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/Snipaste_2018-10-13_22-10-17.png" alt="not found" /></p>
+
+<h1 id="4-router">4. Router</h1>
+
+<h2 id="4-1-按钮点击跳转">4.1. 按钮点击跳转</h2>
+
+<p>有些情况下需要在一个按钮点击的时候进行跳转，这时候就需要用到的<code>Router</code>的功能了。</p>
+
+<p>我们将“文章”跳转链接改成按钮形式：
+<code>app.component.html</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;这是根组件中显示的标题&lt;/<span style="color:#ff79c6">h1</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/&#39;]&#34; &gt;主页&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;文章&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">goToArticle</span>()&#34;&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>在组件<code>app.component.ts</code>中编写点击事件:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppComponent {
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 依赖注入Router对象
+</span><span style="color:#6272a4">   * @param router Router对象
+</span><span style="color:#6272a4">   */</span>
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> router: <span style="color:#8be9fd">Router</span>) {}
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 跳转到文章页面
+</span><span style="color:#6272a4">   */</span>
+  goToArticle() {
+    <span style="color:#ff79c6">this</span>.router.navigate([<span style="color:#f1fa8c">&#39;/article&#39;</span>]);
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>navigate</code>：<code>Router</code>对象的<code>navigate</code>函数可以导航到指定path的路由。</li>
+</ul>
+
+<p>在浏览器中查看，可以实现同样的效果。</p>
+
+<h2 id="4-2-路由传递参数">4.2. 路由传递参数</h2>
+
+<p>在组件中获取路由传递的参数，就需要使用<code>ActivatedRoute</code>对象。</p>
+
+<h3 id="4-2-1-在查询字符串中传递参数">4.2.1. 在查询字符串中传递参数</h3>
+
+<p>改写<code>app.component.html</code>的代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;这是根组件中显示的标题&lt;/<span style="color:#ff79c6">h1</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/&#39;]&#34; &gt;主页&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/<span style="color:#50fa7b">article</span>&#39;]&#34; [<span style="color:#50fa7b">queryParams</span>]=&#34;{ <span style="color:#50fa7b">id:</span> <span style="color:#50fa7b">1</span> }&#34;&gt;文章&lt;/<span style="color:#ff79c6">a</span>&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>queryParams</code>：该属性绑定一个对象，用来在链接的查询字符串中增加数据。</li>
+</ul>
+
+<p>接下来在<code>article.component.ts</code>组件中接收一下该参数：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> ArticleComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 依赖注入ActivatedRoute对象，用来获取路由信息
+</span><span style="color:#6272a4">   * @param routerInfo 当前激活路由对象
+</span><span style="color:#6272a4">   */</span>
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> routerInfo: <span style="color:#8be9fd">ActivatedRoute</span>) { }
+
+  articleId: <span style="color:#8be9fd">number</span>;
+  ngOnInit() {
+    <span style="color:#ff79c6">this</span>.articleId <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.routerInfo.snapshot.queryParams[<span style="color:#f1fa8c">&#39;id&#39;</span>];
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>在文章页面<code>article.component.html</code>中展示一下接收到的参数：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">p</span>&gt;
+  正在显示ID为：{{articleId}}的文章
+&lt;/<span style="color:#ff79c6">p</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>在浏览器中查看效果：<br />
+<img src="/image/Snipaste_2018-10-13_22-47-14.png" alt="参数" /></p>
+
+<h3 id="4-2-2-在路由路径中传递参数">4.2.2. 在路由路径中传递参数</h3>
+
+<p>修改<code>app.component.html</code>模板中的内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;这是根组件中显示的标题&lt;/<span style="color:#ff79c6">h1</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/&#39;]&#34; &gt;主页&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/<span style="color:#50fa7b">article</span>&#39;,<span style="color:#50fa7b">1</span>]&#34;&gt;文章&lt;/<span style="color:#ff79c6">a</span>&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这里我们将参数值“1”，传入了<code>RouterLink</code>数组的第二个位置，第二个位置的参数就是路径参数。</li>
+</ul>
+
+<p>修改<code>app.routing.module.ts</code>路由配置文件的配置：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, component: <span style="color:#8be9fd">HomeComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article/:id&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;**&#39;</span>, component: <span style="color:#8be9fd">NotfoundComponent</span>}
+];
+...</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这里我们在原先<code>path</code>的基础上增加了一个参数语法“<code>:id</code>”，就会形成路径参数的匹配。</li>
+</ul>
+
+<p>在<code>article.component.ts</code>组件中接收该路径参数(只需将<code>queryParams</code>改成<code>params</code>)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> ArticleComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 依赖注入ActivatedRoute对象，用来获取路由信息
+</span><span style="color:#6272a4">   * @param routerInfo 当前激活路由对象
+</span><span style="color:#6272a4">   */</span>
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> routerInfo: <span style="color:#8be9fd">ActivatedRoute</span>) { }
+
+  articleId: <span style="color:#8be9fd">number</span>;
+  ngOnInit() {
+    <span style="color:#ff79c6">this</span>.articleId <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.routerInfo.snapshot.params[<span style="color:#f1fa8c">&#39;id&#39;</span>];
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>在浏览器中浏览可以看到效果：<br />
+<img src="/image/Snipaste_2018-10-13_22-56-19.png" alt="参数" /></p>
+
+<h2 id="4-3-上面组件中获取参数的问题">4.3. 上面组件中获取参数的问题</h2>
+
+<p>我们在<code>app.component.html</code>加一个a链接，同样跳转到文章页面，这个链接的参数是2：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">&lt;</span>h1<span style="color:#ff79c6">&gt;</span>这是根组件中显示的标题<span style="color:#ff79c6">&lt;</span>/h1&gt;
+<span style="color:#ff79c6">&lt;</span>a [routerLink]<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;[&#39;/&#39;]&#34;</span> <span style="color:#ff79c6">&gt;</span>主页<span style="color:#ff79c6">&lt;</span>/a&gt; &lt;br&gt;
+<span style="color:#ff79c6">&lt;</span>a [routerLink]<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;[&#39;/article&#39;,1]&#34;</span><span style="color:#ff79c6">&gt;</span>文章<span style="color:#ff79c6">&lt;</span>/a&gt;
+<span style="color:#ff79c6">&lt;</span>a [routerLink]<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;[&#39;/article&#39;,2]&#34;</span><span style="color:#ff79c6">&gt;</span>文章<span style="color:#bd93f9">2</span><span style="color:#ff79c6">&lt;</span>/a&gt;
+<span style="color:#ff79c6">&lt;</span>router<span style="color:#ff79c6">-</span>outlet<span style="color:#ff79c6">&gt;&lt;</span>/router-outlet&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>其他的都不需要修改，我们打开浏览器看看这个没有提到的问题在哪：<br />
+<img src="/image/Snipaste_2018-10-13_23-07-03.png" alt="问题" />
+从上面的图中可以看到，不管路径参数是1还是2，我们在文章页面中显示的始终是1，也就是我们在组件中获取<code>params['id']</code>的值始终是1，这是怎么回事呢？怎么解决这个问题？</p>
+
+<p>首先我们看看在<code>article.component.ts</code>组件中获取参数值的那行代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">this</span>.articleId <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.routerInfo.snapshot.params[<span style="color:#f1fa8c">&#39;id&#39;</span>];</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　上面图片中出现的问题就是<code>snapshot</code>这个属性造成的，这个<code>snapshot</code>获取的参数叫做快照参数(从它的名字就可大概猜出)，也就是在组件<code>OnInit</code>方法被第一次调用的时候，它会保存一个参数值，以后无论参数如何修改它都不会得知有新的参数值，始终是这一个，这就是我们看到上面图片中展示的问题。同样的当你第一次点击的链接是“文章2”那么id的值就始终是2了。</p>
+
+<p>　　要解决这个问题，我们需要换一种获取参数的方式，叫做订阅参数，顾名思义就是订阅参数的变化，每次进来获取的都是最新的参数值。</p>
+
+<p>修改<code>article.component.ts</code>组件的接收方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+ngOnInit() {
+    <span style="color:#ff79c6">this</span>.routerInfo.params.subscribe((params: <span style="color:#8be9fd">Params</span>) <span style="color:#ff79c6">=&gt;</span> {
+      <span style="color:#ff79c6">this</span>.articleId <span style="color:#ff79c6">=</span> params[<span style="color:#f1fa8c">&#39;id&#39;</span>];
+    });
+}
+...</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这里我们将<code>snapshot</code>换成了<code>params.subscribe()</code>。</li>
+<li><code>subscribe()</code>函数接收一个匿名函数，会传入一个存在于<code>@angular/router</code>模块中的<code>Params</code>对象，它里面存储着最新的路由参数。</li>
+</ul>
+
+<p>我们在看浏览器效果是不是没有问题了：<br />
+<img src="/image/Snipaste_2018-10-13_23-23-08.png" alt="问题" /></p>
+
+<h1 id="5-重定向路由">5. 重定向路由</h1>
+
+<h2 id="5-1-场景">5.1. 场景</h2>
+
+<p>有些情况下，我们的主页是一个单独的组件页面，也就是通过路径<code>/home</code>来访问的，这时想要根链接默认也打开<code>/home</code>路径的组件，那么就可以用到的重定向路由来解决了。</p>
+
+<h2 id="5-2-示例">5.2. 示例</h2>
+
+<p>我们修改一下<code>app.routing.module.ts</code>路由配置，增加一个单独的<code>home</code>路由，并且将根链接重定向到<code>home</code>路由：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, redirectTo<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;/home&#39;</span>, pathMatch<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;full&#39;</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;home&#39;</span>, component: <span style="color:#8be9fd">HomeComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article/:id&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;**&#39;</span>, component: <span style="color:#8be9fd">NotfoundComponent</span>}
+];
+...</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>redirectTo</code>：该参数指定重定向到那个路径，注意这里的是链接路径，需要在前面加上<code>/</code>符号。</li>
+<li><code>pathMatch</code>：路径匹配方式：
+
+<ul>
+<li><code>full</code>是完全匹配，例如当重定向路径设置为<code>/home</code>，那么<code>/home/123</code>就不会匹配到。</li>
+<li><code>prefix</code>是前缀匹配。例如当重定向路径设置为<code>/home</code>，那么包含<code>/home</code>这个前缀的路径<code>/home/123</code>也会被匹配到。</li>
+</ul></li>
+</ul>
+
+<h1 id="6-子路由">6. 子路由</h1>
+
+<p>组件之间是可以互相嵌套的，这就有一个问题，怎么路由到组件中嵌套的组件，这就需要用到子路由来实现。</p>
+
+<p>创建两个新的组件嵌套在<code>home</code>组件中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g component category
+ng g component tag</code></pre></td></tr></table>
+</div>
+</div>
+<p>首先我们把这两个组件作为子路由的组件，绑定到<code>home</code>组件下面，编辑<code>app-routing-module.ts</code>文件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  ...
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;home&#39;</span>, component: <span style="color:#8be9fd">HomeComponent</span>, children<span style="color:#ff79c6">:</span> [
+    {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, component: <span style="color:#8be9fd">CategoryComponent</span>},
+    {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;tags&#39;</span>, component: <span style="color:#8be9fd">TagComponent</span>}
+  ]},
+  ...
+];</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>children</code>：该属性是声明子路由的属性，它的值是一个数组，可以包含多个路由参数对象，子路由的参数对象跟普通的路由参数对象无二，只是包含在<code>children</code>属性下。</li>
+</ul>
+
+<p>然后编辑<code>home.component.html</code>模板文件，将子路由的链接绑定到页面，并且添加一个占位符<code>&lt;router-outlet&gt;</code>，用来显示子路由的内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;sty&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span>&gt;
+    这里是主页
+  &lt;/<span style="color:#ff79c6">p</span>&gt;
+  &lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;./&#39;]&#34;&gt;查看文章分类&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;./<span style="color:#50fa7b">tags</span>&#39;]&#34;&gt;查看文章标签&lt;/<span style="color:#ff79c6">a</span>&gt;
+  &lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>特别注意：在绑定子路由的路径的时候，<strong>必须在最前面加一个<code>.</code>符号</strong>，这表明当前的路由是一个子路由，就会去子路由的列表中查找，否则机会在根路由中查找。</li>
+</ul>
+
+<p>来看一下在浏览器中的效果(为了区分组件的嵌套关系，我加了一点背景颜色):<br />
+<img src="/image/Snipaste_2018-10-14_00-35-34.png" alt="效果" /></p>
+
+<p>因为我在子路由中设置的路径为空的时候显示<code>category</code>组件，所以可以看到在<code>/home</code>路径下默认展示的子组件是<code>category</code>，当点击“查看文章标签”按钮后，浏览器链接就会在<code>/home</code>路径后追加子路由的路径<code>/tags</code>，并且页面也渲染出了<code>tag</code>组件的内容。</p>
+
+<h1 id="7-辅助路由">7. 辅助路由</h1>
+
+<h2 id="辅助路由介绍">辅助路由介绍</h2>
+
+<p>　　到目前为止，我们在页面上每次只能显示一个路由组件，那如果有些场景下，在一个页面上需要显示两个路由组件，这个需要怎么控制呢？我们可以看下面的代码，思考一下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;./&#39;]&#34;&gt;查看文章分类&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;./<span style="color:#50fa7b">tags</span>&#39;]&#34;&gt;查看文章标签&lt;/<span style="color:#ff79c6">a</span>&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;
+&lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>假设第一个<code>router-outlet</code>占位符是展示文章其他内容(例如最近文章的)，而下面一个占位符才是我们想要展示文章分类或者文章标签的，怎么精准控制组件显示在哪里，就需要用到辅助路由的功能。</p>
+
+<h2 id="辅助路由的编写">辅助路由的编写</h2>
+
+<p>为了演示，我们生成两个新的组件<code>auxone</code>和<code>auxtwo</code>。接下来首先我们修改一下<code>app.routing-module.ts</code>文件中的路由配置：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, redirectTo<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;/home&#39;</span>, pathMatch<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;full&#39;</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;home&#39;</span>, component: <span style="color:#8be9fd">HomeComponent</span>, children<span style="color:#ff79c6">:</span> [
+    {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>, component: <span style="color:#8be9fd">CategoryComponent</span>},
+    {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;tags&#39;</span>, component: <span style="color:#8be9fd">TagComponent</span>}
+  ]},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;auxone&#39;</span>, component: <span style="color:#8be9fd">AuxoneComponent</span>, outlet<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;tagAndCategory&#39;</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;auxtwo&#39;</span>, component: <span style="color:#8be9fd">AuxtwoComponent</span>, outlet<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;tagAndCategory&#39;</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article/:id&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>},
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;**&#39;</span>, component: <span style="color:#8be9fd">NotfoundComponent</span>}
+];
+...</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以看到在原先的基础上增加了两个新的组件的路由参数，而这两个组件路由参数多了一个<code>outlet</code>属性，该属性标注了一个“名称”，也就是当前的组件显示在哪个名称的插槽<code>router-outlet</code>上。</li>
+</ul>
+
+<p>接下来我们在<code>app.component.html</code>主组件的模板中加入跳转的链接以及插槽：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span>&gt;这是根组件中显示的标题&lt;/<span style="color:#ff79c6">h1</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/<span style="color:#50fa7b">home</span>&#39;]&#34; &gt;主页&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[&#39;/<span style="color:#50fa7b">article</span>&#39;,<span style="color:#50fa7b">1</span>]&#34; &gt;文章&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[{<span style="color:#50fa7b">outlets:</span>{<span style="color:#50fa7b">tagAndCategory:</span>[&#39;<span style="color:#50fa7b">auxone</span>&#39;]}}]&#34;&gt;auxone&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[{<span style="color:#50fa7b">outlets:</span>{<span style="color:#50fa7b">tagAndCategory:</span>[&#39;<span style="color:#50fa7b">auxtwo</span>&#39;]}}]&#34;&gt;auxtwo&lt;/<span style="color:#ff79c6">a</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+
+&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;background-color:blue;height:300px;padding: 30px&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">router-outlet</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;background-color:red;height:300px;padding: 30px&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">router-outlet</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;tagAndCategory&#34;</span>&gt;&lt;/<span style="color:#ff79c6">router-outlet</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在原先的基础上增加了两个a标签，这两个a标签的<code>routerLink</code>参数只有一个对象，而这个对象的属性<code>outlets</code>的值也是个对象，里面保存了命名的“路由名称”对应哪个“组件的路径”。</li>
+<li>在最后我们又声明了一个插槽，不过这个插槽的有一个name属性，它的值就是前面都要用到的路由的“命名”。</li>
+<li>为了区分两个插槽的位置，我增加了一个背景色。</li>
+</ul>
+
+<p>然后浏览一下看看效果：</p>
+
+<ul>
+<li>首先打开home主页,可以看到和之前的没什么区别(多了两个链接按钮和样式)：
+<img src="/image/Snipaste_2018-10-14_19-16-37.png" alt="主页" /></li>
+<li>接着打开文章页，除了加了背景颜色没有其他的区别：
+<img src="/image/Snipaste_2018-10-14_19-18-12.png" alt="文章页" /></li>
+<li>这时点击的内容始终都在第一个插槽的位置显示，我们现在点击<code>auxone</code>按钮和<code>auxtwo</code>按钮看看：
+<img src="/image/Snipaste_2018-10-14_19-21-23.png" alt="aux" />
+
+<ul>
+<li>可以看到点击这两个按钮的时候，不会影响第一个插槽位置显示的内容，只会改变第二个插槽位置的内容。</li>
+<li>可以看到浏览器的链接很奇怪，这正是用来标注辅助路由的链接，你可以复制这个链接在新页面打开，路由页依然会找到正确的位置。</li>
+</ul></li>
+<li>这时我们在点击“主页”按钮：
+<img src="/image/Snipaste_2018-10-14_19-25-28.png" alt="主页" />
+
+<ul>
+<li>可以看到链接部分的变化，只是括号前面的路径发生了变化，括号内表示辅助路由的标记并没有跟着变，再看页面的内容也是只改变了第一个插槽位置的内容。</li>
+</ul></li>
+</ul>
+
+<h2 id="在辅助路由跳转时控制主路由显示">在辅助路由跳转时控制主路由显示</h2>
+
+<p>辅助路由还有一个功能，就是可以在辅助路由跳转的同时，控制主路由显示哪一个路径，只需要在<code>routerLink</code>中多增加一个<code>primary</code>属性参数：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">a</span> [<span style="color:#50fa7b">routerLink</span>]=&#34;[{<span style="color:#50fa7b">outlets:</span>{<span style="color:#50fa7b">primary:</span>&#39;<span style="color:#50fa7b">home</span>&#39;,<span style="color:#50fa7b">tagAndCategory:</span>[&#39;<span style="color:#50fa7b">auxone</span>&#39;]}}]&#34;&gt;auxone&lt;/<span style="color:#ff79c6">a</span>&gt; &lt;<span style="color:#ff79c6">br</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面的代码作用是在点击&rdquo;auxone&rdquo;按钮时，让主路由跳转到“home”路径映射的组件内容。</li>
+</ul>
+
+<p>在浏览器中测试一下，我们先进入到“文章”页面，然后点击“auxone”按钮，可以看到除了在第二个插槽的位置显示了辅助路由内容，还将第一个插槽位置的内容切换为了“主页”的内容。</p>
+
+<h1 id="8-路由守卫">8. 路由守卫</h1>
+
+<h2 id="路由守卫简介">路由守卫简介</h2>
+
+<p>路由守卫其实是Angular路由系统释放的hook(钩子)，用来在路由导航的各个时期插入我们自定义的操作，具体的应用例如在用户想要进入某个需要权限才能访问的页面时，可以做一些自定义的限制。</p>
+
+<p>路由系统的三个hook(接口)：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">HOOK</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>CanActivate</code></td>
+<td align="left">进入某个路由之前触发的hook</td>
+</tr>
+
+<tr>
+<td align="left"><code>CanActivateChild</code></td>
+<td align="left">进入某个子路由之前触发的hook</td>
+</tr>
+
+<tr>
+<td align="left"><code>CanDeactivate</code></td>
+<td align="left">从某个路由离开前触发的hook</td>
+</tr>
+
+<tr>
+<td align="left"><code>Resolve</code></td>
+<td align="left">在路由被激活之前获取路由数据</td>
+</tr>
+
+<tr>
+<td align="left"><code>CanLoad</code></td>
+<td align="left"><a href="https://www.angular.cn/api/router/CanLoad">异步导航到某特性模块时触发</a></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="实现路由守卫功能的要点">实现路由守卫功能的要点</h2>
+
+<p>　　要实现一个自定义的路由守卫，需要自行创建一个<code>ts</code>文件，然后继承上面的接口，实现相应的方法。然后将该自定义的<code>class</code>交给路由模块的提供器，并且标注到对应的路由参数中。<br />
+　　路由守卫实现方法除了<code>Resolve</code>之外，都需要返回一个<code>bool</code>值，返回true表示路由可以继续导航，返回false就会中断当前的导航，用户会留在原地。</p>
+
+<h2 id="canactivate"><code>CanActivate</code></h2>
+
+<p>我们使用cli命令生成一个普通的ts类编写进入“文章页面”的验证，命名为<code>LoginGuard</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g class routerGuards/loginGuard</code></pre></td></tr></table>
+</div>
+</div>
+<p>修改文件<code>login-guard.ts</code>文件的内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { CanActivate, ActivatedRouteSnapshot, Router } from <span style="color:#f1fa8c">&#39;@angular/router&#39;</span>;
+<span style="color:#ff79c6">import</span> { Injectable } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Injectable</span>()
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> LoginGuard <span style="color:#ff79c6">implements</span> CanActivate {
+    <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> router: <span style="color:#8be9fd">Router</span>) { }
+
+    canActivate(route: <span style="color:#8be9fd">ActivatedRouteSnapshot</span>) {
+        <span style="color:#ff79c6">if</span> (route.params[<span style="color:#f1fa8c">&#39;id&#39;</span>] <span style="color:#ff79c6">===</span> <span style="color:#f1fa8c">&#39;1&#39;</span>) {
+            alert(<span style="color:#f1fa8c">`Id为</span><span style="color:#f1fa8c">${</span>route.params[<span style="color:#f1fa8c">&#39;id&#39;</span>]<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">的文章您无权访问`</span>);
+            <span style="color:#ff79c6">this</span>.router.navigate([<span style="color:#f1fa8c">&#39;/home&#39;</span>]);
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>;
+        } <span style="color:#ff79c6">else</span> {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">true</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>canActivate</code>方法有两个参数，分别是<code>ActivatedRouteSnapshot</code>和<code>RouterStateSnapshot</code>，这两个名字可以看出来和之前的快照有关系，也就是在路由导航时获取路由参数和状态，因为这里我只用到了一个<code>ActivatedRouteSnapshot</code>,所以只声明了它一个，在tslint检测到没有用到的变量时会报错，所以另一个就不能写了。</li>
+<li>在构造函数中注入了<code>Router</code>对象，可以在验证失败的时候导航到指定的页面。而为了在自定义的类中依赖注入对象，应该在类上声明<code>@Injectable()</code>装饰器。
+
+<ul>
+<li>组件模块为什么不需要声明<code>@Injectable()</code>装饰器就能注入呢？因为组件、模块等装饰器其实就是继承的<code>@Injectable()</code>装饰器，所以他们自身就有提供依赖注入的能力。</li>
+</ul></li>
+<li>在<code>canActivate</code>函数内部，在验证失败的时候，先导向其他的路由，然后返回false，这个顺序不能乱。</li>
+</ul>
+
+<p>现在打开路由配置<code>app.routing.module.ts</code>，将路由守卫加到<code>article</code>路由的配置中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  ...
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article/:id&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>, canActivate<span style="color:#ff79c6">:</span> [LoginGuard]},
+  ...
+];
+
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  ...
+  providers<span style="color:#ff79c6">:</span> [LoginGuard]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppRoutingModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>Routes</code>参数中，给文章路由新增加了一个<code>canAactivate</code>属性，它的值是一个数组，数组中是自定义的路由守卫。 它的值是数组就说明可以有多个路由守卫，但是注意的是如果是多个，那么需要所有的都返回true那么路由才会导航进去。</li>
+<li>然后在模块装饰器的提供器<code>providers</code>中注入路由守卫。</li>
+</ul>
+
+<p>在浏览器浏览，我们直接在浏览器中中输入<code>http://localhost:4200/article/1</code>，可以看到被阻止进入页面：<br />
+<img src="/image/Snipaste_2018-10-14_20-35-17.png" alt="阻止" /></p>
+
+<h2 id="candeactivate"><code>CanDeactivate</code></h2>
+
+<p>在离开当前的页面(路由)时，可能需要给用户做出一些提示，例如提示表单未提交之类的操作，那么<code>CanDeactive</code>hook就可以实现该功能。</p>
+
+<p>同样的需要创建一个自定义的class来编写路由守卫：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g class routerGuards/unSaveGuard</code></pre></td></tr></table>
+</div>
+</div>
+<p>打开<code>un-save-guard.ts</code>文件，编写内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { HomeComponent } from <span style="color:#f1fa8c">&#39;./../home/home.component&#39;</span>;
+<span style="color:#ff79c6">import</span> { CanDeactivate } from <span style="color:#f1fa8c">&#39;@angular/router&#39;</span>;
+
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> UnSaveGuard <span style="color:#ff79c6">implements</span> CanDeactivate<span style="color:#ff79c6">&lt;</span>HomeComponent<span style="color:#ff79c6">&gt;</span> {
+    canDeactivate(home: <span style="color:#8be9fd">HomeComponent</span>) {
+        <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>home.canQuit) {
+            <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">window</span>.confirm(<span style="color:#f1fa8c">&#39;确定要离开吗？&#39;</span>);
+        } <span style="color:#ff79c6">else</span> {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">true</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>CanDeactivate</code>需要一个泛型参数，通常是需要保护的路由组件，通过组件内部的一些属性值，或者方法返回判断是否应该提示用户。在这里我演示打开页面的10秒内离开“主页”会提示用户：
+<code>home.component.ts</code>:
+```typescript
+export class HomeComponent implements OnInit {
+constructor() { }</li>
+</ul>
+
+<p>canQuit: boolean;
+  ngOnInit() {
+    setTimeout(() =&gt; {
+      this.canQuit = true;
+    }, 10000);
+  }
+}</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">然后同样需要在`app.routing.module.ts`文件中配置：
+
+```typescript
+const routes: Routes = [
+  ...
+  {path: &#39;home&#39;, component: HomeComponent, children: [
+    {path: &#39;&#39;, component: CategoryComponent},
+    {path: &#39;tags&#39;, component: TagComponent}
+  ], canDeactivate: [UnSaveGuard]},
+  ...
+];
+
+@NgModule({
+  ...
+  providers: [LoginGuard, UnSaveGuard]
+})
+export class AppRoutingModule { }</pre></td></tr></table>
+</div>
+</div>
+<h2 id="resolve"><code>Resolve</code></h2>
+
+<p><code>Resolve</code>可以帮助指定的路由组件在初始化组件之前获得所需的后端数据，可以避免在路由到页面的时候再去获取数据，造成DOM中数据空白的问题，影响用户体验。</p>
+
+<p>我们生成一个获取文章内容的<code>Resolve</code>：<code>ng g class routerGuards/articleResolve</code></p>
+
+<p>打开<code>article-resolve.ts</code>文件，编辑Resolve守卫：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Resolve, ActivatedRouteSnapshot, Router } from <span style="color:#f1fa8c">&#39;@angular/router&#39;</span>;
+<span style="color:#ff79c6">import</span> { Article } from <span style="color:#f1fa8c">&#39;../article/article.component&#39;</span>;
+<span style="color:#ff79c6">import</span> { Injectable } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Injectable</span>()
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> ArticleResolve <span style="color:#ff79c6">implements</span> Resolve<span style="color:#ff79c6">&lt;</span>Article<span style="color:#ff79c6">&gt;</span> {
+    <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> router: <span style="color:#8be9fd">Router</span>) {}
+    resolve(route: <span style="color:#8be9fd">ActivatedRouteSnapshot</span>) {
+        <span style="color:#ff79c6">const</span> id: <span style="color:#8be9fd">number</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">parseInt</span>(route.params[<span style="color:#f1fa8c">&#39;id&#39;</span>], <span style="color:#ff79c6">null</span>);
+        <span style="color:#ff79c6">if</span> (id <span style="color:#ff79c6">===</span> <span style="color:#bd93f9">1</span>) {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Article(<span style="color:#f1fa8c">&#39;文章标题&#39;</span>, <span style="color:#f1fa8c">&#39;文章内容1231231231231231231文章内容&#39;</span>, <span style="color:#ff79c6">new</span> <span style="color:#8be9fd;font-style:italic">Date</span>());
+        } <span style="color:#ff79c6">else</span> {
+            <span style="color:#ff79c6">this</span>.router.navigate([<span style="color:#f1fa8c">&#39;/home&#39;</span>]);
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">undefined</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>Resolve</code>接口需要一个泛型参数，类型是返回的数据对象，这里我是一个<code>Article</code>对象，定义在<code>article.component.ts</code>文件中：
+<code>typescript
+export class Article {
+constructor(
+public title: string,
+public content: string,
+public time: Date) {}
+}
+</code></li>
+<li><code>Resolve</code>方法返回的不是bool类型，而是<code>any</code>或者可订阅的流、Promise。</li>
+</ul>
+
+<p>然后在<code>article.component.ts</code>文件中编辑接收该对象：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> ArticleComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 依赖注入ActivatedRoute对象，用来获取路由信息
+</span><span style="color:#6272a4">   * @param routerInfo 当前激活路由对象
+</span><span style="color:#6272a4">   */</span>
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> routerInfo: <span style="color:#8be9fd">ActivatedRoute</span>) { }
+
+  article: <span style="color:#8be9fd">Article</span>;
+  ngOnInit() {
+    <span style="color:#ff79c6">this</span>.routerInfo.data.subscribe((data<span style="color:#ff79c6">:</span> {article: <span style="color:#8be9fd">Article</span>}) <span style="color:#ff79c6">=&gt;</span> {
+      console.log(data);
+      <span style="color:#ff79c6">this</span>.article <span style="color:#ff79c6">=</span> data.article;
+    });
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在<code>article</code>组件中，我们在初始化<code>ngOnInit</code>函数中接收<code>Resolve</code>传递过来的参数值。</li>
+<li>注意要订阅这个参数需要用到<code>ActivatedRoute</code>的<code>data.subscribe</code>，而不是<code>params.subscribe</code>。</li>
+<li>而且<code>subscribe</code>函数中的匿名函数的参数是一个对象，该对象的属性名必须是路由中配置的名字。</li>
+</ul>
+
+<p>接下来我们配置<code>app.routing.module.ts</code>文件中的路由参数，顺便了解上面说的“属性名”：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">const</span> routes: <span style="color:#8be9fd">Routes</span> <span style="color:#ff79c6">=</span> [
+  ...
+  {path<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;article/:id&#39;</span>, component: <span style="color:#8be9fd">ArticleComponent</span>, resolve<span style="color:#ff79c6">:</span> {article: <span style="color:#8be9fd">ArticleResolve</span>}},
+  ...
+];
+
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  ...
+  providers<span style="color:#ff79c6">:</span> [LoginGuard, UnSaveGuard, ArticleResolve]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppRoutingModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面说的参数对象的属性名，就是路由参数配置中<code>resolve</code>的值对象的属性名，这个属性名需要和<code>subscribe</code>订阅的参数对象属性名保持一致。</li>
+</ul>
+
+<p>这时再打开浏览器访问<code>http://localhost:4200/article/1</code>就可以看到数据被展示(具体展示就不演示)出来了。
+在这个简单的例子中可能感受不到<code>Resolve</code>的作用，但在实际的项目中，使用<code>Resolve</code>去后端获取数据，就能展现出来它的作用了。</p>
+
+<h1 id="9-简化版路由绑定方式">9. 简化版路由绑定方式</h1>
+
+<p>说一下简化版的路由绑定，这个免去了<code>RouterLink</code>的复杂绑定过程，可以简单的指定一个路由链接，比如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">a</span> *<span style="color:#50fa7b">ngFor</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;let hero of heroes&#34;</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;col-1-4&#34;</span>
+    <span style="color:#50fa7b">routerLink</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/detail/{{hero.id}}&#34;</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以看到直接使用属性<code>routerLink</code>赋值一个字符串+插值表达式的组合，就可以匹配简单规则的路由了。但是遇到复杂要求的路由还是推荐使用<code>[routerLink]</code>的方式。</li>
+</ul>
+
+<p>可以在官方文档的<a href="https://www.angular.cn/tutorial/toh-pt5">这个</a>例子了解简单路由绑定的编写方式。</p>
+
+<h1 id="10-参考资料">10. 参考资料</h1>
+
+<p><a href="https://www.angular.cn/guide/router">https://www.angular.cn/guide/router</a><br />
+<a href="https://www.angular.cn/tutorial/toh-pt5">https://www.angular.cn/tutorial/toh-pt5</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB3%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" id="next">
+                &larr; <span class="nav-title nav-title-next">Angular知识点汇总(3)：数据绑定</span> 
+            </a>  
+        <a rel="prev" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB1%E8%B5%B7%E6%AD%A5%E5%92%8C%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/" id="prev">
+            <span class="nav-title nav-title-prev">Angular知识点汇总(1)：起步和项目结构介绍</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

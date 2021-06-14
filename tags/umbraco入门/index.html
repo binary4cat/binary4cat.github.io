@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Umbraco入门 </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="/img/user_log.jpg" title="Haijd">
+    </figure>
+    <div class="bio">
+        
+        <h1>Haijd&#39;s Blog</h1>
+         
+        <p>The coder</p>
+         
+        <p class="bio2">Bj China</p>
+        
+    </div>
+    
+    <nav>
+        
+         
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="/" />
+                <input class="search-input" name="q" type="text" required />
+                <input class="search-submit" type="submit" name="sa" value="Search" />
+            </form>
+        </div>
+        
+        
+        
+        <h6>CATEGORIES</h6>
+        
+
+        <ul>
+               
+            <a class="categories" href='/categories/blog' title="blog">
+                blog(11)
+            </a>   
+            <a class="categories" href='/categories/csharp' title="csharp">
+                csharp(44)
+            </a>   
+            <a class="categories" href='/categories/database' title="database">
+                database(6)
+            </a>     
+            <a class="categories" href='/categories/frontend' title="frontend">
+                frontend(15)
+            </a>   
+            <a class="categories" href='/categories/golang' title="golang">
+                golang(11)
+            </a>   
+            <a class="categories" href='/categories/java' title="java">
+                java(22)
+            </a>         
+            <a class="categories" href='/categories/tool' title="tool">
+                tool(6)
+            </a>     
+            <a class="categories" href='/categories/%E6%96%87%E9%9B%86' title="文集">
+                文集(11)
+            </a>   
+            <a class="categories" href='/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F' title="设计模式">
+                设计模式(6)
+            </a>  
+        </ul>
+
+        
+        
+        <h6>TAGS</h6>
+        
+
+        <ul>
+               
+            <a class="categories" href='/tags/angular' title="angular">
+                angular(6)
+            </a>             
+            <a class="categories" href='/tags/c#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86' title="c#基础知识">
+                c#基础知识(6)
+            </a>   
+            <a class="categories" href='/tags/c#%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0' title="c#学习笔记">
+                c#学习笔记(12)
+            </a>           
+            <a class="categories" href='/tags/git%E5%AD%A6%E4%B9%A0' title="git学习">
+                git学习(3)
+            </a>   
+            <a class="categories" href='/tags/golang%E5%85%A5%E9%97%A8' title="golang入门">
+                golang入门(8)
+            </a>     
+            <a class="categories" href='/tags/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA' title="hexo博客搭建">
+                hexo博客搭建(10)
+            </a>       
+            <a class="categories" href='/tags/java%E5%9F%BA%E7%A1%80' title="java基础">
+                java基础(18)
+            </a>             
+            <a class="categories" href='/tags/spring-annotations' title="spring-annotations">
+                spring-annotations(3)
+            </a>   
+            <a class="categories" href='/tags/sql-server' title="sql-server">
+                sql-server(8)
+            </a>     
+            <a class="categories" href='/tags/umbraco%E5%85%A5%E9%97%A8' title="umbraco入门">
+                umbraco入门(11)
+            </a>                       
+            <a class="categories" href='/tags/%E5%BD%B1%E8%AF%84%E5%85%B6%E5%AE%9E%E5%B0%B1%E6%98%AF%E8%A7%82%E5%90%8E%E6%84%9F' title="影评其实就是观后感">
+                影评其实就是观后感(4)
+            </a>         
+            <a class="categories" href='/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0' title="设计模式学习笔记">
+                设计模式学习笔记(6)
+            </a>   
+            <a class="categories" href='/tags/%E8%BD%AC%E8%BD%BD' title="转载">
+                转载(9)
+            </a>   
+            <a class="categories" href='/tags/%E9%9A%8F%E7%AC%94' title="随笔">
+                随笔(8)
+            </a>  
+        </ul>
+
+        
+        
+        <h6>FOLLOW ME</h6>
+        
+        <ul>
+            
+            <li>
+                <a class="email" target="_blank" href="mailto:haijiandong@outlook.com">EMAIL</a>
+            </li>
+            
+            <li>
+                <a class="email" target="_blank" href="https://github.com/hjdo">GITHUB</a>
+            </li>
+            
+            <a class="rss" target="_blank" href="/index.xml">RSS</a>
+        </ul>
+
+        
+        <h6>OTHER</h6>
+        <ul>
+            <li>
+                <p>There are 11 articles in total.</p>
+            </li>
+        </ul>
+    </nav>
+</div>
+    <a class="menu-icon" title="Menu"><span class="lines"></span></a> <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+
+    <div class="site-wrapper">
+        <main>
+            <div id="home">
+                <ul class="posts">
+                     
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/11umbraco%E5%85%A5%E9%97%A8%E6%80%BB%E7%BB%93/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">10 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">11、Umbraco入门总结</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/10umbraconewssite%E9%A6%96%E9%A1%B5%E6%96%B0%E9%97%BB%E8%81%9A%E5%90%88/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">10 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">10、UmbracoNewsSite：首页新闻聚合</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/9umbraconewssite%E5%88%86%E9%A1%B5/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">09 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">9、UmbracoNewsSite：分页</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/8umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%97%E8%A1%A8/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">08 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">8、UmbracoNewsSite：添加新闻列表</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/7umbraconewssite%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85%E9%A1%B5%E5%92%8C%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">07 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">7、UmbracoNewsSite：新闻详情页</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/6umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%86%E7%B1%BB/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">06 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">6、UmbracoNewsSite：添加新闻分类</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/5umbraconewssite%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">05 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">5、UmbracoNewsSite：添加css和js文件</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/4umbraconewssitetemplates%E5%B1%95%E7%A4%BA%E5%86%85%E5%AE%B9%E6%95%B0%E6%8D%AE/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">04 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">4、UmbracoNewsSite：Templates展示内容数据</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/3umbraconewssite-%E4%B8%80/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">03 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">3、UmbracoNewsSite：文档类型设置</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/umbraco%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">02 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">2、Umbraco后台管理功能介绍</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li itemscope itemtype="//schema.org/BlogPosting">
+                        <a href="/csharp/umbraco%E7%AE%80%E4%BB%8B/" itemprop="url">
+                            <div class="p-wrap">
+                                <time datetime="" itemprop="datePublished">
+                                            &lt;<span class="p-attr">p</span> <span class="class-attr">class</span>=<span class="date-attr">"date"</span>><span class="baffle">01 Jan 2016</span>&lt;/<span class="p-attr">p</span>>
+                                            </time>
+                                <p itemprop="name headline">
+                                    &lt;<span class="title-attr">title</span>><span class="baffle">1、Umbraco简介和安装</span>&lt;/<span class="title-attr">title</span>></p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+
+</body>
+
+</html>

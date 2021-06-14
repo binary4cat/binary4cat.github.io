@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：泛型  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    08 June 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：泛型</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-泛型概述">1. 泛型概述</a></li>
+<li><a href="#2-java中的伪泛型">2. Java中的伪泛型</a></li>
+<li><a href="#3-泛型类">3. 泛型类</a></li>
+<li><a href="#4-泛型的方法">4. 泛型的方法</a></li>
+<li><a href="#5-泛型的接口">5. 泛型的接口</a></li>
+<li><a href="#6-泛型的通配符">6. 泛型的通配符</a></li>
+<li><a href="#7-泛型的限定">7. 泛型的限定</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-泛型概述">1. 泛型概述</h1>
+
+<ul>
+<li>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。</li>
+<li>泛型的本质就是参数化类型，也就是说把数据类型作为一个参数传递。例如：<code>private class Itr implements Iterator&lt;E&gt;{...}</code></li>
+</ul>
+
+<h1 id="2-java中的伪泛型">2. Java中的伪泛型</h1>
+
+<ul>
+<li>泛型只在编译时存在，编译之后的class文件中并不存在泛型。
+
+<ul>
+<li>例如:ArrayList<String> al=new ArrayList<String>();</li>
+<li>编译后:ArrayList al = new ArrayList();</li>
+</ul></li>
+<li>泛型只是在编译期进行的类型安全检查机制，避免程序可能发生的错误。</li>
+</ul>
+
+<h1 id="3-泛型类">3. 泛型类</h1>
+
+<ul>
+<li>定义格式：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ArrayList</span><span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;{</span> 
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>E e<span style="color:#ff79c6">){</span> <span style="color:#ff79c6">}</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> E <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> index<span style="color:#ff79c6">){</span>  <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用格式：
+
+<ul>
+<li>创建对象时，确定泛型的类型</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+<span style="color:#6272a4">//此时，变量E的值就是String类型
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ArrayList</span><span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;{</span> 
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>String e<span style="color:#ff79c6">){</span> <span style="color:#ff79c6">}</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> index<span style="color:#ff79c6">){</span>  <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+
+ArrayList<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;();</span>
+<span style="color:#6272a4">//此时，变量E的值就是Integer类型
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ArrayList</span><span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;{</span> 
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>Integer e<span style="color:#ff79c6">){</span> <span style="color:#ff79c6">}</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> Integer <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> index<span style="color:#ff79c6">){</span>  <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-泛型的方法">4. 泛型的方法</h1>
+
+<ul>
+<li>定义格式：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span> T<span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">toArray</span><span style="color:#ff79c6">(</span>T<span style="color:#ff79c6">[]</span> a<span style="color:#ff79c6">){</span>  <span style="color:#ff79c6">}</span> </code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用格式：调用方法时，确定泛型的类型</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">//变量T的值就是String类型
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> String<span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">toArray</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> a<span style="color:#ff79c6">){</span> 
+    <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span> 
+<span style="color:#6272a4">//变量T的值就是Integer类型
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> Integer<span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">toArray</span><span style="color:#ff79c6">(</span>Integer<span style="color:#ff79c6">[]</span> a<span style="color:#ff79c6">){</span> 
+    <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span> </code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-泛型的接口">5. 泛型的接口</h1>
+
+<ul>
+<li>带有泛型的接口</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">List</span> <span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;{</span>
+    <span style="color:#8be9fd;font-style:italic">abstract</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>E e<span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ArrayList</span><span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">implements</span> List<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;{</span>
+<span style="color:#ff79c6">}</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> al <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>  <span style="color:#6272a4">//指定了数据类型
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-泛型的通配符">6. 泛型的通配符</h1>
+
+<ul>
+<li>泛型的通配符就相当于给泛型穿了一个Object类型，也就是可以给泛型传递任何类型的参数。</li>
+<li>用在集合中，那么就相当于之前的没有使用泛型的集合，因为没有限制了。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> al <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+        HashSet<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> hs <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> HashSet<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;();</span>
+        al<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;123&#34;</span><span style="color:#ff79c6">);</span>
+        hs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>123<span style="color:#ff79c6">);</span>
+      
+        iterator<span style="color:#ff79c6">(</span>array<span style="color:#ff79c6">);</span>
+        iterator<span style="color:#ff79c6">(</span>set<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">(</span>Collection<span style="color:#ff79c6">&lt;?&gt;</span> coll<span style="color:#ff79c6">){</span>
+        Iterator<span style="color:#ff79c6">&lt;?&gt;</span> it <span style="color:#ff79c6">=</span> coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">()){</span>
+            System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">());</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="7-泛型的限定">7. 泛型的限定</h1>
+
+<ul>
+<li>由于通配符太灵活了，容易出错，所以引入了限制条件，这就是限定通配符</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Parent</span>  <span style="color:#ff79c6">{}</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Subclass</span> <span style="color:#8be9fd;font-style:italic">extends</span> Parent <span style="color:#ff79c6">{}</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Sub</span> <span style="color:#8be9fd;font-style:italic">extends</span> Parent<span style="color:#ff79c6">{}</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>       
+        Collection<span style="color:#ff79c6">&lt;</span>Sub<span style="color:#ff79c6">&gt;</span> subs <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>Sub<span style="color:#ff79c6">&gt;();</span>
+        subs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> Sub<span style="color:#ff79c6">());</span>
+        Collection<span style="color:#ff79c6">&lt;</span>Subclass<span style="color:#ff79c6">&gt;</span> scs <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>Subclass<span style="color:#ff79c6">&gt;();</span>
+        scs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> Subclass<span style="color:#ff79c6">());</span>
+        <span style="color:#6272a4">//可以直接调用function方法，因为function方法的限定符指定了只要继承Parent类就可以
+</span><span style="color:#6272a4"></span>        extFunc<span style="color:#ff79c6">(</span>subs<span style="color:#ff79c6">);</span>
+        extFunc<span style="color:#ff79c6">(</span>scs<span style="color:#ff79c6">);</span>
+
+        Collection<span style="color:#ff79c6">&lt;</span>Parent<span style="color:#ff79c6">&gt;</span> pars <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>Parent<span style="color:#ff79c6">&gt;();</span>
+        <span style="color:#6272a4">//必须传递父类
+</span><span style="color:#6272a4"></span>        supFunc<span style="color:#ff79c6">(</span>pars<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#6272a4">//限制父类，必须继承这个父类才能传递
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">extFunc</span><span style="color:#ff79c6">(</span>Collection<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">extends</span> Parent<span style="color:#ff79c6">&gt;){</span>
+        <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span>
+    <span style="color:#ff79c6">}</span>  
+    <span style="color:#6272a4">//限制子类，必须传递它的父类才可以
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">supFunc</span><span style="color:#ff79c6">(</span>Collection<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">super</span> Subclass<span style="color:#ff79c6">&gt;){</span>
+        <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span>
+    <span style="color:#ff79c6">}</span> 
+
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>? extends className</code> 限制的是父类, 上限限定, 可以传递它的子类对象</li>
+<li><code>? super   className</code> 限制的是子类, 下限限定, 可以传递它的父类对象</li>
+</ul>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80list%E6%8E%A5%E5%8F%A3/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：List接口</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：Iterator迭代器</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

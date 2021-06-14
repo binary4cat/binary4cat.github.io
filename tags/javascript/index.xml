@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Javascript on Haijd&#39;s Blog</title>
+    <link>/tags/javascript/</link>
+    <description>Recent content in Javascript on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Feb 2019 12:02:52 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用map、reduce和filter简化你的JavaScript代码库</title>
+      <link>/frontend/%E4%BD%BF%E7%94%A8mapreduce%E5%92%8Cfilter%E7%AE%80%E5%8C%96%E4%BD%A0%E7%9A%84javascript%E4%BB%A3%E7%A0%81%E5%BA%93/</link>
+      <pubDate>Sun, 24 Feb 2019 12:02:52 +0800</pubDate>
+      
+      <guid>/frontend/%E4%BD%BF%E7%94%A8mapreduce%E5%92%8Cfilter%E7%AE%80%E5%8C%96%E4%BD%A0%E7%9A%84javascript%E4%BB%A3%E7%A0%81%E5%BA%93/</guid>
+      <description>原文：How to simplify your codebase with map(), reduce(), and filter() in JavaScript
+ 当你查阅有关于Array.reduce的资料以及它的用法有多酷以外，在很多资料中唯一的例子就是关于“数字之和”的示例，这对于我们了解Array.reduce的定义来说不是很有用。
+此外，我也从来没有在真实的代码库中看到有使用它。但是我经常能看到一个7-8行的for循环代码解决的常规任务，使用Array.reduce只用一行就搞定了。
+如果你有map、reduce函数更好的使用方式，请在文章评论区回复。
+1. 从strings/numbers数组中去重 这是这篇文章中唯一不关于map/reduce/filter函数的使用方法，但是这个方法很有用，很难从这篇文章中排除，而且也会在后面的例子中用到。
+1 2 3 4 5  const values = [3, 1, 3, 5, 2, 4, 4, 4]; const uniqueValues = [...new Set(values)]; // uniqueValues 等于 [3, 1, 5, 2, 4]    2. 简单查找（大小写敏感） filter()函数会创建一个新的数组，在下面的例子中新的数组将包含测试数组中符合条件的子项。
+1 2 3 4 5 6 7 8 9 10  const users = [ { id: 11, name: &amp;#39;Adam&amp;#39;, age: 23, group: &amp;#39;editor&amp;#39; }, { id: 47, name: &amp;#39;John&amp;#39;, age: 28, group: &amp;#39;admin&amp;#39; }, { id: 85, name: &amp;#39;William&amp;#39;, age: 34, group: &amp;#39;editor&amp;#39; }, { id: 97, name: &amp;#39;Oliver&amp;#39;, age: 28, group: &amp;#39;admin&amp;#39; } ]; let res = users.</description>
+    </item>
+    
+    <item>
+      <title>以Ajax方式下载文件流</title>
+      <link>/frontend/%E4%BB%A5ajax%E6%96%B9%E5%BC%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E6%B5%81/</link>
+      <pubDate>Fri, 28 Sep 2018 17:37:10 +0800</pubDate>
+      
+      <guid>/frontend/%E4%BB%A5ajax%E6%96%B9%E5%BC%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E6%B5%81/</guid>
+      <description>最近在修改一个遗留老项目的导出功能，其中有一个功能因为其导出功能没有加载动画，所以在下载耗时稍长的时候，完全不知道页面在干什么，在解决的时候感觉前端框架用的多了，这种原生的问题还是有些棘手的，在此记录一下。
+ 1. 原有项目的问题 1.1. 使用拼接Form节点的方式 　由于老项目是使用的ASP.NET MVC编写的，没有使用流行的前端框架，所以在代码中该文件下载功能是用JavaScript拼接了一个form节点的方式，调用DOM的submit()方法进行提交请求下载的：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  function downloadFunc(action, params) { //创建iframe  var downloadHelper = $(&amp;#39;&amp;lt;iframe style=&amp;#34;display:none;&amp;#34; id=&amp;#34;downloadHelper&amp;#34;&amp;gt;&amp;lt;/iframe&amp;gt;&amp;#39;).appendTo(&amp;#39;body&amp;#39;)[0]; var doc = downloadHelper.contentWindow.document; if (doc) { doc.open(); doc.write(&amp;#39;&amp;#39;); doc.writeln(abp.utils.formatString(&amp;#34;&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;form id=&amp;#39;downloadForm_export_file&amp;#39; name=&amp;#39;downloadForm&amp;#39; method=&amp;#39;post&amp;#39; action=&amp;#39;{0}&amp;#39;&amp;gt;&amp;#34;, action)); for (var key in params){ doc.writeln(abp.utils.formatString(&amp;#34;&amp;lt;input type=&amp;#39;hidden&amp;#39; name=&amp;#39;{0}&amp;#39; value=&amp;#39;{1}&amp;#39;&amp;gt;&amp;#34;, key, params[key])); doc.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：修饰符  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    11 May 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：修饰符</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-权限修饰符">1. 权限修饰符</a></li>
+<li><a href="#2-常用来修饰类-方法-变量的修饰符如下">2. 常用来修饰类、方法、变量的修饰符如下：</a></li>
+<li><a href="#3-不能同时使用的修饰符">3. 不能同时使用的修饰符</a>
+<ul>
+<li><a href="#3-1-修饰类能够使用的修饰符">3.1. 修饰类能够使用的修饰符：</a></li>
+</ul></li>
+<li><a href="#4-修饰成员变量能够使用的修饰符">4. 修饰成员变量能够使用的修饰符：</a></li>
+<li><a href="#5-修饰构造方法能够使用的修饰符">5. 修饰构造方法能够使用的修饰符：</a></li>
+<li><a href="#6-修饰成员方法能够使用的修饰符">6. 修饰成员方法能够使用的修饰符：</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-权限修饰符">1. 权限修饰符</h1>
+
+<ul>
+<li>权限修饰符有哪些
+
+<ul>
+<li>在Java中提供了四种访问权限，使用不同的访问权限时，被修饰的内容会有不同的访问权限<br /></li>
+</ul></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th align="left">范围</th>
+<th align="left">public</th>
+<th align="left">protected</th>
+<th align="left">default</th>
+<th align="left">private</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">同一类中</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+</tr>
+
+<tr>
+<td align="left">同一包中(子类与无关类)</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left">不同包的子类</td>
+<td align="left">✔</td>
+<td align="left">✔</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left">不同包中的无关类</td>
+<td align="left">✔</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>要想仅能在本类中访问使用<code>private</code>修饰；</li>
+<li>要想本包中的类都可以访问不加修饰符即可；</li>
+<li>要想本包中的类与其他包中的子类可以访问使用<code>protected</code>修饰</li>
+<li>要想所有包中的所有类都可以访问使用<code>public</code>修饰。</li>
+<li>如果类用public修饰，则类名必须与文件名相同。一个文件中只能有一个<code>public</code>修饰的类。
+<br /></li>
+</ul>
+
+<h1 id="2-常用来修饰类-方法-变量的修饰符如下">2. 常用来修饰类、方法、变量的修饰符如下：</h1>
+
+<ul>
+<li><code>public</code> 权限修饰符，公共访问, 类,方法,成员变量</li>
+<li><code>protected</code> 权限修饰符，受保护访问, 方法,成员变量</li>
+<li>默认什么也不写 也是一种权限修饰符，默认访问, 类,方法,成员变量</li>
+<li><code>private</code> 权限修饰符，私有访问, 方法,成员变量</li>
+<li><code>static</code> 静态修饰符  方法,成员变量</li>
+<li><code>final</code> 最终修饰符   类,方法,成员变量,局部变量</li>
+<li><code>abstract</code> 抽象修饰符  类 ,方法</li>
+</ul>
+
+<h1 id="3-不能同时使用的修饰符">3. 不能同时使用的修饰符</h1>
+
+<ul>
+<li><code>abstract</code>与<code>private</code>不能同时使用；</li>
+<li><code>abstract</code>与<code>static</code>不能同时使用；</li>
+<li><code>abstract</code>与<code>final</code>不能同时使用。</li>
+</ul>
+
+<h2 id="3-1-修饰类能够使用的修饰符">3.1. 修饰类能够使用的修饰符：</h2>
+
+<ul>
+<li>修饰类只能使用<code>public</code>、默认的、<code>final</code>、<code>abstract</code>关键字</li>
+<li>使用最多的是<code>public</code>关键字</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span> <span style="color:#ff79c6">{}</span> <span style="color:#6272a4">//最常用的方式
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test2</span><span style="color:#ff79c6">{}</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test3</span><span style="color:#ff79c6">{}</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">abstract</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test4</span><span style="color:#ff79c6">{}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-修饰成员变量能够使用的修饰符">4. 修饰成员变量能够使用的修饰符：</h1>
+
+<ul>
+<li><code>public</code> : 公共的</li>
+<li><code>protected</code> : 受保护的</li>
+<li>: 默认的</li>
+<li><code>private</code> ：私有的</li>
+<li><code>final</code> : 最终的</li>
+<li><code>static</code> : 静态的</li>
+<li>使用最多的是<code>private</code></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span>
+<span style="color:#8be9fd;font-style:italic">protected</span> <span style="color:#8be9fd">int</span> i2 <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span>
+<span style="color:#8be9fd">int</span> i3 <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span>
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> i4 <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span> <span style="color:#6272a4">//最常用的方式
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> i5 <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">int</span> i6 <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-修饰构造方法能够使用的修饰符">5. 修饰构造方法能够使用的修饰符：</h1>
+
+<ul>
+<li><code>public</code> : 公共的</li>
+<li><code>protected</code> : 受保护的</li>
+<li>: 默认的</li>
+<li><code>private</code> ：私有的</li>
+<li>使用最多的是<code>public</code></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Test</span><span style="color:#ff79c6">(){}</span> <span style="color:#6272a4">//最常用的方式
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">protected</span> <span style="color:#50fa7b">Test</span><span style="color:#ff79c6">(){}</span>
+Test<span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#50fa7b">Test</span><span style="color:#ff79c6">(){}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-修饰成员方法能够使用的修饰符">6. 修饰成员方法能够使用的修饰符：</h1>
+
+<ul>
+<li><code>public</code> : 公共的</li>
+<li><code>protected</code> : 受保护的</li>
+<li>: 默认的</li>
+<li><code>private</code> ：私有的</li>
+<li><code>final</code> : 最终的</li>
+<li><code>static</code> : 静态的</li>
+<li><code>abstract</code> : 抽象的</li>
+<li>使用最多的是<code>public</code></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method1</span><span style="color:#ff79c6">(){}</span><span style="color:#6272a4">//最常用的方式
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">protected</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method2</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method3</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method4</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method5</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method6</span><span style="color:#ff79c6">(){}</span><span style="color:#6272a4">//最常用的方式
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">abstract</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method7</span><span style="color:#ff79c6">();//</span>最常用的方式</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80object%E7%B1%BB/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：Object类</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80final%E5%8C%BF%E5%90%8D%E7%B1%BB%E4%BB%A3%E7%A0%81%E5%9D%97/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：final&amp;匿名类&amp;代码块</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

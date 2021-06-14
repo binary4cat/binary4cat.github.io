@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>1、Umbraco简介和安装  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    01 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">1、Umbraco简介和安装</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-安装">1. 、安装</a>
+<ul>
+<li><a href="#1-1-两种安装方法">1.1. 两种安装方法：</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　Umbraco是国外一个开源的Cms(内容管理)系统，适合做新闻发布、官网等内容需要经常更改变动的网站，也可以作为论坛软件使用，比如asp.net论坛就是基于umbraco制作的。而且Umbraco是使用“所见即所得”的形式，对网站的控制更加方便简单。可谓分分钟做出一个功能齐全的网站的节奏。</p>
+
+<p>Umbraco在中国的使用范围并不广，能够找到的中文资料零零散散的，而且很多都是以前的，要知道Umbraco从7.0版本以后就开始使用MVC编写了，之前的webforms已经是过去式了。在刚开始学习使用的时候走了很多弯路，由于没有搞懂Cms系统的开发模式，浪费了很多时间，另一个是英语水平限制，阅读英文文档有很多不理解(自我批评一下，程序员应该好！好！学！英！语！)。想到可能以后应该少有机会再用Umbraco了，所以把学习到的记录下来，以后用到了还能回来看看，而且工作中有用到的朋友也可以参考一下，如果能帮到别人，这是我最大的愿望。</p>
+
+<p>　　</p>
+
+<hr />
+
+<h1 id="1-安装">1. 、安装</h1>
+
+<h2 id="1-1-两种安装方法">1.1. 两种安装方法：</h2>
+
+<p>　　1、Umbraco的安装比较简单，可以直接去<a href="http://our.umbraco.org">our.umbraco.org</a>网站进行下载完整的代码压缩文件并且解压到任意合适位置，其次还需要下载微软的一个web开发工具<a href="http://www.microsoft.com/web/webmatrix/"><strong>WebMatrix</strong></a>,安装之后可以使用这个工具打开并且编辑Umbraco了。　
+　　2、打开VS建立一个新的空web程序，然后打开<strong>程序包管理控制台</strong>，在命令行界面输入<code>Install-Package UmbracoCms</code>这个命令安装Umbraco；之后会把Umbraco以NuGet包的形式安装在当前的空web程序当中，推荐这种安装方法，因为如果有升级之类的，使用NuGet比直接下载方便管理一些。
+　　
+　　接下来运行Umbraco程序，会进入一个安装的页面，在这里需要进行后台账号密码、数据库类型、是否需要实例开始包安装等操作。</p>
+
+<p>　　下图是首次进入Umbraco的设置界面，需要设置用户名(Name)、登陆umbraco时使用的邮箱(Email)、登陆密码(Password)。下面两个按钮分别是直接安装和进行其他的设置，这里我们点击<strong>Customize</strong>。
+　　<img src="/image/umbraco/setting1.png" alt="" />
+　　点击Customize进入选择数据库类型的界面，如下图所示，有多种选择，Umbraco支持内嵌的CE数据库，MySql、SqlServer以及微软自家的Azure云。选择好数据库之后，填写数据库名称、数据库登陆账号密码等信息后，Umbraco会自动创建连接字符串；这里我们示例使用CE数据库。
+　　<img src="/image/umbraco/setting2.png" alt="" />
+　　点击continue进入下一步操作，这里会让你选择一个官方的示例开始包(starterwebsite)，里面包含了一个简单的Umbraco网站模板，是为了让你更快上手Umbraco的使用。在这里我们点击<strong>No thanks, I do not want to install a starter website</strong>就不使用官方的模板了，因为我们接下来需要自己创建一个网站模板。
+　　<img src="/image/umbraco/setting3.png" alt="" />
+　　接下来，我们等待安装完成，进入Umbraco的后台管理界面。如下图：
+　　<img src="/image/umbraco/backoffice1.png" alt="" />
+　　至此，我们就已经成功的安装了Umbraco，接下来将介绍Umbraco后台管理的一些详细功能。
+　　</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/umbraco%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" id="next">
+                &larr; <span class="nav-title nav-title-next">2、Umbraco后台管理功能介绍</span> 
+            </a>  
+        <a rel="prev" href="/csharp/mvc%E5%BB%B6%E4%BC%B8mvpmvvm/" id="prev">
+            <span class="nav-title nav-title-prev">MVC延伸：MVP、MVVM</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

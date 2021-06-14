@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>c#类型、存储和变量  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    13 May 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">c#类型、存储和变量</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p><strong>c#程序是一组类型声明</strong>
+　　如果广泛的描述C和C++程序源代码的特征，可以说C程序是一组函数数据类型，C++程序是一组函数和类，然而c#程序是一组类型声明。</p>
+
+<p><strong>类型是一种模板</strong>
+　　既然c#程序是一组类型声明，那么使用c#就是创建和使用类型。
+　　可以把类型想象成一个用来创建数据结构的模板。这个模板本身不是数据结构，但是详细说明了由该模板构造的对象的特征：
+<img src="/image/cSharp/cSharp8.png" alt="" /></p>
+
+<p><strong>实例化类型</strong>
+　　从某个类型模板创建市级的对象，称为实例化该类型。
+　　在c#程序中，每个数据项都是某种类型的实例。这些类型可以是语言自带的，可以是BCL或者其他库提供的，也可以是程序员自己定义的。</p>
+
+<p><strong>数据成员和函数成员</strong>
+　　对象也是一种一种类型，这个类型中的数据项个体称为成员，有两种成员：
+　　数据成员保存了与这个类的对象或类本身相关的数据。
+　　函数成员执行代码。函数成员定义类型的行为。</p>
+
+<p><strong>预定义类型</strong>
+　　所有预定义类型的名称都是小写字母组成。
+　　■ 简单类型：
+　　11种数值类型。
+　　　　不同长度的有符号和无符号的整数类型。
+　　　　浮点数类型float和double
+　　　　一种称为decimal的高精度小数类型。与float和double不同，decimal类型可以准确的表示分数。decimal常用于表示货币。
+　　一种Unicode字符类型char。
+　　一种布尔类型bool。bool类型表示布尔值并且必须是true或者false(与C和C++不同，在c#中的数值类型不具有布尔意义)。
+　　■ 两种非简单类型：　　
+　　string，它是一个Unicode字符数组。
+　　object，它是所有其他类型的基类。</p>
+
+<p><strong>用户定义类型</strong>
+　　有6中类型可以有用户自己创建：
+　　■ 类类型(class)
+　　■ 结构类型(struct)
+　　■ 数组类型(array)
+　　■ 枚举类型(enum)
+　　■ 委托类型(delegate)
+　　■ 接口类型(interface)</p>
+
+<p>　　预定义类型的使用是一个单步过程，简单的实例化对象即可。使用用户定义类型是一个两步过程：先声明类型，然后实例化该类型的对象。
+<img src="/image/cSharp/cSharp9.png" alt="" /></p>
+
+<p><strong>堆和栈</strong>
+　　运行中的程序使用两个内存区域来存储数据：栈和堆。
+　　
+　　◆ 栈
+　　作为程序员一般不需要显示的对栈进行操作，因为系统会接管所有的栈操作。
+　　栈是一个内存数组，是一个LIFO(last-in first-out,后进先出)的数据结构。栈存储以下几种类型的数据：
+　　■ 某些类型变量的值；
+　　■ 程序当前的执行环境；
+　　■ 传递给方法的参数；
+　　
+　　栈的特征：
+　　■ 数据只能从栈的顶端插入和删除；
+　　■ 把数据放到站定称为入栈(push)；
+　　■ 从栈顶删除数据称为出栈(pop)；
+<img src="/image/cSharp/cSharp10.png" alt="" /></p>
+
+<p>　　◆　堆
+　　堆是一块内存区域，在堆里可以分配大块的内存用于存储某类型的数据。与栈不同，堆里的内存可以任意顺序存入和移除。
+<img src="/image/cSharp/cSharp11.png" alt="" />
+　　虽然程序可以在堆里面保存数据，但是并不能显示的删除它们。CLR的GC垃圾回收器在判断出程序代码不再访问某项数据时，就会自动的清除无主的堆对象。</p>
+
+<p><strong>值类型和引用类型</strong>
+　　数据项的类型定义了存储数据需要的内存大小、组成该类型的数据成员以及该类型能执行的函数。类型还决定了对象在内存中的存储位置————栈或堆。
+　　类型被分为两种：值类型和引用类型，两者的对象在内存中的存储方式不同。
+　　■ 值类型只需要一段单独的内存，用于存储实际的数据。
+　　■ 引用类型需要两段内存：
+　　　　□ 第一段存储市级的数据，它总是位于堆中。
+　　　　□ 第二段是一个引用，指向数据在堆中的存放位置。
+　　对于值类型，数据存放在栈里。对于引用类型，实际数据存放在堆里面而引用存放在栈里。
+<img src="/image/cSharp/cSharp12.png" alt="" /></p>
+
+<p><strong>存储引用类型对象的成员</strong>
+　　■ 引用类型对象的数据始终存放在堆里。
+　　■ 值类型对象，或引用类型数据的引用部分可以存放在堆里，也可以存放在栈里，这依赖于实际的环境。</p>
+
+<p>　　假设有一个引用类型的实例，名称为MyType，它有两个成员：一个值类型成员和一个引用类型成员，它将如何存储呢？是不是值类型的成员存储在堆里面，引用类型的成员在堆栈之间各存储一半呢？答案是否定的。
+　　因为，对于一个引用类型，其实例的数据部分始终是存储在堆里面。既然两个 成员都是对象数据的一部分，那么它们都是存储在堆里面的，无论它们是值类型还是引用类型。
+<img src="/image/cSharp/cSharp13.png" alt="" />
+　　■ 尽管成员A是值类型，但它也是*MyType*实例数据的一部分，因此和对象的数据一起呗存放在堆里。
+　　■ 成员B是引用类型，所以它的数据部分会始终存放在堆里，正如图中“数据”框所示。不同的是，*它的引用部分也被存放在堆里，封装在MyType对象的数据部分中*。</p>
+
+<p>　　对于引用类型的任何对象，它所有的数据成员都存放在堆里，无论它们是值类型还是引用类型。</p>
+
+<p><strong>c#类型的分类</strong>
+<img src="/image/cSharp/cSharp14.png" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%BC%82%E5%B8%B8-try%E8%AF%AD%E5%8F%A5/" id="next">
+                &larr; <span class="nav-title nav-title-next">异常(try语句)</span> 
+            </a>  
+        <a rel="prev" href="/csharp/c-%E5%92%8C-net%E6%A1%86%E6%9E%B6/" id="prev">
+            <span class="nav-title nav-title-prev">c#和.NET框架</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

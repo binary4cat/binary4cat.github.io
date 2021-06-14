@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>5分钟概览TypeScript  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    15 April 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">5分钟概览TypeScript</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="https://lc-mhke0kuv.cn-n1.lcfile.com/4efd9a4018b57efdcf77.png">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-简介">1. 简介</a></li>
+<li><a href="#2-语法特性">2. 语法特性</a></li>
+<li><a href="#3-基础语法">3. 基础语法</a>
+<ul>
+<li><a href="#3-1-声明语法">3.1. 声明语法:</a></li>
+<li><a href="#3-2-基础类型">3.2. 基础类型：</a></li>
+<li><a href="#3-3-属性和函数">3.3. 属性和函数</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<blockquote>
+<p>5分钟快速上手，请猛击<a href="https://www.tslang.cn/docs/handbook/typescript-in-5-minutes.html">这里</a>看官网文档。</p>
+</blockquote>
+
+<h1 id="1-简介">1. 简介</h1>
+
+<p>　　TypeScript不是一种新的语言，可以认为是给JavaScript添加语言特性的语言扩展(例如在JavaScript还未出现import和装饰器的时候，TypeScript已经有了)，官方的说法是JavaScript的超集，最终还是会编译成JavaScript代码在浏览器执行。</p>
+
+<h1 id="2-语法特性">2. 语法特性</h1>
+
+<p>　　TypeScript是支持OOP开发的，对于有OOP经验的人来说是非常友好的，写过c#、Java、golang语言的开发者，很容易上手。<br />
+　　学习的时候，建议通读文档，中文文档非常全面，更新的也特别及时，建议多做参考，文档地址：<a href="https://www.tslang.cn/docs/home.html">点此</a>！</p>
+
+<h1 id="3-基础语法">3. 基础语法</h1>
+
+<h2 id="3-1-声明语法">3.1. 声明语法:</h2>
+
+<ul>
+<li>类、接口声明：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">class</span> Name{
+    <span style="color:#6272a4">// 声明成员
+</span><span style="color:#6272a4"></span>}
+<span style="color:#ff79c6">interface</span> IName{
+    <span style="color:#6272a4">// 声明成员
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>变量声明:<br /></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">let</span> num: <span style="color:#8be9fd">number</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;  <span style="color:#6272a4">// 显示赋值
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">let</span> str: <span style="color:#8be9fd">string</span>;      // 默认初始值</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>函数声明：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">function</span> func(val: <span style="color:#8be9fd">string</span>)<span style="color:#ff79c6">:</span><span style="color:#ff79c6">void</span>{
+    <span style="color:#6272a4">// 该函数需要一个string类型的参数，无返回值。
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-2-基础类型">3.2. 基础类型：</h2>
+
+<p>TypeScript中的类型和JavaScript中某些是一致的，有：</p>
+
+<ul>
+<li>布尔类型：<code>boolean</code></li>
+<li>数字类型：<code>number</code></li>
+<li>字符串类型：<code>string</code></li>
+<li>数组：<code>number[]</code>或者泛型方式<code>Array&lt;T&gt;</code></li>
+
+<li><p>元组(Tuple)：<code>[string,number]</code></p>
+
+<ul>
+<li>元组也是一个数组，不同的是，元组是已知长度和类型的数组：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">let</span> tup<span style="color:#ff79c6">:</span> [<span style="color:#8be9fd">string</span>,<span style="color:#8be9fd">number</span>];
+tup <span style="color:#ff79c6">=</span> [<span style="color:#f1fa8c">&#34;str&#34;</span>,<span style="color:#bd93f9">123</span>];    <span style="color:#6272a4">// 正确
+</span><span style="color:#6272a4"></span>tup <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">123</span>,<span style="color:#f1fa8c">&#34;str&#34;</span>];    // 错误</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>枚举(enum):</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">enum</span> Color{
+    Red <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>,
+    Blue,
+    Black
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>any：表示任意类型，不会在编译阶段对Any类型的变量进行类型检查，相当于c#中的<code>dynamic</code>。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">let</span> notType: <span style="color:#8be9fd">any</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">123</span>;
+notType <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;123&#34;</span>;
+notType <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span>;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>void：这和any类型相反，表示没有任何类型，通常用在函数没有返回值的情况下，因为声明一个void类型没有什么用，void类型只能赋值undefined和null。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">let</span> nothing: <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">undefined</span>;</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-3-属性和函数">3.3. 属性和函数</h2>
+
+<ul>
+<li>属性和函数都可以用public、protected和private修饰，默认的类、接口以及属性和函数都是public的，想要私有成员，需要显示的声明private；protected表示可以在当前类和它的子类中访问的成员。</li>
+<li>属性可以声明只读属性：<code>private readonly _num: number = 123;</code></li>
+<li>属性和函数都可以声明成静态属性/函数；包含静态成员的类，不需要new就可以调用其静态成员。静态成员中this关键字不指向声明它的类。</li>
+<li>属性具有存取器<code>getter</code>和<code>setter</code>，可以是实现对属性的访问控制：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">class</span> Person{
+    <span style="color:#ff79c6">private</span> _name: <span style="color:#8be9fd">string</span>;
+    <span style="color:#ff79c6">public</span> get name()<span style="color:#ff79c6">:</span><span style="color:#8be9fd">string</span>{
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span>._name;
+    }
+    <span style="color:#ff79c6">public</span> set name(val: <span style="color:#8be9fd">string</span>){
+        <span style="color:#ff79c6">this</span>._name <span style="color:#ff79c6">=</span> val;
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>函数的参数中可以使用可选参数，表示调用该方法时，可以不传入该参数：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">class</span> Person{
+    <span style="color:#8be9fd;font-style:italic">function</span> getName(age: <span style="color:#8be9fd">number</span>, gender?: <span style="color:#8be9fd">string</span>){
+
+    }
+    <span style="color:#8be9fd;font-style:italic">function</span> getName1(age: <span style="color:#8be9fd">number</span>,gender: <span style="color:#8be9fd">string</span>){
+
+    }
+}
+<span style="color:#8be9fd;font-style:italic">let</span> p :<span style="color:#8be9fd">Person</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person();
+p.getName(<span style="color:#bd93f9">23</span>);  <span style="color:#6272a4">// 正确
+</span><span style="color:#6272a4"></span>p.getName1(<span style="color:#bd93f9">23</span>,<span style="color:#f1fa8c">&#34;girl&#34;</span>);  <span style="color:#6272a4">// 正确
+</span><span style="color:#6272a4"></span>p.getName1(<span style="color:#bd93f9">23</span>)  // 错误</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>函数参数可以设定默认值：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">class</span> Person{
+    <span style="color:#8be9fd;font-style:italic">function</span> getName(age: <span style="color:#8be9fd">number</span>, gender <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;girl&#34;</span>){
+        <span style="color:#ff79c6">return</span> age <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;***&#34;</span> <span style="color:#ff79c6">+</span> gender;
+    }
+}
+<span style="color:#8be9fd;font-style:italic">let</span> p :<span style="color:#8be9fd">Person</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person();
+p.getName(<span style="color:#bd93f9">23</span>);  <span style="color:#6272a4">// 23***girl
+</span><span style="color:#6272a4"></span>p.getName(<span style="color:#bd93f9">23</span>, <span style="color:#ff79c6">undefined</span>); <span style="color:#6272a4">// 23***girl
+</span><span style="color:#6272a4"></span>p.getName(<span style="color:#bd93f9">23</span>, <span style="color:#f1fa8c">&#34;boy&#34;</span>);   // 23***boy</code></pre></td></tr></table>
+</div>
+</div>
+<p>TypeScript的特性还有很多，但是了解上面的简单特性基本上就能书写TypeScript代码了(可能对于没有接触过后端的开发者还是有点绕)，还是一句话，通读官方文档，那是非常好的入门和提升的资料。</p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/vue-elementui-upload%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6/" id="next">
+                &larr; <span class="nav-title nav-title-next">Vue-ElementUI upload组件的上传文件控制</span> 
+            </a>  
+        <a rel="prev" href="/frontend/%E4%BD%BF%E7%94%A8ckeditor%E6%97%B6%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/" id="prev">
+            <span class="nav-title nav-title-prev">使用CKEditor时碰到的一个坑</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asp.net Web Api笔记 on Haijd&#39;s Blog</title>
+    <link>/tags/asp.net-web-api%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in Asp.net Web Api笔记 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Feb 2016 23:37:09 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net-web-api%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>理解RESTful</title>
+      <link>/csharp/%E7%90%86%E8%A7%A3restful/</link>
+      <pubDate>Wed, 24 Feb 2016 23:37:09 +0800</pubDate>
+      
+      <guid>/csharp/%E7%90%86%E8%A7%A3restful/</guid>
+      <description>&lt;p&gt;　　在学习Web API之前，我们首先接触的一个概念就是RESTful，个人觉得从名字(英文全名)上来理解还是很抽象的一个概念，刚开始接触的时候感觉似懂非懂，但是使用一段时间后再回来看这个问题就会比较清晰了。
+　　在这篇博文中，我尽力把我所理解的RESTful解释清楚，理解错误可能难免，希望有看到的同学能指点一下。&lt;/p&gt;
+
+&lt;p&gt;😒 &lt;strong&gt;简单粗暴版&lt;/strong&gt;：&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

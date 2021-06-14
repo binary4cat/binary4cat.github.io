@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>数据库基本增删改查语句总结  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    25 March 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">数据库基本增删改查语句总结</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#创建-create">创建 create</a>
+<ul>
+<li><a href="#创建数据库">创建数据库</a></li>
+<li><a href="#创建日志">创建日志</a></li>
+</ul></li>
+<li><a href="#使用某个数据库">使用某个数据库</a></li>
+<li><a href="#创建表">创建表</a></li>
+<li><a href="#增-三种方式-inster-into">增(三种方式) inster into</a></li>
+<li><a href="#删-三种方式">删(三种方式)</a></li>
+<li><a href="#改-update">改 update</a></li>
+<li><a href="#添加约束-alter">添加约束 alter</a></li>
+<li><a href="#查-select">查 select</a></li>
+<li><a href="#sql语句的执行顺序">SQL语句的执行顺序</a></li>
+<li><a href="#select语句处理顺序">select语句处理顺序</a></li>
+<li><a href="#数据类型">数据类型</a></li>
+<li><a href="#null的特殊处理-null作为-不知道-处理">null的特殊处理(null作为“不知道”处理)</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="创建-create">创建 create</h1>
+
+<h2 id="创建数据库">创建数据库</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">create</span> <span style="color:#ff79c6">database</span> MyDatabase
+<span style="color:#ff79c6">on</span> <span style="color:#ff79c6">primary</span>
+(
+    name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;MyDatabase_data&#39;</span>,
+    filename<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;D:\working software\sql Sever\MSSQL11.MSSQLSERVER\MSSQL\DATA\MyDatabase0301_data.mdf&#39;</span>,
+    <span style="color:#ff79c6">size</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">5</span>MB,
+    filegorwth<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>MB
+)</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="创建日志">创建日志</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">log <span style="color:#ff79c6">on</span>
+(
+    name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;MyDatabase_log&#39;</span>,
+    filename<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;D:\working software\sql Sever\MSSQL11.MSSQLSERVER\MSSQL\DATA\MyDatabase0301_data_log.ldf&#39;</span>,
+    <span style="color:#ff79c6">size</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>MB,
+    filegorwth<span style="color:#ff79c6">=</span><span style="color:#bd93f9">10</span><span style="color:#ff79c6">%</span>
+)</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="使用某个数据库">使用某个数据库</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">use MyDatabase</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="创建表">创建表</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">carate <span style="color:#ff79c6">table</span> Student
+(
+    StuId <span style="color:#8be9fd;font-style:italic">int</span> <span style="color:#ff79c6">identity</span>(<span style="color:#bd93f9">1</span>,<span style="color:#bd93f9">1</span>) <span style="color:#ff79c6">primary</span> <span style="color:#ff79c6">key</span>, <span style="color:#6272a4">--主键，自增从1开始每次增加1
+</span><span style="color:#6272a4"></span>    StuName nvarchar(<span style="color:#bd93f9">10</span>),
+    StuGender <span style="color:#8be9fd;font-style:italic">char</span>(<span style="color:#bd93f9">2</span>),
+    StuAge <span style="color:#8be9fd;font-style:italic">int</span>,
+    StuChinese <span style="color:#8be9fd;font-style:italic">int</span>,
+    StuMath <span style="color:#8be9fd;font-style:italic">int</span>,
+    StuEnglish <span style="color:#8be9fd;font-style:italic">int</span>
+)</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="增-三种方式-inster-into">增(三种方式) inster into</h1>
+
+<ul>
+<li>第一种</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">inster <span style="color:#ff79c6">into</span> Student(StuName.StuGender,StuAge) <span style="color:#ff79c6">values</span>(<span style="color:#f1fa8c">&#39;Microsoft&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>第二种</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">inster <span style="color:#ff79c6">into</span> Student <span style="color:#ff79c6">values</span>(<span style="color:#f1fa8c">&#39;Microsoft&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>第三种</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">inster <span style="color:#ff79c6">into</span> Student(StuName,StuGender,StuAge)
+<span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;Microsoft&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span> <span style="color:#ff79c6">union</span>
+<span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;Google&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">10</span>,<span style="color:#bd93f9">10</span> <span style="color:#ff79c6">union</span>
+<span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;FaceBook&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">11</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">20</span>,<span style="color:#bd93f9">20</span> <span style="color:#ff79c6">union</span>
+<span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;Twitter&#39;</span>,<span style="color:#f1fa8c">&#39;gay&#39;</span>,<span style="color:#bd93f9">13</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">30</span>,<span style="color:#bd93f9">30</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="删-三种方式">删(三种方式)</h1>
+
+<ul>
+<li>第一种，数据表一起删除掉</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">drop</span> <span style="color:#ff79c6">table</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>第二种，只删除数据，主键不重置为0，可以加后缀(where子句)</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">delete</span> <span style="color:#ff79c6">from</span> Student </code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>第三种，只删除数据，主键重置为0</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">truncate</span> <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="改-update">改 update</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">update</span> Student <span style="color:#ff79c6">set</span> StuAge<span style="color:#ff79c6">=</span><span style="color:#bd93f9">20</span> <span style="color:#ff79c6">where</span> StuId<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="添加约束-alter">添加约束 alter</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#6272a4">--主键约束
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> <span style="color:#ff79c6">constraint</span> PK_Student_StuId <span style="color:#ff79c6">primary</span> <span style="color:#ff79c6">key</span>(StuId)
+<span style="color:#6272a4">--唯一约束
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> <span style="color:#ff79c6">constraint</span> UQ_Student_StuName <span style="color:#ff79c6">unique</span> (StuName)
+<span style="color:#6272a4">--默认约束
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> <span style="color:#ff79c6">constraint</span> DF_Student_StuGender <span style="color:#ff79c6">default</span> <span style="color:#f1fa8c">&#39;gay&#39;</span> <span style="color:#ff79c6">for</span> StuGender
+<span style="color:#6272a4">--检查约束
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> <span style="color:#ff79c6">constraint</span> CK_Student_StuAge <span style="color:#ff79c6">check</span>(StuAge<span style="color:#ff79c6">&gt;</span><span style="color:#bd93f9">0</span> <span style="color:#ff79c6">add</span> StuAge<span style="color:#ff79c6">&lt;</span><span style="color:#bd93f9">150</span>)
+<span style="color:#6272a4">--外键约束(前外键，后主键)
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> <span style="color:#ff79c6">constraint</span> FK_Student_StuClass <span style="color:#ff79c6">foreign</span> <span style="color:#ff79c6">key</span> (StuClass) <span style="color:#ff79c6">references</span> tClass(classId)</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#6272a4">--手动删除一列
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">drop</span> <span style="color:#ff79c6">column</span> StuGender
+<span style="color:#6272a4">--手动增加一列
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">add</span> StuIsGay nvarchar(<span style="color:#bd93f9">2</span>) <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">null</span>
+<span style="color:#6272a4">--手动修改一列数据类型
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">table</span> Student <span style="color:#ff79c6">alter</span> <span style="color:#ff79c6">column</span> StuGender <span style="color:#ff79c6">nchar</span>(<span style="color:#bd93f9">2</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="查-select">查 select</h1>
+
+<ul>
+<li>查询列表中所有的数据</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>查询指定列</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuName,StuGender,StuAge <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>给查询出的结果以别名显示(四种方式)</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuName <span style="color:#ff79c6">as</span> <span style="color:#f1fa8c">&#39;姓名&#39;</span>,StuGender <span style="color:#ff79c6">as</span> <span style="color:#f1fa8c">&#39;性别&#39;</span>,StuAge <span style="color:#ff79c6">as</span> <span style="color:#f1fa8c">&#39;年龄&#39;</span> <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> StuName <span style="color:#ff79c6">as</span> 姓名，StuGender <span style="color:#ff79c6">as</span> 性别,StuAge <span style="color:#ff79c6">as</span> 年龄 <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> StuName 姓名，StuGender 性别,StuAge 年龄 <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> 姓名<span style="color:#ff79c6">=</span>StuName,性别<span style="color:#ff79c6">=</span>StuGender,年龄<span style="color:#ff79c6">=</span>StuAge <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>前N条数据 top order by</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> top <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> StuAge (<span style="color:#ff79c6">asc</span>)  <span style="color:#6272a4">--从小到大
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> top <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> StuAge (<span style="color:#ff79c6">desc</span>)  <span style="color:#6272a4">--从大到小
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> top <span style="color:#bd93f9">5</span> percent <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> StuAge (<span style="color:#ff79c6">desc</span>)  <span style="color:#6272a4">--百分比</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>去除重复</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">distinct</span> StuName <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>类型相同时连接</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuName<span style="color:#ff79c6">+</span>StuAge<span style="color:#ff79c6">+</span>StuGender <span style="color:#ff79c6">from</span> Student</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>聚合函数</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">sum</span>(StuChinese) <span style="color:#ff79c6">as</span> 语文总分 <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">avg</span>(StuMath) <span style="color:#ff79c6">as</span> 数学平均分 <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">max</span>(StuEnglish) <span style="color:#ff79c6">as</span> 英语最高分 <span style="color:#ff79c6">from</span> Student 
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">min</span>(StuEnglish) <span style="color:#ff79c6">as</span> 英语最低分 <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">from</span> Student   <span style="color:#6272a4">--查询表中总共多少数据</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>between and双闭区间</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuAge <span style="color:#ff79c6">between</span> <span style="color:#bd93f9">20</span> <span style="color:#ff79c6">and</span> <span style="color:#bd93f9">30</span>  <span style="color:#6272a4">--20岁到30岁之间的数据
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuAge<span style="color:#ff79c6">&gt;=</span><span style="color:#bd93f9">20</span> <span style="color:#ff79c6">and</span> StuAge<span style="color:#ff79c6">&lt;=</span><span style="color:#bd93f9">30</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>in 规定多个值</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">in</span>(<span style="color:#f1fa8c">&#39;Microsoft&#39;</span>,<span style="color:#f1fa8c">&#39;Google&#39;</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>模糊查询</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;东%&#39;</span> <span style="color:#6272a4">--%号替代一个或多个字符
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;东_&#39;</span> <span style="color:#6272a4">--_符号代替一个字符
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;东[a-z]&#39;</span> <span style="color:#6272a4">--限制范围
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;东[^a-z]&#39;</span> <span style="color:#6272a4">--取非，排除该范围
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuName <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;东[_%]&#39;</span>  <span style="color:#6272a4">--取消转义</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>分组 group by</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuId <span style="color:#ff79c6">as</span> 学生号,<span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">as</span> 学生总数 <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">group</span> <span style="color:#ff79c6">by</span> StuId</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>分组后筛选 having</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuID <span style="color:#ff79c6">as</span> 学生号,<span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>) <span style="color:#ff79c6">as</span> 学生总数 <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">group</span> <span style="color:#ff79c6">by</span> StuId <span style="color:#ff79c6">having</span>(<span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>)<span style="color:#ff79c6">&gt;</span><span style="color:#bd93f9">2</span>)  <span style="color:#6272a4">--筛选人数大于2的数据</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>时间函数</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> GETDATE()   <span style="color:#6272a4">--获得当前时间
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> DATEADD(dd,<span style="color:#ff79c6">-</span><span style="color:#bd93f9">90</span>,GETDATE())  <span style="color:#6272a4">--可以在源日期值上追加指定时间间隔的日期数
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> DATEDIFF(dd,<span style="color:#f1fa8c">&#39;2015-03-25&#39;</span>,GETDATE()) <span style="color:#ff79c6">as</span> 过了几天  <span style="color:#6272a4">--计算两个日期之间的间隔
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> DATENAME(dw,GETDATE())   <span style="color:#6272a4">--获取日期的指定格式的字符串表现形式</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>联合结果集</p>
+
+<ul>
+<li><p>union去除重复</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuId,StuName <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">union</span>
+<span style="color:#ff79c6">select</span> BanGanBuId.BanGanBuName <span style="color:#ff79c6">from</span> BanGanBu
+<span style="color:#ff79c6">union</span>
+<span style="color:#ff79c6">select</span> XueShengHuiId,XueShengHuiName <span style="color:#ff79c6">from</span> XueShengHui</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>union all不去除重复</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> StuId,StuName <span style="color:#ff79c6">from</span> Student
+<span style="color:#ff79c6">union</span> <span style="color:#ff79c6">all</span>
+<span style="color:#ff79c6">select</span> BanGanBuId.BanGanBuName <span style="color:#ff79c6">from</span> BanGanBu
+<span style="color:#ff79c6">union</span> <span style="color:#ff79c6">all</span>
+<span style="color:#ff79c6">select</span> XueShengHuiId,XueShengHuiName <span style="color:#ff79c6">from</span> XueShengHui</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul></li>
+
+<li><p>字符串函数</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> LEN(<span style="color:#f1fa8c">&#39;每天都要吃饭&#39;</span>)   <span style="color:#6272a4">--获取字符串长度或字符个数
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> DATALENGTH(<span style="color:#f1fa8c">&#39;今天天气真好&#39;</span>)   <span style="color:#6272a4">--获取字符串字节数
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">LOWER</span>(<span style="color:#f1fa8c">&#39;MICROSOFT&#39;</span>)   <span style="color:#6272a4">--大写转小写
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">UPPER</span>(<span style="color:#f1fa8c">&#39;microsoft&#39;</span>)   <span style="color:#6272a4">--小写转大写</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>去掉空格</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;我是&#39;</span><span style="color:#ff79c6">+</span>LTRIM(<span style="color:#f1fa8c">&#39;  大侠  &#39;</span>)   <span style="color:#6272a4">--去掉左边空格
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;我是&#39;</span><span style="color:#ff79c6">+</span>RTRIM(<span style="color:#f1fa8c">&#39;  小菜  &#39;</span>)   <span style="color:#6272a4">--去掉右边的空格
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#f1fa8c">&#39;我是&#39;</span><span style="color:#ff79c6">+</span>LTRIM(RTRIM(<span style="color:#f1fa8c">&#39;  我  &#39;</span>))   <span style="color:#6272a4">--去掉两边空格</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>截取</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">LEFT</span>(<span style="color:#f1fa8c">&#39;我是好人啊&#39;</span>,<span style="color:#bd93f9">1</span>)   <span style="color:#6272a4">--从字符串左边开始截取1个
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">RIGHT</span>(<span style="color:#f1fa8c">&#39;我是好人啊&#39;</span>,<span style="color:#bd93f9">1</span>)   <span style="color:#6272a4">--从字符串右边开始截取1个
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">SUBSTRING</span>(<span style="color:#f1fa8c">&#39;我是好人啊&#39;</span>,<span style="color:#bd93f9">1</span>,<span style="color:#bd93f9">4</span>)  <span style="color:#6272a4">--从第一个字符开始截取，截取4个</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul></li>
+</ul>
+
+<h1 id="sql语句的执行顺序">SQL语句的执行顺序</h1>
+
+<ol>
+<li><code>from</code> 表</li>
+<li><code>where</code> 条件</li>
+<li><code>group by</code> 列</li>
+<li><code>having</code> 筛选条件</li>
+<li><code>select</code>
+5.1 选择列
+5.2 <code>distinct</code>
+5.3 <code>top</code>(应用top选项最后计算)</li>
+<li><code>order by</code> 排序</li>
+</ol>
+
+<h1 id="select语句处理顺序">select语句处理顺序</h1>
+
+<ol>
+<li><code>FROM</code></li>
+<li><code>ON</code></li>
+<li><code>JOIN</code></li>
+<li><code>WHERE</code></li>
+<li><code>GROUP BY</code></li>
+<li><code>WITH CUBE</code> 或 <code>WITH ROLLUP</code></li>
+<li><code>HAVING</code></li>
+<li><code>SELECT</code></li>
+<li><code>DISTINCT</code></li>
+<li><code>RODER BY</code></li>
+<li><code>TOP</code></li>
+</ol>
+
+<h1 id="数据类型">数据类型</h1>
+
+<ul>
+<li><code>char</code>：汉字1，字母2，多余空间会用空格补全</li>
+<li><code>varchar</code>：汉字1，字母2</li>
+<li><code>nchar</code>：(n表示Unicode)汉字1，字母1，多余空间会用空格补全</li>
+<li><code>nvarchar</code>：(n表示Unicode)汉字1，字母1</li>
+</ul>
+
+<h1 id="null的特殊处理-null作为-不知道-处理">null的特殊处理(null作为“不知道”处理)</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuMath <span style="color:#ff79c6">is</span> <span style="color:#ff79c6">null</span>  
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> Student <span style="color:#ff79c6">where</span> StuMath <span style="color:#ff79c6">is</span> <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">null</span>
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>   <span style="color:#6272a4">--返回null</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/database/sql-server%E4%BA%8B%E5%8A%A1/" id="next">
+                &larr; <span class="nav-title nav-title-next">SQL Server事务</span> 
+            </a>  
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

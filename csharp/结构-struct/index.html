@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>结构(struct)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    24 May 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">结构(struct)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是结构">1. 什么是结构</a></li>
+<li><a href="#2-结构是值类型">2. 结构是值类型</a></li>
+<li><a href="#3-对结构赋值">3. 对结构赋值</a></li>
+<li><a href="#4-构造函数">4. 构造函数</a>
+<ul>
+<li><a href="#4-1-实例构造函数">4.1. 实例构造函数</a></li>
+<li><a href="#4-2-静态构造函数">4.2. 静态构造函数</a></li>
+</ul></li>
+<li><a href="#5-字段不允许被初始化">5. 字段不允许被初始化</a></li>
+<li><a href="#6-结构是密封的">6. 结构是密封的</a></li>
+<li><a href="#7-结构作为返回类型和参数">7. 结构作为返回类型和参数</a></li>
+<li><a href="#8-关于结构">8. 关于结构</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么是结构">1. 什么是结构</h1>
+
+<p>　　结构是程序员定义的数据类型，非常类似于类，都有数据成员和函数成员。
+　　结构就是轻量级的类，使用方式和枚举差不多，方便归类存储数据。
+　　结构和类的区别是：
+　　■ 类是引用类型而结构是值类型。
+　　■ 结构是隐式密封的，这意味着结构不能被派生。
+<strong>声明结构</strong>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//声明结构的关键字是“struct”
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">StructName</span>
+{
+    MemberDeclarations
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>使用结构</strong>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">   <span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Point</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+    }
+
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Point first, second, third;
+
+            first.X = <span style="color:#bd93f9">10</span>;
+            first.Y = <span style="color:#bd93f9">10</span>;
+            second.X = <span style="color:#bd93f9">20</span>;
+            second.Y = <span style="color:#bd93f9">20</span>;
+            third.X = first.X + second.X;
+            third.Y = first.Y + second.Y;
+
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;first：{0}——{1}&#34;</span>, first.X, first.Y);
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;second：{0}——{1}&#34;</span>, second.X, second.Y);
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;third：{0}——{1}&#34;</span>, third.X, third.Y);
+
+            Console.ReadKey();
+        }
+    }</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/cSharp/cSharp75.png" alt="" /></p>
+
+<h1 id="2-结构是值类型">2. 结构是值类型</h1>
+
+<p>　　和所有的值类型一样，结构类型变量含有它自己的数据(而非引用)，从而：
+　　■ 结构类型的变量不能为null。
+　　■ 两个结构变量不能引用(保存、赋值)同一个对象。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//类
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">CSimple</span> 
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+}
+<span style="color:#6272a4">//结构
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Simple</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+}
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        CSimple cs = <span style="color:#ff79c6">new</span> CSimple();
+        Simple ss = <span style="color:#ff79c6">new</span> Simple();
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>类和结构在内存中的存储方式：
+<img src="/image/cSharp/cSharp76.png" alt="" /></p>
+
+<h1 id="3-对结构赋值">3. 对结构赋值</h1>
+
+<p>　　把一个结构赋值给另一个结构，就是从一个结构中把值<strong>复制</strong>到另一个结构。而复制类变量时只有引用被复制了，堆中的数据不变。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">CSimple</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+}
+<span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Simple</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+}
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        <span style="color:#6272a4">// 类实例
+</span><span style="color:#6272a4"></span>        CSimple cs1 = <span style="color:#ff79c6">new</span> CSimple();
+        CSimple cs2 = <span style="color:#ff79c6">null</span>;
+        <span style="color:#6272a4">// 结构实例
+</span><span style="color:#6272a4"></span>        Simple ss1 = <span style="color:#ff79c6">new</span> Simple();
+        Simple ss2 = <span style="color:#ff79c6">new</span> Simple();
+        
+        cs1.X=<span style="color:#bd93f9">5</span>;
+        ss1.X=<span style="color:#bd93f9">5</span>;
+        cs1.Y=<span style="color:#bd93f9">10</span>;
+        ss1.Y=<span style="color:#bd93f9">10</span>;
+        cs2=cs1;   <span style="color:#6272a4">//赋值类实例
+</span><span style="color:#6272a4"></span>        ss2=ss1;   <span style="color:#6272a4">//复制结构实例
+</span><span style="color:#6272a4"></span>    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>在内存中存储的情况：
+<img src="/image/cSharp/cSharp77.png" alt="" />
+　　■ 类赋值后，<code>cs2</code>和<code>cs1</code>指向堆中的同一对象。
+　　■ 结构赋值后，<code>ss2</code>中的成员的值和<code>ss1</code>的相同。　</p>
+
+<h1 id="4-构造函数">4. 构造函数</h1>
+
+<p>　　<strong>结构可以有实例构造函数和静态构造函数，但是不能有析构函数。</strong></p>
+
+<h2 id="4-1-实例构造函数">4.1. 实例构造函数</h2>
+
+<p>　　结构隐式的含有一个无参数的构造函数，这个无参数的构造函数默认的为结构中的每一个成员赋值了默认值(值类型被默认设置成它们的默认值，引用类型默认设置成null)。
+　　隐式的无参构造函数在每个结构中存在，这个无参构造函数不能被删除，也不能重新定义。
+　　<strong>结构可以创建另外的含有参数的构造函数</strong>。</p>
+
+<p>　　调用构造函数有两种方法，一种是使用<code>new</code>关键字，一种是不使用<code>new</code>关键字。
+<strong>使用new关键字：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Simple</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+    <span style="color:#6272a4">// 带参数的构造函数
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> Simple(<span style="color:#8be9fd">int</span> a,<span style="color:#8be9fd">int</span> b)
+    {
+        X=a;
+        Y=b;
+    }
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main()
+    {
+        <span style="color:#6272a4">//调用隐式的无参构造函数
+</span><span style="color:#6272a4"></span>        Simple s1 = <span style="color:#ff79c6">new</span> Simple();
+        <span style="color:#6272a4">//调用定义的有参构造函数
+</span><span style="color:#6272a4"></span>        Simple s2 = <span style="color:#ff79c6">new</span> Simple(<span style="color:#bd93f9">5</span>,<span style="color:#bd93f9">10</span>);
+        
+        Console.WriteLine(<span style="color:#f1fa8c">&#34;{0},{1}&#34;</span>,s1.X,s1.Y);
+        Console.WriteLine(<span style="color:#f1fa8c">&#34;{0},{1}&#34;</span>,s2.X,s2.Y);
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>不使用new关键字：</strong>
+　　■ 必须给数据成员赋值后才能使用该数据成员。
+　　■ 必须给所有的数据成员都赋值之后，才能调用函数成员。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Simple</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y;
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        <span style="color:#6272a4">// 不使用new关键字声明
+</span><span style="color:#6272a4"></span>        Simple s1,s2;
+        
+        <span style="color:#6272a4">//Console.WriteLine(&#34;{0},{1}&#34;,s1.X,s1.Y);  //因为没有赋值就使用，编译错误
+</span><span style="color:#6272a4"></span>        
+        s2.X=<span style="color:#bd93f9">5</span>;
+        s2.Y=<span style="color:#bd93f9">10</span>;
+        Console.WriteLine(<span style="color:#f1fa8c">&#34;{0},{1}&#34;</span>,s2.X,s2.Y);  <span style="color:#6272a4">//没有使用new创建实例，但是成员赋值之后是可以使用的。
+</span><span style="color:#6272a4"></span>    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-2-静态构造函数">4.2. 静态构造函数</h2>
+
+<p>　　结构的静态构造函数创建并初始化静态数据成员，而且不能引用实例成员。
+　　结构的静态构造函数在调用显示声明的构造函数之前被调用。</p>
+
+<h1 id="5-字段不允许被初始化">5. 字段不允许被初始化</h1>
+
+<p>　　<strong>在结构中字段初始化是不允许的。</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">struct</span> <span style="color:#50fa7b">Simple</span>
+{
+    <span style="color:#6272a4">//这种写法是错误的，结构中的字段不允许初始化
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> X = <span style="color:#bd93f9">5</span>;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Y = <span style="color:#bd93f9">10</span>;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-结构是密封的">6. 结构是密封的</h1>
+
+<p>　　结构总是密封的，所以，不能从结构派生其他的结构。
+　　由于结构不支持继承，所以下列类修饰符不能用于结构：
+　　● protected
+　　● internal
+　　● abstract
+　　● virtual
+　　<strong>结构派生自System.ValueType类</strong></p>
+
+<h1 id="7-结构作为返回类型和参数">7. 结构作为返回类型和参数</h1>
+
+<p>　　结构可以用作返回值和参数。
+　　■ <strong>返回值</strong>：当结构被当做返回值时，一个该结构的拷贝被创建并从函数成员返回。
+　　■ <strong>值参</strong>：当结构被当做值参时，一个实际参数的拷贝被创建，该拷贝用在方法的执行中。
+　　■ <strong>ref和out参数</strong>：如果把一个结构用作ref或者out参数，一个对该结构的引用被传入方法，这样其数据成员就能被改变。</p>
+
+<h1 id="8-关于结构">8. 关于结构</h1>
+
+<p>　　分配结构比创建类的实例需要更少的消耗，所以使用结构代替类有时可以提高性能，但是结构是值类型，如果想使用一个结构实例作为引用类型的对象，必须执行拆装箱操作，代价比较高。
+　　■ 预定义简单类型(int、short、long等等),尽管在.NET和c#中被视为原始类型，但是它们在.NET中都被实现为结构。
+　　■ 可以使用声明partial类相同的方法声明partial结构。
+　　■ 结构可以实现接口。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E6%8E%A5%E5%8F%A3-interface/" id="next">
+                &larr; <span class="nav-title nav-title-next">接口(interface)</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E6%B3%9B%E5%9E%8B-generic/" id="prev">
+            <span class="nav-title nav-title-prev">泛型(generic)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Golang文本编码处理  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    05 September 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Golang文本编码处理</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1ficnszlhh9j20go098jrl.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-strings库常见例子">1. strings库常见例子</a>
+<ul>
+<li><a href="#1-1-strings-contains-包含">1.1. <code>strings.Contains()</code>包含</a></li>
+<li><a href="#1-2-strings-index-索引">1.2. <code>strings.Index()</code>索引</a></li>
+<li><a href="#1-3-strings-split-切割">1.3. <code>strings.Split()</code>切割</a></li>
+<li><a href="#1-4-strings-join-合并">1.4. <code>strings.Join()</code>合并</a></li>
+<li><a href="#1-5-strings-hasprefix-strings-hassuffix-是否包含前-后缀">1.5. <code>strings.HasPrefix() strings.HasSuffix()</code>是否包含前、后缀</a></li>
+</ul></li>
+<li><a href="#2-strconv-库常用操作">2. <code>strconv</code>库常用操作</a>
+<ul>
+<li><a href="#2-1-itoa-数字转字符串">2.1. <code>Itoa</code>数字转字符串</a></li>
+<li><a href="#2-2-atoi-字符串转数字">2.2. <code>Atoi</code>字符串转数字</a></li>
+<li><a href="#2-3-parsebool-字符串转bool类型">2.3. <code>ParseBool</code>字符串转bool类型</a></li>
+<li><a href="#2-4-parsefloat-字符串转浮点数">2.4. <code>ParseFloat</code>字符串转浮点数</a></li>
+<li><a href="#2-5-format-格式化">2.5. <code>Format...</code>格式化</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-strings库常见例子">1. strings库常见例子</h1>
+
+<h2 id="1-1-strings-contains-包含">1.1. <code>strings.Contains()</code>包含</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strings&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    str <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello world&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Contains</span>(str,<span style="color:#f1fa8c">&#34;hello&#34;</span>))      <span style="color:#6272a4">//输出 true
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Contains</span>(str,<span style="color:#f1fa8c">&#34;?&#34;</span>))      <span style="color:#6272a4">//输出  false
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-2-strings-index-索引">1.2. <code>strings.Index()</code>索引</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strings&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    str <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello world&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Index</span>(str,<span style="color:#f1fa8c">&#34;w&#34;</span>))      <span style="color:#6272a4">//输出 6
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-3-strings-split-切割">1.3. <code>strings.Split()</code>切割</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strings&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    str <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello,world&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Split</span>(str,<span style="color:#f1fa8c">&#34;,&#34;</span>))      <span style="color:#6272a4">//输出 [hello world]
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-4-strings-join-合并">1.4. <code>strings.Join()</code>合并</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strings&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    str <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;hello&#34;</span>,<span style="color:#f1fa8c">&#34;world&#34;</span>}
+    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Join</span>(str,<span style="color:#f1fa8c">&#34;,&#34;</span>))      <span style="color:#6272a4">//输出 hello,world
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-5-strings-hasprefix-strings-hassuffix-是否包含前-后缀">1.5. <code>strings.HasPrefix() strings.HasSuffix()</code>是否包含前、后缀</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strings&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    str <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello,world&#34;</span>
+    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">HasPrefix</span>(str,<span style="color:#f1fa8c">&#34;he&#34;</span>))      <span style="color:#6272a4">//输出 true
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">HasSuffix</span>(str,<span style="color:#f1fa8c">&#34;ld&#34;</span>))      <span style="color:#6272a4">//输出 true
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-strconv-库常用操作">2. <code>strconv</code>库常用操作</h1>
+
+<h2 id="2-1-itoa-数字转字符串">2.1. <code>Itoa</code>数字转字符串</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strconv&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">Itoa</span>(<span style="color:#bd93f9">10</span>))  <span style="color:#6272a4">//输出 10
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>Itoa的内部实现:<br />
+可以看到是直接调用<code>FormatInt</code>函函数进行格式化的</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// Itoa is shorthand for FormatInt(int64(i), 10).
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">Itoa</span>(i <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">string</span> {
+    <span style="color:#ff79c6">return</span> <span style="color:#50fa7b">FormatInt</span>(<span style="color:#8be9fd;font-style:italic">int64</span>(i), <span style="color:#bd93f9">10</span>)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-2-atoi-字符串转数字">2.2. <code>Atoi</code>字符串转数字</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strconv&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">Atoi</span>(<span style="color:#f1fa8c">&#34;10&#34;</span>))  <span style="color:#6272a4">//输出 10 &lt;nil&gt;
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>Atoi的内部实现:<br />
+内部调用了<code>ParseInt</code>函数进行转换，失败会将异常返回，所以传入的字符串必须是符合转换要求的</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// Atoi returns the result of ParseInt(s, 10, 0) converted to type int.
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">Atoi</span>(s <span style="color:#8be9fd">string</span>) (<span style="color:#8be9fd">int</span>, <span style="color:#8be9fd">error</span>) {
+    <span style="color:#8be9fd;font-style:italic">const</span> fnAtoi = <span style="color:#f1fa8c">&#34;Atoi&#34;</span>
+    i64, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">ParseInt</span>(s, <span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">0</span>)
+    <span style="color:#ff79c6">if</span> nerr, ok <span style="color:#ff79c6">:=</span> err.(<span style="color:#ff79c6">*</span>NumError); ok {
+        nerr.Func = fnAtoi
+    }
+    <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">int</span>(i64), err
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-3-parsebool-字符串转bool类型">2.3. <code>ParseBool</code>字符串转bool类型</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strconv&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">ParseBool</span>(<span style="color:#f1fa8c">&#34;true&#34;</span>))  <span style="color:#6272a4">//输出 true &lt;nil&gt;
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>ParseBool</code>的内部实现：<br />
+从内部实现可以看到这个函数需要的参数要求</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// ParseBool returns the boolean value represented by the string.
+</span><span style="color:#6272a4">// It accepts 1, t, T, TRUE, true, True, 0, f, F, FALSE, false, False.
+</span><span style="color:#6272a4">// Any other value returns an error.
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ParseBool</span>(str <span style="color:#8be9fd">string</span>) (<span style="color:#8be9fd">bool</span>, <span style="color:#8be9fd">error</span>) {
+    <span style="color:#ff79c6">switch</span> str {
+    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;1&#34;</span>, <span style="color:#f1fa8c">&#34;t&#34;</span>, <span style="color:#f1fa8c">&#34;T&#34;</span>, <span style="color:#f1fa8c">&#34;true&#34;</span>, <span style="color:#f1fa8c">&#34;TRUE&#34;</span>, <span style="color:#f1fa8c">&#34;True&#34;</span>:
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">true</span>, <span style="color:#ff79c6">nil</span>
+    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;0&#34;</span>, <span style="color:#f1fa8c">&#34;f&#34;</span>, <span style="color:#f1fa8c">&#34;F&#34;</span>, <span style="color:#f1fa8c">&#34;false&#34;</span>, <span style="color:#f1fa8c">&#34;FALSE&#34;</span>, <span style="color:#f1fa8c">&#34;False&#34;</span>:
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>, <span style="color:#ff79c6">nil</span>
+    }
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>, <span style="color:#50fa7b">syntaxError</span>(<span style="color:#f1fa8c">&#34;ParseBool&#34;</span>, str)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-4-parsefloat-字符串转浮点数">2.4. <code>ParseFloat</code>字符串转浮点数</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strconv&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">ParseFloat</span>(<span style="color:#f1fa8c">&#34;1.11&#34;</span>,<span style="color:#bd93f9">64</span>))  <span style="color:#6272a4">//输出 1.11 &lt;nil&gt;
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">ParseFloat</span>(<span style="color:#f1fa8c">&#34;1.11&#34;</span>,<span style="color:#bd93f9">32</span>))  <span style="color:#6272a4">//输出 1.1100000143051147 &lt;nil&gt;
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>ParseFloat</code>的内部实现：
+可以看到内部最终是把转换后的浮点数放到float64类型中返回的</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// ParseFloat converts the string s to a floating-point number
+</span><span style="color:#6272a4">// with the precision specified by bitSize: 32 for float32, or 64 for float64.
+</span><span style="color:#6272a4">// When bitSize=32, the result still has type float64, but it will be
+</span><span style="color:#6272a4">// convertible to float32 without changing its value.
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// If s is well-formed and near a valid floating point number,
+</span><span style="color:#6272a4">// ParseFloat returns the nearest floating point number rounded
+</span><span style="color:#6272a4">// using IEEE754 unbiased rounding.
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// The errors that ParseFloat returns have concrete type *NumError
+</span><span style="color:#6272a4">// and include err.Num = s.
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// If s is not syntactically well-formed, ParseFloat returns err.Err = ErrSyntax.
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// If s is syntactically well-formed but is more than 1/2 ULP
+</span><span style="color:#6272a4">// away from the largest floating point number of the given size,
+</span><span style="color:#6272a4">// ParseFloat returns f = ±Inf, err.Err = ErrRange.
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ParseFloat</span>(s <span style="color:#8be9fd">string</span>, bitSize <span style="color:#8be9fd">int</span>) (<span style="color:#8be9fd">float64</span>, <span style="color:#8be9fd">error</span>) {
+    <span style="color:#ff79c6">if</span> bitSize <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">32</span> {
+        f, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">atof32</span>(s)
+        <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">float64</span>(f), err
+    }
+    <span style="color:#ff79c6">return</span> <span style="color:#50fa7b">atof64</span>(s)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-5-format-格式化">2.5. <code>Format...</code>格式化</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">import</span>(
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;strconv&#34;</span>
+)
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">FormatBool</span>(<span style="color:#ff79c6">true</span>)) <span style="color:#6272a4">//输出 true(字符串)
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">FormatFloat</span>(<span style="color:#bd93f9">1.123</span>, <span style="color:#f1fa8c">&#39;e&#39;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">32</span>))  <span style="color:#6272a4">//输出 1.12e+00(字符串)
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">FormatInt</span>(<span style="color:#bd93f9">222</span>,<span style="color:#bd93f9">2</span>))   <span style="color:#6272a4">//输出 11011110(字符串)
+</span><span style="color:#6272a4"></span>    fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">FormatUint</span>(<span style="color:#bd93f9">123</span>,<span style="color:#bd93f9">10</span>))  <span style="color:#6272a4">//输出 123(字符串)
+</span><span style="color:#6272a4"></span>}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormatBool</code>内部实现：<br />
+内部实现比较简单，直接if判断返回相应的字符串</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// FormatBool returns &#34;true&#34; or &#34;false&#34; according to the value of b
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">FormatBool</span>(b <span style="color:#8be9fd">bool</span>) <span style="color:#8be9fd">string</span> {
+    <span style="color:#ff79c6">if</span> b {
+        <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;true&#34;</span>
+    }
+    <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;false&#34;</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormatFloat</code>内部实现：
+可以看到源码注释很详细：需要4个参数分别是：
+
+<ul>
+<li>f : 要转换的浮点数</li>
+<li>fmt : 格式标记(b、e、E、f、g、G)</li>
+<li>prec : 精度(数字部分的长度，不包括指数部分)</li>
+<li>bitSize : 指定浮点类型(32:float32、64:float64)</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// FormatFloat converts the floating-point number f to a string,
+</span><span style="color:#6272a4">// according to the format fmt and precision prec. It rounds the
+</span><span style="color:#6272a4">// result assuming that the original was obtained from a floating-point
+</span><span style="color:#6272a4">// value of bitSize bits (32 for float32, 64 for float64).
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// The format fmt is one of (格式标记)
+</span><span style="color:#6272a4">// &#39;b&#39; (-ddddp±ddd, a binary exponent),
+</span><span style="color:#6272a4">// &#39;e&#39; (-d.dddde±dd, a decimal exponent),
+</span><span style="color:#6272a4">// &#39;E&#39; (-d.ddddE±dd, a decimal exponent),
+</span><span style="color:#6272a4">// &#39;f&#39; (-ddd.dddd, no exponent),
+</span><span style="color:#6272a4">// &#39;g&#39; (&#39;e&#39; for large exponents, &#39;f&#39; otherwise), or
+</span><span style="color:#6272a4">// &#39;G&#39; (&#39;E&#39; for large exponents, &#39;f&#39; otherwise).
+</span><span style="color:#6272a4">//
+</span><span style="color:#6272a4">// The precision prec controls the number of digits
+</span><span style="color:#6272a4">// (excluding the exponent) printed by the &#39;e&#39;, &#39;E&#39;, &#39;f&#39;, &#39;g&#39;, and &#39;G&#39; formats.
+</span><span style="color:#6272a4">// For &#39;e&#39;, &#39;E&#39;, and &#39;f&#39; it is the number of digits after the decimal point.
+</span><span style="color:#6272a4">// For &#39;g&#39; and &#39;G&#39; it is the total number of digits.
+</span><span style="color:#6272a4">// The special precision -1 uses the smallest number of digits
+</span><span style="color:#6272a4">// necessary such that ParseFloat will return f exactly.
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">FormatFloat</span>(f <span style="color:#8be9fd">float64</span>, fmt <span style="color:#8be9fd">byte</span>, prec, bitSize <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">string</span> {
+	<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">string</span>(<span style="color:#50fa7b">genericFtoa</span>(<span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">byte</span>, <span style="color:#bd93f9">0</span>, <span style="color:#50fa7b">max</span>(prec<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">24</span>)), f, fmt, prec, bitSize))
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormatInt</code>内部实现:<br />
+可以看到第二个参数<code>base</code>表示进制，调用了<code>formatBits</code>这个函数对int进行了转换</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#6272a4">// FormatInt returns the string representation of i in the given base,
+</span><span style="color:#6272a4">// for 2 &lt;= base &lt;= 36. The result uses the lower-case letters &#39;a&#39; to &#39;z&#39;
+</span><span style="color:#6272a4">// for digit values &gt;= 10.
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">FormatInt</span>(i <span style="color:#8be9fd">int64</span>, base <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">string</span> {
+    _, s <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">formatBits</span>(<span style="color:#ff79c6">nil</span>, <span style="color:#8be9fd;font-style:italic">uint64</span>(i), base, i &lt; <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">false</span>)
+    <span style="color:#ff79c6">return</span> s
+}</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/go%E6%A0%87%E5%87%86%E5%BA%93%E7%AC%94%E8%AE%B0io/" id="next">
+                &larr; <span class="nav-title nav-title-next">Go标准库笔记Ⅰ：IO</span> 
+            </a>  
+        <a rel="prev" href="/golang/go%E6%A0%87%E5%87%86%E5%BA%93-fmt/" id="prev">
+            <span class="nav-title nav-title-prev">Go语言标准库-fmt</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

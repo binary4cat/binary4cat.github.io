@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>使用map、reduce和filter简化你的JavaScript代码库  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    24 February 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">使用map、reduce和filter简化你的JavaScript代码库</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-从-strings-numbers-数组中去重">1. 从<code>strings</code>/<code>numbers</code>数组中去重</a></li>
+<li><a href="#2-简单查找-大小写敏感">2. 简单查找（大小写敏感）</a></li>
+<li><a href="#3-简单查找-不区分大小写">3. 简单查找（不区分大小写）</a></li>
+<li><a href="#4-检查是否有用户拥有管理员权限">4. 检查是否有用户拥有管理员权限</a></li>
+<li><a href="#5-展开多维数组">5. 展开多维数组</a></li>
+<li><a href="#6-从一个对象中获取指定属性出现的频率-次数">6. 从一个对象中获取指定属性出现的频率（次数）</a></li>
+<li><a href="#7-给对象数组增加索引-查找表">7. 给对象数组增加索引（查找表）</a></li>
+<li><a href="#8-循环数组提取指定key的唯一值">8. 循环数组提取指定key的唯一值</a></li>
+<li><a href="#9-对象的键-值翻转">9. 对象的键/值翻转</a></li>
+<li><a href="#10-将一个-摄氏度-值数组转换成-华氏度-值数组">10. 将一个“摄氏度”值数组转换成“华氏度”值数组</a></li>
+<li><a href="#11-将对象编码为查询字符串">11. 将对象编码为查询字符串</a></li>
+<li><a href="#12-仅使用指定的key-属性-将users用户对象数组转换成可读的字符串">12. 仅使用指定的key（属性）将users用户对象数组转换成可读的字符串</a></li>
+<li><a href="#13-从对象数组中查找并且替换-key-value-对">13. 从对象数组中查找并且替换<code>key-value</code>对</a></li>
+<li><a href="#14-数组合并">14. 数组合并</a></li>
+<li><a href="#15-获取两个数组的交集">15. 获取两个数组的交集</a></li>
+<li><a href="#16-参考资料">16. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<blockquote>
+<p>原文：<a href="https://medium.freecodecamp.org/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">How to simplify your codebase with map(), reduce(), and filter() in JavaScript</a></p>
+</blockquote>
+
+<p>当你查阅有关于<code>Array.reduce</code>的资料以及它的用法有多酷以外，在很多资料中唯一的例子就是关于“数字之和”的示例，这对于我们了解<code>Array.reduce</code>的定义来说不是很有用。</p>
+
+<p>此外，我也从来没有在真实的代码库中看到有使用它。但是我经常能看到一个7-8行的for循环代码解决的常规任务，使用<code>Array.reduce</code>只用一行就搞定了。</p>
+
+<p>如果你有<code>map</code>、<code>reduce</code>函数更好的使用方式，请在文章评论区回复。</p>
+
+<h1 id="1-从-strings-numbers-数组中去重">1. 从<code>strings</code>/<code>numbers</code>数组中去重</h1>
+
+<p>这是这篇文章中唯一不关于<code>map</code>/<code>reduce</code>/<code>filter</code>函数的使用方法，但是这个方法很有用，很难从这篇文章中排除，而且也会在后面的例子中用到。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#ff79c6">const</span> values <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>];
+<span style="color:#ff79c6">const</span> uniqueValues <span style="color:#ff79c6">=</span> [...<span style="color:#ff79c6">new</span> Set(values)];
+
+<span style="color:#6272a4">// uniqueValues 等于 [3, 1, 5, 2, 4]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-简单查找-大小写敏感">2. 简单查找（大小写敏感）</h1>
+
+<p><code>filter()</code>函数会创建一个新的数组，在下面的例子中新的数组将包含测试数组中符合条件的子项。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> users <span style="color:#ff79c6">=</span> [
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">11</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Adam&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">23</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">47</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;John&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">85</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;William&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">34</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+];
+<span style="color:#8be9fd;font-style:italic">let</span> res <span style="color:#ff79c6">=</span> users.filter(it =&gt; it.name.includes(<span style="color:#f1fa8c">&#39;oli&#39;</span>));
+
+<span style="color:#6272a4">// res 等于 []
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-简单查找-不区分大小写">3. 简单查找（不区分大小写）</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#8be9fd;font-style:italic">let</span> res <span style="color:#ff79c6">=</span> users.filter(it =&gt; <span style="color:#ff79c6">new</span> <span style="color:#8be9fd;font-style:italic">RegExp</span>(<span style="color:#f1fa8c">&#39;oli&#39;</span>, <span style="color:#f1fa8c">&#34;i&#34;</span>).test(it.name));
+
+<span style="color:#6272a4">// res 等于
+</span><span style="color:#6272a4"></span>[
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+]
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-检查是否有用户拥有管理员权限">4. 检查是否有用户拥有管理员权限</h1>
+
+<p><code>some()</code>函数可以检查数组中是否有任何元素满足条件，这个条件时自定义的一个<code>function</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> hasAdmin <span style="color:#ff79c6">=</span> users.some(user =&gt; user.group <span style="color:#ff79c6">===</span> <span style="color:#f1fa8c">&#39;admin&#39;</span>);
+
+<span style="color:#6272a4">// hasAdmin 等于 true
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-展开多维数组">5. 展开多维数组</h1>
+
+<p>使用<code>reduce()</code>函数将一个多维数组展开为一个数组。下面例子中的原始数组在第一次迭代时相当于将<code>[...[], ...[1,2,3]]</code>转换成了<code>[1,2,3]</code>，第二次迭代时值就是我们提供的<code>acc</code>变量，并且以此类推：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> nested <span style="color:#ff79c6">=</span> [[<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>], [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>], [<span style="color:#bd93f9">7</span>, <span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">9</span>]];
+<span style="color:#8be9fd;font-style:italic">let</span> flat <span style="color:#ff79c6">=</span> nested.reduce((acc, it) =&gt; [...acc, ...it], []);
+
+<span style="color:#6272a4">// flat 等于 [1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以稍稍改进这个方法，去掉<code>reduce()</code>函数的第二个参数，这时，<code>nested</code>的第一个填充的值就是<code>acc</code>的值（从上面的描述中可知，如果有第二个参数，第一次迭代会先将第二个参数的数据填充进去）。感谢<a href="https://medium.com/@vladimir_efanov?source=responses---------2---------------------">Vladimir Efanov</a></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#8be9fd;font-style:italic">let</span> flat <span style="color:#ff79c6">=</span> nested.reduce((acc, it) =&gt; [...acc, ...it]);
+
+<span style="color:#6272a4">// flat 等于 [1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>需要注意的是在<code>reduce()</code>函数中使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"><em>spread operator</em></a>会影响性能。</p>
+
+<p>这个例子是排除了性能的情况下的使用方式。</p>
+
+<p>感谢<a href="https://medium.com/@pawewolak?source=responses---------0---------------------">Paweł Wolak</a>，他提供了一个不使用<code>Array.reduce</code>的例子：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#8be9fd;font-style:italic">let</span> flat <span style="color:#ff79c6">=</span> [].concat.apply([], nested);
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>而且由这种使用方式还产生了一个新的功能<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat"><code>Array.flat</code></a>，不过到目前这仍是一个实验性的功能。</p>
+
+<h1 id="6-从一个对象中获取指定属性出现的频率-次数">6. 从一个对象中获取指定属性出现的频率（次数）</h1>
+
+<p>对一个对象数组中的每一个<code>age</code>属性进行分组和计数：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> users <span style="color:#ff79c6">=</span> [
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">11</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Adam&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">23</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">47</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;John&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">85</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;William&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">34</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+];
+<span style="color:#ff79c6">const</span> groupByAge <span style="color:#ff79c6">=</span> users.reduce((acc, it) =&gt; {
+  acc[it.age] <span style="color:#ff79c6">=</span> acc[it.age] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">||</span> <span style="color:#bd93f9">1</span>;
+  <span style="color:#ff79c6">return</span> acc;
+}, {});
+
+<span style="color:#6272a4">// groupByAge 等于 {23: 1, 28: 2, 34: 1}
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>感谢<a href="https://medium.com/@krishnasai952?source=responses---------8-31--------------------">sai krishna</a>提出这个示例。</p>
+
+<h1 id="7-给对象数组增加索引-查找表">7. 给对象数组增加索引（查找表）</h1>
+
+<p>我们可以将对象数组构建成一个对象，使用对象的id作为key，这样可以优化查找。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> uTable <span style="color:#ff79c6">=</span> users.reduce((acc, it) =&gt; (acc[it.id] <span style="color:#ff79c6">=</span> it, acc), {})
+
+<span style="color:#6272a4">// uTable 等于:
+</span><span style="color:#6272a4"></span>{
+  <span style="color:#bd93f9">11</span><span style="color:#ff79c6">:</span> { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">11</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Adam&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">23</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  <span style="color:#bd93f9">47</span><span style="color:#ff79c6">:</span> { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">47</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;John&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> },
+  <span style="color:#bd93f9">85</span><span style="color:#ff79c6">:</span> { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">85</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;William&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">34</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  <span style="color:#bd93f9">97</span><span style="color:#ff79c6">:</span> { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+}
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这是非常有用的，当你想通过id访问某个对象数据的时候，例如：<code>uTable[85].name</code>。</p>
+
+<h1 id="8-循环数组提取指定key的唯一值">8. 循环数组提取指定key的唯一值</h1>
+
+<p>让我们常见一个已有的用户组。<code>map()</code>函数会从被调用的数组中，按照给定的<code>function</code>创建一个新的数组。数组中没有重复数据。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> listOfUserGroups <span style="color:#ff79c6">=</span> [...<span style="color:#ff79c6">new</span> Set(users.map(it =&gt; it.group))];
+
+<span style="color:#6272a4">// listOfUserGroups 是 [&#39;editor&#39;, &#39;admin&#39;];
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的操作就相当于从<code>users</code>数组中获取指定的值，组成数组，<code>it</code>表示数组中的对象，<code>it.group</code>代表最终要取到的值。</p>
+
+<h1 id="9-对象的键-值翻转">9. 对象的键/值翻转</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> cities <span style="color:#ff79c6">=</span> {
+  Lyon<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;France&#39;</span>,
+  Berlin<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Germany&#39;</span>,
+  Paris<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;France&#39;</span>
+};
+<span style="color:#8be9fd;font-style:italic">let</span> countries <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Object</span>.keys(cities).reduce(
+  (acc, k) =&gt; (acc[cities[k]] <span style="color:#ff79c6">=</span> [...(acc[cities[k]] <span style="color:#ff79c6">||</span> []), k], acc) , {});
+
+<span style="color:#6272a4">// countries 是
+</span><span style="color:#6272a4"></span>{
+  France<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#34;Lyon&#34;</span>, <span style="color:#f1fa8c">&#34;Paris&#34;</span>],
+  Germany<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#34;Berlin&#34;</span>]
+}
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这个单行操作看起来十分复杂，我在这使用了<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comma_Operator"><em>comma operator</em></a>，这就意味着每次都会返回圆括号中的最后一个值<code>acc</code>（这是comma operator的功能）。</p>
+
+<p>让我来重写一下这个例子，让其更加接近真实使用的方式，而且性能更好：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#8be9fd;font-style:italic">let</span> countries <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Object</span>.keys(cities).reduce((acc, k) =&gt; {
+  <span style="color:#8be9fd;font-style:italic">let</span> country <span style="color:#ff79c6">=</span> cities[k];
+  acc[country] <span style="color:#ff79c6">=</span> acc[country] <span style="color:#ff79c6">||</span> [];
+  acc[country].push(k);
+  <span style="color:#ff79c6">return</span> acc;
+}, {});
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里我没有使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"><em>spread operator</em></a>，它会在每一个<code>reduce()</code>函数的调用中创建了一个新数组，这会造成很大的性能损耗，其算法复杂度为<code>O(n²)</code>。代替<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"><em>spread operator</em></a>的是比较好的旧功能<code>push()</code>函数。</p>
+
+<h1 id="10-将一个-摄氏度-值数组转换成-华氏度-值数组">10. 将一个“摄氏度”值数组转换成“华氏度”值数组</h1>
+
+<p>可以看作是使用特定的算法处理每一个元素：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> celsius <span style="color:#ff79c6">=</span> [<span style="color:#ff79c6">-</span><span style="color:#bd93f9">15</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">16</span>, <span style="color:#bd93f9">20</span>, <span style="color:#bd93f9">24</span>, <span style="color:#bd93f9">32</span>]
+<span style="color:#ff79c6">const</span> fahrenheit <span style="color:#ff79c6">=</span> celsius.map(t =&gt; t <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">1.8</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">32</span>);
+
+<span style="color:#6272a4">// fahrenheit 是 [5, 23, 32, 50, 60.8, 68, 75.2, 89.6]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="11-将对象编码为查询字符串">11. 将对象编码为查询字符串</h1>
+
+<p>将一个对象转换成URL的查询字符串：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> params <span style="color:#ff79c6">=</span> {lat<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">45</span>, lng<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">6</span>, alt<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">1000</span>};
+<span style="color:#ff79c6">const</span> queryString <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Object</span>.entries(params).map(p =&gt; <span style="color:#8be9fd;font-style:italic">encodeURIComponent</span>(p[<span style="color:#bd93f9">0</span>]) <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;=&#39;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">encodeURIComponent</span>(p[<span style="color:#bd93f9">1</span>])).join(<span style="color:#f1fa8c">&#39;&amp;&#39;</span>)
+
+<span style="color:#6272a4">// queryString 是 &#34;lat=45&amp;lng=6&amp;alt=1000&#34;
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="12-仅使用指定的key-属性-将users用户对象数组转换成可读的字符串">12. 仅使用指定的key（属性）将users用户对象数组转换成可读的字符串</h1>
+
+<p>有时候你可能想按照选择的key（属性）当作字符串打印一个对象数组，但是你应当已经认识到<code>JSON.stringify</code>并不能很好的实现这一点。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> users <span style="color:#ff79c6">=</span> [
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">11</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Adam&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">23</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">47</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;John&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">85</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;William&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">34</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+];
+users.map(({id, age, group}) =&gt; <span style="color:#f1fa8c">`</span>\<span style="color:#f1fa8c">n</span><span style="color:#f1fa8c">${</span>id<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c"> </span><span style="color:#f1fa8c">${</span>age<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c"> </span><span style="color:#f1fa8c">${</span>group<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>).join(<span style="color:#f1fa8c">&#39;&#39;</span>)
+
+<span style="color:#6272a4">// 返回:
+</span><span style="color:#6272a4"></span><span style="color:#f1fa8c">&#34;
+</span><span style="color:#f1fa8c">11 23 editor
+</span><span style="color:#f1fa8c">47 28 admin
+</span><span style="color:#f1fa8c">85 34 editor
+</span><span style="color:#f1fa8c">97 28 admin&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>JSON.stringify</code>可以使字符串更具可读性（json格式），但是它不能打印成table形式：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">JSON.stringify(users, [<span style="color:#f1fa8c">&#39;id&#39;</span>, <span style="color:#f1fa8c">&#39;name&#39;</span>, <span style="color:#f1fa8c">&#39;group&#39;</span>], <span style="color:#bd93f9">2</span>);
+
+<span style="color:#6272a4">// 返回:
+</span><span style="color:#6272a4"></span><span style="color:#f1fa8c">&#34;[
+</span><span style="color:#f1fa8c">  {
+</span><span style="color:#f1fa8c">    &#34;</span>id<span style="color:#f1fa8c">&#34;: 11,
+</span><span style="color:#f1fa8c">    &#34;</span>name<span style="color:#f1fa8c">&#34;: &#34;</span>Adam<span style="color:#f1fa8c">&#34;,
+</span><span style="color:#f1fa8c">    &#34;</span>group<span style="color:#f1fa8c">&#34;: &#34;</span>editor<span style="color:#f1fa8c">&#34;
+</span><span style="color:#f1fa8c">  },
+</span><span style="color:#f1fa8c">  {
+</span><span style="color:#f1fa8c">    &#34;</span>id<span style="color:#f1fa8c">&#34;: 47,
+</span><span style="color:#f1fa8c">    &#34;</span>name<span style="color:#f1fa8c">&#34;: &#34;</span>John<span style="color:#f1fa8c">&#34;,
+</span><span style="color:#f1fa8c">    &#34;</span>group<span style="color:#f1fa8c">&#34;: &#34;</span>admin<span style="color:#f1fa8c">&#34;
+</span><span style="color:#f1fa8c">  },
+</span><span style="color:#f1fa8c">  {
+</span><span style="color:#f1fa8c">    &#34;</span>id<span style="color:#f1fa8c">&#34;: 85,
+</span><span style="color:#f1fa8c">    &#34;</span>name<span style="color:#f1fa8c">&#34;: &#34;</span>William<span style="color:#f1fa8c">&#34;,
+</span><span style="color:#f1fa8c">    &#34;</span>group<span style="color:#f1fa8c">&#34;: &#34;</span>editor<span style="color:#f1fa8c">&#34;
+</span><span style="color:#f1fa8c">  },
+</span><span style="color:#f1fa8c">  {
+</span><span style="color:#f1fa8c">    &#34;</span>id<span style="color:#f1fa8c">&#34;: 97,
+</span><span style="color:#f1fa8c">    &#34;</span>name<span style="color:#f1fa8c">&#34;: &#34;</span>Oliver<span style="color:#f1fa8c">&#34;,
+</span><span style="color:#f1fa8c">    &#34;</span>group<span style="color:#f1fa8c">&#34;: &#34;</span>admin<span style="color:#f1fa8c">&#34;
+</span><span style="color:#f1fa8c">  }
+</span><span style="color:#f1fa8c">]&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="13-从对象数组中查找并且替换-key-value-对">13. 从对象数组中查找并且替换<code>key-value</code>对</h1>
+
+<p>假设我们要改变“John&rsquo;s”的年龄，如果你知道对象所在数组的索引，那么完全可以这么写：<code>users[1].age = 29</code>，但是让我们来看看另外一种更灵活的写法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> users <span style="color:#ff79c6">=</span> [
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">11</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Adam&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">23</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">47</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;John&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">85</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;William&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">34</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;editor&#39;</span> },
+  { id<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">97</span>, name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Oliver&#39;</span>, age<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">28</span>, group<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;admin&#39;</span> }
+];
+
+<span style="color:#ff79c6">const</span> updatedUsers <span style="color:#ff79c6">=</span> users.map(
+  p =&gt; p.id <span style="color:#ff79c6">!==</span> <span style="color:#bd93f9">47</span> <span style="color:#ff79c6">?</span> p <span style="color:#ff79c6">:</span> {...p, age<span style="color:#ff79c6">:</span> p.age <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>}
+);
+
+<span style="color:#6272a4">// John现在是29岁了
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>相反这里不是改变数组中的单个项，我们创建了一个仅有一个元素不同的新对象，现在我们可以试试用引用来比较我们的两个数组，例如：<code>updatedUsers == users</code>。React.js使用这种方式加速reconciliation过程。<a href="https://blog.logrocket.com/immutability-in-react-ebe55253a1cc">Here is an explanation</a>。</p>
+
+<h1 id="14-数组合并">14. 数组合并</h1>
+
+<p>下面的方法比使用<a href="https://lodash.com/docs/4.17.11#union">lodash库的<code>union</code>函数</a>的代码量少:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> arrA <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">2</span>];
+<span style="color:#ff79c6">const</span> arrB <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">7</span>, <span style="color:#bd93f9">1</span>];
+[...<span style="color:#ff79c6">new</span> Set([...arrA, ...arrB])]; <span style="color:#6272a4">// returns [1, 4, 3, 2, 5, 6, 7]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="15-获取两个数组的交集">15. 获取两个数组的交集</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#ff79c6">const</span> arrA <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">2</span>];
+<span style="color:#ff79c6">const</span> arrB <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">7</span>, <span style="color:#bd93f9">1</span>];
+
+arrA.filter(it =&gt; arrB.includes(it)); <span style="color:#6272a4">// returns [1, 2]
+</span><span style="color:#6272a4"></span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="16-参考资料">16. 参考资料</h1>
+
+<p><a href="https://medium.freecodecamp.org/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">How to simplify your codebase with map(), reduce(), and filter() in JavaScript</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/" id="prev">
+            <span class="nav-title nav-title-prev">6个Angular开发者必备的VSCode扩展</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

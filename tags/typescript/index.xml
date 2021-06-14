@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Typescript on Haijd&#39;s Blog</title>
+    <link>/tags/typescript/</link>
+    <description>Recent content in Typescript on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 15 Apr 2018 20:03:07 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5分钟概览TypeScript</title>
+      <link>/frontend/5%E5%88%86%E9%92%9F%E4%B8%8A%E6%89%8Btypescript/</link>
+      <pubDate>Sun, 15 Apr 2018 20:03:07 +0800</pubDate>
+      
+      <guid>/frontend/5%E5%88%86%E9%92%9F%E4%B8%8A%E6%89%8Btypescript/</guid>
+      <description>5分钟快速上手，请猛击这里看官网文档。
+ 1. 简介 　TypeScript不是一种新的语言，可以认为是给JavaScript添加语言特性的语言扩展(例如在JavaScript还未出现import和装饰器的时候，TypeScript已经有了)，官方的说法是JavaScript的超集，最终还是会编译成JavaScript代码在浏览器执行。
+2. 语法特性 　TypeScript是支持OOP开发的，对于有OOP经验的人来说是非常友好的，写过c#、Java、golang语言的开发者，很容易上手。
+学习的时候，建议通读文档，中文文档非常全面，更新的也特别及时，建议多做参考，文档地址：点此！
+3. 基础语法 3.1. 声明语法:  类、接口声明：  1 2 3 4 5 6  class Name{ // 声明成员 } interface IName{ // 声明成员 }    变量声明:
+  1 2  let num: number = 1; // 显示赋值 let str: string; // 默认初始值    函数声明：  1 2 3  function func(val: string):void{ // 该函数需要一个string类型的参数，无返回值。 }   3.</description>
+    </item>
+    
+  </channel>
+</rss>

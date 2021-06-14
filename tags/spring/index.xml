@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring on Haijd&#39;s Blog</title>
+    <link>/tags/spring/</link>
+    <description>Recent content in Spring on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 May 2018 22:36:50 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spring-AOP极简入门</title>
+      <link>/java/spring-aop%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 30 May 2018 22:36:50 +0800</pubDate>
+      
+      <guid>/java/spring-aop%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;h1 id=&#34;1-apo介绍&#34;&gt;1. APO介绍&lt;/h1&gt;
+
+&lt;h2 id=&#34;1-1-简介&#34;&gt;1.1. 简介&lt;/h2&gt;
+
+&lt;p&gt;按照惯例先来一份&lt;a href=&#34;https://zh.wikipedia.org/wiki/面向侧面的程序设计&#34;&gt;维基百科的解释&lt;/a&gt;：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;面向侧面的程序设计（aspect-oriented programming，AOP，又译作面向方面的程序设计、观点导向编程、剖面导向程序设计）是计算机科学中的一个术语，指一种程序设计范型。该范型以一种称为侧面（aspect，又译作方面）的语言构造为基础，侧面是一种新的模块化机制，用来描述分散在对象、类或函数中的横切关注点（crosscutting concern）。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

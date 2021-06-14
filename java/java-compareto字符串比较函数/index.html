@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java compareTo字符串比较函数  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    10 December 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java compareTo字符串比较函数</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-调用方式">1. 调用方式：</a></li>
+<li><a href="#2-关于返回值的三种判断">2. 关于返回值的三种判断</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-调用方式">1. 调用方式：</h1>
+
+<p><code>int compareTo(String)</code>
+compareTo函数可以直接使用String类型的变量调用，参数是需要比较的另一个字符串，返回值是一个int类型。</p>
+
+<h1 id="2-关于返回值的三种判断">2. 关于返回值的三种判断</h1>
+
+<p><code>s1.compareTo(s2)//s1是原字符串，s2是参数字符串</code>
+返回值计算方式：<em>原减参</em></p>
+
+<ul>
+<li>返回<code>0</code>
+
+<ul>
+<li>两个字符串相同</li>
+</ul></li>
+
+<li><p>返回正负整数：</p>
+
+<ul>
+<li>原字符串中的所有字符，按照顺序都包含在参数字符串中时，返回的是，原字符串字符数减去参数字符串字符数。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String s1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Java&#34;</span><span style="color:#ff79c6">;</span>
+String s2 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;JavaScript&#34;</span><span style="color:#ff79c6">;</span>
+System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">Println</span><span style="color:#ff79c6">(</span>s1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">compareTo</span><span style="color:#ff79c6">(</span>s2<span style="color:#ff79c6">));</span>  <span style="color:#6272a4">//输出-6
+</span><span style="color:#6272a4">//解读：因为s1是原字符串，并且其中的4个字符全部在参数字符串s2中可以找到，
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">//</span> 所以在使用compareTo函数的时候，就是源字符串的长度4减去参数字符串的长度10等于<span style="color:#ff79c6">-</span>6</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>原字符串中有1个或以上的字符并不在参数字符串中时，返回的是，两个字符串中不相同的第一个字符的ASCII码(十进制表示)相减的值。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">String s1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Javac&#34;</span><span style="color:#ff79c6">;</span>  
+String s2 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;JavaScript&#34;</span><span style="color:#ff79c6">;</span>
+System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">Println</span><span style="color:#ff79c6">(</span>s1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">compareTo</span><span style="color:#ff79c6">(</span>s2<span style="color:#ff79c6">));</span>  <span style="color:#6272a4">//输出16
+</span><span style="color:#6272a4">// 解读：字符串s1中的第五个字符“c”对应的是s2中的“S”，
+</span><span style="color:#6272a4">// 所以两个是不包含的关系，使用ASCII码的十进制表示相减。
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">//</span> “c”的ASCII码为99，“S”的ASCII码为83，利用“原减参”的规则，99<span style="color:#ff79c6">-</span>83<span style="color:#ff79c6">=</span>16</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<blockquote>
+<p>使用人话说：
+我找你想比较一下我们俩拥有的水果是不是一模一样的，我有4个苹果，你也有4个苹果，但是你还有3个梨，这时候，我只能表示我比你少3个数量的水果。
+过了一会儿，我从家里拿来一个橘子，加在一起和你比较了，这时候，橘子是只有我有，而你没有，这时候我才不管你有梨我没梨了，我就非得用这个橘子和你的梨比较价格。</p>
+</blockquote>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/spring-aop%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8/" id="next">
+                &larr; <span class="nav-title nav-title-next">Spring-AOP极简入门</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80map%E6%8E%A5%E5%8F%A3/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：Map接口</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

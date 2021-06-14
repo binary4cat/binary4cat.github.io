@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asp.net on Haijd&#39;s Blog</title>
+    <link>/tags/asp.net/</link>
+    <description>Recent content in Asp.net on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 Feb 2017 00:39:03 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用CsvHelper导入导出csv文件</title>
+      <link>/csharp/%E4%BD%BF%E7%94%A8csvhelper%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sat, 25 Feb 2017 00:39:03 +0800</pubDate>
+      
+      <guid>/csharp/%E4%BD%BF%E7%94%A8csvhelper%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;今天记录一下使用&lt;a href=&#34;https://github.com/JoshClose/CsvHelper&#34;&gt;CsvHelper&lt;/a&gt;导入导出CSV文件的方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-csv介绍&#34;&gt;1. CSV介绍&lt;/h1&gt;
+
+&lt;p&gt;　　csv文件是一种纯文本存储的文件格式，行和列分别用逗号和换行来代替，可以直接使用Excel打开。在代码中可以直接使用&lt;code&gt;TextWrite&lt;/code&gt; 操作，比较方便快速。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-csvhelper&#34;&gt;2. CsvHelper&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-项目介绍&#34;&gt;2.1. 项目介绍：&lt;/h2&gt;
+
+&lt;p&gt;　　github主页：&lt;a href=&#34;https://github.com/JoshClose/CsvHelper&#34;&gt;https://github.com/JoshClose/CsvHelper&lt;/a&gt;
+　　文档：&lt;a href=&#34;http://joshclose.github.io/CsvHelper/&#34;&gt;http://joshclose.github.io/CsvHelper/&lt;/a&gt;
+　　wiki：&lt;a href=&#34;https://github.com/JoshClose/CsvHelper/wiki&#34;&gt;https://github.com/JoshClose/CsvHelper/wiki&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET中的Url重写</title>
+      <link>/csharp/asp-net%E4%B8%AD%E7%9A%84url%E9%87%8D%E5%86%99/</link>
+      <pubDate>Wed, 11 Feb 2015 13:47:48 +0800</pubDate>
+      
+      <guid>/csharp/asp-net%E4%B8%AD%E7%9A%84url%E9%87%8D%E5%86%99/</guid>
+      <description>&lt;h1 id=&#34;1-一-为了页面更有利于seo优化-url重写程序需要做出的不可缺少的手段之一&#34;&gt;1. 一. 为了页面更有利于seo优化，url重写程序需要做出的不可缺少的手段之一。&lt;/h1&gt;
+
+&lt;h1 id=&#34;2-二-目前url重写最常见的两种方法有&#34;&gt;2. 二.目前url重写最常见的两种方法有：&lt;/h1&gt;
+
+&lt;p&gt;　　1. 通过熟悉页面的内部执行流程，也就是asp.net请求管道中的相关知识点，进行url重写。
+　　2. 通过使用微软提供的UrlRewriter.dll实现url重写（简单）；&lt;/p&gt;
+
+&lt;h1 id=&#34;3-三-在请求管道中的第一个请求管道中拦截url并使其完成url重写功能&#34;&gt;3. 三、在请求管道中的第一个请求管道中拦截url并使其完成url重写功能：&lt;/h1&gt;
+
+&lt;p&gt;　　1. 熟悉请求管道实现程序运行的全过程：
+　　　　(1)：BeginRequest: 开始处理请求
+　　　　(2)：AuthenticateRequest授权验证请求，获取用户授权信息
+　　　　(3):PostAuthenticateRequest获取成功
+　　　　(4): AunthorizeRequest 授权，一般来检查用户是否获得权限&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

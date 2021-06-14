@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang入门 on Haijd&#39;s Blog</title>
+    <link>/tags/golang%E5%85%A5%E9%97%A8/</link>
+    <description>Recent content in Golang入门 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 20 Apr 2019 22:08:09 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/golang%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Win10&#43;WSL配置Golang开发环境</title>
+      <link>/golang/win10&#43;wsl%E9%85%8D%E7%BD%AEgolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Sat, 20 Apr 2019 22:08:09 +0800</pubDate>
+      
+      <guid>/golang/win10&#43;wsl%E9%85%8D%E7%BD%AEgolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid>
+      <description>Linux 是比较理想的开发环境，先前电脑装的 Ubuntu 系统，流畅度、字体效果感觉都比 Windows 好，但是开发之外其他的内容就很难在 Linux 上进行了，例如印象笔记、微信 QQ 传输文件等，最近又换回了 Windows 系统，花时间借助 win10 的 Linux 子系统也能搭一个 Linux 下的开发环境。
+安装 WSL 关于如何安装 WSL 的操作就省略了，Google 一下很多，也很简单，主要介绍一下其他的配置内容。
+配置清华大学软件源 Ubuntu 官方阿软件源服务器在国外，执行apt-get比较慢，所以切换为国内的软件源进行加速，这里使用清华大学开源软件镜像站提供的 Ubuntu 镜像
+Hyper 好看是第一生产力，Hyper 是一个第三方的命令行工具，使用Electron框架开发的，可配置性很高，有丰富的主题可以选择，直接秒杀自带的黑框框，来两张图对比一下： 安装 Hyper 直接上官网下载对应的版本安装即可。
+配置 Hyper 默认为 WSL 的 terminal 打开 Hyper 窗口，在左上角菜单选择 Eidt -&amp;gt; Perferences&amp;hellip; 后会直接打开配置文件，配置文件是 js 文件很容易看懂。 我们主要修改shell这个属性的值，这个配置可以修改 Hyper 默认使用的 terminal 类型，我们输入wsl的路径：
+1 2 3  shell: &amp;#39;C:\\Windows\\System32\\wsl.exe&amp;#39;, ... shellArgs: [&amp;#39;bash&amp;#39;], // 这是进入terminal时默认命令，可以酌情修改   修改完之后保存配置文件，Hyper 会热加载配置，不过重启一下最好。</description>
+    </item>
+    
+    <item>
+      <title>GoWeb示例笔记</title>
+      <link>/golang/goweb%E7%A4%BA%E4%BE%8B%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sat, 28 Oct 2017 17:05:51 +0800</pubDate>
+      
+      <guid>/golang/goweb%E7%A4%BA%E4%BE%8B%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;p&gt;学习&lt;a href=&#34;http://books.studygolang.com/gowebexamples&#34;&gt;GoWeb示例&lt;/a&gt;的笔记，做了总结和摘录，加入了一些没有提到的知识点。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Go by Example笔记</title>
+      <link>/golang/go-by-example%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Thu, 26 Oct 2017 20:59:43 +0800</pubDate>
+      
+      <guid>/golang/go-by-example%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;p&gt;学习&lt;a href=&#34;http://books.studygolang.com/gobyexample/&#34;&gt;Go by Example&lt;/a&gt;的笔记，做了总结和摘录，加入了一些没有提到的知识点。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Golang文本编码处理</title>
+      <link>/golang/golang%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%A4%84%E7%90%86/</link>
+      <pubDate>Tue, 05 Sep 2017 22:43:02 +0800</pubDate>
+      
+      <guid>/golang/golang%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%A4%84%E7%90%86/</guid>
+      <description>1. strings库常见例子 1.1. strings.Contains()包含 1 2 3 4 5 6 7 8 9  import( &amp;#34;fmt&amp;#34; &amp;#34;strings&amp;#34; ) func main(){ str := &amp;#34;hello world&amp;#34; fmt.Println(strings.Contains(str,&amp;#34;hello&amp;#34;)) //输出 true  fmt.Println(strings.Contains(str,&amp;#34;?&amp;#34;)) //输出 false }   1.2. strings.Index()索引 1 2 3 4 5 6 7 8  import( &amp;#34;fmt&amp;#34; &amp;#34;strings&amp;#34; ) func main(){ str := &amp;#34;hello world&amp;#34; fmt.Println(strings.Index(str,&amp;#34;w&amp;#34;)) //输出 6 }   1.3. strings.Split()切割 1 2 3 4 5 6 7 8  import( &amp;#34;fmt&amp;#34; &amp;#34;strings&amp;#34; ) func main(){ str := &amp;#34;hello,world&amp;#34; fmt.</description>
+    </item>
+    
+    <item>
+      <title>Go语言标准库-fmt</title>
+      <link>/golang/go%E6%A0%87%E5%87%86%E5%BA%93-fmt/</link>
+      <pubDate>Wed, 23 Aug 2017 20:56:34 +0800</pubDate>
+      
+      <guid>/golang/go%E6%A0%87%E5%87%86%E5%BA%93-fmt/</guid>
+      <description>1. fmt包  fmt包实现了类似c语言的printf和scanf函数，实现格式化I/O函数。  1.1. printf函数 1.1.1. 示例类型和变量 1 2 3 4 5 6 7  type Human struct{ Name string } func main(){ var people = Human{Name:&amp;#34;zhangsan&amp;#34;} }   1.1.2. 普通占位符    占位符 说明 举例 输出     %v 相应值的默认格式 Printf(&amp;quot;%v&amp;quot;,people) {zhangsan}   %+v 打印结构体时，会添加字段名显示 Printf(&amp;quot;%+v&amp;quot;,people) {Name:zhangsan}   %#v 相应值的Go语法表示 Printf(&amp;quot;%#v&amp;quot;,people) main.Human{Name:zhangsan}   %T 相应值*类型*的Go语法表示 Printf(&amp;quot;%T&amp;quot;,people) main.Human   %% 表示输出一个%(类似转义符) Printf(&amp;quot;%%&amp;quot;) %    1.</description>
+    </item>
+    
+    <item>
+      <title>Go语言基础知识</title>
+      <link>/golang/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+      <pubDate>Fri, 11 Aug 2017 21:53:08 +0800</pubDate>
+      
+      <guid>/golang/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+      <description>1. 基础知识  每个go程序都是由package定义的。package必须在源文件的第一行。 每个可执行程序必须有且只有一个main包，main包里面必须有main函数。  1 2 3 4 5  package main // todo func main(){ //TODO }    import
+ 多个包可以一个一个import：   1 2 3  import &amp;#34;fmt&amp;#34; import &amp;#34;os&amp;#34; import &amp;#34;log&amp;#34;    也可以简化：  1 2 3 4 5 6 7 8 9  import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; &amp;#34;log&amp;#34; ) //调用 func main(){ fmt.Println(&amp;#34;hello world&amp;#34;); }    导入的包没有调用里面的函数等，就会导致编译失败。 可以设置别名：  1 2 3 4 5 6  import env &amp;#34;fmt&amp;#34; //调用 func main(){ env.</description>
+    </item>
+    
+    <item>
+      <title>Go命令操作工具</title>
+      <link>/golang/go%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Wed, 09 Aug 2017 21:09:03 +0800</pubDate>
+      
+      <guid>/golang/go%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%B7%A5%E5%85%B7/</guid>
+      <description>1. 查看Go命令 可以在命令行中执行go命令来查看所有的go命令： 2. Go命令 2.1. go build 主要用来编译代码，在编译的过程中，可以同时编译代码中引用的其他包。
+ 对于普通包，执行go build后不会生成任何文件。(执行gi install可以在$GOPATH/pkg目录下生成对应的文件) 如果是main包，执行go build后，会在当前的目录下生成一个可执行文件。(使用go install或go build -o [path]/a.exe可以在$GOPATH/bin目录下生成相应的文件) go build默认会编译当前目录下的所有go文件；如果只想编译某一个文件，可以在go build之后加上文件名，例如：go build name.go。 使用go build -o namexx.exe可以指定编译输出的文件名；默认的名称有两种情况：如果当前不是main包，那么就是package名；如果是main包那么就是第一个源文件的文件名。 go build会忽略目录下以“_”或者“.”开头的文件。 如果需要针对不同的操作系统进行不同的处理，可以根据不同系统名称后缀来命名文件，例如有一个读取数组的程序，针对不同的操作系统的执行代码有差异的，那么就有这么几个源文件：array_linux.go、array_darwin.go、array_windows.go、array_freebsd.go，在不同的操作系统下编译会选择相应系统名结尾的文件，忽略其他文件。  2.1.1. 参数介绍  -o 指定输出的文件名，可以带路径输出：go build a/b/c/name.exe -n 把需要执行的编译命令打印出来，但是不执行，只输出。 -v 打印出正在编译的包名 -x 和-n相同，只是-x在打印的同时会执行编译  2.2. go clean 这个命令是用来删除掉当前包中编译生成的文件，只剩下源文件。
+2.2.1. 参数介绍  -i 清除使用go install安装的文件(关联的安装包和可运行文件)。 -n 把需要执行清除命令打印出来，但是不执行。 -r 循环清除在import中引入的包。 -x 和-n一样，只不过在打印的同时会执行清除命令。  2.3. go fmt 这个命令可以格式化你源文件中的代码，消除源文件中的编码不规范。
+2.3.1. 参数介绍  -l 列出需要格式化的文件。 -w 把格式化后的内容直接写入对应的源文件中。 -s 简化文件中的代码。 -d 打印格式化前后的内容对比，不写入文件，默认是false。 -e 打印所有的语法错误。如果没有这个参数，默认只会打印前10个错误。  2.</description>
+    </item>
+    
+    <item>
+      <title>GO环境安装部署</title>
+      <link>/golang/go%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Tue, 08 Aug 2017 21:50:58 +0800</pubDate>
+      
+      <guid>/golang/go%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</guid>
+      <description>&lt;h1 id=&#34;windows安装go&#34;&gt;Windows安装GO&lt;/h1&gt;
+
+&lt;p&gt;官网下载&lt;a href=&#34;https://golang.org/dl/&#34;&gt;https://golang.org/dl/&lt;/a&gt;
+  Golang中国下载&lt;a href=&#34;https://golangtc.com/download&#34;&gt;https://golangtc.com/download&lt;/a&gt;
+直接安装即可。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

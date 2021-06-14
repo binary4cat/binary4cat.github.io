@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wsl on Haijd&#39;s Blog</title>
+    <link>/tags/wsl/</link>
+    <description>Recent content in Wsl on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 29 Jun 2019 14:46:11 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/wsl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL&#43;VSCODE体验UBUNTU环境下的开发</title>
+      <link>/tool/wsl&#43;vscode%E4%BD%93%E9%AA%8Cubuntu%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Sat, 29 Jun 2019 14:46:11 +0800</pubDate>
+      
+      <guid>/tool/wsl&#43;vscode%E4%BD%93%E9%AA%8Cubuntu%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%BC%80%E5%8F%91/</guid>
+      <description>配置 WSL 环境 首先安装 WSL，我这里选择的是 ubuntu18.04 这个应用。
+切换 WSL 的默认用户为 root 用户 切换成 root 用户主要是避免后续开发中遇到权限问题比较麻烦，直接默认 root 解决问题。
+找到ubuntu安装目录，一般在C:\Program Files\WindowsApps\CanonicalGroupLimited.Ubuntu18.04onWindows_1804.2019.522.0_x64__79rhkp1fndgsc文件夹下面。
+在文件夹中打开 powershell 运行下面的命令：
+1 2 3 4  ./ubuntu1804.exe config --default-user root # 重启WSL服务 net stop LxssManager net start LxssManager   如果显示拒绝访问，就用管理员权限打开 powershell，或者直接在资源管理器中找到LxssManager这个服务重新启动。
+切换 apt 源为清华源 默认的软件源下载太慢，替换为国内的清华大学软件源。
+Ubuntu 清华源的地址：https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/
+切换 WSL 默认的 shell 为 zsh zsh 的优点在我看来就是配置丰富，最重要的就是好看。
+执行下面的命令安装zsh和oh-my-zsh
+1 2 3  sudo apt-get update sudo apt-get install zsh sh -c &amp;#34;$(wget https://raw.</description>
+    </item>
+    
+  </channel>
+</rss>

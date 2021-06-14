@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fmt on Haijd&#39;s Blog</title>
+    <link>/tags/fmt/</link>
+    <description>Recent content in Fmt on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Jan 2019 20:39:10 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/fmt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>深入了解fmt包</title>
+      <link>/golang/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3fmt%E5%8C%85/</link>
+      <pubDate>Sat, 12 Jan 2019 20:39:10 +0800</pubDate>
+      
+      <guid>/golang/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3fmt%E5%8C%85/</guid>
+      <description>英文原文：https://blog.gopheracademy.com/advent-2018/fmt/
+ fmt包是我们最常使用的package，我们使用它打印输出一些内容，也可以当作字符串formatter工具。在这篇内容中我们再更进一步了解fmt的使用技巧。
+Formatting Output Go fmt的方法支持多个“描述符”，一些常见的“描述符”例如：%s表示格式化输出为字符串，%d表示格式化输出为整数型，%f表示格式化输出为浮点类型。除了这些常见的，这里介绍一些其他的fmt包的“描述符”：
+%v&amp;amp;%T %v将会格式化输出任意的变量的值，%T则会格式化输出任意变量的类型（type）
+1 2  var e interface{} = 2.7182 fmt.Printf(&amp;#34;e = %v (%T)\n&amp;#34;, e, e)   输出：
+1  e = 2.7182 (float64)   宽度 可以在格式化输出的时候，指定输出内容的宽度，例如：
+1  fmt.Println(&amp;#34;[%10d]\n&amp;#34;, 353)   输出：
+1  [ 353]   可以看到输出的内容在353前面多了7个空格(我真的数了)，加上“353”正好是10个字符，这就是“宽度”的意思，把变量格式化为指定的宽度输出。当然指定的宽度如果小于要输出的内容，那么就不会生效了。
+这个宽度可以用在其他的“描述符”中，%s、%f、%T等等，对于%T这种使用宽度时，会给类型描述设置宽度，这么描述可能不清楚，可以看看代码：
+1 2  s := &amp;#34;123&amp;#34; fmt.Printf(&amp;#34;[%10T]\n&amp;#34;, s) // 输出：[ string]   也可以在参数中指定宽度的数值，使用*来指代宽度数值参数，例如：
+1  fmt.Printf(&amp;#34;%*d&amp;#34;, 10, 353)   输出：</description>
+    </item>
+    
+  </channel>
+</rss>

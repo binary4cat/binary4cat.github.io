@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>微信JSSDK的使用  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    15 March 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">微信JSSDK的使用</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-概述和官方文档">1. 概述和官方文档</a></li>
+<li><a href="#2-调用步骤">2. 调用步骤</a>
+<ul>
+<li><a href="#2-1-绑定域名">2.1. 绑定域名</a></li>
+<li><a href="#2-2-页面引入js文件">2.2. 页面引入JS文件</a></li>
+<li><a href="#2-3-请求配置参数-注入微信权限验证配置">2.3. 请求配置参数，注入微信权限验证配置</a></li>
+</ul></li>
+<li><a href="#3-结束">3. 结束</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-概述和官方文档">1. 概述和官方文档</h1>
+
+<p>　　使用微信JSSDK可以在网页中调用手机的拍照语音、定位等手机系统功能，还可以定制微信分享、扫一扫、卡券、支付等微信功能。
+　　官方文档：<a href="http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html">http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html</a>
+　　</p>
+
+<h1 id="2-调用步骤">2. 调用步骤</h1>
+
+<h2 id="2-1-绑定域名">2.1. 绑定域名</h2>
+
+<p>　　首先进入<a href="http://mp.weixin.qq.com/">微信公众号后台</a>，进入公众号设置=&gt;功能设置=&gt;JS接口安全域名设置：在这里可以设置三个调用的JSSDK的域名，然后将提示信息注意事项3中的<a href="https://mp.weixin.qq.com/cgi-bin/mpverifytxt?lang=zh_CN&amp;token=1492992380">文件下载</a>下来，放到网站的根目录下，点击保存，微信会自动测试是否设置成功。</p>
+
+<h2 id="2-2-页面引入js文件">2.2. 页面引入JS文件</h2>
+
+<p>　　在需要使用到JSSDK的页面引入微信提供的js文件，可以支持https协议，下载：</p>
+
+<p><a href="http://res.wx.qq.com/open/js/jweixin-1.2.0.js">http://res.wx.qq.com/open/js/jweixin-1.2.0.js</a>
+ 　　<a href="https://res.wx.qq.com/open/js/jweixin-1.2.0.js">https://res.wx.qq.com/open/js/jweixin-1.2.0.js</a></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript">@section scripts{
+    <span style="color:#ff79c6">&lt;</span>script src<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;http://res.wx.qq.com/open/js/jweixin-1.2.0.js&#34;</span><span style="color:#ff79c6">&gt;&lt;</span>/script&gt;
+}
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-3-请求配置参数-注入微信权限验证配置">2.3. 请求配置参数，注入微信权限验证配置</h2>
+
+<p>　　在所有使用JSSDK的页面上，必须在打开页面之前注入配置信息，否则无法调用JSSDK，所以，在页面准备完成之前，我们需要操作js代码，对权限验证的参数进行获取。在这里我们需要注意两点：
+　　1.假设我们在后台可以直接拿到当前公众号的appId。如果后天拿不到就要想办法在页面上拿到appid，然后发送到后台，否则无法进行权限验证。
+　　2.请求配置需要的<code>jsapi_ticket</code>参数需要缓存下来，避免频繁请求，过期时间在请求成功返回的参数里面带有。
+<em>asp.net mvc:</em></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">101
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 保存需要返回的数据
+</span><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">JsSdkConfigData</span>{
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 公众号的app id
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> AppId  { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 生成签名的时间戳
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Timestamp { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 生成签名的随机字符串
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> NonceStr { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 生成的签名
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Signature { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+}
+
+<span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 获取页面的配置
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> JsSdkConfigData GetJsSdkConfig(<span style="color:#8be9fd">string</span> appid){
+    <span style="color:#8be9fd">var</span> ticket = GetJsApiTicketByAppId(appid);  <span style="color:#6272a4">//根据appid获取的jsapi_ticket
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> timestamp = GetTimeStamp(); <span style="color:#6272a4">//生成的时间戳
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> nonceStr = Guid.NewGuid().ToString(<span style="color:#f1fa8c">&#34;N&#34;</span>); <span style="color:#6272a4">//随机32位字符串
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> url = currentUrl;  <span style="color:#6272a4">//注意currentUrl是一个假参数，代表当前请求的页面的url，不能包含#之后的内容
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//拼接字符串
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> urlStr = <span style="color:#f1fa8c">$&#34;jsapi_ticket={ticket}&amp;noncestr={nonceStr}&amp;timestamp={timestamp}&amp;url={url}&#34;</span>;
+    <span style="color:#6272a4">//对拼接的字符串进行SHA1计算，并拿到小写后的值，就是最终的凭据
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> signature = SHA1UtilHelper.GetSha1(urlStr).ToLower();
+    <span style="color:#6272a4">//将当前计算凭据的数据都保存起来，返回到后台，因为在验证的时候，凭据和生成它的参数必须保持一致
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> config=<span style="color:#ff79c6">new</span> JsSdkConfigData()
+    {
+        AppId= appid,
+        Timestamp= timestamp,
+        NonceStr= nonceStr,
+        Signature= signature
+    };
+    <span style="color:#ff79c6">return</span> config;
+}
+<span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 根据appid获取jsapi_ticket
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">virtual</span> <span style="color:#8be9fd">string</span> GetJsApiTicketByAppId(<span style="color:#8be9fd">string</span> appId){
+    <span style="color:#6272a4">//优先读取redis中的缓存数据
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> cache = CacheManager.GetCache(JsApiTicket)
+    <span style="color:#8be9fd">var</span> cacheToke = cache.GetOrDefault(appId);
+    <span style="color:#ff79c6">if</span> (cacheToke != <span style="color:#ff79c6">null</span> &amp;&amp; !cacheToke.ToString().IsNullOrEmpty()) <span style="color:#ff79c6">return</span> cacheToke.ToString();
+    <span style="color:#6272a4">//不存在jsapi_ticket,重新获取
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> publicEntity = WeiXin.GetAll().Single(d =&gt; d.AppId == appId);   <span style="color:#6272a4">//从数据库读取该公众号的信息
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//借用Senparc.Weixin SDK请求jsapi_ticket(注意token同样需要缓存)
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> result = CommonApi.GetTicketByAccessToken(GetTokenByAppId(appId));  
+    cache.Set(publicEntity.AppId, result.ticket, TimeSpan.FromSeconds(result.expires_in));
+    <span style="color:#ff79c6">return</span> result.ticket;
+}
+<span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 根据appid获取token
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;appId&#34;&gt;&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">virtual</span> <span style="color:#8be9fd">string</span> GetTokenByAppId(<span style="color:#8be9fd">string</span> appId)
+{
+    <span style="color:#6272a4">//优先读取redis中缓存的token
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> cache = CacheManager.GetCache(iCTRWeiXinCacheNames.WeiXinToken)
+    <span style="color:#8be9fd">var</span> cacheToke = cache.GetOrDefault(appId);
+    <span style="color:#ff79c6">if</span> (cacheToke != <span style="color:#ff79c6">null</span> &amp;&amp; !cacheToke.ToString().IsNullOrEmpty()) <span style="color:#ff79c6">return</span> cacheToke.ToString();
+    <span style="color:#6272a4">//不存在Token,重新获取
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> Entity = WeiXin.GetAll().Single(d =&gt; d.AppId == appId);  <span style="color:#6272a4">//从数据库读取该公众号的信息
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//借用Senparc.Weixin SDK请求token
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">var</span> token = AccessTokenContainer.TryGetAccessToken(appId, Entity.AppSecret, <span style="color:#ff79c6">true</span>);  
+    cache.Set(Entity.AppId, token, TimeSpan.FromMinutes(<span style="color:#bd93f9">110</span>));
+    <span style="color:#ff79c6">return</span> token;
+}
+
+<span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">SHA1UtilHelper</span>
+{
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 签名算法
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;param name=&#34;str&#34;&gt;&lt;/param&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#8be9fd">string</span> GetSha1(<span style="color:#8be9fd">string</span> str)
+    {
+        <span style="color:#6272a4">//建立SHA1对象
+</span><span style="color:#6272a4"></span>        SHA1 sha = <span style="color:#ff79c6">new</span> SHA1CryptoServiceProvider();
+        <span style="color:#6272a4">//将mystr转换成byte[] 
+</span><span style="color:#6272a4"></span>        ASCIIEncoding enc = <span style="color:#ff79c6">new</span> ASCIIEncoding();
+        <span style="color:#8be9fd">byte</span><span style="color:#50fa7b">[]</span> dataToHash = enc.GetBytes(str);
+        <span style="color:#6272a4">//Hash运算
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">byte</span><span style="color:#50fa7b">[]</span> dataHashed = sha.ComputeHash(dataToHash);
+        <span style="color:#6272a4">//将运算结果转换成string
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">string</span> hash = BitConverter.ToString(dataHashed).Replace(<span style="color:#f1fa8c">&#34;-&#34;</span>, <span style="color:#f1fa8c">&#34;&#34;</span>);
+        <span style="color:#ff79c6">return</span> hash;
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><em>JavaScript:</em></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">102
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#ff79c6">&lt;</span>script<span style="color:#ff79c6">&gt;</span>
+    $(<span style="color:#8be9fd;font-style:italic">function</span>(){
+        $.get({
+            url<span style="color:#ff79c6">:</span><span style="color:#f1fa8c">&#34;/WeiXin/GetJssdkConfig&#34;</span>,
+            success<span style="color:#ff79c6">:</span><span style="color:#8be9fd;font-style:italic">function</span>(result){
+                <span style="color:#8be9fd;font-style:italic">window</span>.wx.config({
+                        debug<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">true</span>, <span style="color:#6272a4">// 开启    调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+</span><span style="color:#6272a4"></span>                        appId<span style="color:#ff79c6">:</span> result.appId, <span style="color:#6272a4">// 必填，公众号的唯一标识
+</span><span style="color:#6272a4"></span>                        timestamp<span style="color:#ff79c6">:</span> result.timestamp, <span style="color:#6272a4">// 必填，生成签名的时间戳
+</span><span style="color:#6272a4"></span>                        nonceStr<span style="color:#ff79c6">:</span> result.nonceStr, <span style="color:#6272a4">// 必填，生成签名的随机串
+</span><span style="color:#6272a4"></span>                        signature<span style="color:#ff79c6">:</span> result.signature,<span style="color:#6272a4">// 必填，签名，
+</span><span style="color:#6272a4"></span>                        jsApiList<span style="color:#ff79c6">:</span> [
+                            <span style="color:#f1fa8c">&#39;onMenuShareTimeline&#39;</span>,
+                            <span style="color:#f1fa8c">&#39;onMenuShareAppMessage&#39;</span>,
+                            <span style="color:#f1fa8c">&#39;onMenuShareQQ&#39;</span>,
+                            <span style="color:#f1fa8c">&#39;onMenuShareWeibo&#39;</span>] <span style="color:#6272a4">// 必填，需要使用的JS接口列表，
+</span><span style="color:#6272a4"></span>                    });
+            }
+        });
+    });
+    <span style="color:#6272a4">//通过ready接口处理成功验证
+</span><span style="color:#6272a4"></span>    wx.ready(<span style="color:#8be9fd;font-style:italic">function</span> () {
+                wx.onMenuShareAppMessage({
+                    title<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击发送给朋友&#39;</span>,
+                    desc<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击发送给朋友&#39;</span>,
+                    link<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">window</span>.location.href,
+                    imgUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;http://ww4.sinaimg.cn/large/c55a7aeejw1fa2eocj9c4j20dc07ijrg.jpg&#39;</span>,
+                    trigger<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;用户点击发送给朋友&#39;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">window</span>.location.href);
+                    },
+                    success<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已分享&#39;</span>);
+                    },
+                    cancel<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已取消&#39;</span>);
+                    },
+                    fail<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+                wx.onMenuShareTimeline({
+                    title<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击分享到朋友圈&#39;</span>,
+                    link<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">window</span>.location.href,
+                    imgUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;http://ww4.sinaimg.cn/large/c55a7aeejw1fa2eocj9c4j20dc07ijrg.jpg&#39;</span>,
+                    trigger<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;用户点击分享到朋友圈&#39;</span>);
+                    },
+                    success<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已分享&#39;</span>);
+                    },
+                    cancel<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已取消&#39;</span>);
+                    },
+                    fail<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+                wx.onMenuShareQQ({
+                    title<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击分享到QQ&#39;</span>,
+                    desc<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击分享到QQ&#39;</span>,
+                    link<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">window</span>.location.href,
+                    imgUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;http://ww4.sinaimg.cn/large/c55a7aeejw1fa2eocj9c4j20dc07ijrg.jpg&#39;</span>,
+                    trigger<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;用户点击分享到QQ&#39;</span>);
+                    },
+                    complete<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    },
+                    success<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已分享&#39;</span>);
+                    },
+                    cancel<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已取消&#39;</span>);
+                    },
+                    fail<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+                wx.onMenuShareWeibo({
+                    title<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击分享到微博&#39;</span>,
+                    desc<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;用户点击分享到微博&#39;</span>,
+                    link<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">window</span>.location.href,
+                    imgUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;http://ww4.sinaimg.cn/large/c55a7aeejw1fa2eocj9c4j20dc07ijrg.jpg&#39;</span>,
+                    trigger<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;用户点击分享到微博&#39;</span>);
+                    },
+                    complete<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    },
+                    success<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已分享&#39;</span>);
+                    },
+                    cancel<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(<span style="color:#f1fa8c">&#39;已取消&#39;</span>);
+                    },
+                    fail<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+            });
+<span style="color:#ff79c6">&lt;</span>/script&gt;
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-结束">3. 结束</h1>
+
+<p>　　其他使用方法，参看官方文档。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/" id="next">
+                &larr; <span class="nav-title nav-title-next">在.Net Core中实现一个WebSocket路由</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E4%BD%BF%E7%94%A8csvhelper%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BAcsv%E6%96%87%E4%BB%B6/" id="prev">
+            <span class="nav-title nav-title-prev">使用CsvHelper导入导出csv文件</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

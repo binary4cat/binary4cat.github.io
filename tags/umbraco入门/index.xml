@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Umbraco入门 on Haijd&#39;s Blog</title>
+    <link>/tags/umbraco%E5%85%A5%E9%97%A8/</link>
+    <description>Recent content in Umbraco入门 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Jan 2016 14:05:19 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/umbraco%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>11、Umbraco入门总结</title>
+      <link>/csharp/11umbraco%E5%85%A5%E9%97%A8%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sun, 10 Jan 2016 14:05:19 +0800</pubDate>
+      
+      <guid>/csharp/11umbraco%E5%85%A5%E9%97%A8%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;p&gt;　　Umbraco入门教程算是告一段落了，其实将其称为“教程”，我觉得有些惭愧，因为其中并没有什么干货，编码也不是很好，所以在这里跟大家说句抱歉，也请朋友们不要见怪，暂且称其为“教程”吧，也希望能够认识更多的朋友，大家互相学习。&lt;/p&gt;
+
+&lt;p&gt;　　这些在Umbraco的使用中是最基本的使用方法，Umbraco是非常强大的，我目前掌握的还只是皮毛罢了，在这里只是希望给自己记个笔记，如果能帮到刚刚接触到Umbraco的朋友，那就万幸的。如果有时间和精力，我会继续写一些关于Umbraco的高级一点的用法，我自己也会努力学习，学习是无止境的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>10、UmbracoNewsSite：首页新闻聚合</title>
+      <link>/csharp/10umbraconewssite%E9%A6%96%E9%A1%B5%E6%96%B0%E9%97%BB%E8%81%9A%E5%90%88/</link>
+      <pubDate>Sun, 10 Jan 2016 12:56:07 +0800</pubDate>
+      
+      <guid>/csharp/10umbraconewssite%E9%A6%96%E9%A1%B5%E6%96%B0%E9%97%BB%E8%81%9A%E5%90%88/</guid>
+      <description>&lt;p&gt;　　目前为止已经实现了基本的新闻展示和新闻内容添加管理的功能演示，这一篇是Umbraco入门的最后一篇教程，我们看看怎么在首页拿到其他页面的数据的。&lt;/p&gt;
+
+&lt;p&gt;　　要在首页拿到几个新闻板块的节点，然后分别读取最新的新闻数据显示在首页中。
+　　我们需要在&lt;strong&gt;Home&lt;/strong&gt;模板中进行编写代码，具体的代码如下：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>9、UmbracoNewsSite：分页</title>
+      <link>/csharp/9umbraconewssite%E5%88%86%E9%A1%B5/</link>
+      <pubDate>Sat, 09 Jan 2016 13:54:45 +0800</pubDate>
+      
+      <guid>/csharp/9umbraconewssite%E5%88%86%E9%A1%B5/</guid>
+      <description>&lt;p&gt;　　接着上一篇博客的内容，这一篇我们开始给新闻列表进行分页。&lt;/p&gt;
+
+&lt;p&gt;　　首先说一下分页的思路，由于Umbraco使用的是模板的结构，所以我们需要将分页的页码数发送到当前的页面中，然后拿到这个页码数，对应的进行读取对应页码的新闻。
+　　首先给当前的新闻分类添加了10条新闻，然后按照每页显示3条来进行分页。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>8、UmbracoNewsSite：添加新闻列表</title>
+      <link>/csharp/8umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%97%E8%A1%A8/</link>
+      <pubDate>Fri, 08 Jan 2016 12:20:45 +0800</pubDate>
+      
+      <guid>/csharp/8umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%97%E8%A1%A8/</guid>
+      <description>&lt;p&gt;　　在上一篇中添加了新闻详情页面，但是没有任何可以指向这条新闻内容的跳转，所以需要将新闻添加到新闻列表中展示。&lt;/p&gt;
+
+&lt;p&gt;　　现在我们找到&lt;strong&gt;News List&lt;/strong&gt;模板，对其中的代码进行编辑，以展示新闻列表。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>7、UmbracoNewsSite：新闻详情页</title>
+      <link>/csharp/7umbraconewssite%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85%E9%A1%B5%E5%92%8C%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/</link>
+      <pubDate>Thu, 07 Jan 2016 21:53:36 +0800</pubDate>
+      
+      <guid>/csharp/7umbraconewssite%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85%E9%A1%B5%E5%92%8C%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/</guid>
+      <description>&lt;p&gt;　　这一篇我们创建一个新闻详情页文档类型，然后尝试编辑新闻内容。&lt;/p&gt;
+
+&lt;p&gt;　　首先确定新闻详情页需要什么？应该有新闻标题、新闻内容、新闻简介、新闻缩略图；其中后两个是为了在新闻列表展示该新闻信息设置的。确定了这些，现在就可以开始编写了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>6、UmbracoNewsSite：添加新闻分类</title>
+      <link>/csharp/6umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%86%E7%B1%BB/</link>
+      <pubDate>Wed, 06 Jan 2016 16:21:30 +0800</pubDate>
+      
+      <guid>/csharp/6umbraconewssite%E6%B7%BB%E5%8A%A0%E6%96%B0%E9%97%BB%E5%88%86%E7%B1%BB/</guid>
+      <description>&lt;p&gt;　　上一篇做了一个简单的首页，在导航条上添加了几个新闻板块，接下来我们就添加这几个新闻板块的页面。&lt;/p&gt;
+
+&lt;p&gt;　　开始我们还是需要创建&lt;strong&gt;Document Types&lt;/strong&gt;用来展示新闻列表。我们先做好规划，新闻列表只需要把新闻标题和图片展示出来就可以了，。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>5、UmbracoNewsSite：添加css和js文件</title>
+      <link>/csharp/5umbraconewssite%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9/</link>
+      <pubDate>Tue, 05 Jan 2016 10:41:40 +0800</pubDate>
+      
+      <guid>/csharp/5umbraconewssite%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9/</guid>
+      <description>我们接着上一篇的内容，这一篇我们引入stylesheets样式，并且尝试添加其他页面的内容。
+　打开visual studio，在项目根目录下新建js和css文件夹，分别把bootstrap的文件复制进去。(如果已经有就不用新建了) 然后打开Umbraco后台管理页面，刷新之后就可以看到Stylesheets节点下面出现了刚刚复制的文件。这是因为Umbraco规定了Stylesheet节点默认去读取根目录下名为*css*的文件夹中的文件；看到这你可能会下意识的认为那Scripts节点下肯定会出现刚才复制的js脚本文件啦！事实是——没有！Scripts节点默认读取的文件夹名是*scripts*，所以在引用这些文件的时候要注意路径。
+　文件添加完毕了，我们在程序中引用文件，在Templates节点下打开Master文件，然后将bootstrap文件分别添加进去(这里需要注意路径)。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;zh-cn&amp;#34;&amp;gt; &amp;lt;head&amp;gt; ...... &amp;lt;!-- CSS --&amp;gt; &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; href=&amp;#34;/css/bootstrap.min.css&amp;#34;&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; ....... &amp;lt;!-- Javascripts --&amp;gt; &amp;lt;script src=&amp;#34;/js/jquery.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;/js/bootstrap.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   　接下来我们进入编码工作，为了方便编写代码，可以进入visual studio进行编写，在Umbraco后台创建的文件内容在源代码中都可以找到，其中Templates节点下的文件在VS项目中的Views文件夹下，这下MVC模式就可以体现出来了。为了演示，我会继续在网页后台写代码，这个没有特别的限制。 　我们把*Master*模板代码改动一下，让页面稍微好看一点。代码如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58  @inherits Umbraco.</description>
+    </item>
+    
+    <item>
+      <title>4、UmbracoNewsSite：Templates展示内容数据</title>
+      <link>/csharp/4umbraconewssitetemplates%E5%B1%95%E7%A4%BA%E5%86%85%E5%AE%B9%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Mon, 04 Jan 2016 16:45:02 +0800</pubDate>
+      
+      <guid>/csharp/4umbraconewssitetemplates%E5%B1%95%E7%A4%BA%E5%86%85%E5%AE%B9%E6%95%B0%E6%8D%AE/</guid>
+      <description>&lt;p&gt;　　接着上一篇博客内容，这一篇我们来看看怎么把设置好的数据展示在网页上面。&lt;/p&gt;
+
+&lt;p&gt;　　因为Umbraco是基于MVC编写的软件，我们也最好遵循这个方式，也就是一个模板页(master)，然后再使用部分页(partial view)展示具体的内容。这里的模板需要创建在&lt;strong&gt;Setting&amp;ndash;&amp;gt;Templates&lt;/strong&gt;节点下面。我们打开&lt;strong&gt;Templates&lt;/strong&gt;节点，可以看到我们创建的Home模板已经在这里了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>3、UmbracoNewsSite：文档类型设置</title>
+      <link>/csharp/3umbraconewssite-%E4%B8%80/</link>
+      <pubDate>Sun, 03 Jan 2016 13:37:04 +0800</pubDate>
+      
+      <guid>/csharp/3umbraconewssite-%E4%B8%80/</guid>
+      <description>&lt;p&gt;　　从这一篇开始，我们制作一个简单的新闻网站UmbracoNewsStie，用来演示Umbraco的实际使用技巧。&lt;/p&gt;
+
+&lt;p&gt;　　在开始，我们需要先创建文档类型才能进行其他的操作，文档类型就是网站要展示什么。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2、Umbraco后台管理功能介绍</title>
+      <link>/csharp/umbraco%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Sat, 02 Jan 2016 11:13:41 +0800</pubDate>
+      
+      <guid>/csharp/umbraco%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/</guid>
+      <description>&lt;p&gt;　　上一篇博客介绍了Umbraco的安装，这一篇里面介绍一下umbraco的后台管理的一些主要功能的使用方式。
+　　首先介绍一下侧边栏的几个主要功能：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>1、Umbraco简介和安装</title>
+      <link>/csharp/umbraco%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Fri, 01 Jan 2016 21:23:04 +0800</pubDate>
+      
+      <guid>/csharp/umbraco%E7%AE%80%E4%BB%8B/</guid>
+      <description>&lt;p&gt;　　Umbraco是国外一个开源的Cms(内容管理)系统，适合做新闻发布、官网等内容需要经常更改变动的网站，也可以作为论坛软件使用，比如asp.net论坛就是基于umbraco制作的。而且Umbraco是使用“所见即所得”的形式，对网站的控制更加方便简单。可谓分分钟做出一个功能齐全的网站的节奏。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

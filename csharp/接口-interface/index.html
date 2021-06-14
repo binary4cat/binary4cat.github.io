@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>接口(interface)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    03 June 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">接口(interface)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是接口">1. 什么是接口</a></li>
+<li><a href="#2-声明接口">2. 声明接口</a></li>
+<li><a href="#3-访问性">3. 访问性：</a></li>
+<li><a href="#4-实现接口">4. 实现接口</a></li>
+<li><a href="#5-接口是引用类型">5. 接口是引用类型</a></li>
+<li><a href="#6-实现多个接口">6. 实现多个接口</a></li>
+<li><a href="#7-实现具有重复成员的接口">7. 实现具有重复成员的接口</a></li>
+<li><a href="#8-派生成员作为实现">8. 派生成员作为实现</a></li>
+<li><a href="#9-显式接口成员实现">9. 显式接口成员实现</a></li>
+<li><a href="#10-接口可以继承接口">10. 接口可以继承接口</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么是接口">1. 什么是接口</h1>
+
+<p>　　接口是一种能力的体现。
+　　接口是表示一组<strong>函数成员</strong>而不是实现成员的引用类型，类和结构可以实现接口。</p>
+
+<h1 id="2-声明接口">2. 声明接口</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//声明接口的关键字是“interface”
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">interface</span> IMyInterface
+{
+    <span style="color:#6272a4">//接口中的方法没有方法体(也就是没有具体的实现)
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> GetSum(<span style="color:#8be9fd">int</span> num1,<span style="color:#8be9fd">int</span> num2); 
+    <span style="color:#8be9fd">string</span> Speak(<span style="color:#8be9fd">string</span> str);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>■ 接口中不包含数据成员
+　　■ 接口声明只能包含如下如下类型的静态成员函数的声明：
+　　　　□ 方法
+　　　　□ 属性
+　　　　□ 事件
+　　　　□ 索引
+　　■ 这些函数成员的声明不能包含任何实现代码，在每一个成员声明的主体后面必须使用封号。
+　　■ 一般情况下，建议接口的名称以大写字母“<strong>I</strong>”开头。</p>
+
+<h1 id="3-访问性">3. 访问性：</h1>
+
+<p>　　■ 接口的声明可以使用任何访问修饰符public、protected、internal、private。
+　　■ 因为接口中的成员隐式的是public修饰的，所以接口中成员不允许有任何访问修饰符，包括public。</p>
+
+<h1 id="4-实现接口">4. 实现接口</h1>
+
+<p>　　<strong>只有类和结构才能实现接口。</strong>要实现接口，类和结构必须：
+　　■ 在基类列表(继承列表)中包括接口的名称。
+　　■ 需要实现接口中的每一个成员。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span>:IMyInterface    <span style="color:#6272a4">//实现接口
+</span><span style="color:#6272a4"></span>{
+    <span style="color:#8be9fd">int</span> GetSum(<span style="color:#8be9fd">int</span> num1,<span style="color:#8be9fd">int</span> num2)
+    {
+        <span style="color:#ff79c6">return</span> num1+num2;   <span style="color:#6272a4">//实现接口的成员
+</span><span style="color:#6272a4"></span>    }
+    <span style="color:#8be9fd">string</span> Speak(<span style="color:#8be9fd">string</span> str)
+    {
+        <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;你说接口是：&#34;</span>+str;  <span style="color:#6272a4">//实现接口的成员
+</span><span style="color:#6272a4"></span>    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　★ 如果类实现了接口，它必须实现接口中的所有成员。
+　　★ 如果类继承了基类并且又要实现接口，那么在基类列表中必须把基类的名称放在第一位，也就是必须放在接口的前面。</p>
+
+<h1 id="5-接口是引用类型">5. 接口是引用类型</h1>
+
+<p>　　接口不仅仅是类或结构需要实现的成员列表，它还是一个引用类型。
+　　所以我们不能直接通过类对象的成员访问接口，但是可以通过把类对象引用强制转换为接口类型来获取指向接口的引用。一旦有了接口的引用，就可以使用点号调用接口的方法了。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//“mc”是实现了接口IMyInterface的类对象引用，使用强制转换语法转换为接口类型
+</span><span style="color:#6272a4"></span>IMyInterface imi= (IMyInterface) mc;
+<span style="color:#6272a4">//使用接口的引用调用方法
+</span><span style="color:#6272a4"></span>imi.Speak(<span style="color:#f1fa8c">&#34;引用类型&#34;</span>);   </code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp59.png" alt="" /></p>
+
+<h1 id="6-实现多个接口">6. 实现多个接口</h1>
+
+<p>　　★ 类或者结构可以实现任意数量的接口。
+　　★ 所有实现的接口必须列在基类列表中，并且以逗号分隔。(如果同时继承了基类，则基类名称必须在最前面)</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">interface</span> ISum
+{
+    <span style="color:#8be9fd">int</span> GetSum();
+}
+<span style="color:#ff79c6">interface</span> ISpeak
+{
+    <span style="color:#ff79c6">void</span> Speak(<span style="color:#8be9fd">string</span> str);
+}
+
+<span style="color:#6272a4">//继承多个接口，必须实现每一个接口的全部成员
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span>:ISum,ISpeak
+{
+    <span style="color:#8be9fd">int</span> num;
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> GetSum()
+    {
+        <span style="color:#ff79c6">return</span> num;
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Speak(<span style="color:#8be9fd">string</span> str)
+    {
+        Console.WriteLine(<span style="color:#f1fa8c">&#34;接口是：{0}&#34;</span>,str);
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp60.png" alt="" /></p>
+
+<h1 id="7-实现具有重复成员的接口">7. 实现具有重复成员的接口</h1>
+
+<p>　　类可以实现多个接口，如果有两个或以上的接口中的成员具有相同的签名和返回类型，这时候应该怎么让类去实现这些具有重复成员的接口？
+　　● 这种情况下，类只需要实现单个成员，就能满足所有包含重复成员的接口。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">interface</span> IIf1
+{
+    <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str);
+}
+<span style="color:#ff79c6">interface</span> IIF2
+{
+    <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str);
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span>:IIf1,IIf2
+{
+    <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str)
+    {
+        Console.WriteLine(str);
+    }
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        MyClass mc = <span style="color:#ff79c6">new</span> MyClass();
+        mc.PrintOut(<span style="color:#f1fa8c">&#34;只需实现单个成员！&#34;</span>)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp61.png" alt="" /></p>
+
+<h1 id="8-派生成员作为实现">8. 派生成员作为实现</h1>
+
+<p>　　如果一个基类中的成员与接口的成员一致，那么派生自该基类的派生类就可以继承父类的成员而无需实现接口的成员。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">interface</span> IIf
+{
+    <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str);
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span> 
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str)
+    {
+        Console.WriteLine(str);
+    }
+}
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Derived</span> : MyClass , IIf
+{
+    
+}
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+{
+    <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+    {
+        Derived d = <span style="color:#ff79c6">new</span> Derived();
+        d.PrintOut(<span style="color:#f1fa8c">&#34;interface&#34;</span>);
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp62.png" alt="" /></p>
+
+<h1 id="9-显式接口成员实现">9. 显式接口成员实现</h1>
+
+<p>　　我们可以为重复的成员实现单个的实现，如果需要为每一个接口分离实现，可以创建<strong>显式接口成员实现</strong>。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Interface
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            MyClass mc = <span style="color:#ff79c6">new</span> MyClass();
+            IIf1 iif1 = mc;
+            IIf2 iif2 = mc;
+            iif1.PrintOut(<span style="color:#f1fa8c">&#34;IIf1接口的实现&#34;</span>);
+            iif2.PrintOut(<span style="color:#f1fa8c">&#34;IIf2接口的实现&#34;</span>);
+            Console.ReadKey();
+        }
+    }
+
+    <span style="color:#ff79c6">interface</span> IIf1
+    {
+        <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str);
+    }
+    <span style="color:#ff79c6">interface</span> IIf2
+    {
+        <span style="color:#ff79c6">void</span> PrintOut(<span style="color:#8be9fd">string</span> str);
+    }
+
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyClass</span> : IIf1, IIf2
+    {
+        <span style="color:#ff79c6">void</span> IIf1.PrintOut(<span style="color:#8be9fd">string</span> str)
+        {
+            Console.WriteLine(str);
+        }
+
+        <span style="color:#ff79c6">void</span> IIf2.PrintOut(<span style="color:#8be9fd">string</span> str)
+        {
+            Console.WriteLine(str);
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出结果：
+<img src="/image/cSharp/cSharp63.png" alt="" />
+　　★ <strong>显式接口成员只能由指向接口的引用来调用</strong>，如上面代码中的<code>iif1</code>和<code>iif2</code>。实现了显示接口成员的类对象是无法调用接口成员的：<img src="/image/cSharp/cSharp64.png" alt="" />
+　　★ 由于其他类不能直接访问显式接口成员实现，派生类的成员也不能直接访问它们，<strong>它们总是必须通过接口的引用来访问</strong>。</p>
+
+<h1 id="10-接口可以继承接口">10. 接口可以继承接口</h1>
+
+<p>　　类可以实现接口，接口也可以继承接口。
+　　■ 接口的继承和类继承类似，都是由冒号分隔的。
+　　■ 与类不一样的是，接口可以继承多个接口，而类只能继承一个类。
+　　■ 子接口包含了它自己的所有成员和所有基接口的所有成员。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E6%9E%9A%E4%B8%BE-enumerate/" id="next">
+                &larr; <span class="nav-title nav-title-next">枚举(enumerate)</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E7%BB%93%E6%9E%84-struct/" id="prev">
+            <span class="nav-title nav-title-prev">结构(struct)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring Annotations on Haijd&#39;s Blog</title>
+    <link>/tags/spring-annotations/</link>
+    <description>Recent content in Spring Annotations on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Jun 2018 11:00:01 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/spring-annotations/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spring Boot Annotations</title>
+      <link>/java/spring-boot-annotations/</link>
+      <pubDate>Thu, 14 Jun 2018 11:00:01 +0800</pubDate>
+      
+      <guid>/java/spring-boot-annotations/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&#34;http://www.baeldung.com/spring-boot-annotations&#34;&gt;http://www.baeldung.com/spring-boot-annotations&lt;/a&gt;
+此篇为译文，由于英语水平有限，可能对原文的理解有误，欢迎指正，不甚感激！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-概览&#34;&gt;1. 概览&lt;/h1&gt;
+
+&lt;p&gt;Spring Boot的自动配置功能使创建Spring配置变得非常容易。&lt;/p&gt;
+
+&lt;p&gt;在这个入门教程，我们将要探讨Spring Boot相关的注解，其注解来自于两个包：&lt;code&gt;org.springframework.boot.autoconfigure&lt;/code&gt;和&lt;code&gt;org.springframework.boot.autoconfigure.condition&lt;/code&gt;。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring Web Annotations</title>
+      <link>/java/spring-web-annotations/</link>
+      <pubDate>Wed, 13 Jun 2018 10:09:46 +0800</pubDate>
+      
+      <guid>/java/spring-web-annotations/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&#34;http://www.baeldung.com/spring-mvc-annotations&#34;&gt;http://www.baeldung.com/spring-mvc-annotations&lt;/a&gt;
+此篇为译文，由于英语水平有限，可能对原文的理解有误，欢迎指正，不甚感激！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-概览&#34;&gt;1. 概览&lt;/h1&gt;
+
+&lt;p&gt;在本篇教程中，我们将要探讨Spring web开发有关的注解(Spring MVC注解)，这些注解存在于&lt;code&gt;org.springframework.web.bind.annotation&lt;/code&gt;包中。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-requestmapping&#34;&gt;2. &lt;code&gt;@RequestMapping&lt;/code&gt;&lt;/h1&gt;
+
+&lt;p&gt;简而言之，&lt;code&gt;@RequestMapping&lt;/code&gt;标记&lt;code&gt;@Controller&lt;/code&gt;类中的请求处理器(request handler)方法。可用的配置有：
+- &lt;code&gt;path&lt;/code&gt;：或者别名&lt;code&gt;name&lt;/code&gt;、&lt;code&gt;value&lt;/code&gt;都可以作为参数名，它指定了哪个URL映射到当前的方法。
+- &lt;code&gt;method&lt;/code&gt;：协调处理HTTP请求的方法。
+- &lt;code&gt;params&lt;/code&gt;：根据HTTP请求参数的存在、不存在或者值来过滤请求。
+- &lt;code&gt;headers&lt;/code&gt;：根据HTTP请求的&lt;code&gt;headers&lt;/code&gt;的存在、不存在或者值来过滤请求。
+- &lt;code&gt;consumes&lt;/code&gt;：限制哪些HTTP请求主体中的媒体类型可以被该方法使用。
+- &lt;code&gt;produces&lt;/code&gt;：限制改方法可以响应哪些HTTP媒体类型。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring Core Annotations</title>
+      <link>/java/spring-core-annotationss/</link>
+      <pubDate>Tue, 12 Jun 2018 10:15:12 +0800</pubDate>
+      
+      <guid>/java/spring-core-annotationss/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&#34;http://www.baeldung.com/spring-core-annotations&#34;&gt;http://www.baeldung.com/spring-core-annotations&lt;/a&gt;
+此篇为译文，由于英语水平有限，可能对原文的理解有误，欢迎指正，不甚感激！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-概览&#34;&gt;1. 概览&lt;/h1&gt;
+
+&lt;p&gt;我们可以利用&lt;code&gt;org.springframework.beans.factory.annotation&lt;/code&gt;和&lt;code&gt;org.springframework.context.annotation&lt;/code&gt;这两个包提供的注解功能使用Spring的依赖注入。
+我们经常称它为&amp;rdquo;Spring core annotations&amp;rdquo;，我将在本教程对此进行回顾。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-di有关的注解&#34;&gt;2. DI有关的注解&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-autowired&#34;&gt;2.1. &lt;code&gt;@Autowired&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;我们可以使用&lt;code&gt;@Autowired&lt;/code&gt;注解标记需要Spring去解析和注入的依赖项。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

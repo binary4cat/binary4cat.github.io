@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>委托内部构造  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    01 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">委托内部构造</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-委托的内部构造">1. 委托的内部构造</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-委托的内部构造">1. 委托的内部构造</h1>
+
+<p>　　委托的内部构造是什么样的？
+　　在一个委托对象被创建后，该委托的内部由三部分组成：&rdquo;_methodPtr(方法指针)&ldquo;、&rdquo;_target(目标对象)&ldquo;、&rdquo;委托链(多播委托时才有，否则为空)&ldquo;，具体的构造我们画张图来看看：
+<img src="http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1hridcavej20is0d874l.jpg" alt="" /></p>
+
+<p><strong>多播委托的内部构造：</strong>
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1hrmfyi3ij20ql0fn3z1.jpg" alt="" />
+　　当一个委托被创建出来后，在栈上存储指向它的引用，在堆中存储着它的实例。
+　　在堆中的数据分为三个部分：<code>_methodPtr</code>存储委托指向方法的内存地址；<code>_target</code>保存该方法(委托指向的方法)所在的实例化对象，当该方法为静态方法时，这里为null，因为静态方法没有实例；委托链，当该委托是多播委托时，这里就由组成了委托数组，保存指向每一个委托方法的地址。
+　　所以也可以这样描述：委托的内部保存着委托 要调用的方法的地址、该方法所在对象实例的地址、有其他的方法时，保存其他方法的地址。</p>
+
+<p>参考：《CLR via c#》</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%A7%94%E6%89%98%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">委托使用案例</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E7%90%86%E8%A7%A3restful/" id="prev">
+            <span class="nav-title nav-title-prev">理解RESTful</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

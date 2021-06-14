@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>抽象工厂模式(Abstract Factory)：工厂方法  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    23 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">抽象工厂模式(Abstract Factory)：工厂方法</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　学习抽象工厂之前，我们有必要对另外两个：简单工厂、工厂方法进行学习，以更好的掌握抽象工厂的使用。
+&gt;定义一个用于创建对象的接口，让子类决定实例化哪一个产品，Factory Method使得一个产品类的实例化延迟到子类。  ————GoF</p>
+
+<p>　　 在软件系统中经常面临着某个对象(产品)的创建工作由于需求的变化，这个对象(产品)经常面临中剧烈的变化，但是他却拥有比较稳定的接口。</p>
+
+<p><strong>类图</strong>：
+<img src="/image/Design Pattern/design pattern12.png" alt="" /></p>
+
+<p>　　可以看到这个类图在简单工厂的基础上多了一个*Creator*抽象类，用来“生产”工厂子类。
+<img src="/image/Design Pattern/design pattern13.png" alt="" /></p>
+
+<p><strong>特点</strong>
+　　只有一种类型的产品
+　　有N个工厂(这点与简单工厂不同的，简单工厂只有一个工厂，而工厂方法是把工厂又抽象出来了。)
+　　一个工厂只生产一种产品</p>
+
+<p>　　工厂方法的本质就是在简单工厂的基础上，又对工厂做了抽象。</p>
+
+<p><strong>Code</strong>
+　　我们在简单工厂*Code5*代码基础上进行改写。
+　　在下面的代码中，我们看似依旧需要<code>switch</code>进行子类工厂的创建，但是在具体的项目中，我们可以使用反射技术动态的加载创建的对象，这样体现出了工厂方法的便捷和解耦的好处。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">130
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">131
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">132
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">133
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Text;
+<span style="color:#ff79c6">using</span> System.Threading.Tasks;
+
+<span style="color:#ff79c6">namespace</span> FactoryMethod
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;请输入第一个数字:&#34;</span>);
+            <span style="color:#8be9fd">int</span> number1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;请输入第二个数字:&#34;</span>);
+            <span style="color:#8be9fd">int</span> number2 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;请输入运算符:&#34;</span>);
+            <span style="color:#8be9fd">string</span> sign = Console.ReadLine();
+
+            <span style="color:#8be9fd">int</span> numberResult = <span style="color:#bd93f9">0</span>;
+            <span style="color:#6272a4">//期望得到的产品
+</span><span style="color:#6272a4"></span>            Computer computer = <span style="color:#ff79c6">null</span>;
+            <span style="color:#6272a4">//创建具体工厂
+</span><span style="color:#6272a4"></span>            Factory factory = <span style="color:#ff79c6">null</span>;
+<span style="color:#6272a4">/************************工厂的创建和实例化，可以使用反射技术实现************************/</span>
+            <span style="color:#ff79c6">switch</span> (sign)
+            {
+                <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;+&#34;</span>: factory = <span style="color:#ff79c6">new</span> AddFactpry(); <span style="color:#ff79c6">break</span>;
+                <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;-&#34;</span>: factory = <span style="color:#ff79c6">new</span> SubtractionFactory(); <span style="color:#ff79c6">break</span>;
+                <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;*&#34;</span>: factory = <span style="color:#ff79c6">new</span> MultiplicationFactory(); <span style="color:#ff79c6">break</span>;
+                <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;/&#34;</span>: factory = <span style="color:#ff79c6">new</span> DivisionFactory(); <span style="color:#ff79c6">break</span>;
+                <span style="color:#ff79c6">default</span>:
+                    factory = <span style="color:#ff79c6">null</span>;
+                    <span style="color:#ff79c6">break</span>;
+            }
+<span style="color:#6272a4">/****************************************************************************************/</span>
+
+            <span style="color:#6272a4">//获得具体的产品。
+</span><span style="color:#6272a4"></span>            computer = factory.CreateComputer();  
+            computer.Number1 = number1;
+            computer.Number2 = number2;
+            numberResult = computer.numberResult;
+
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;运算结果是：{0}&#34;</span>, numberResult);
+            Console.ReadKey();
+        }
+    }
+
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Factory</span>
+    {
+        <span style="color:#6272a4">//如果不是强制让工厂子类实现，可以使用virtual让子类有缺省实现。可以灵活运用。
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> Computer CreateComputer();
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AddFactpry</span> : Factory
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Computer CreateComputer()
+        {
+            <span style="color:#6272a4">//让工厂子类去创建具体的产品
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Add();
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">SubtractionFactory</span> : Factory
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Computer CreateComputer()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Subtraction();
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MultiplicationFactory</span> : Factory
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Computer CreateComputer()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Multiplication();
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">DivisionFactory</span> : Factory
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Computer CreateComputer()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Division();
+        }
+    }
+
+    <span style="color:#6272a4">/**************************以下具体产品的生产不变*******************************/</span>
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Computer</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Number1 { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Number2 { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+        <span style="color:#6272a4">//子类必须完成的功能：返回计算结果
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#8be9fd">int</span> numberResult { <span style="color:#ff79c6">get</span>; }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Add</span> : Computer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">int</span> numberResult
+        {
+            <span style="color:#ff79c6">get</span>
+            {
+                <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">base</span>.Number1 + <span style="color:#ff79c6">base</span>.Number2;
+            }
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Subtraction</span> : Computer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">int</span> numberResult
+        {
+            <span style="color:#ff79c6">get</span>
+            {
+                <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">base</span>.Number1 - <span style="color:#ff79c6">base</span>.Number2;
+            }
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Multiplication</span> : Computer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">int</span> numberResult
+        {
+            <span style="color:#ff79c6">get</span>
+            {
+                <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">base</span>.Number1 * <span style="color:#ff79c6">base</span>.Number2;
+            }
+        }
+    }
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Division</span> : Computer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">int</span> numberResult
+        {
+            <span style="color:#ff79c6">get</span>
+            {
+                <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">base</span>.Number1 / <span style="color:#ff79c6">base</span>.Number2;
+            }
+        }
+    }
+
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/Design Pattern/design pattern14.png" alt="" /></p>
+
+<p><strong>代码注释</strong>:
+　　Factory Method模式可以有两种情况：一种是<code>Factory</code>类是一个抽象类，不需要提供子类的具体实现，只需让子类去实现它的抽象方法；另一种是<code>Factpry</code>是一个具体的类，它提供了子类的缺省实现，也就是使用<code>virtual</code>关键字修饰方法。
+　　工厂方法中可以带带参数，这样也会比较方便客户使用，在初始化工厂方法的时候就可以传入生产产品所需要的参数。
+　　工厂的作用并不仅仅是创建一个对象，它还可以做对象的初始化、参数的设置等等。</p>
+
+<p><strong>适用性</strong>：
+　　当一个类不知道它所必须创建的对象的时候，或者希望由它的子类指定它所创建的对象的时候。
+　　当一个类(工厂抽象类)将创建对象的工作交给了多个辅助子类(工厂子类)中的某一个，并且可以将需要由哪一个子类创建这一信息局部化(使用反射等技术方便的配置)的时候。
+<strong>总结</strong>：
+　　Factory Method模式通过面向对象的方式，将所要创建的具体对象的创建工作(new)延迟到了子类，从而提供了一种扩展的策略，较好的解决了这种紧耦合的关系。
+　　Factory Method模式解决“单个对象”的需求变化，Abstract Factory模式解决“系列对象”的需求变化，Builder模式解决“对象部分”的需求变化。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/" id="next">
+                &larr; <span class="nav-title nav-title-next">抽象工厂模式(Abstract Factory)：抽象工厂</span> 
+            </a>  
+        <a rel="prev" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82/" id="prev">
+            <span class="nav-title nav-title-prev">抽象工厂模式(Abstract Factory)：简单工厂</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

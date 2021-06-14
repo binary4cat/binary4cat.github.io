@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>GO环境安装部署  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    08 August 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">GO环境安装部署</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1ficnszlhh9j20go098jrl.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#windows安装go">Windows安装GO</a></li>
+<li><a href="#部署环境">部署环境</a>
+<ul>
+<li><a href="#查看安装状态">查看安装状态</a></li>
+<li><a href="#修改gopath">修改GOPATH</a></li>
+<li><a href="#查看文档">查看文档</a></li>
+<li><a href="#gopath规定">GOPATH规定</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="windows安装go">Windows安装GO</h1>
+
+<p>官网下载<a href="https://golang.org/dl/">https://golang.org/dl/</a>
+  Golang中国下载<a href="https://golangtc.com/download">https://golangtc.com/download</a>
+直接安装即可。</p>
+
+<h1 id="部署环境">部署环境</h1>
+
+<h2 id="查看安装状态">查看安装状态</h2>
+
+<p>上一步安装完成后，打开命令行工具，输入<code>go env</code>回车，就可以看到如下界面：
+<img src="http://ww1.sinaimg.cn/large/c55a7aeely1fico3eyuuqj20jg0ah0te.jpg" alt="" />
+有几个关键的参数：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">GOARCH=amd64</td>
+<td align="left">表示目标机器的处理器架构，它的值可以是 386、amd64 或 arm</td>
+</tr>
+
+<tr>
+<td align="left">GOBIN=</td>
+<td align="left">编译器喝链接器安装位置，默认是<code>$GOROOT/bin</code>文件夹，一般不需要设置</td>
+</tr>
+
+<tr>
+<td align="left">GOOS=windows</td>
+<td align="left">安装GO语言的操作系统</td>
+</tr>
+
+<tr>
+<td align="left">GOPATH=E:\GOPATH</td>
+<td align="left">GO语言默认的工作目录，可以随意设置(在后面提到)</td>
+</tr>
+
+<tr>
+<td align="left">GOROOT=G:\GO</td>
+<td align="left">安装目录</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="修改gopath">修改GOPATH</h2>
+
+<ol>
+<li>打开环境变量设置：
+在系统变量中新建一个环境变量：</li>
+</ol>
+
+<table>
+<thead>
+<tr>
+<th align="left">变量名</th>
+<th align="left">变量值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">GOPATH</td>
+<td align="left">[你的目录]</td>
+</tr>
+</tbody>
+</table>
+
+<ol>
+<li>修改<code>path</code>环境变量：
+在里面新增一个<code>%GOPATH%\bin</code></li>
+<li>测试修改
+在命令行输入<code>go env</code>查看<code>GOPATH</code>是否设置为制定的目录，如果没有变化，关掉命令行重新打开再试试看。</li>
+</ol>
+
+<h2 id="查看文档">查看文档</h2>
+
+<ol>
+<li>官方文档：<a href="https://golang.org/">https://golang.org/</a></li>
+<li>本地文档：
+由于网络的原因，官网可能访问不了，可以构建本地文档，在命令行输入<code>godoc -http=:8000</code>,回车之后，在浏览器中输入<code>localhost:8000</code>，就可以打开本地的官网了。</li>
+</ol>
+
+<h2 id="gopath规定">GOPATH规定</h2>
+
+<p>从 Go 1.1 版本开始，GOPATH不能和GOROOT相同文件夹。它可以包含多个包含 Go 语言源码文件、包文件和可执行文件的路径，而这些路径下又必须分别包含三个规定的目录：src、pkg 和 bin，这三个目录分别用于存放源码文件、包文件和可执行文件。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/go%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%B7%A5%E5%85%B7/" id="next">
+                &larr; <span class="nav-title nav-title-next">Go命令操作工具</span> 
+            </a>  
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

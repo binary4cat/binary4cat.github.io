@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Haijd&#39;s Blog</title>
+    <link>/categories/blog/</link>
+    <description>Recent content in Blog on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Jul 2018 10:03:53 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hexo博客迁移到Hugo</title>
+      <link>/blog/hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hugo/</link>
+      <pubDate>Thu, 26 Jul 2018 10:03:53 +0800</pubDate>
+      
+      <guid>/blog/hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hugo/</guid>
+      <description>最近将Hexo迁移到了Hugo，过程还是比较曲折的，在这里记录以下迁移的过程。
+ 1. Hugo 　首先还是说一下为什么迁移吧，之前一直在使用Hexo编写博客，Hexo的主题毫无疑问是非常多的，编辑主题也很简单，因为大家可能都会或多或少的掌握前端开发；对比下来hugo的主题挺少，而且要编写的话还要掌握go语言的模板引擎，说实话这个模板引擎确实挺变态的，幸亏现在基本都是前后端分离开发，要不然能被这个模板语法折磨死。
+迁移的主要原因还是喜欢折腾吧，其次就是正在学习go语言，发现hugo的生成速度真的是快，当初用Hexo的时候，觉得Hexo已经很快了，感受一下hugo才知道这速度真是杠杠滴。
+hugo还有一个好处就是它本身作为一个程序运行的，没有其他的依赖，很方便的发布到github上，换电脑写博客也很方便，博客原文拉取下来安装个hugo就好。而Hexo就比较麻烦了，依赖太多迁移比较麻烦的。
+2. 迁移碰到的一些问题  时间类型：  hexo的时间是不带时区的24小时制时间：yyyy-MM-dd HH:mm:ss
+ hugo的时间是带时区的时间格式：yyyy-MM-ddTHH:mm:ss+HH:mm
+  tags和categories：  Hexo的markdown文件头部使用的是yaml格式的，虽然Hugo也是支持这种格式的，但是在提交travis-ci编译的时候报错了：error calling union: can&#39;t iterate over string，找了一下原因，是把tags和categories的值当作数组遍历了。   3. 解决方法 由于上述问题，迁移遇到了困难，一个一个手动改太麻烦了，于是用golang写了一个简单的替换代码，可以直接将hexo的博客文档转换成hugo能够编译的。
+// hexo的头部
+1 2 3 4 5 6 7  --- title: Hexo博客迁移到Hugo date: 2018-07-26 10:03:53 categories: Blog tags: Hugo description: Hexo博客迁移到Hugo ---   // hugo的头部
+1 2 3 4 5 6 7 8  --- title: &amp;#34;Hexo博客迁移到Hugo&amp;#34; date: 2018-07-26T10:03:53+08:00 tags: [&amp;#34;Hugo&amp;#34;] categories: [&amp;#34;Blog&amp;#34;] description: Hexo博客迁移到Hugo draft: false ---   可以看到只需要将tag和categories的值转成数组形式，将date转换成带时区的格式就可以了。</description>
+    </item>
+    
+    <item>
+      <title>Hexo标签分类写错的处理</title>
+      <link>/blog/hexo%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E5%86%99%E9%94%99%E7%9A%84%E5%A4%84%E7%90%86/</link>
+      <pubDate>Mon, 18 Jul 2016 01:17:13 +0800</pubDate>
+      
+      <guid>/blog/hexo%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E5%86%99%E9%94%99%E7%9A%84%E5%A4%84%E7%90%86/</guid>
+      <description>&lt;p&gt;　　有时候我们会不小心写错了Hexo的标签，部署之后需要改正的话发现改完之后，之前的那个错误的标签或者分类的名字依然存在，这时我们需要删除本地的部署文件以及生成文件的json数据。&lt;/p&gt;
+
+&lt;p&gt;　　打开Hexo博客，删除根目录下的&lt;strong&gt;db.json&lt;/strong&gt;文件和&lt;strong&gt;.deploy_git&lt;/strong&gt;文件夹。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>8、使用SSH方式部署博客</title>
+      <link>/blog/8%E4%BD%BF%E7%94%A8ssh%E6%96%B9%E5%BC%8F%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 14 May 2016 01:35:24 +0800</pubDate>
+      
+      <guid>/blog/8%E4%BD%BF%E7%94%A8ssh%E6%96%B9%E5%BC%8F%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;p&gt;　　每次写完博客提交都要输入账号密码，尤其是同时部署到了俩网站，输两个网站的账号密码，简直噩梦一般，这篇就是为了解除这个噩梦。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-什么是ssh&#34;&gt;1. 什么是SSH&lt;/h1&gt;
+
+&lt;p&gt;　　简单说就是一种更加安全的网络传输协议。摘录一段维基百科的解释：
+&amp;gt; Secure Shell（缩写为SSH），由IETF的网络工作小组（Network Working Group）所制定；SSH为一项创建在应用层和传输层基础上的安全协议，为计算机上的Shell（壳层）提供安全的传输和使用环境。
+传统的网络服务程序，如rsh、FTP、POP和Telnet其本质上都是不安全的；因为它们在网络上用明文传送数据、用户帐号和用户口令，很容易受到中间人（man-in-the-middle）攻击方式的攻击。就是存在另一个人或者一台机器冒充真正的服务器接收用户传给服务器的数据，然后再冒充用户把数据传给真正的服务器。
+而SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用SSH协议可以有效防止远程管理过程中的信息泄露问题。通过SSH可以对所有传输的数据进行加密，也能够防止DNS欺骗和IP欺骗。
+SSH之另一项优点为其传输的数据可以是经过压缩的，所以可以加快传输的速度。SSH有很多功能，它既可以代替Telnet，又可以为FTP、POP、甚至为PPP提供一个安全的“通道”。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-创建ssh&#34;&gt;2. 创建SSH&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;检查电脑上是否创建了SSH key
+　　右键打开Git Bash，输入下面的命令，检查“.ssh”文件夹中是否已经创建了id_rsa id_rsa.pub known_hosts文件。&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>7、解析博客域名</title>
+      <link>/blog/7%E8%A7%A3%E6%9E%90%E5%8D%9A%E5%AE%A2%E5%9F%9F%E5%90%8D/</link>
+      <pubDate>Sat, 14 May 2016 00:57:47 +0800</pubDate>
+      
+      <guid>/blog/7%E8%A7%A3%E6%9E%90%E5%8D%9A%E5%AE%A2%E5%9F%9F%E5%90%8D/</guid>
+      <description>&lt;p&gt;　　这一篇我们介绍一下怎么解析域名，执行我们的博客，由于我的域名是在万网购买的，所以解析式在万网做的，下面的示例会已万网解析为例，好像万网也提供了解析服务，如果选择其他的解析服务，操作的大致方式都是一样的。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-给github绑定域名&#34;&gt;1. 给github绑定域名&lt;/h1&gt;
+
+&lt;p&gt;　　首先我们需要给github绑定一个域名，也就是指定一个CNAME文件，这是将一个域名解析指向另一个域名的方式，如果想了解域名解析的相关知识点，网上有很多相关资料。😝
+　　1. 进入到根目录下面的&lt;code&gt;source&lt;/code&gt;文件夹内，新建一个文本文件，名称为&lt;code&gt;CNAME&lt;/code&gt;。(注意没有后缀名)
+　　2. 使用编辑器打开该文件，在里面写入你的域名，比如&lt;code&gt;www.hais2.com&lt;/code&gt;，那么你的博客就使用www.hais2.com访问，或者&lt;code&gt;hais2.com&lt;/code&gt;，那么你的博客就使用hais2.com访问。
+　　3. 执行&lt;code&gt;hexo d -g&lt;/code&gt;命令部署发布。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>6、将博客部署到coding并绑定域名</title>
+      <link>/blog/6%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0coding%E5%B9%B6%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</link>
+      <pubDate>Tue, 08 Mar 2016 21:52:33 +0800</pubDate>
+      
+      <guid>/blog/6%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0coding%E5%B9%B6%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</guid>
+      <description>&lt;p&gt;　　由于墙的原因，github访问速度很慢，而且github屏蔽了百度蜘蛛，所以将博客部署到github对国内的访客来说，并不是最好的选择，这一篇我们介绍一下，怎么将博客同时部署到github和coding上，然后绑定域名，并且分别指向国外和国内线路。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-将博客同时部署到coding上&#34;&gt;1. 将博客同时部署到coding上&lt;/h1&gt;
+
+&lt;p&gt;　　之前是gitcafe+github的部署方式，奈何gitcafe被coding给收了，感叹世事变幻无常啊。还好coding也提供了pages服务，我们可以将博客部署到coding上。
+　　&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>5、Hexo博客的写作</title>
+      <link>/blog/5hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%86%99%E4%BD%9C/</link>
+      <pubDate>Mon, 07 Mar 2016 21:12:55 +0800</pubDate>
+      
+      <guid>/blog/5hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%86%99%E4%BD%9C/</guid>
+      <description>&lt;p&gt;　　这一篇介绍一下Hexo中怎么写博客的，无论怎么折腾，认认真真的写博客才是最主要的。
+　　&lt;/p&gt;
+
+&lt;h1 id=&#34;1-创建文章&#34;&gt;1. 创建文章&lt;/h1&gt;
+
+&lt;p&gt;　　Hexo创建一篇博文很简单，只需要在博客所在目录下打开“Git Bash Here”命令行窗口，输入：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;hexo new &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;你文章的名字&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;　　然后回车即可创建一篇文章。注意，在博客名称中没有特殊字符时可以不写双引号，但是建议大家每次都写上比较好。
+　　创建的博文默认在&lt;code&gt;\source\_posts\&lt;/code&gt;目录下面，进入该文件夹，找到并打开即可。
+　　打开之后可以看到，自动生成了一些信息：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>4、Hexo博客主题的修改</title>
+      <link>/blog/4hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/</link>
+      <pubDate>Sun, 06 Mar 2016 22:54:10 +0800</pubDate>
+      
+      <guid>/blog/4hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/</guid>
+      <description>&lt;p&gt;　　在这一篇中介绍一下Hexo主题的一些修改方法，在这里是基于默认主题介绍的，但是了解一下，对使用其他主题也有些帮助。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-主题文件说明&#34;&gt;1. 主题文件说明&lt;/h1&gt;
+
+&lt;p&gt;　　依次打开博客文件夹根目录下的&lt;code&gt;themes\landscape\&lt;/code&gt;，可以看见主题包里面一些文件夹和文件，我们先认识一下这些文件分别是什么：
+&lt;img src=&#34;http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1njlex0x6j208508hgli.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;　　1. &lt;code&gt;languages&lt;/code&gt;：语言文件包，存放网页语言文件。
+　　2. &lt;code&gt;layout&lt;/code&gt;：页面模板文件夹，保存生成静态页面的HTML模板文件，使用的是EJS模板引擎编写，会HTML的话就很容易看懂。
+　　3. &lt;code&gt;scripts&lt;/code&gt;：存放网页中要使用的脚本文件。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>3、Hexo博客配置和主题</title>
+      <link>/blog/3hexo%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E5%92%8C%E4%B8%BB%E9%A2%98/</link>
+      <pubDate>Sat, 05 Mar 2016 23:16:49 +0800</pubDate>
+      
+      <guid>/blog/3hexo%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E5%92%8C%E4%B8%BB%E9%A2%98/</guid>
+      <description>&lt;p&gt;　　这一篇中，我们介绍一下对Hexo博客的配置，和主题的一些设置。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-博客网站信息配置&#34;&gt;1. 博客网站信息配置&lt;/h1&gt;
+
+&lt;p&gt;　　在创建的博客文件夹根目录(比如我的是E:\Is2Blog),找到名为&lt;code&gt;_config.yml&lt;/code&gt;的配置文件，使用编辑器打开，具体的配置信息说明在下面：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2、安装并部署Hexo博客</title>
+      <link>/blog/2%E5%AE%89%E8%A3%85%E5%B9%B6%E9%83%A8%E7%BD%B2hexo%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 05 Mar 2016 20:46:11 +0800</pubDate>
+      
+      <guid>/blog/2%E5%AE%89%E8%A3%85%E5%B9%B6%E9%83%A8%E7%BD%B2hexo%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;p&gt;　　下面的搭建过程是在Windows系统上进行的，Linux系统和OSX系统可以看&lt;a href=&#34;https://hexo.io/zh-cn/docs/index.html&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-安装&#34;&gt;1. 安装&lt;/h1&gt;
+
+&lt;p&gt;　　因为Hexo是基于nodejs编写的，而且使用Git进行管理，所以需要安装这两个工具。
+&lt;strong&gt;安装Git工具&lt;/strong&gt;
+　　直接百度Git的Windows安装包或者去&lt;a href=&#34;http://git-scm.com/download/&#34;&gt;官网下载&lt;/a&gt;安装，安装过程中无需特殊设置，一路next即可。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;安装NodeJs&lt;/strong&gt;
+　　nodejs也可以直接去&lt;a href=&#34;http://nodejs.cn/&#34;&gt;中文网&lt;/a&gt;或&lt;a href=&#34;http://nodejs.org/&#34;&gt;英文官网&lt;/a&gt;下载。nodejs有两个版本：LTS(长期支持版)、Stable(稳定版)。建议大家下载LTS长期支持版。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>1、Hexo博客简介</title>
+      <link>/blog/1hexo%E5%8D%9A%E5%AE%A2%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Sat, 05 Mar 2016 17:55:45 +0800</pubDate>
+      
+      <guid>/blog/1hexo%E5%8D%9A%E5%AE%A2%E7%AE%80%E4%BB%8B/</guid>
+      <description>&lt;p&gt;　　当你点开这篇博客的时候，说明你对写博客是感兴趣的，那就跟着我一起学习搭建自己的博客吧。&lt;/p&gt;
+
+&lt;p&gt;　　首先让我们先探究三个问题：&lt;/p&gt;
+
+&lt;h1 id=&#34;1-为什么要写博客&#34;&gt;1. 为什么要写博客？&lt;/h1&gt;
+
+&lt;p&gt;　　我觉得这个问题应该是很多人不会说，但是心里还是会问的，我为什么要写博客，写博客有什么好处吗？对此我总结了几点：
+　　1. 总结
+　　　　这是第一点，也是个人认为最重要的一点。我们每天接受的新知识可能非常多，也非常杂，很多时候我们在课堂上或者在看书的时候都是在笔记本上记录零散的知识点，或者在工作开发中将遇到的问题以及解决办法记录下来。但是这些东西对我们来说都是过了一遍罢了，没有起到大的作用。所以我说的总结，就是总结自己学习工作，有一个系统的总结，对我们理解问题有很大的帮助。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>hexo免输入用户名密码部署到github的方法</title>
+      <link>/blog/hexo%E5%85%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Fri, 22 Jan 2016 23:34:58 +0800</pubDate>
+      
+      <guid>/blog/hexo%E5%85%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0github%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;p&gt;　　最近一直在写博客和修改主题样式，因为需要即时发布，所以没有使用&lt;code&gt;hexo s&lt;/code&gt;本地预览,需要反复的执行&lt;code&gt;hexo d -g&lt;/code&gt;来发布预览效果，但是每次都需要输入*username*和*password*，非常麻烦，想到在使用git时可以设置SSH来免输入账号密码，所以试了试，但是好像没什么用，所以google了一下，找到了解决办法。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

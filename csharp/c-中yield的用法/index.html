@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>c#中yield的用法  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    26 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">c#中yield的用法</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-之前查找数据库数据的部分代码">1. 之前查找数据库数据的部分代码</a></li>
+<li><a href="#2-yield的方式">2. yield的方式</a></li>
+<li><a href="#3-一个小例子演示yield的用法">3. 一个小例子演示yield的用法</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　记录一下c#中的一个关键字<code>yield</code>的用法，之前基本没怎么用过这个算是语法糖的关键字，最近做了一个小的机构账号管理项目，读取DataReader对象数据时，每一次都得Add到集合中，记得以前见过有人用过这个方法，写起来很方便，所以学习了一下，记录下来以备查看。</p>
+
+<h1 id="1-之前查找数据库数据的部分代码">1. 之前查找数据库数据的部分代码</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">public</span> List&lt;Organization&gt; OrgModel=<span style="color:#ff79c6">new</span> List&lt;Organization&gt;();
+<span style="color:#8be9fd">string</span> sqlText=<span style="color:#f1fa8c">&#34;select * from Organization&#34;</span>;
+<span style="color:#8be9fd">var</span> dataTable = SqlHelper.ExecuteReader(sqlText);
+            <span style="color:#ff79c6">if</span> (dataTable.HasRows)
+            {
+                <span style="color:#ff79c6">while</span> (dataTable.Read())
+                {
+                    Organization org = <span style="color:#ff79c6">new</span> Organization();
+                    org.org_code = dataTable<span style="color:#50fa7b">[&#34;org_code&#34;]</span>.ToString();
+                    org.org_name = dataTable<span style="color:#50fa7b">[&#34;org_name&#34;]</span>.ToString();
+                    org.org_acount = dataTable<span style="color:#50fa7b">[&#34;org_acount&#34;]</span>.ToString();
+                    org.org_password = dataTable<span style="color:#50fa7b">[&#34;org_password&#34;]</span>.ToString();
+                    OrgModel.Add(org);
+                }
+            }
+            <span style="color:#ff79c6">return</span> orgModel;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-yield的方式">2. yield的方式</h1>
+
+<p>　　　使用<code>yield</code>时，yield会返回结果集合，比如下面的代码，返回的是一个<code>IEnumerable&lt;org&gt;</code>，类型的数据，所以在组织数据的时候，需要是符合<code>IEnumerable</code>、<code>IEnumerable&lt;T&gt;</code>、<code>IEnumerator</code>或 <code>IEnumerator&lt;T&gt;</code>的数据。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">//public List&lt;Organization&gt; OrgModel=new List&lt;Organization&gt;();
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">string</span> sqlText=<span style="color:#f1fa8c">&#34;select * from Organization&#34;</span>;
+<span style="color:#8be9fd">var</span> dataTable = SqlHelper.ExecuteReader(sqlText);
+            <span style="color:#ff79c6">if</span> (dataTable.HasRows)
+            {
+                <span style="color:#ff79c6">while</span> (dataTable.Read())
+                {
+                    Organization org = <span style="color:#ff79c6">new</span> Organization();
+                    org.org_code = dataTable<span style="color:#50fa7b">[&#34;org_code&#34;]</span>.ToString();
+                    org.org_name = dataTable<span style="color:#50fa7b">[&#34;org_name&#34;]</span>.ToString();
+                    org.org_acount = dataTable<span style="color:#50fa7b">[&#34;org_acount&#34;]</span>.ToString();
+                    org.org_password = dataTable<span style="color:#50fa7b">[&#34;org_password&#34;]</span>.ToString();
+                    <span style="color:#6272a4">//OrgModel.Add(org);
+</span><span style="color:#6272a4"></span>                    <span style="color:#ff79c6">yield</span> <span style="color:#ff79c6">return</span> org;
+                }
+            }
+            <span style="color:#6272a4">//因为yield会返回集合数据，所以这里不需要再return了
+</span><span style="color:#6272a4"></span>            //<span style="color:#ff79c6">return</span> orgModel;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-一个小例子演示yield的用法">3. 一个小例子演示yield的用法</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Text;
+
+<span style="color:#ff79c6">namespace</span> yield
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            <span style="color:#6272a4">//输出该数组中的奇数
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> ints = { <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">7</span>, <span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">9</span>, <span style="color:#bd93f9">0</span> };
+
+            <span style="color:#6272a4">//用到该返回值的时候，才去执行含有yield的方法
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">//在下面的foreach没有执行时，num是没有值的。
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">var</span> num = GetOdd(ints);
+
+            <span style="color:#6272a4">//使用foreach遍历，因为返回的是符合条件的可枚举对象
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">foreach</span> (<span style="color:#8be9fd">var</span> item <span style="color:#ff79c6">in</span> num)
+            {
+                Console.WriteLine(item);
+            }
+            
+            Console.ReadKey();
+        }
+
+        <span style="color:#6272a4">//返回值需要是IEnumerable类型
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">static</span> IEnumerable&lt;<span style="color:#8be9fd">int</span>&gt; GetOdd(<span style="color:#8be9fd">int</span><span style="color:#50fa7b">[]</span> ints)
+        {
+            <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">int</span> i = <span style="color:#bd93f9">0</span>; i &lt; ints.Length; i++)
+            {
+                <span style="color:#ff79c6">if</span> (i%<span style="color:#bd93f9">2</span>!=<span style="color:#bd93f9">0</span>)
+                {
+                    <span style="color:#ff79c6">yield</span> <span style="color:#ff79c6">return</span> i;
+                }
+            }
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>执行结果：
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeegw1f2adypz1s8j20rp0g7wfd.jpg" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/ef-code-first%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">EF code first简单示例</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%9C%A8ashx%E9%A1%B5%E4%B8%AD%E4%BD%BF%E7%94%A8session/" id="prev">
+            <span class="nav-title nav-title-prev">在ashx页中使用Session</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

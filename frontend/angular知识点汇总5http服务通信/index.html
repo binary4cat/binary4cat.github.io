@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Angular知识点汇总(5)：HTTP服务通信  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    25 October 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Angular知识点汇总(5)：HTTP服务通信</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-响应式编程">1. 响应式编程</a>
+<ul>
+<li><a href="#1-1-名词解释">1.1. 名词解释</a></li>
+<li><a href="#1-2-简单例子">1.2. 简单例子</a></li>
+<li><a href="#1-3-在angular中使用响应式编程">1.3. 在Angular中使用响应式编程</a></li>
+</ul></li>
+<li><a href="#2-httpclientmodule模块">2. HttpClientModule模块</a>
+<ul>
+<li><a href="#2-1-httpclientmodule模块介绍">2.1. HttpClientModule模块介绍</a></li>
+<li><a href="#2-2-httpclientmodule的使用">2.2. HttpClientModule的使用</a>
+<ul>
+<li><a href="#2-2-1-get请求演示">2.2.1. Get请求演示</a></li>
+<li><a href="#2-2-2-post请求演示">2.2.2. POST请求演示</a></li>
+</ul></li>
+<li><a href="#2-3-配置后端api请求地址">2.3. 配置后端API请求地址</a></li>
+<li><a href="#2-4-http请求header和参数设置">2.4. HTTP请求Header和参数设置</a></li>
+<li><a href="#2-5-异步管道的方式获取数据">2.5. 异步管道的方式获取数据</a></li>
+<li><a href="#2-6-高级用法">2.6. 高级用法</a></li>
+</ul></li>
+<li><a href="#3-编写可订阅的websocket通信">3. 编写可订阅的WebSocket通信</a></li>
+<li><a href="#4-参考资料">4. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-响应式编程">1. 响应式编程</h1>
+
+<p>在开始写HTTP通信之前，先简单的说一个必要的知识点：响应式编程，因为在Angular的HTTP通信中，返回的结果通常都是一个可观察对象，而响应式编程就是一个观察者模式(可观察对象)的实现。</p>
+
+<h2 id="1-1-名词解释">1.1. 名词解释</h2>
+
+<ul>
+<li>可观察对象（Observable）：可观察对象基本上可以理解为观察者订阅者模式，可观察对象可以发送多种类型的值(字面量、消息、事件)，无论这些值是同步发送还是异步发送的，我们都无需在意，只需要订阅这个可观察对象，并且消费它的数据即可，消费完取消订阅，无需其他的操作。</li>
+<li>响应式编程：响应式编程是一种面向数据流和变更传播的异步编程范式（<a href="https://zh.wikipedia.org/wiki/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">Wikipedia</a>）。RxJS（响应式扩展的 JavaScript 版）是一个使用可观察对象进行响应式编程的库，它让组合异步代码和基于回调的代码变得更简单 (<a href="http://reactivex.io/rxjs/">RxJS Docs</a>)。RxJS 提供了一种对 Observable 类型的实现。</li>
+</ul>
+
+<h2 id="1-2-简单例子">1.2. 简单例子</h2>
+
+<p>下面的代码基于rxjs6版本，6之前的版本语法差异较大，请自行查阅文档。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { from } from <span style="color:#f1fa8c">&#39;rxjs&#39;</span>;
+<span style="color:#ff79c6">import</span> { filter } from <span style="color:#f1fa8c">&#39;rxjs/operators&#39;</span>;
+
+viewObservable(obj: <span style="color:#8be9fd">any</span>) {
+    <span style="color:#ff79c6">const</span> names: <span style="color:#8be9fd">string</span>[] <span style="color:#ff79c6">=</span> [<span style="color:#f1fa8c">&#39;zhangsan&#39;</span>, <span style="color:#f1fa8c">&#39;lisi&#39;</span>, <span style="color:#f1fa8c">&#39;wangwu&#39;</span>, <span style="color:#f1fa8c">&#39;zhaosi&#39;</span>];
+    from(names).pipe(
+      filter(f <span style="color:#ff79c6">=&gt;</span> f.indexOf(<span style="color:#f1fa8c">&#39;san&#39;</span>) <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span>,
+    )).subscribe(
+      result <span style="color:#ff79c6">=&gt;</span> console.log(result),
+      error <span style="color:#ff79c6">=&gt;</span> console.error(error),
+      () <span style="color:#ff79c6">=&gt;</span> console.log(<span style="color:#f1fa8c">&#39;订阅结束&#39;</span>)
+    );
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在Angualr中使用的响应式编程实现，都是来自于rxjs库。</li>
+<li>上面的代码演示了一个使用响应式编程处理数组的例子，<code>from</code>函数创建一个可观察对象，这里我们观察的是一个字符数组。</li>
+<li><code>pipe</code>表示可观察对象的处理管道，其中可以包含多个处理函数，例如<code>filter</code>、<code>map</code>等。</li>
+<li><code>subscribe</code>表示订阅，用来进行最终的处理通知，它包含了三个匿名函数(严格按照顺序)：
+
+<ol>
+<li>结果函数：该函数是必选的，用来处理最终的返回结果，可以自行实现个性化的处理，例子里面是打印了结果。</li>
+<li>错误处理函数：该函数可选，它收一个错误对象，用来在发生错误的时候进行处理。</li>
+<li>结束时调用：该函数可选，它会在订阅结束的时候调用一次。</li>
+</ol></li>
+</ul>
+
+<h2 id="1-3-在angular中使用响应式编程">1.3. 在Angular中使用响应式编程</h2>
+
+<p>接下来演示一个可观测的事件流的例子，将事件当作流来处理，可以理解成该事件是一个永不结束的流，避免频繁的事件触发调用。因为在普通的事件绑定中都是触发一次调用一次，所以事件流的好处就体现出来了。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">// template
+
+&lt;<span style="color:#ff79c6">input</span> [<span style="color:#50fa7b">formControl</span>]=&#34;<span style="color:#50fa7b">checkInput</span>&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// component
+</span><span style="color:#6272a4"></span>
+<span style="color:#ff79c6">import</span> { delay } from <span style="color:#f1fa8c">&#39;rxjs/operators&#39;</span>;
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestHttpComponent <span style="color:#ff79c6">implements</span> OnInit {
+  checkInput: <span style="color:#8be9fd">FormControl</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormControl();
+  
+  <span style="color:#ff79c6">constructor</span>() {
+    <span style="color:#ff79c6">this</span>.checkInput.valueChanges.pipe(
+      delay(<span style="color:#bd93f9">1000</span>)
+    ).subscribe(
+      input <span style="color:#ff79c6">=&gt;</span> console.log(input)
+    );
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormControl</code>对象的<code>valueChanges</code>属性的结果是一个可观察对象Observable，它会在每次“value”发生改变的时候发布一次流，如果有观察者订阅了这个流，那么就会触发监听事件调用。</li>
+<li>我们在构造函数中订阅了这个事件流，当页面上每次输入的内容变化时，就会延迟(<code>pipe</code>中的<code>delay</code>函数)1秒钟将value打印在控制台。</li>
+</ul>
+
+<p><img src="/image/20181025observable.gif" alt="observable" /></p>
+
+<h1 id="2-httpclientmodule模块">2. HttpClientModule模块</h1>
+
+<h2 id="2-1-httpclientmodule模块介绍">2.1. HttpClientModule模块介绍</h2>
+
+<p>Angular的<code>HttpClient</code>类封装了很多的请求方法，例如<code>POST</code>/<code>GET</code>/<code>PUT</code>/<code>DELETE</code>/<code>HEAD</code>等等众多方法。每一个方法返回的都是一个<code>Observable&lt;T&gt;</code>的响应流（<code>T</code>的类型众多，这里用来做代替），在请求的返回阶段我们需要订阅这个流，获取服务端响应的数据或者错误信息。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">request(method: <span style="color:#8be9fd">string</span>, url: <span style="color:#8be9fd">string</span>, options<span style="color:#ff79c6">:</span> {
+    body?: <span style="color:#8be9fd">any</span>;
+    headers?: <span style="color:#8be9fd">HttpHeaders</span> <span style="color:#ff79c6">|</span> {
+        [header: <span style="color:#8be9fd">string</span>]<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd">string</span>[];
+    };
+    observe<span style="color:#ff79c6">?:</span> <span style="color:#f1fa8c">&#39;body&#39;</span>;
+    params?: <span style="color:#8be9fd">HttpParams</span> <span style="color:#ff79c6">|</span> {
+        [param: <span style="color:#8be9fd">string</span>]<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd">string</span>[];
+    };
+    reportProgress?: <span style="color:#8be9fd">boolean</span>;
+    responseType<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;blob&#39;</span>;
+    withCredentials?: <span style="color:#8be9fd">boolean</span>;
+})<span style="color:#ff79c6">:</span> Observable<span style="color:#ff79c6">&lt;</span>Blob<span style="color:#ff79c6">&gt;</span>;
+
+get(url: <span style="color:#8be9fd">string</span>, options<span style="color:#ff79c6">:</span> {
+    headers?: <span style="color:#8be9fd">HttpHeaders</span> <span style="color:#ff79c6">|</span> {
+        [header: <span style="color:#8be9fd">string</span>]<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd">string</span>[];
+    };
+    observe<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;response&#39;</span>;
+    params?: <span style="color:#8be9fd">HttpParams</span> <span style="color:#ff79c6">|</span> {
+      [param: <span style="color:#8be9fd">string</span>]<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd">string</span>[];
+    };
+    reportProgress?: <span style="color:#8be9fd">boolean</span>;
+    responseType<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;arraybuffer&#39;</span>;
+    withCredentials?: <span style="color:#8be9fd">boolean</span>;
+})<span style="color:#ff79c6">:</span> Observable<span style="color:#ff79c6">&lt;</span>HttpResponse<span style="color:#ff79c6">&lt;</span>ArrayBuffer<span style="color:#ff79c6">&gt;&gt;</span>;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面从<code>HttpClient</code>类的定义中摘选了两个方法，方法中的参数大致都是相同的，请求的方式可以指定或者调用专用的方法。</li>
+<li>其中可以看到参数<code>options</code>时相同的，包含一致的属性，其中的作用可以从属性名大致看出来，其中影响<code>Observable&lt;T&gt;</code>的<code>T</code>类型的属性是<code>responseType</code>，因为我们最终返回的流中的数据类型应该是我们的<code>responseType</code>类型。</li>
+<li><code>HttpClient</code>是Angular中最新的HTTP请求封装类型，是在4.3.0版本引入的，它和以前的<code>Http</code>类有比较大的区别，总体使用更加方便了，你可以看<a href="https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361">这篇文章</a>了解新旧封装类型的变化，以及了解<code>HttpClient</code>的使用，我在接下来会简单的说一下使用需要注意的地方。</li>
+</ul>
+
+<h2 id="2-2-httpclientmodule的使用">2.2. HttpClientModule的使用</h2>
+
+<p>在这里分别演示一个GET/POST请求的使用，调用的后端接口是一个简单的Go语言的接口实现，代码在<a href="https://gist.github.com/hjdo/4f0b0a87c1b289b1fe079a44d121f6c1">这里</a>可以找见。</p>
+
+<h3 id="2-2-1-get请求演示">2.2.1. Get请求演示</h3>
+
+<p><strong>Component:</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestHttpComponent <span style="color:#ff79c6">implements</span> OnInit {
+  getService: <span style="color:#8be9fd">Observable</span><span style="color:#ff79c6">&lt;</span>UserInfo<span style="color:#ff79c6">&gt;</span>;
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> http: <span style="color:#8be9fd">HttpClient</span>, <span style="color:#ff79c6">private</span> fb: <span style="color:#8be9fd">FormBuilder</span>) {
+    <span style="color:#ff79c6">this</span>.getService <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.http.get<span style="color:#ff79c6">&lt;</span>UserInfo<span style="color:#ff79c6">&gt;</span>(<span style="color:#f1fa8c">&#39;http://localhost:2333/get&#39;</span>);
+  }
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 获取用户信息按钮事件
+</span><span style="color:#6272a4">   */</span>
+  getUserInfo() {
+    <span style="color:#ff79c6">this</span>.getService.subscribe((data: <span style="color:#8be9fd">UserInfo</span>) <span style="color:#ff79c6">=&gt;</span> {
+      console.log(data);
+    });
+  }
+}
+
+<span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * 用户信息
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> UserInfo {
+  <span style="color:#ff79c6">constructor</span>(
+    <span style="color:#ff79c6">public</span> Email: <span style="color:#8be9fd">string</span>,
+    <span style="color:#ff79c6">public</span> Password: <span style="color:#8be9fd">string</span>) {}
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>首先定义了一个名为<code>getService</code>的<code>Observable&lt;UserInfo&gt;</code>可观察的流对象，泛型中的类型为我们定义的已知数据对象。</p>
+
+<ul>
+<li>该<code>getService</code>我们单独的拿出来，要说明一下在正式的开发中，我们会将这种对后端的请求函数，会封装成一个service类，里面有各种的请求方法，在需要使用的地方直接调用即可，下面演示一下<code>getUserInfo</code>封装后的代码：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// UserInfo.service.ts
+</span><span style="color:#6272a4"></span>
+getUserInfo<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(){
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span>.http.get<span style="color:#ff79c6">&lt;</span>T<span style="color:#ff79c6">&gt;</span>(<span style="color:#f1fa8c">&#39;http://localhost:2333/get&#39;</span>);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们将<code>getUserInfo</code>封装到了一个类中，它会返回一个可订阅的流对象<code>Observable&lt;T&gt;</code>，注意这里只是返回了一个可订阅的流，并没有真正的发起请求，真正的请求会在流被<code>subscribe</code>订阅的时候发生。</li>
+</ul></li>
+
+<li><p>在真正的点击事件中，我们订阅了这个流，此时就会发起GET请求，从后端接口返回数据，这里我们打印出来了：</p></li>
+</ul>
+
+<p><img src="/image/Snipaste_2018-11-05_22-49-11.png" alt="返回" /></p>
+
+<h3 id="2-2-2-post请求演示">2.2.2. POST请求演示</h3>
+
+<p><strong>Component:</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestHttpComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> http: <span style="color:#8be9fd">HttpClient</span>, <span style="color:#ff79c6">private</span> fb: <span style="color:#8be9fd">FormBuilder</span>) {
+    <span style="color:#6272a4">// 组织
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">this</span>.loginForm <span style="color:#ff79c6">=</span> fb.group({
+      email<span style="color:#ff79c6">:</span> [],
+      password<span style="color:#ff79c6">:</span> []
+    });
+  }
+
+  postService: <span style="color:#8be9fd">Observable</span><span style="color:#ff79c6">&lt;</span>any<span style="color:#ff79c6">&gt;</span>;
+  loginForm: <span style="color:#8be9fd">FormGroup</span>;
+
+  postServiceFunc(userInfo: <span style="color:#8be9fd">UserInfo</span>) {
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span>.postService <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.http.post<span style="color:#ff79c6">&lt;</span><span style="color:#ff79c6">boolean</span><span style="color:#ff79c6">&gt;</span>(<span style="color:#f1fa8c">&#39;http://localhost:2333/login&#39;</span>, userInfo);
+  }
+
+  submit() {
+    <span style="color:#ff79c6">const</span> userInfo <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> UserInfo(
+      <span style="color:#ff79c6">this</span>.loginForm.value.email,
+      <span style="color:#ff79c6">this</span>.loginForm.value.password
+    );
+    <span style="color:#ff79c6">this</span>.postServiceFunc(userInfo).subscribe(res <span style="color:#ff79c6">=&gt;</span>
+      console.log(res)
+    );
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>页面上是一个表单，填写<code>email</code>和<code>password</code>点击提交就会触发<code>submit</code>函数。</li>
+<li>这里我们定义的“service”是类似的，只不过请求的方法变为了<code>post</code>方法，并且多了一个参数。</li>
+<li>传入的参数默认会被序列化成json格式传递。</li>
+</ul>
+
+<p><img src="/image/Snipaste_2018-11-05_23-24-13.png" alt="post" /></p>
+
+<h2 id="2-3-配置后端api请求地址">2.3. 配置后端API请求地址</h2>
+
+<p>上面的两个例子中我们都将后端的接口地址写全了，但是在实际的开发中可能会用到多个后端的域名，这是因为在测试环境和发布环境肯定会调用不同的后端地址，但是如果像上面例子中写死的话，我想没有人会去挨个修改，所以我们需要将后端的域名(也就是上面例子的<code>http://localhost:2333</code>)作为配置变量，以便在需要改动的时候只修改一次。</p>
+
+<p>首先我们需要在项目的根目录下创建一个json文件，文件名一般为<code>proxy.conf.json</code>，当然你可以自定义文件名，其内容为：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#ff79c6">&#34;/api&#34;</span>: {
+    <span style="color:#ff79c6">&#34;target&#34;</span>: <span style="color:#f1fa8c">&#34;http://localhost:2333&#34;</span>
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在json文件中，我们定义了一个<code>/api</code>名称的变量，它的值是一个对象，其中包含一个<code>target</code>属性，也许从名字你就能大概猜出来了，它的作用是将Angular中的包含<code>/api</code>的请求，转发到<code>target</code>所代表的地址。</li>
+<li>需要注意的是，上面描述的是转发而不是替换，也就是将<code>/api/get</code>这个请求发往<code>http://localhost:2333/api/get</code>。</li>
+<li>所以这点是不同的，我们之前的例子里的路径是没有<code>api</code>这个字符的，但是我们需要使用<code>api</code>代表转发，所以后端的接口路径也需要包含<code>api</code>字符。</li>
+<li>更多的内容可以查阅<a href="https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/proxy.md">这里</a></li>
+</ul>
+
+<p>然后我们将之前的请求地址都改成<code>/api/get</code>、<code>/api/login</code>这两个字符串。</p>
+
+<p>最后我们需要在服务启动的时候，让配置生效，需要用到<code>--proxy-config</code>参数，它会使指定的代理配置生效：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng serve --proxy-config proxy.conf.json</code></pre></td></tr></table>
+</div>
+</div>
+<p>启动后，我们尝试刚才的POST请求，可以看到请求依然是正确执行的。但是我们看<code>Network</code>请求的信息会发现Request URL的地址是Angular的链接，但是请求确实发送到了后端API，这点有点疑惑，如果你对这里有所了解，麻烦留言给我😊</p>
+
+<p><img src="/image/Snipaste_2018-11-06_22-28-25.png" alt="Network" /></p>
+
+<p>上面的启动命令写起来会比较麻烦，每次都需要写一大串，我们可以换种方式，调用npm的脚本启动。
+打开<code>package.json</code>文件，将其中<code>script</code>节点中的<code>start</code>的值改为我们刚才的启动命令：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">-- <span style="color:#f1fa8c">&#34;start&#34;</span>: <span style="color:#f1fa8c">&#34;ng serve&#34;</span>,
+++ <span style="color:#f1fa8c">&#34;start&#34;</span>: <span style="color:#f1fa8c">&#34;ng serve --proxy-config proxy.conf.json&#34;</span>,</code></pre></td></tr></table>
+</div>
+</div>
+<p>以后每次启动我们就可以直接使用<code>npm start</code>来启动了。</p>
+
+<h2 id="2-4-http请求header和参数设置">2.4. HTTP请求Header和参数设置</h2>
+
+<p>在<code>HttpClient</code>模块中，所有的请求方法最后一个参数都是<code>options</code>，这个参数十分重要，它里面配置了我们请求携带的参数，以及返回的数据类型。
+这里要说的<code>Header</code>就是<code>options</code>中的一个属性，在我们需要请求携带身份验证信息的时候，就需要设置Header：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">const</span> httpOptions <span style="color:#ff79c6">=</span> {
+  headers: <span style="color:#8be9fd">new</span> HttpHeaders({
+    <span style="color:#f1fa8c">&#39;Content-Type&#39;</span><span style="color:#ff79c6">:</span>  <span style="color:#f1fa8c">&#39;application/json&#39;</span>,
+    <span style="color:#f1fa8c">&#39;Authorization&#39;</span><span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;my-auth-token&#39;</span>
+  })
+};
+
+<span style="color:#ff79c6">this</span>.http.post<span style="color:#ff79c6">&lt;</span>Hero<span style="color:#ff79c6">&gt;</span>(url, data, httpOptions)</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-5-异步管道的方式获取数据">2.5. 异步管道的方式获取数据</h2>
+
+<p>上面的例子中，我们都是模拟定义一个service，然后再点击事件中使用<code>subscribe</code>触发HTTP请求的调用，如果一个请求只是单纯的返回一些可以直接使用的数据的话，Angular给我们提供了一个异步管道<code>async</code>，使用它我们可以直接再模板中，发起请求并接收数据。</p>
+
+<p>加入有一个<code>GetUserInfos</code>请求，它返回一个用户信息的集合，我们需要把这个集合循环展示在页面。</p>
+
+<p>在Component中增加一个值<code>Observable&lt;Array&lt;UserInfo&gt;&gt;</code>属性：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">userArrService: <span style="color:#8be9fd">Observable</span><span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">Array</span><span style="color:#ff79c6">&lt;</span>UserInfo<span style="color:#ff79c6">&gt;&gt;</span>;
+<span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> http: <span style="color:#8be9fd">HttpClient</span>, <span style="color:#ff79c6">private</span> fb: <span style="color:#8be9fd">FormBuilder</span>) {
+  <span style="color:#ff79c6">this</span>.userArrService <span style="color:#ff79c6">=</span> http.get<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd;font-style:italic">Array</span><span style="color:#ff79c6">&lt;</span>UserInfo<span style="color:#ff79c6">&gt;&gt;</span>(<span style="color:#f1fa8c">&#39;api/getuserinfo&#39;</span>);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后在页面中直接使用<code>async</code>异步管道去请求数据：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">ul</span>&gt;
+    &lt;<span style="color:#ff79c6">li</span> *<span style="color:#50fa7b">ngFor</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;let user of userArrService | async&#34;</span>&gt;
+        {{user.email}} {{user.password}}
+    &lt;/<span style="color:#ff79c6">li</span>&gt;
+&lt;/<span style="color:#ff79c6">ul</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们直接在<code>ngFor</code>中循环了<code>userArrService</code>这个流，由于借助了<code>async</code>管道，它会调用这个流，并且返回流中的数据，使得我们的<code>ngFor</code>正常渲染。</li>
+<li>当然使用场景不仅是在<code>ngFor</code>，其他可以在页面直接渲染的流，都可用<code>async</code>解决，会很方便。</li>
+</ul>
+
+<h2 id="2-6-高级用法">2.6. 高级用法</h2>
+
+<p>Angular的HTTP通信组件非常强大，还有很多实用的高级用法，<a href="https://www.angular.cn/guide/http#advanced-usage">官方文档</a>非常的详细，我没有办法再精简总结它，你可以浏览官方文档的这部分，以便在合适的场景下使用。</p>
+
+<h1 id="3-编写可订阅的websocket通信">3. 编写可订阅的WebSocket通信</h1>
+
+<p>我们可以将websocket封装成一个可订阅的<code>Observable&lt;any&gt;</code>，这样的话我们在调用的时候，就可以直接订阅这个流就可以了。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">ws: <span style="color:#8be9fd">WebSocket</span>;
+getObservableWebSocket(url)<span style="color:#ff79c6">:</span> Observable<span style="color:#ff79c6">&lt;</span>any<span style="color:#ff79c6">&gt;</span> {
+    <span style="color:#ff79c6">this</span>.ws <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> WebSocket(url);
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> Observable(ob <span style="color:#ff79c6">=&gt;</span> {
+      <span style="color:#ff79c6">this</span>.ws.onmessage <span style="color:#ff79c6">=</span> (e) <span style="color:#ff79c6">=&gt;</span> ob.next(e.data);
+      <span style="color:#ff79c6">this</span>.ws.onerror <span style="color:#ff79c6">=</span> (e) <span style="color:#ff79c6">=&gt;</span> ob.error(e);
+      <span style="color:#ff79c6">this</span>.ws.onclose <span style="color:#ff79c6">=</span> (e) <span style="color:#ff79c6">=&gt;</span> ob.complete();
+    });
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们定义了一个公用的方法，用来创建一个可订阅的WebSocket流对象。</li>
+<li>可以看到我们将WebSocket的三个事件分别添加到了流<code>Observable</code>的三个自定义函数。
+
+<ul>
+<li>第一个函数监听WebSocket的<code>onmessage</code>事件，当收到来自服务端的消息时，会触发<code>next</code>函数，将服务端发送的数据发射出去。</li>
+<li>第二个函数监听<code>onerror</code>事件，当WebSocket发生错误的时候，会触发该事件，从而调用<code>error</code>函数，将错误传递出去。</li>
+<li>第三个函数监听<code>onclose</code>事件，当WebSocket通信关闭的时候，会触发该事件，，从而调用<code>complete</code>函数，通知订阅者流结束了。</li>
+</ul></li>
+</ul>
+
+<p>我们在使用的时候，就可以直接调用这个方法，然后使用<code>subscribe</code>函数订阅，并且处理这三个事件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">this</span>.getObservableWebSocket(<span style="color:#f1fa8c">&#39;ws:localhost:2333&#39;</span>).subscribe(
+    data <span style="color:#ff79c6">=&gt;</span> console.log(<span style="color:#f1fa8c">&#39;服务端返回了数据：&#39;</span> <span style="color:#ff79c6">+</span> data),
+    err <span style="color:#ff79c6">=&gt;</span> console.log(<span style="color:#f1fa8c">&#39;websocket通信发生错误&#39;</span> <span style="color:#ff79c6">+</span> err),
+    () <span style="color:#ff79c6">=&gt;</span> console.log(<span style="color:#f1fa8c">&#39;websocket关闭&#39;</span>)
+);</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在使用的时候，直接调用该方法，然后传入服务端地址，最后订阅并且处理返回的流即可。</li>
+</ul>
+
+<h1 id="4-参考资料">4. 参考资料</h1>
+
+<p><a href="https://www.angular.cn/guide/rx-library">https://www.angular.cn/guide/rx-library</a><br />
+<a href="https://www.angular.cn/guide/observables">https://www.angular.cn/guide/observables</a><br />
+<a href="https://www.angular.cn/guide/practical-observable-usage">https://www.angular.cn/guide/practical-observable-usage</a><br />
+<a href="https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361">https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361</a><br />
+<a href="https://www.angular.cn/guide/http">https://www.angular.cn/guide/http</a><br />
+<a href="https://webpack.js.org/configuration/dev-server/#devserver-proxy">https://webpack.js.org/configuration/dev-server/#devserver-proxy</a><br />
+<a href="https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/proxy.md">https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/proxy.md</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/" id="next">
+                &larr; <span class="nav-title nav-title-next">6个Angular开发者必备的VSCode扩展</span> 
+            </a>  
+        <a rel="prev" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB4form%E8%A1%A8%E5%8D%95/" id="prev">
+            <span class="nav-title nav-title-prev">Angular知识点汇总(4)：Form表单</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

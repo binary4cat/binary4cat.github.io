@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Csharp on Haijd&#39;s Blog</title>
+    <link>/tags/csharp/</link>
+    <description>Recent content in Csharp on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Sep 2015 01:16:16 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/csharp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MVC延伸：MVP、MVVM</title>
+      <link>/csharp/mvc%E5%BB%B6%E4%BC%B8mvpmvvm/</link>
+      <pubDate>Sat, 19 Sep 2015 01:16:16 +0800</pubDate>
+      
+      <guid>/csharp/mvc%E5%BB%B6%E4%BC%B8mvpmvvm/</guid>
+      <description>&lt;p&gt;　　学习和使用ASP.NET MVC也有一段时间了，对这种开发方式(模式)有了更进一步的了解，今天就跳出ASP.NET的圈子，说一说我了解到的MVC，以及延伸到的MVP、MVVM。(如果理解的不到位希望有看到的这篇博文的同学在评论中指出😛)&lt;/p&gt;
+
+&lt;h1 id=&#34;1-mvc&#34;&gt;1. MVC&lt;/h1&gt;
+
+&lt;p&gt;　　一开始接触MVC时最先想到的是，MVC算不算是一种设计模式？为什么GoF的23种设计模式中没有MVC模式？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>HTML辅助方法</title>
+      <link>/csharp/html%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sun, 02 Aug 2015 23:15:02 +0800</pubDate>
+      
+      <guid>/csharp/html%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;p&gt;　　HTML辅助方法，也就是&lt;code&gt;HtmlHelper&lt;/code&gt;，就是帮助快捷的产生HTML标签的作用。
+　　HTML辅助方法可以编写超链接、表单(&lt;form&gt;)、输入框、选项、加载其他的分布视图(Partial View)等。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-超链接-html-actionlink&#34;&gt;1. 超链接：Html.ActionLink&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;code&gt;@Html.ActionLink()&lt;/code&gt;用于产生超链接。并且链接的文字部分会自动的进行HTML编码(HtmlEncode)。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

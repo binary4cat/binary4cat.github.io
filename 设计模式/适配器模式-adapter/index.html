@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>适配器模式(Adapter)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    12 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">适配器模式(Adapter)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>将一个类的接口转换成客户希望的另一个接口。Adapter模式是将原本由于接口不兼容而不能工作在一起的那些类可以在一起工作。       ————GoF</p>
+</blockquote>
+
+<p>　　在软件系统中，由于应用环境的变化，常常需要将一些老的系统放在新的系统中使用，但是新的系统要求的接口和老的系统不一致，这就需要一个中间的适配器去将新老系统转换连接，使之能够正常工作。</p>
+
+<p>Adapter模式中有两种模式：对象适配器和类适配器，主要使用的是对象适配器这种模式。
+<strong>对象适配器</strong>:
+<img src="/image/Design Pattern/design pattern2.png" alt="" /></p>
+
+<p>　　对象适配器采用对象的组合(老的系统和适配器捆绑成一个组合)，通过引用一个类与另一个类接口在对象适配器中通过组合获得<em>Adaptee</em>(被适配者)对象。
+　　通过调用Adapter对象的方法，转换后返回Target结果。这里做了两步，第一是继承新的接口Target，让Target可以使用里氏替换任意使用Adapter；第二是调用老系统Adaptee，在Adapter内部对老系统的方法实现进行转换，以可用于新系统中。
+　　特点就是通过维护一个Adaptee的引用(老方法)来让新老系统兼容，只要能拿到Adaptee的内部实现就可以了，不用管Adaptee这个类是什么(接口、类、密封类……)，因为无需让Adapter和Adaptee发生继承关系。</p>
+
+<p><strong>类适配器</strong>：
+<img src="/image/Design Pattern/design pattern3.png" alt="" /></p>
+
+<p>　　类适配器通过多继承对一个接口与另一个接口进行匹配。
+　　Target定义了Client使用的与特定领域相关的接口，Client通过调用Target实现某一个特定的操作。Adaptee是一个已经存在的类，需要与Target协同工作，这个接口需要适配。  Adapter适配器适配Adaptee和Target接口。在类的适配器中，通过继承的方式获得Adaptee中的方法。
+　　.net中不支持多重继承，因此当Target是一个类，而不是一个接口时，是无法实现类适配器的，这是需要使用对象适配器。
+　　通过继承老的类实现的，如果新老两个都是类，就无法让适配器同时继承两个类；再如果老的类是一个sealed类，那么就无法对老的类进行继承，也无法实现。</p>
+
+<p>　　下面我们写一个例子：在手机产品中，使用的充电传输接口有两种老的microUSB和最新的Type-C，我们假设现在我们只有一条Type-C接口，但是要给拥有Lumia950XL和小米note进行充电和下载，其中Lumia950XL本身是Type-C接口的手机，而小米note则是旧的microUSB接口，所以为了给小米note充电和下载需要一个适配器，我们用代码实现一下这个适配器的功能：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">85
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Text;
+<span style="color:#ff79c6">using</span> System.Threading.Tasks;
+
+<span style="color:#ff79c6">namespace</span> Adapter
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            ChargingAndDownload lumia = <span style="color:#ff79c6">new</span> TypeC() { Name = <span style="color:#f1fa8c">&#34;Lumia950XL&#34;</span> };
+            ChargingAndDownload xiaomi = <span style="color:#ff79c6">new</span> USB_Adapter() ;
+
+            lumia.Charging();
+            lumia.Download();
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;—————————————————————————————————————&#34;</span>);
+            xiaomi.Charging();
+            xiaomi.Download();
+            Console.ReadLine();
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 抽象充电和下载，因为不管是lumia950XL还是小米note都拥有这两项功能
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ChargingAndDownload</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">void</span> Charging();
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">void</span> Download();
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 使用Type-C的手机
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TypeC</span> : ChargingAndDownload
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Charging()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}使用Type-C充电&#34;</span>,<span style="color:#ff79c6">base</span>.Name);
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Download()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}使用Type-C下载&#34;</span>,<span style="color:#ff79c6">base</span>.Name);
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 使用microUSB的手机
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MicroUSB</span> 
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Charging()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}使用microUSB充电&#34;</span>, <span style="color:#ff79c6">this</span>.Name);
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Download()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}使用microUSB下载&#34;</span>, <span style="color:#ff79c6">this</span>.Name);
+        }
+    }
+
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">USB_Adapter</span> : ChargingAndDownload
+    {
+        <span style="color:#6272a4">//拿到被适配者
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">private</span> MicroUSB _adapter = <span style="color:#ff79c6">new</span> MicroUSB() { Name=<span style="color:#f1fa8c">&#34;小米note&#34;</span>};
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Charging()
+        {
+            <span style="color:#6272a4">//借力打力
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">this</span>._adapter.Charging();  
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Download()
+        {
+            <span style="color:#6272a4">//移花接木
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">this</span>._adapter.Download();
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　运行结果：
+<img src="/image/Design Pattern/design pattern4.png" alt="" />
+　　可以看到我们使用了适配器，调用最新的接口的时候，虽然同样使用的<strong>ChargingAndDownload</strong>类实例，但是新旧传输接口都可以正常工作了。</p>
+
+<p>例子二：
+　　我们都知道姚明是NBA球星，假如姚明去NBA打球时不会说英语，那么就需要一个翻译，这个翻译就充当了Adapter的作用，在NBA中英语就是新系统，汉语就是旧系统，我们用代码实现一下教练指挥姚明打球的功能。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">80
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Text;
+<span style="color:#ff79c6">using</span> System.Threading.Tasks;
+
+<span style="color:#ff79c6">namespace</span> Adapter2
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Sports kobe = <span style="color:#ff79c6">new</span> USA_Sports() { Name=<span style="color:#f1fa8c">&#34;kobe&#34;</span>};
+            Sports yaoming = <span style="color:#ff79c6">new</span> Translate();
+
+            kobe.Shot();
+            kobe.Dribble();
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;------------------------------&#34;</span>);
+            yaoming.Shot();
+            yaoming.Dribble();
+            Console.ReadKey();
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 抽象出运动员投篮和运球的功能
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Sports</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">void</span> Shot();
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">void</span> Dribble();
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 美国球员打球
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">USA_Sports</span> : Sports
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Dribble()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0} the Shot&#34;</span>,<span style="color:#ff79c6">base</span>.Name);
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Shot()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0} the Dribble&#34;</span>, <span style="color:#ff79c6">base</span>.Name);
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 中国球员
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">CN_Sports</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Shot()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}投篮&#34;</span>,<span style="color:#ff79c6">this</span>.Name);
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Dribble()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;{0}运球&#34;</span>, <span style="color:#ff79c6">this</span>.Name);
+        }
+    }
+
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Translate</span> : Sports
+    {
+        CN_Sports _adapter = <span style="color:#ff79c6">new</span> CN_Sports() {Name=<span style="color:#f1fa8c">&#34;姚明&#34;</span> };
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Dribble()
+        {
+            <span style="color:#ff79c6">this</span>._adapter.Shot();
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">void</span> Shot()
+        {
+            <span style="color:#ff79c6">this</span>._adapter.Dribble();
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　运行结果：
+<img src="/image/Design Pattern/design pattern5.png" alt="" />
+　　可以看到我们只要调用新的接口<strong>Sports</strong>，不管是科比还是姚明都可以投篮和运球，不管姚明听不听得懂英语，这一切都交给了<strong>Translate</strong>(适配器)进行处理。</p>
+
+<p><strong>实现要点</strong>：
+　　适配器模式重在转换接口，它能够使原本不能再一起工作的两个类，在一起工作，所以经常用在类库的复用、代码迁移等方面，有一种亡羊补牢的味道。</p>
+
+<p><strong>效果</strong>:
+　　通过类的继承或者对象的组合转换*已有接口*为*目标接口*。</p>
+
+<p><strong>适用性</strong>：
+　　需要使用一个已经存在的类(老系统)，但接口与设计要求不符(也就是在新系统中无法使用)。
+　　希望创建一个可以复用的类(也就是类库的相似功能)，该类可以与其他不相关的类或者是将来不可预见的类协同工作。</p>
+
+<p><strong>总结</strong>：
+　　Adapter模式主要应用于“希望复用一些现存的类，但是接口又与复用环境要求不一致的情况”，在遗留代码复用、类库迁移等方面非常有用。
+　　GoF23定义了两种Adapter模式的实现结构：对象适配器和类适配器，但类适配器采用了“多继承”的实现方式，带来了不良的高耦合，所以一般不推荐使用。对象适配器采用“对象组合”的方式，更符合松耦合的精神。
+　　Adapter模式可以实现的非常灵活，不必拘泥于GoF23中定义的两种结构。例如，完全可以将Adapter模式中的“现存对象”作为新的接口方法参数，来达到适配的目的。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82/" id="next">
+                &larr; <span class="nav-title nav-title-next">抽象工厂模式(Abstract Factory)：简单工厂</span> 
+            </a>  
+        <a rel="prev" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton/" id="prev">
+            <span class="nav-title nav-title-prev">单例模式(Singleton)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

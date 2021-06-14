@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Win10&#43;WSL配置Golang开发环境  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    20 April 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Win10&#43;WSL配置Golang开发环境</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1ficnszlhh9j20go098jrl.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#安装-wsl">安装 WSL</a>
+<ul>
+<li><a href="#配置清华大学软件源">配置清华大学软件源</a></li>
+<li><a href="#hyper">Hyper</a>
+<ul>
+<li><a href="#安装-hyper">安装 Hyper</a></li>
+<li><a href="#配置-hyper-默认为-wsl-的-terminal">配置 Hyper 默认为 WSL 的 terminal</a></li>
+</ul></li>
+<li><a href="#zsh">zsh</a></li>
+</ul></li>
+<li><a href="#安装-golang">安装 Golang</a>
+<ul>
+<li><a href="#安装-golang-1">安装 Golang</a></li>
+<li><a href="#配置-goroot-和-gopath">配置 GOROOT 和 GOPATH</a></li>
+<li><a href="#测试">测试</a></li>
+</ul></li>
+<li><a href="#安装-docker">安装 Docker</a>
+<ul>
+<li><a href="#在-wsl-中操作-docker">在 WSL 中操作 Docker</a></li>
+<li><a href="#执行-docker-操作">执行 Docker 操作</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<p>Linux 是比较理想的开发环境，先前电脑装的 Ubuntu 系统，流畅度、字体效果感觉都比 Windows 好，但是开发之外其他的内容就很难在 Linux 上进行了，例如印象笔记、微信 QQ 传输文件等，最近又换回了 Windows 系统，花时间借助 win10 的 Linux 子系统也能搭一个 Linux 下的开发环境。</p>
+
+<h1 id="安装-wsl">安装 WSL</h1>
+
+<p>关于如何安装 WSL 的操作就省略了，Google 一下很多，也很简单，主要介绍一下其他的配置内容。</p>
+
+<h2 id="配置清华大学软件源">配置清华大学软件源</h2>
+
+<p>Ubuntu 官方阿软件源服务器在国外，执行<code>apt-get</code>比较慢，所以切换为国内的软件源进行加速，这里使用<a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/">清华大学开源软件镜像站提供的 Ubuntu 镜像</a></p>
+
+<h2 id="hyper">Hyper</h2>
+
+<p>好看是第一生产力，Hyper 是一个第三方的命令行工具，使用<code>Electron</code>框架开发的，可配置性很高，有丰富的主题可以选择，直接秒杀自带的黑框框，来两张图对比一下：
+<img src="/image/Snipaste_2019-04-20_22-22-46.png" alt="wsl" />
+<img src="/image/Snipaste_2019-04-20_22-25-30.png" alt="wsl" /></p>
+
+<h3 id="安装-hyper">安装 Hyper</h3>
+
+<p>直接上<a href="https://hyper.is/">官网</a>下载对应的版本安装即可。</p>
+
+<h3 id="配置-hyper-默认为-wsl-的-terminal">配置 Hyper 默认为 WSL 的 terminal</h3>
+
+<p>打开 Hyper 窗口，在左上角菜单选择 Eidt -&gt; Perferences&hellip; 后会直接打开配置文件，配置文件是 js 文件很容易看懂。
+<img src="/image/Snipaste_2019-04-20_22-28-35.png" alt="conf" /></p>
+
+<p>我们主要修改<code>shell</code>这个属性的值，这个配置可以修改 Hyper 默认使用的 terminal 类型，我们输入<code>wsl</code>的路径：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">shell: &#39;C:\\Windows\\System<span style="color:#bd93f9">32</span>\\wsl.exe&#39;,
+...
+shellArgs: [&#39;bash&#39;],   // 这是进入terminal时默认命令，可以酌情修改</code></pre></td></tr></table>
+</div>
+</div>
+<p>修改完之后保存配置文件，Hyper 会热加载配置，不过重启一下最好。</p>
+
+<h2 id="zsh">zsh</h2>
+
+<p>zsh 是 Linux 下的爆款 shell，除了方便之外，我觉得还是好看，但是安装起来比较麻烦，好在有大神已经将安装过程打包，直接傻瓜式安装就好，具体安装可查<a href="https://ohmyz.sh/">https://ohmyz.sh/</a>不过多赘述了。</p>
+
+<h1 id="安装-golang">安装 Golang</h1>
+
+<p>安装好了好看的 terminal，接下来就需要配置 Golang 的开发环境了，主要思路是在 WSL 中运行、编译 Golang 程序，在 Windows 中编写代码。</p>
+
+<h2 id="安装-golang-1">安装 Golang</h2>
+
+<p>首先从官网上拷贝对应版本的安装文件地址，然后解压、配置环境即可：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#6272a4"># 下载安装文件</span>
+wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz
+<span style="color:#6272a4"># 解压到指定的文件夹</span>
+sudo tar zxvf go1.12.4.linux-amd64.tar.gz -C /usr/local</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="配置-goroot-和-gopath">配置 GOROOT 和 GOPATH</h2>
+
+<p>GOROOT 配置就是常规的配置为 go 的 bin 文件夹就行，GOPATH 因为我们需要配置为我们在 Windows 文件系统下的 GOPATH 地址，这样就可以直接在 WSL 的 Linux 环境下编译运行 Golang 程序了。</p>
+
+<p>打开<code>.bashrc</code>文件（如果使用的式 zsh 的话需要打开<code>.zshrc</code>文件）：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vi ~/.bashrc
+<span style="color:#6272a4"># vi ~/.zshrc</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在其中增加如下内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">GOROOT</span><span style="color:#ff79c6">=</span>/usr/local/go
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">GOPATH</span><span style="color:#ff79c6">=</span>/mnt/e/golang
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">PATH</span><span style="color:#ff79c6">=</span><span style="color:#8be9fd;font-style:italic">$PATH</span>:<span style="color:#8be9fd;font-style:italic">$GOPATH</span>:/usr/local/go/bin</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>GOROOT 的值设置的是刚才我们解压的安装文件的路径</li>
+<li>GOPATH 的值设置的是 Windows 文件系统中的 GOPATH 地址，<strong>在 WSL 中<code>/mnt</code>文件夹下就是 Windows 的文件系统</strong>，因为我的 Windows 系统中的 GOPATH 是在 E 盘下的 golang 文件夹，所以这里配置成了<code>/mnt/e/golang</code></li>
+</ul>
+
+<p>使配置生效：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8be9fd;font-style:italic">source</span> ~/.bashrc
+<span style="color:#6272a4"># source ~/.zshrc</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="测试">测试</h2>
+
+<p>我在<code>E:\Golang\src\github.com\haijiandong\demo</code>文件夹下编写了一个简单的测试程序，接下来我们测试一下开发环境。</p>
+
+<p>在 WSL 中进入并运行<code>main.go</code>文件：
+<img src="/image/Snipaste_2019-04-20_23-15-24.png" alt="main.go" /></p>
+
+<p>这样配置后可以简单的替代 Linux 开发环境，并且也可以使用 Windows 办公两不误了。</p>
+
+<h1 id="安装-docker">安装 Docker</h1>
+
+<p>如果直接用 apt 来安装 docker，不会是最新版的，所以参考<a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">官方文档</a>来安装最新版的</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get remove docker docker-engine docker.io
+sudo apt-get update
+sudo apt-get install <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>    apt-transport-https <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>    ca-certificates <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>    curl <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>   <span style="color:#f1fa8c">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+</span><span style="color:#f1fa8c">   </span><span style="color:#ff79c6">$(</span>lsb_release -cs<span style="color:#ff79c6">)</span><span style="color:#f1fa8c"> \
+</span><span style="color:#f1fa8c">   stable&#34;</span>
+sudo apt-get update
+sudo apt-get install docker-ce</code></pre></td></tr></table>
+</div>
+</div>
+<p>执行一下<code>docker version</code>:</p>
+
+<p><img src="/image/wx_2019164102.png" alt="docker" /></p>
+
+<p>启动 Docker：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo service docker start</code></pre></td></tr></table>
+</div>
+</div>
+<p>此时直接运行镜像会报错：</p>
+
+<p><img src="/image/wx_20190420165031.png" alt="docker" /></p>
+
+<p>因为 WSL 不是一个完整阿 Linux 系统，所以没有办法运行 Docker 的守护进程，如果在 Windows 中安装了 Docker，那么在 WSL 中可以操作 Windows 安装的 Docker。</p>
+
+<h2 id="在-wsl-中操作-docker">在 WSL 中操作 Docker</h2>
+
+<p>首先启用 Windows10 系统的<strong>Hyper-V</strong>，然后下载安装<a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows">Docker for Windows</a>并运行（Hyper-V 只支持 win10 Pro 以上系统，其他系统需要使用<a href="https://docs.docker.com/toolbox/toolbox_install_windows/">docker toolbox</a>安装）。</p>
+
+<p>然后打开 Docker for Windows 的配置，勾选<code>Expose daemon on tcp:localhost:2375 without TLS</code></p>
+
+<p><img src="/image/wx_20190420165951.png" alt="docker" /></p>
+
+<p>配置 WSL 中的 Docker 链接到 Docker for Windows：</p>
+
+<p>使用命令<code>vi ~/.bashrc</code>（<code>vi ~/.zshrc</code>），增加下面的配置：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">DOCKER_HOST</span><span style="color:#ff79c6">=</span>tcp://127.0.0.1:2375</code></pre></td></tr></table>
+</div>
+</div>
+<p>保存后执行<code>source ~/.bashrc</code>（<code>vi ~/.zshrc</code>）使配置生效。</p>
+
+<h2 id="执行-docker-操作">执行 Docker 操作</h2>
+
+<p><img src="/image/wx_20190420173017.png" alt="docker" /></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/golang/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3fmt%E5%8C%85/" id="prev">
+            <span class="nav-title nav-title-prev">深入了解fmt包</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

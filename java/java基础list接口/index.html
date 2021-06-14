@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：List接口  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    14 June 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：List接口</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-list接口">1. List接口</a></li>
+<li><a href="#2-list接口的方法">2. List接口的方法</a></li>
+<li><a href="#3-arraylist集合">3. ArrayList集合</a></li>
+<li><a href="#4-linkedlist集合的自身特点">4. LinkedList集合的自身特点</a></li>
+<li><a href="#5-linkedlist集合特有方法">5. LinkedList集合特有方法</a></li>
+<li><a href="#6-vector类">6. Vector类</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-list接口">1. List接口</h1>
+
+<ul>
+<li><p>List接口的特点:</p>
+
+<ul>
+<li>它是一个元素存取有序的集合</li>
+<li>它是一个带有索引的集合，通过索引就可以精确的操作集合中的元素。</li>
+<li>集合中可以有重复的元素。</li>
+</ul></li>
+
+<li><p>List接口子类有：</p>
+
+<ul>
+<li><code>ArrayList</code>集合</li>
+<li><code>LinkedList</code>集合</li>
+</ul></li>
+</ul>
+
+<h1 id="2-list接口的方法">2. List接口的方法</h1>
+
+<ul>
+<li><code>boolean add(E e);</code> :将指定的元素添加到集合的末尾，返回是否添加成功</li>
+<li><code>void add(int index, E element);</code>  :将指定元素添加到指定的索引处</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a4&#34;</span><span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>list<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：[a1, a2, a3, a4]
+</span><span style="color:#6272a4"></span>    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;aa&#34;</span><span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>list<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：[a1, aa, a2, a3, a4]
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>boolean remove(Object o);</code>  ：从集合中删除指定元素，返回值为是否删除成功</li>
+<li><code>E remove(int index);</code> ：删除集合中指定位置的元素，返回值为被删除的元素</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a4&#34;</span><span style="color:#ff79c6">);</span>
+    String d1<span style="color:#ff79c6">=</span>list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>d1<span style="color:#ff79c6">);</span>       <span style="color:#6272a4">//输出：a2
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">boolean</span> d2<span style="color:#ff79c6">=</span>list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>d2<span style="color:#ff79c6">);</span>       <span style="color:#6272a4">//输出：true
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>E set(int index, E element);</code>：将指定索引处的元素替换成指定的元素，返回值为替换前的元素</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a4&#34;</span><span style="color:#ff79c6">);</span>
+
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;aa&#34;</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>list<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：[a1, a2, aa, a4]
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>E get(int index);</code> ：获取指定索引处的元素</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> list <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a4&#34;</span><span style="color:#ff79c6">);</span>
+
+    String str<span style="color:#ff79c6">=</span>list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//输出：a3
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-arraylist集合">3. ArrayList集合</h1>
+
+<ul>
+<li>ArrayList集合底层采用的是数组结构
+
+<ul>
+<li>当<code>new ArrayList()</code>的时候，底层创建了一个长度为10的Object类型的数组
+<br /></li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * Shared empty array instance used for default sized empty instances. We
+</span><span style="color:#6272a4">     * distinguish this from EMPTY_ELEMENTDATA to know how much to inflate when
+</span><span style="color:#6272a4">     * first element is added.
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">final</span> Object<span style="color:#ff79c6">[]</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{};</span>
+
+    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * Constructs an empty list with an initial capacity of ten.
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">ArrayList</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">elementData</span> <span style="color:#ff79c6">=</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>通过阅读源码可以知道，默认的数组长度是10，当<code>add</code>操作超出了默认的长度的时候，就会进行数组的扩容，数组的扩容其实就是将数组重新复制一份，保存到一个新的数组中，新数组的长度是旧数组长度乘1.5取整。
+<br /></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * Increases the capacity to ensure that it can hold at least the
+</span><span style="color:#6272a4">     * number of elements specified by the minimum capacity argument.
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param minCapacity the desired minimum capacity
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">grow</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> minCapacity<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// overflow-conscious code
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> oldCapacity <span style="color:#ff79c6">=</span> elementData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span> newCapacity <span style="color:#ff79c6">=</span> oldCapacity <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">(</span>oldCapacity <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>    <span style="color:#6272a4">//这里的位移操作相当于就是给旧数组乘1.5取整
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>newCapacity <span style="color:#ff79c6">-</span> minCapacity <span style="color:#ff79c6">&lt;</span> 0<span style="color:#ff79c6">)</span>
+            newCapacity <span style="color:#ff79c6">=</span> minCapacity<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>newCapacity <span style="color:#ff79c6">-</span> MAX_ARRAY_SIZE <span style="color:#ff79c6">&gt;</span> 0<span style="color:#ff79c6">)</span>
+            newCapacity <span style="color:#ff79c6">=</span> hugeCapacity<span style="color:#ff79c6">(</span>minCapacity<span style="color:#ff79c6">);</span>     <span style="color:#6272a4">//这里判断的是数组是否超过了规定的数组最大容量，超过的话就返回int数值的最大值
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// minCapacity is usually close to size, so this is a win:
+</span><span style="color:#6272a4"></span>        elementData <span style="color:#ff79c6">=</span> Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">copyOf</span><span style="color:#ff79c6">(</span>elementData<span style="color:#ff79c6">,</span> newCapacity<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * The maximum size of array to allocate.
+</span><span style="color:#6272a4">     * Some VMs reserve some header words in an array.
+</span><span style="color:#6272a4">     * Attempts to allocate larger arrays may result in
+</span><span style="color:#6272a4">     * OutOfMemoryError: Requested array size exceeds VM limit
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> MAX_ARRAY_SIZE <span style="color:#ff79c6">=</span> Integer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MAX_VALUE</span> <span style="color:#ff79c6">-</span> 8<span style="color:#ff79c6">;</span>  <span style="color:#6272a4">//数组默认的最大容量为int类型的最大值减8
+</span><span style="color:#6272a4"></span>    </code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-linkedlist集合的自身特点">4. LinkedList集合的自身特点</h1>
+
+<ul>
+<li>LinkedList集合底层采用链表结构,每次查询都要从链头或链尾找起,查询相比数组较慢，但是增删直接修改元素记录的地址值即可,不要大量移动元素，相比数组较快。</li>
+<li>LinkedList根据索引使用二分法查找需要的元素数据</li>
+</ul>
+
+<h1 id="5-linkedlist集合特有方法">5. LinkedList集合特有方法</h1>
+
+<ul>
+<li><code>E removeFirst()</code> :移除链表的开头，并返回移除的元素</li>
+<li><code>E removeLast()</code> ：移除链表的结尾，并返回移除的元素</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4">* Unlinks non-null first node f.
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">private</span> E <span style="color:#50fa7b">unlinkFirst</span><span style="color:#ff79c6">(</span>Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> f<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// assert f == first &amp;&amp; f != null;
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">final</span> E element <span style="color:#ff79c6">=</span> f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">item</span><span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">final</span> Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> next <span style="color:#ff79c6">=</span> f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">;</span>
+    f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">item</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span>
+    f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span> <span style="color:#6272a4">// help GC  将原来的链表头对象指向空，让GC释放
+</span><span style="color:#6272a4"></span>    first <span style="color:#ff79c6">=</span> next<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>next <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">)</span>
+        last <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">else</span>
+        next<span style="color:#ff79c6">.</span><span style="color:#50fa7b">prev</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span>  <span style="color:#6272a4">//释放之前的第二个链表指向前一个对象，因为这个已经成为first了
+</span><span style="color:#6272a4"></span>    size<span style="color:#ff79c6">--;</span>
+    modCount<span style="color:#ff79c6">++;</span>            <span style="color:#6272a4">//操作记录，在迭代的时候判断错误检查用的，可以看迭代的那篇博客
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">return</span> element<span style="color:#ff79c6">;</span>        <span style="color:#6272a4">//返回原先的(移除)节点数据
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+<span style="color:#8be9fd;font-style:italic">private</span> E <span style="color:#50fa7b">unlinkLast</span><span style="color:#ff79c6">(</span>Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> l<span style="color:#ff79c6">)</span>  <span style="color:#ff79c6">//</span>类似unlinkFirst</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>E getFirst()</code> : 获取链表的开头</li>
+<li><code>E getLast()</code>  : 获取链表的结尾</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4">* Returns the first element in this list.
+</span><span style="color:#6272a4">*
+</span><span style="color:#6272a4">* @return the first element in this list
+</span><span style="color:#6272a4">* @throws NoSuchElementException if this list is empty
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> E <span style="color:#50fa7b">getFirst</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">final</span> Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> f <span style="color:#ff79c6">=</span> first<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>f <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> NoSuchElementException<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">return</span> f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">item</span><span style="color:#ff79c6">;</span>    <span style="color:#6272a4">//直接返回头结点的数据
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>void addFirst(E)</code> : 添加到链表的开头</li>
+<li><code>void addLast(E)</code> : 添加到链表的结尾</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4">* Links e as first element.
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">linkFirst</span><span style="color:#ff79c6">(</span>E e<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">final</span> Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> f <span style="color:#ff79c6">=</span> first<span style="color:#ff79c6">;</span>
+    <span style="color:#6272a4">//创建一个新节点，构造函数的参数分别是：前一个节点(没有)，当前的节点(新插入的)，后一个节点(之前的头结点)
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">final</span> Node<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> newNode <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Node<span style="color:#ff79c6">&lt;&gt;(</span><span style="color:#ff79c6">null</span><span style="color:#ff79c6">,</span> e<span style="color:#ff79c6">,</span> f<span style="color:#ff79c6">);</span>  
+    first <span style="color:#ff79c6">=</span> newNode<span style="color:#ff79c6">;</span>     <span style="color:#6272a4">//头节点现在让位啦
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>f <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">)</span>
+        last <span style="color:#ff79c6">=</span> newNode<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">else</span>
+        f<span style="color:#ff79c6">.</span><span style="color:#50fa7b">prev</span> <span style="color:#ff79c6">=</span> newNode<span style="color:#ff79c6">;</span>  <span style="color:#6272a4">//f现在成第二个节点，所以把f的前一个节点设置成新生成的节点啦
+</span><span style="color:#6272a4"></span>    size<span style="color:#ff79c6">++;</span>
+    modCount<span style="color:#ff79c6">++;</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-vector类">6. Vector类</h1>
+
+<ul>
+<li><code>Vector</code>类的特点
+
+<ul>
+<li><code>Vector</code>集合数据存储的结构是数组结构，为JDK中最早提供的集合,它是线程同步的</li>
+<li><code>Vector</code>中提供了一个独特的取出方式，就是枚举<code>Enumeration</code>，它其实就是早期的迭代器。</li>
+<li>此接口<code>Enumeration</code>的功能与<code>Iterator</code>接口的功能是类似的。</li>
+<li><code>Vector</code>集合已被<code>ArrayList</code>替代。枚举<code>Enumeration</code>已被迭代器<code>Iterator</code>替代。</li>
+</ul></li>
+</ul>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80set%E6%8E%A5%E5%8F%A3/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：Set接口</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80%E6%B3%9B%E5%9E%8B/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：泛型</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

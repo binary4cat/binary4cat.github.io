@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>SQL Server表连接(Join)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    20 April 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">SQL Server表连接(Join)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#语法">语法</a></li>
+<li><a href="#inner-join代码示例">inner Join代码示例</a></li>
+<li><a href="#left-join代码示例">left join代码示例</a></li>
+<li><a href="#right-join代码示例">right join代码示例</a></li>
+<li><a href="#full-join代码示例">full join代码示例</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　Join用于根据两个或多个表之间的关系，从这些表之间查找数据。
+　　有时候我们为了方便管理会将业务分拆成多个表，表之间用“键(key)”连接，之间存在一定的关联，比如我们有会员表专门存储会员信息，有订单表存储订单信息，但是我们要知道那些会员订购了那些商品，就需要结合两张表去查找这些信息了。
+　　
+　　Join有四种用法：
+　　1. inner join :内连接。能够找到两个或多个表中建立连接字段值相等的记录。没有匹配的行就不会列出。
+　　2. left join :左连接。关键字前面是左表，后面是右表。&ndash;左连接可以得到左表所有数据，即使右表没有匹配的行。如果建立关联的字段值在右表中不存在，那么右表的数据就以null值替换。
+　　3. right join :右连接。关键字前面的表是左表，后面的表是右表。&ndash;右连接可以得到右表所有数据，即使左表没有匹配的行。如果建立关联的字段值在右左表中不存在，那么左表的数据就以null值替换。
+　　4. full join :可以得到左右连接的综合结果&ndash;去重复</p>
+
+<h1 id="语法">语法</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">SELECT</span> <span style="color:#ff79c6">column_name</span>(s)
+<span style="color:#ff79c6">FROM</span> table_name1
+<span style="color:#ff79c6">inner</span><span style="color:#ff79c6">|</span><span style="color:#ff79c6">left</span><span style="color:#ff79c6">|</span><span style="color:#ff79c6">right</span><span style="color:#ff79c6">|</span><span style="color:#ff79c6">full</span> <span style="color:#ff79c6">JOIN</span> table_name2 
+<span style="color:#ff79c6">ON</span> table_name1.<span style="color:#ff79c6">column_name</span><span style="color:#ff79c6">=</span>table_name2.<span style="color:#ff79c6">column_name</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>有两张表：
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1e9ogltfcj20ha05wmx1.jpg" alt="" />
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1eagmfb0cj20fe04cjr8.jpg" alt="" />
+我们现在要获取谁订购了什么商品的数据：</p>
+
+<h1 id="inner-join代码示例">inner Join代码示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#6272a4">--我们可以用这个种方式获取
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> person.Name,person.Address,orders.ordernum 
+<span style="color:#ff79c6">from</span> person,orders 
+<span style="color:#ff79c6">where</span> person.P_Id<span style="color:#ff79c6">=</span>orders.P_Id</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1e9stu5clj20ex04ijr6.jpg" alt="" />
+<strong>使用Join实现：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> person.Name,person.Address,orders.ordernum 
+<span style="color:#ff79c6">from</span> person 
+<span style="color:#ff79c6">inner</span> <span style="color:#ff79c6">join</span> orders 
+<span style="color:#ff79c6">on</span> person.P_Id<span style="color:#ff79c6">=</span>orders.P_Id</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1e9stu5clj20ex04ijr6.jpg" alt="" /></p>
+
+<h1 id="left-join代码示例">left join代码示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> person.Name,person.Address,orders.ordernum 
+<span style="color:#ff79c6">from</span> person 
+<span style="color:#ff79c6">left</span> <span style="color:#ff79c6">join</span> orders 
+<span style="color:#ff79c6">on</span> person.P_Id<span style="color:#ff79c6">=</span>orders.P_Id</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1easqr69jj20h404mq3a.jpg" alt="" /></p>
+
+<h1 id="right-join代码示例">right join代码示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> person.Name,person.Address,orders.ordernum 
+<span style="color:#ff79c6">from</span> person 
+<span style="color:#ff79c6">right</span> <span style="color:#ff79c6">join</span> orders 
+<span style="color:#ff79c6">on</span> person.P_Id<span style="color:#ff79c6">=</span>orders.P_Id</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1eayxaeauj20ep04ymxd.jpg" alt="" /></p>
+
+<h1 id="full-join代码示例">full join代码示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">select</span> person.Name,person.Address,orders.ordernum 
+<span style="color:#ff79c6">from</span> person 
+<span style="color:#ff79c6">full</span> <span style="color:#ff79c6">join</span> orders 
+<span style="color:#ff79c6">on</span> person.P_Id<span style="color:#ff79c6">=</span>orders.P_Id</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1eb2147ruj20fz05ft8z.jpg" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/database/sql-server%E8%A7%86%E5%9B%BE/" id="next">
+                &larr; <span class="nav-title nav-title-next">SQL Server视图</span> 
+            </a>  
+        <a rel="prev" href="/database/sql-server%E8%A7%A6%E5%8F%91%E5%99%A8/" id="prev">
+            <span class="nav-title nav-title-prev">SQL Server触发器</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

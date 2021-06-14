@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>一个简单的逻辑英语音频小爬虫  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    05 December 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">一个简单的逻辑英语音频小爬虫</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-网页分析">1. 网页分析</a></li>
+<li><a href="#2-代码编写">2. 代码编写</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<p>最近在看逻辑英语的课程，感觉还挺不错的，不过看完视频好像啥也没记住😥，正好看见有逻辑英语的纸质书就买了一本没事可以翻翻，这本书随书赠送了一些配套的音频，但是都是一个一个的分开在微信公众号文章内的，想要下载下来听比较方便一些，所以研究了一下，花了十几分钟写了个小爬虫，趁着有空写篇博客记录一下。</p>
+
+<h1 id="1-网页分析">1. 网页分析</h1>
+
+<p>首先我们打开音频的<a href="http://c.youdao.com/xue/activity/ljyyyf_zzfw2.html">汇总页面</a>，看一下这个页面的HTML结构。
+<img src="/image/Snipaste_2018-12-05_21-55-28.png" alt="汇总页" />
+可以看到每一个音频都指向一个公众号图文网页，只需要获取这些<code>href</code>的链接就可以进去音频的页面了。</p>
+
+<p>接下来我们进入图文页面，看看怎么获取音频文件。
+<img src="/image/Snipaste_2018-12-05_21-58-19.png" alt="音频页" /></p>
+
+<p>在音频页面找了一下，没有发现有音频文件的，也没有找到<code>&lt;audio&gt;</code>标签，但是发现有一个不认识的标签<code>mpvoice</code>，看起来像是微信自己弄的一个标签，看来从页面上不能直接获取音频文件了。</p>
+
+<p>先不管HTML代码了，点击播放按钮看一下是怎么播放的。</p>
+
+<p>没有发现什么有价值的东西，先放弃分析HTML了，看看Network中有什么有用的东西，点完之后果然有收获。
+<img src="/image/Snipaste_2018-12-05_22-05-54.png" alt="音频" /></p>
+
+<p>看这个接口大概就可以猜到是获取音频的，复制链接在新窗口打开，果真是音频文件。在打开几个音频图文，可以发现每个音频调用的都是相同的接口，唯一的区别就是查询参数<code>mediaid</code>的值不同，由此可以知道微信图文获取音频是调用该接口，带上音频的一个<code>id</code>就可以获取。</p>
+
+<p>接下来就是找找<code>mediaid</code>在哪里了，打开HTML代码，很容易就发现了在<code>&lt;mpvoice&gt;</code>标签上有一个<code>voice_encode_fileid</code>属性的值就是<code>mediaid</code>的值。</p>
+
+<p>分析完了页面的结构，接下来就很容易写代码了。</p>
+
+<h1 id="2-代码编写">2. 代码编写</h1>
+
+<p>使用Go语言写简单的爬虫很快，先说几个关键点，然后贴完整的代码。</p>
+
+<p>代码使用了<code>github.com/PuerkitoBio/goquery</code>这个库解析HTML结构的，如果你熟悉<code>JQuery</code>的使用，那么可以很容易的使用这个库解析HTML获取有用的数据。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#6272a4">// 创建音频汇总列表的DOM读取器
+</span><span style="color:#6272a4"></span>doc, docErr <span style="color:#ff79c6">:=</span> goquery.<span style="color:#50fa7b">NewDocumentFromReader</span>(strings.<span style="color:#50fa7b">NewReader</span>(res))
+<span style="color:#ff79c6">if</span> docErr<span style="color:#ff79c6">!=</span><span style="color:#ff79c6">nil</span> {
+    log.<span style="color:#50fa7b">Fatalf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,docErr)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>首先使用<code>NewDocumentFromReader</code>函数将获取的页面HTML字符串，转换成<code>goquery</code>中的<code>Document</code>结构，<code>Document</code>中包含的<code>Node</code>可以由选择器语法进行解析。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#6272a4">// 读取列表中的每一个音频链接
+</span><span style="color:#6272a4"></span>doc.<span style="color:#50fa7b">Find</span>(<span style="color:#f1fa8c">&#34;section a&#34;</span>).<span style="color:#50fa7b">Each</span>(<span style="color:#8be9fd;font-style:italic">func</span>(i <span style="color:#8be9fd">int</span>,s <span style="color:#ff79c6">*</span>goquery.Selection){
+    mp3Url<span style="color:#ff79c6">:=</span>s.<span style="color:#50fa7b">AttrOr</span>(<span style="color:#f1fa8c">&#34;href&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>)
+    log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,mp3Url)
+})</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用<code>Find</code>函数获取HTML中的指定Node，指定的方式是跟使用Jquery一样的，例如这里我们查找<code>section</code>标签下的<code>a</code>标签。</li>
+<li>由于<code>a</code>标签是有很多个的，所以这里使用<code>Each</code>函数处理每一个节点。</li>
+<li>然后在循环中，获取每一个<code>a</code>标签的<code>href</code>属性的值。获取节点属性的值有两个方法:
+
+<ul>
+<li><code>AttrOr(&quot;&quot;,&quot;&quot;)</code>：第一个参数是属性的名字，第二个参数是没有找到指定的属性时，默认返回的值。</li>
+<li><code>Attr(&quot;&quot;)</code>：这个方法如果没有找到指定的属性，就会返回<code>string</code>和<code>bool</code>类型的零值，否则就返回指定属性的值和true。</li>
+</ul></li>
+</ul>
+
+<p>完整的代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">97
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#ff79c6">package</span> main
+
+<span style="color:#ff79c6">import</span> (
+	<span style="color:#f1fa8c">&#34;os&#34;</span>
+	<span style="color:#f1fa8c">&#34;io&#34;</span>
+	<span style="color:#f1fa8c">&#34;log&#34;</span>
+	<span style="color:#f1fa8c">&#34;strings&#34;</span>
+	<span style="color:#f1fa8c">&#34;net/http&#34;</span>
+	<span style="color:#f1fa8c">&#34;io/ioutil&#34;</span>
+	<span style="color:#f1fa8c">&#34;github.com/PuerkitoBio/goquery&#34;</span>
+)
+
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>(){
+	<span style="color:#ff79c6">defer</span> <span style="color:#8be9fd;font-style:italic">func</span> ()  {
+		<span style="color:#ff79c6">if</span> panicErr <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">recover</span>(); panicErr <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+			log.<span style="color:#50fa7b">Fatalf</span>(<span style="color:#f1fa8c">&#34;程序发生异常，异常信息：%v&#34;</span>,panicErr)
+		}
+	}()
+
+	res<span style="color:#ff79c6">:=</span><span style="color:#50fa7b">GetMethod</span>(<span style="color:#f1fa8c">&#34;http://c.youdao.com/xue/activity/ljyyyf_zzfw2.html&#34;</span>)
+
+	<span style="color:#ff79c6">if</span> res <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+		<span style="color:#6272a4">// 创建音频汇总列表的DOM读取器
+</span><span style="color:#6272a4"></span>		doc, docErr <span style="color:#ff79c6">:=</span> goquery.<span style="color:#50fa7b">NewDocumentFromReader</span>(strings.<span style="color:#50fa7b">NewReader</span>(res))
+		<span style="color:#ff79c6">if</span> docErr<span style="color:#ff79c6">!=</span><span style="color:#ff79c6">nil</span> {
+			log.<span style="color:#50fa7b">Fatalf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,docErr)
+		}
+		<span style="color:#6272a4">// 读取列表中的每一个音频链接
+</span><span style="color:#6272a4"></span>		doc.<span style="color:#50fa7b">Find</span>(<span style="color:#f1fa8c">&#34;section a&#34;</span>).<span style="color:#50fa7b">Each</span>(<span style="color:#8be9fd;font-style:italic">func</span>(i <span style="color:#8be9fd">int</span>,s <span style="color:#ff79c6">*</span>goquery.Selection){
+			mp3Url<span style="color:#ff79c6">:=</span>s.<span style="color:#50fa7b">AttrOr</span>(<span style="color:#f1fa8c">&#34;href&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>)
+			log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,mp3Url)
+			res=<span style="color:#50fa7b">GetMethod</span>(mp3Url)
+
+			<span style="color:#6272a4">// 创建图文内容的DOM读取器
+</span><span style="color:#6272a4"></span>			docAudio, docAudioErr <span style="color:#ff79c6">:=</span> goquery.<span style="color:#50fa7b">NewDocumentFromReader</span>(strings.<span style="color:#50fa7b">NewReader</span>(res))
+			<span style="color:#ff79c6">if</span> docAudioErr<span style="color:#ff79c6">!=</span><span style="color:#ff79c6">nil</span> {
+				log.<span style="color:#50fa7b">Fatalf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,docErr)
+			}
+			content<span style="color:#ff79c6">:=</span>docAudio.<span style="color:#50fa7b">Find</span>(<span style="color:#f1fa8c">&#34;div#img-content&#34;</span>)
+			<span style="color:#6272a4">// 解析标题作为音频的名称
+</span><span style="color:#6272a4"></span>			title<span style="color:#ff79c6">:=</span>strings.<span style="color:#50fa7b">TrimSpace</span>(content.<span style="color:#50fa7b">Find</span>(<span style="color:#f1fa8c">&#34;h2.rich_media_title&#34;</span>).<span style="color:#50fa7b">Text</span>())
+			<span style="color:#6272a4">// 获取音频的标识
+</span><span style="color:#6272a4"></span>			mediaid<span style="color:#ff79c6">:=</span>strings.<span style="color:#50fa7b">TrimSpace</span>(content.<span style="color:#50fa7b">Find</span>(<span style="color:#f1fa8c">&#34;mpvoice&#34;</span>).<span style="color:#50fa7b">AttrOr</span>(<span style="color:#f1fa8c">&#34;voice_encode_fileid&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>))
+			log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s:%s&#34;</span>,title,mediaid)
+			<span style="color:#6272a4">// 下载文件
+</span><span style="color:#6272a4"></span>			err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">DownloadFile</span>(title<span style="color:#ff79c6">+</span><span style="color:#f1fa8c">&#34;.mp3&#34;</span>, <span style="color:#f1fa8c">&#34;https://res.wx.qq.com/voice/getvoice?mediaid=&#34;</span><span style="color:#ff79c6">+</span>mediaid)
+			<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+				log.<span style="color:#50fa7b">Fatalf</span>(<span style="color:#f1fa8c">&#34;%v&#34;</span>,err)
+			}
+		})
+	}
+}
+
+<span style="color:#6272a4">// 获取GET请求页面内容
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">GetMethod</span>(getUrl <span style="color:#8be9fd">string</span>)<span style="color:#8be9fd">string</span>{
+	client <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>http.Client{}
+
+	request, err <span style="color:#ff79c6">:=</span> http.<span style="color:#50fa7b">NewRequest</span>(<span style="color:#f1fa8c">&#34;GET&#34;</span>, getUrl, <span style="color:#ff79c6">nil</span>)
+	<span style="color:#ff79c6">if</span> err<span style="color:#ff79c6">!=</span><span style="color:#ff79c6">nil</span> {
+		log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;发送GET请求发生错误，错误信息：%v&#34;</span>,err)
+	}
+
+	response, errRes <span style="color:#ff79c6">:=</span> client.<span style="color:#50fa7b">Do</span>(request)
+	<span style="color:#ff79c6">if</span> errRes<span style="color:#ff79c6">!=</span><span style="color:#ff79c6">nil</span> {
+		log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;获取响应GET请求发生错误，错误信息：%v&#34;</span>,errRes)
+	}
+	<span style="color:#ff79c6">defer</span> response.Body.<span style="color:#50fa7b">Close</span>()
+	<span style="color:#ff79c6">if</span> response.StatusCode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">200</span> {
+		str, _ <span style="color:#ff79c6">:=</span> ioutil.<span style="color:#50fa7b">ReadAll</span>(response.Body)
+		bodyStr <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">string</span>(str)
+		<span style="color:#ff79c6">return</span> bodyStr
+	}
+	<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+}
+
+<span style="color:#6272a4">// 下载文件
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">DownloadFile</span>(filepath <span style="color:#8be9fd">string</span>, dUrl <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+
+	out, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Create</span>(filepath)
+	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+		<span style="color:#ff79c6">return</span> err
+	}
+	<span style="color:#ff79c6">defer</span> out.<span style="color:#50fa7b">Close</span>()
+
+	resp, err <span style="color:#ff79c6">:=</span> http.<span style="color:#50fa7b">Get</span>(dUrl)
+	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+		<span style="color:#ff79c6">return</span> err
+	}
+	<span style="color:#ff79c6">defer</span> resp.Body.<span style="color:#50fa7b">Close</span>()
+
+	_, err = io.<span style="color:#50fa7b">Copy</span>(out, resp.Body)
+	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+		<span style="color:#ff79c6">return</span> err
+	}
+	log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v ----- 下载完成！&#34;</span>,filepath)
+	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3fmt%E5%8C%85/" id="next">
+                &larr; <span class="nav-title nav-title-next">深入了解fmt包</span> 
+            </a>  
+        <a rel="prev" href="/golang/goweb%E7%A4%BA%E4%BE%8B%E7%AC%94%E8%AE%B0/" id="prev">
+            <span class="nav-title nav-title-prev">GoWeb示例笔记</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

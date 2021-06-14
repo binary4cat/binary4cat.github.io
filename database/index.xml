@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Databases on Haijd&#39;s Blog</title>
+    <link>/database/</link>
+    <description>Recent content in Databases on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 Apr 2015 16:57:47 +0800</lastBuildDate>
+    
+	<atom:link href="/database/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL Server视图</title>
+      <link>/database/sql-server%E8%A7%86%E5%9B%BE/</link>
+      <pubDate>Mon, 27 Apr 2015 16:57:47 +0800</pubDate>
+      
+      <guid>/database/sql-server%E8%A7%86%E5%9B%BE/</guid>
+      <description>&lt;h1 id=&#34;什么是视图&#34;&gt;什么是视图&lt;/h1&gt;
+
+&lt;p&gt;　　视图就是一张虚拟表，是基于SQL语句的&lt;strong&gt;结果集&lt;/strong&gt;的可视化的表，视图中的字段是来自一个或多个表中的字段(相当于子查询的结果集那样)。
+　　视图简单的理解为一个统一访问数据的接口，用户只需要访问这个接口，而不需要知道具体的表的结构和表之间的关系。
+　　数据库的结构和设计不会受到视图中的函数、where、join语句的影响。&lt;/p&gt;
+
+&lt;h1 id=&#34;视图的优点和使用规则-http-www-cnblogs-com-careyson-archive-2011-12-07-2279522-html&#34;&gt;&lt;a href=&#34;http://www.cnblogs.com/CareySon/archive/2011/12/07/2279522.html&#34;&gt;视图的优点和使用规则&lt;/a&gt;&lt;/h1&gt;
+
+&lt;h2 id=&#34;为什么要使用视图&#34;&gt;为什么要使用视图&lt;/h2&gt;
+
+&lt;p&gt;•   视图隐藏了底层的表结构，简化了数据访问操作
+•   因为隐藏了底层的表结构，所以大大加强了安全性，用户只能看到视图提供的数据
+•   使用视图，方便了权限管理，让用户对视图有权限而不是对底层表有权限进一步加强了安全性
+•   视图提供了一个用户访问的接口，当底层表改变后，改变视图的语句来进行适应，使已经建立在这个视图上客户端程序不受影响&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server表连接(Join)</title>
+      <link>/database/sql-server%E8%A1%A8%E8%BF%9E%E6%8E%A5-join/</link>
+      <pubDate>Mon, 20 Apr 2015 21:44:19 +0800</pubDate>
+      
+      <guid>/database/sql-server%E8%A1%A8%E8%BF%9E%E6%8E%A5-join/</guid>
+      <description>&lt;p&gt;　　Join用于根据两个或多个表之间的关系，从这些表之间查找数据。
+　　有时候我们为了方便管理会将业务分拆成多个表，表之间用“键(key)”连接，之间存在一定的关联，比如我们有会员表专门存储会员信息，有订单表存储订单信息，但是我们要知道那些会员订购了那些商品，就需要结合两张表去查找这些信息了。
+　　
+　　Join有四种用法：
+　　1. inner join :内连接。能够找到两个或多个表中建立连接字段值相等的记录。没有匹配的行就不会列出。
+　　2. left join :左连接。关键字前面是左表，后面是右表。&amp;ndash;左连接可以得到左表所有数据，即使右表没有匹配的行。如果建立关联的字段值在右表中不存在，那么右表的数据就以null值替换。
+　　3. right join :右连接。关键字前面的表是左表，后面的表是右表。&amp;ndash;右连接可以得到右表所有数据，即使左表没有匹配的行。如果建立关联的字段值在右左表中不存在，那么左表的数据就以null值替换。
+　　4. full join :可以得到左右连接的综合结果&amp;ndash;去重复&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server触发器</title>
+      <link>/database/sql-server%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <pubDate>Thu, 16 Apr 2015 23:33:00 +0800</pubDate>
+      
+      <guid>/database/sql-server%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <description>&lt;p&gt;　　&lt;/p&gt;
+
+&lt;h1 id=&#34;1-什么是触发器&#34;&gt;1. 什么是触发器&lt;/h1&gt;
+
+&lt;p&gt;　　触发器是一种特殊的存储过程，和存储过程不同的是，触发器是由事件被触发时自动进行调用的。
+　　触发器的执行不是由程序调用，也不是手工启动，而是有事件来触发，比如当对一个表进行操作(insert、delete、update)是就会激活触发器执行。触发器常用于加强数据的完整性约束和业务规则。&lt;/p&gt;
+
+&lt;h2 id=&#34;1-1-分类&#34;&gt;1.1. 分类&lt;/h2&gt;
+
+&lt;p&gt;　　SQL Server包括了三种常规类型的触发器：DML触发器、DDL触发器和登录触发器。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server联合结果集(union)</title>
+      <link>/database/sql-server%E8%81%94%E5%90%88%E7%BB%93%E6%9E%9C%E9%9B%86-union/</link>
+      <pubDate>Fri, 10 Apr 2015 20:46:09 +0800</pubDate>
+      
+      <guid>/database/sql-server%E8%81%94%E5%90%88%E7%BB%93%E6%9E%9C%E9%9B%86-union/</guid>
+      <description>&lt;p&gt;　　&lt;code&gt;union&lt;/code&gt;操作符用于合并另个或多个select(查询)语句的结果集。
+　　在使用&lt;code&gt;union&lt;/code&gt;操作符时，要注意联合的select语句需要有相同的列、相似的数据类型、列的顺序要相同。&lt;/p&gt;
+
+&lt;h1 id=&#34;union和union-all&#34;&gt;union和union all&lt;/h1&gt;
+
+&lt;p&gt;★ &lt;code&gt;union&lt;/code&gt;默认去掉合并结果中重复的数据。
+★ &lt;code&gt;union all&lt;/code&gt;可以保留重复的结果数据。&lt;/p&gt;
+
+&lt;h1 id=&#34;语法&#34;&gt;语法&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;from&lt;/span&gt; table1_name
+&lt;span style=&#34;color:#ff79c6&#34;&gt;union&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;union&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;all&lt;/span&gt;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;from&lt;/span&gt; table2_name&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;union结果集中的列名总是等于第一条select语句的列名&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server事务</title>
+      <link>/database/sql-server%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Wed, 01 Apr 2015 21:20:19 +0800</pubDate>
+      
+      <guid>/database/sql-server%E4%BA%8B%E5%8A%A1/</guid>
+      <description>&lt;h1 id=&#34;1-什么是事务&#34;&gt;1. 什么是事务&lt;/h1&gt;
+
+&lt;p&gt;　　事务(Transaction)是访问并可能更新数据库中的各种数据项的一个程序执行单元。事务用来保持逻辑数据的一致性和可恢复性，避免错误操作引发不可挽回的损失。
+　　事务由begin Transaction(事务开始)和end Transaction(事务结束)之间执行的全部成员构成。在关系型数据库中，事务是一条或多条SQL语句组成的。&lt;/p&gt;
+
+&lt;h2 id=&#34;1-1-事务的特性&#34;&gt;1.1. 事务的特性&lt;/h2&gt;
+
+&lt;p&gt;　　事务有四个属性：原子性、一致性、隔离性、持久性。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>数据库基本增删改查语句总结</title>
+      <link>/database/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 25 Mar 2015 20:27:07 +0800</pubDate>
+      
+      <guid>/database/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93/</guid>
+      <description>创建 create 创建数据库 1 2 3 4 5 6 7 8  create database MyDatabase on primary ( name=&amp;#39;MyDatabase_data&amp;#39;, filename=&amp;#39;D:\working software\sql Sever\MSSQL11.MSSQLSERVER\MSSQL\DATA\MyDatabase0301_data.mdf&amp;#39;, size=5MB, filegorwth=1MB )   创建日志 1 2 3 4 5 6 7  log on ( name=&amp;#39;MyDatabase_log&amp;#39;, filename=&amp;#39;D:\working software\sql Sever\MSSQL11.MSSQLSERVER\MSSQL\DATA\MyDatabase0301_data_log.ldf&amp;#39;, size=1MB, filegorwth=10% )   使用某个数据库 1  use MyDatabase   创建表 1 2 3 4 5 6 7 8 9 10  carate table Student ( StuId int identity(1,1) primary key, --主键，自增从1开始每次增加1  StuName nvarchar(10), StuGender char(2), StuAge int, StuChinese int, StuMath int, StuEnglish int )   增(三种方式) inster into  第一种  1  inster into Student(StuName.</description>
+    </item>
+    
+  </channel>
+</rss>

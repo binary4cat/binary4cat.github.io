@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：Map接口  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    20 June 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：Map接口</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-map接口">1. Map接口</a>
+<ul>
+<li><a href="#1-1-map接口中的常用方法">1.1. Map接口中的常用方法</a></li>
+<li><a href="#1-2-map集合遍历-keyset">1.2. Map集合遍历(keySet)</a></li>
+<li><a href="#1-3-map集合entry对象">1.3. Map集合Entry对象</a></li>
+<li><a href="#1-4-map集合遍历-entryset方法">1.4. Map集合遍历(entrySet方法)</a></li>
+<li><a href="#1-5-hashmap集合存储自定义对象">1.5. HashMap集合存储自定义对象</a></li>
+<li><a href="#1-6-linkedhashmap">1.6. LinkedHashMap</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-map接口">1. Map接口</h1>
+
+<ul>
+<li>Map接口概述:
+
+<ul>
+<li>Map中存储元素是成对存在的，每一个元素都包含键和值(key、value)。</li>
+<li>Map集合不能批量添加，只能执行单个添加操作。</li>
+<li>Map集合中的<code>key</code>是不能重复的，但是<code>value</code>可以重复，每个键只能对应一个值。</li>
+<li>Map下的主要实现类：<code>HashMap</code>、<code>LinkedHashMap</code></li>
+</ul></li>
+</ul>
+
+<h2 id="1-1-map接口中的常用方法">1.1. Map接口中的常用方法</h2>
+
+<ul>
+<li><code>public V put(K key, V value)</code> ：存储键值对</li>
+<li><code>public void putAll(Map&lt;? extends K, ? extends V&gt; m)</code> :添加一个相同类型的Map(注意限定符约束)</li>
+<li>查看源码可以知道，无论是put还是putAll最终调用的都是<code>putVal</code>这个方法(putAll也是循环调用的该方法)</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">//可以看到第一个参数是一个hash
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">final</span> V <span style="color:#50fa7b">putVal</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> hash<span style="color:#ff79c6">,</span> K key<span style="color:#ff79c6">,</span> V value<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">boolean</span> onlyIfAbsent<span style="color:#ff79c6">,</span><span style="color:#8be9fd">boolean</span> evict<span style="color:#ff79c6">){}</span>
+<span style="color:#6272a4">//从这里可以看出来，HashMap在存储的时候会对key进行hash操作，在putVal方法中对hash进行判断，用来判重
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> V <span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>K key<span style="color:#ff79c6">,</span> V value<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#ff79c6">return</span> putVal<span style="color:#ff79c6">(</span>hash<span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">),</span> key<span style="color:#ff79c6">,</span> value<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">false</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">true</span><span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>public V get(Object key)</code> ：根据key获取value</li>
+<li><code>public V getOrDefault(Object key, V defaultValue)</code> ：根据key获取value，并且传递一个默认的value，当该key的时候，就返回这个传过来的默认的value，这是JDK8中新扩展的方法。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> V <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Object key<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        Node<span style="color:#ff79c6">&lt;</span>K<span style="color:#ff79c6">,</span>V<span style="color:#ff79c6">&gt;</span> e<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span>e <span style="color:#ff79c6">=</span> getNode<span style="color:#ff79c6">(</span>hash<span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">),</span> key<span style="color:#ff79c6">))</span> <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">:</span> e<span style="color:#ff79c6">.</span><span style="color:#50fa7b">value</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#6272a4">// Overrides of JDK8 Map extension methods
+</span><span style="color:#6272a4"></span>    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> V <span style="color:#50fa7b">getOrDefault</span><span style="color:#ff79c6">(</span>Object key<span style="color:#ff79c6">,</span> V defaultValue<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        Node<span style="color:#ff79c6">&lt;</span>K<span style="color:#ff79c6">,</span>V<span style="color:#ff79c6">&gt;</span> e<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span>e <span style="color:#ff79c6">=</span> getNode<span style="color:#ff79c6">(</span>hash<span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">),</span> key<span style="color:#ff79c6">))</span> <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">?</span> defaultValue <span style="color:#ff79c6">:</span> e<span style="color:#ff79c6">.</span><span style="color:#50fa7b">value</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>public V remove(Object key)</code> ：根据key删除集合中的键值对</li>
+<li><code>public boolean remove(Object key, Object value)</code> :根据key、value的值删除集合中的键值对，键和值都匹配上才删除。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    Map<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span>Integer<span style="color:#ff79c6">&gt;();</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">);</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;b&#34;</span><span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>map<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">// {a=1, b=2}
+</span><span style="color:#6272a4"></span>    Integer integer<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">);</span>  
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>integer<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//1
+</span><span style="color:#6272a4"></span>    Integer value<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>value<span style="color:#ff79c6">);</span>     <span style="color:#6272a4">//1
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">boolean</span> success<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;b&#34;</span><span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>success<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//true
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-2-map集合遍历-keyset">1.2. Map集合遍历(keySet)</h2>
+
+<ul>
+<li>首先获取Map集合中所有的键，<code>keySet()</code>方法返回一个Set集合存储所有的键</li>
+<li>遍历返回的Set，调用<code>get(key)</code>方法获取对应的值</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    Map<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span>Integer<span style="color:#ff79c6">&gt;();</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">);</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;b&#34;</span><span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+    Set<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> keys<span style="color:#ff79c6">=</span> map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">keySet</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>String key <span style="color:#ff79c6">:</span> keys<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		Integer value<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">);</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>value<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//1 2
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+
+	<span style="color:#6272a4">//Iterator迭代器方式
+</span><span style="color:#6272a4"></span>	Iterator<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> iterator<span style="color:#ff79c6">=</span>keys<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+		String key<span style="color:#ff79c6">=</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+		Integer value<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">);</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>value<span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-3-map集合entry对象">1.3. Map集合Entry对象</h2>
+
+<ul>
+<li>Map接口中有一个嵌套的接口<code>Entry&lt;K,V&gt;</code>，它将键值对的对应关系封装成了键值对对象</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>K<span style="color:#ff79c6">,</span>V<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
+	K <span style="color:#50fa7b">getKey</span><span style="color:#ff79c6">();</span>
+	V <span style="color:#50fa7b">getValue</span><span style="color:#ff79c6">();</span>
+	V <span style="color:#50fa7b">setValue</span><span style="color:#ff79c6">(</span>V value<span style="color:#ff79c6">);</span>
+	<span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>Object o<span style="color:#ff79c6">);</span>
+	<span style="color:#8be9fd">int</span> <span style="color:#50fa7b">hashCode</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在Map接口中有一个方法<code>Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();</code> <code>HashMap</code>重写了这个方法，返回Map集合中所有的Entry(键值对)对象。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> Set<span style="color:#ff79c6">&lt;</span>Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>K<span style="color:#ff79c6">,</span>V<span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#50fa7b">entrySet</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    Set<span style="color:#ff79c6">&lt;</span>Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>K<span style="color:#ff79c6">,</span>V<span style="color:#ff79c6">&gt;&gt;</span> es<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span>es <span style="color:#ff79c6">=</span> entrySet<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">(</span>entrySet <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> EntrySet<span style="color:#ff79c6">())</span> <span style="color:#ff79c6">:</span> es<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-4-map集合遍历-entryset方法">1.4. Map集合遍历(entrySet方法)</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    Map<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span>Integer<span style="color:#ff79c6">&gt;();</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">);</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;b&#34;</span><span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+    <span style="color:#6272a4">//获取map的键值对Set集合
+</span><span style="color:#6272a4"></span>    Set<span style="color:#ff79c6">&lt;</span>Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> set<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">entrySet</span><span style="color:#ff79c6">();</span>
+	<span style="color:#6272a4">//获取该Set的迭代器对象
+</span><span style="color:#6272a4"></span>    Iterator<span style="color:#ff79c6">&lt;</span>Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;&gt;</span> iterator<span style="color:#ff79c6">=</span>set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+		Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> entry<span style="color:#ff79c6">=</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+		<span style="color:#6272a4">//调用Entry对象的方法获取键和值
+</span><span style="color:#6272a4"></span>		String key<span style="color:#ff79c6">=</span>entry<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getKey</span><span style="color:#ff79c6">();</span>
+		Integer value<span style="color:#ff79c6">=</span>entry<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getValue</span><span style="color:#ff79c6">();</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Key:&#34;</span><span style="color:#ff79c6">+</span>key<span style="color:#ff79c6">+</span><span style="color:#f1fa8c">&#34;---------&#34;</span><span style="color:#ff79c6">+</span><span style="color:#f1fa8c">&#34;Value:&#34;</span><span style="color:#ff79c6">+</span>value<span style="color:#ff79c6">);</span>  
+		<span style="color:#6272a4">// 输出：Key:a---------Value:1  Key:b---------Value:2
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+
+	<span style="color:#6272a4">//foreach
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>Map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Entry</span><span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> entry <span style="color:#ff79c6">:</span> set<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Key:&#34;</span><span style="color:#ff79c6">+</span>entry<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getKey</span><span style="color:#ff79c6">()+</span><span style="color:#f1fa8c">&#34;---------&#34;</span><span style="color:#ff79c6">+</span><span style="color:#f1fa8c">&#34;Value:&#34;</span><span style="color:#ff79c6">+</span>entry<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getValue</span><span style="color:#ff79c6">());</span>
+		<span style="color:#6272a4">// 输出：Key:a---------Value:1  Key:b---------Value:2
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-5-hashmap集合存储自定义对象">1.5. HashMap集合存储自定义对象</h2>
+
+<ul>
+<li><code>HashMap</code>集合的key、value值都可以是Object类型的，也就是可以存储任意类型的对象。</li>
+<li>key为自定义对象时：
+
+<ul>
+<li>因为Map类型的数据在存储时，会对key进行哈希，如果是自定义对象还会调用<code>Object</code>对象的<code>equals</code>方法比较key是否重复。</li>
+<li>默认的<code>Object</code>对象的<code>equals</code>方法其实调用的是<code>==</code>比较的，也就是比较的对象的地址。所以当自定义对象作为Map的键时，应该重写Object的equals方法，例如比较对象中属性值的不同。</li>
+</ul></li>
+<li>value为自定义对象时：
+
+<ul>
+<li>因为Map存储时判断的时键是否重复，所以value为自定义对象时，可以没有特殊的处理。</li>
+</ul></li>
+</ul>
+
+<h2 id="1-6-linkedhashmap">1.6. LinkedHashMap</h2>
+
+<ul>
+<li><code>LinkedHashMap</code>和<code>HashMap</code>基本一致，<code>LinkedHashMap</code>的特定就是可以保证迭代的顺序和插入的顺序一致。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    LinkedHashMap<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> LinkedHashMap<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span>Integer<span style="color:#ff79c6">&gt;();</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a&#34;</span><span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">);</span>
+    map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;b&#34;</span><span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">);</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>map<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：{a=1, b=2}
+</span><span style="color:#6272a4"></span>    Set<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> set<span style="color:#ff79c6">=</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">keySet</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>String key <span style="color:#ff79c6">:</span> set<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Value:&#34;</span><span style="color:#ff79c6">+</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>key<span style="color:#ff79c6">));</span>  <span style="color:#6272a4">//输出：Value:1   Value:2
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java-compareto%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83%E5%87%BD%E6%95%B0/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java compareTo字符串比较函数</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80set%E6%8E%A5%E5%8F%A3/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：Set接口</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

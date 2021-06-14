@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>SQL Server事务  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    01 April 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">SQL Server事务</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是事务">1. 什么是事务</a>
+<ul>
+<li><a href="#1-1-事务的特性">1.1. 事务的特性</a></li>
+<li><a href="#1-2-事务的种类">1.2. 事务的种类</a></li>
+</ul></li>
+<li><a href="#2-编写事务">2. 编写事务</a>
+<ul>
+<li><a href="#2-1-事务示例代码">2.1. 事务示例代码：</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么是事务">1. 什么是事务</h1>
+
+<p>　　事务(Transaction)是访问并可能更新数据库中的各种数据项的一个程序执行单元。事务用来保持逻辑数据的一致性和可恢复性，避免错误操作引发不可挽回的损失。
+　　事务由begin Transaction(事务开始)和end Transaction(事务结束)之间执行的全部成员构成。在关系型数据库中，事务是一条或多条SQL语句组成的。</p>
+
+<h2 id="1-1-事务的特性">1.1. 事务的特性</h2>
+
+<p>　　事务有四个属性：原子性、一致性、隔离性、持久性。</p>
+
+<p>● 原子性(atomicity)：一个事务是一个不可分割的工作单位，事务中的操作，要么全部都执行，要么全部都不执行。
+　　● 一致性(consistency)：事务结束的时候，所有的内部数据必须全部都是正确的。
+　　● 隔离性(isolation)：并发多个事务时。各个事务之间不干涉内部数据，每一个事务处理的都是另一个事务处理之前或者处理之后的数据。
+　　● 持久性(durability)：当事务提交后，数据的改变是永久性的，不能在回滚。</p>
+
+<h2 id="1-2-事务的种类">1.2. 事务的种类</h2>
+
+<p>　　自动提交事务：SQL Server中默认的事务模式，将每一条SQL语句看做是一个事务来执行。
+　　显式事务：使用SQL语句编写，由<code>Begin Transaction</code>开启事务，<code>Commit Transaction</code>提交事务或者<code>Rollback Transaction</code>回滚事务结束事务。
+　　隐式事务：使用<code>Set IMPLICIT_TRANSACTIONS {ON|OFF}</code>打开或者关闭事务，当为<code>ON</code>时会将隐式事务模式打开，这时就不使用Begin Transaction开启事务了，隐式事务模式会自动启动事务，要做的只是<code>Commit Transaction</code>提交事务、<code>Rollback Transaction</code>回滚事务。</p>
+
+<p>　　<text style='color:yellow'>💡<text/> 我们常用的事务类型就是显式事务，也就是我们自定义的事务。</p>
+
+<h1 id="2-编写事务">2. 编写事务</h1>
+
+<p>　　常用的关键词语句有4个：
+　　1. Begin Transaction：标记事务开启。
+　　2. Commit Transaction：提交事务，表示事务成功执行。
+　　3. Rollback Transaction：回滚事务，事务的执行过程中出现错误，回滚到事务处理之前的状态。
+　　4. Save Transaction：设置一个事务保存点，当事务执行出错是，Roolback Transaction语句执行后可以不用全部回滚，可以回滚到这个保存点。当然前提是保证保存点之前的事务不出错。</p>
+
+<h2 id="2-1-事务示例代码">2.1. 事务示例代码：</h2>
+
+<p>　　假设我们有一张员工表，有三个字段分别是Name(nchar)、Age(int)、Class(nchar)</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#6272a4">---开启事务
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">begin</span> tran
+<span style="color:#6272a4">--错误捕捉机制
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">begin</span> try  
+   <span style="color:#6272a4">--正确
+</span><span style="color:#6272a4"></span>   <span style="color:#ff79c6">insert</span> <span style="color:#ff79c6">into</span> Staff (Name,Age,<span style="color:#ff79c6">Class</span>) <span style="color:#ff79c6">values</span> (<span style="color:#f1fa8c">&#39;Microsoft&#39;</span>,<span style="color:#bd93f9">30</span>,<span style="color:#f1fa8c">&#39;wp部门&#39;</span>)
+   <span style="color:#6272a4">--正确
+</span><span style="color:#6272a4"></span>   <span style="color:#ff79c6">insert</span> <span style="color:#ff79c6">into</span> Staff (Name,Age,<span style="color:#ff79c6">Class</span>) <span style="color:#ff79c6">values</span> (<span style="color:#f1fa8c">&#39;Google&#39;</span>,<span style="color:#bd93f9">20</span>,<span style="color:#f1fa8c">&#39;Android部门&#39;</span>)
+   <span style="color:#6272a4">--因为年龄Age字段是int类型，这里插入了字符串，错误
+</span><span style="color:#6272a4"></span>   <span style="color:#6272a4">--insert into Staff (Name,Age,Class) values (&#39;Apple&#39;,&#39;abc&#39;,&#39;ios部门&#39;)
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">end</span> try
+<span style="color:#ff79c6">begin</span> catch
+   <span style="color:#ff79c6">select</span> Error_number() <span style="color:#ff79c6">as</span> ErrorNumber,  <span style="color:#6272a4">--出现错误的代码
+</span><span style="color:#6272a4"></span>          Error_severity() <span style="color:#ff79c6">as</span> ErrorSeverity,  <span style="color:#6272a4">--错误严重级别，级别小于10 try catch 捕获不到
+</span><span style="color:#6272a4"></span>          Error_state() <span style="color:#ff79c6">as</span> ErrorState ,  <span style="color:#6272a4">--错误状态码
+</span><span style="color:#6272a4"></span>          Error_Procedure() <span style="color:#ff79c6">as</span> ErrorProcedure , <span style="color:#6272a4">--出现错误的存储过程或触发器的名称。
+</span><span style="color:#6272a4"></span>          Error_line() <span style="color:#ff79c6">as</span> ErrorLine,  <span style="color:#6272a4">--发生错误的行号
+</span><span style="color:#6272a4"></span>          Error_message() <span style="color:#ff79c6">as</span> ErrorMessage  <span style="color:#6272a4">--错误的具体信息
+</span><span style="color:#6272a4"></span>   <span style="color:#ff79c6">if</span>(<span style="color:#ff79c6">@@</span>trancount<span style="color:#ff79c6">&gt;</span><span style="color:#bd93f9">0</span>) <span style="color:#6272a4">--全局变量@@trancount，事务时开启此值+1，用来判断是否开启事务
+</span><span style="color:#6272a4"></span>      <span style="color:#ff79c6">rollback</span> tran  <span style="color:#6272a4">---由于第三条语句出错，这里回滚到开始，前两条语句也没有执行成功
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">end</span> catch
+<span style="color:#ff79c6">if</span>(<span style="color:#ff79c6">@@</span>trancount<span style="color:#ff79c6">&gt;</span><span style="color:#bd93f9">0</span>)
+<span style="color:#ff79c6">commit</span> tran  <span style="color:#6272a4">--没有发生错误就提交事务。</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1d464k3i0j20o90hq7av.jpg" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/database/sql-server%E8%81%94%E5%90%88%E7%BB%93%E6%9E%9C%E9%9B%86-union/" id="next">
+                &larr; <span class="nav-title nav-title-next">SQL Server联合结果集(union)</span> 
+            </a>  
+        <a rel="prev" href="/database/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93/" id="prev">
+            <span class="nav-title nav-title-prev">数据库基本增删改查语句总结</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Go标准库笔记Ⅰ：IO  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    14 October 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Go标准库笔记Ⅰ：IO</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1ficnszlhh9j20go098jrl.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#io-基本的i-o接口"><code>io</code>：基本的I/O接口</a>
+<ul>
+<li><a href="#reader-接口"><code>Reader</code>接口</a></li>
+<li><a href="#writer-接口"><code>Writer</code>接口</a></li>
+<li><a href="#举例实现了-io-reader-接口或-io-writer-接口的标准库类型">举例实现了<code>io.Reader</code>接口或<code>io.Writer</code>接口的标准库类型</a></li>
+<li><a href="#readerat-和-writerat-接口"><code>ReaderAt</code>和<code>WriterAt</code>接口</a></li>
+<li><a href="#readerfrom-和-writerto-接口"><code>ReaderFrom</code>和<code>WriterTo</code>接口</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h2 id="io-基本的i-o接口"><code>io</code>：基本的I/O接口</h2>
+
+<h3 id="reader-接口"><code>Reader</code>接口</h3>
+
+<ul>
+<li><p>定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#8be9fd;font-style:italic">type</span> Reader <span style="color:#8be9fd;font-style:italic">interface</span>{
+    <span style="color:#50fa7b">Read</span>(p []<span style="color:#8be9fd">byte</span>)(n <span style="color:#8be9fd">int</span>,err <span style="color:#8be9fd">error</span>)
+}</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p><code>Read</code>方法将<code>len(p)</code>个字节读取到p中，返回值是读取的字节数和任何遇到的错误，这个错误可能是读取中遇到的意外或者EOF(end-of-file)。</p></li>
+
+<li><p>当<code>Read</code>方法返回错误时，不代表没有读取到任何数据。<strong>调用者应该处理返回的任何数据，之后才处理可能的错误</strong>。</p></li>
+
+<li><p>即使<code>Read</code>函数返回的的字节数小于<code>p</code>的长度，函数也会返回完整的p；如果读取的数据不到<code>p</code>的最大长度，<code>Read</code>方法会返回当前读取到的可用数据，不会继续等待读取。</p></li>
+
+<li><p>因为所有实现了<code>Read</code>方法的类型都相当于实现了<code>io.Reader</code>接口，也就是说，在所有需要<code>io.Reader</code>的地方，可以传递实现了<code>Read()</code>方法的类型的实例。</p></li>
+</ul>
+
+<ul>
+<li><p>Example：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ReadFrom</span>(reader io.Reader,num <span style="color:#8be9fd">int</span>)([]<span style="color:#8be9fd">byte</span>,<span style="color:#8be9fd">error</span>){
+    p <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">byte</span>,num)    <span style="color:#6272a4">//创建长度为num的byte数组
+</span><span style="color:#6272a4"></span>    n, err <span style="color:#ff79c6">:=</span> reader.<span style="color:#50fa7b">Read</span>(p)    <span style="color:#6272a4">//将reader中的数据读到p里面
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> n &gt; <span style="color:#bd93f9">0</span>{
+        <span style="color:#ff79c6">return</span> p[:n],<span style="color:#ff79c6">nil</span>
+    }
+    <span style="color:#ff79c6">return</span> p ,err
+}
+
+<span style="color:#6272a4">// 从标准输入读取
+</span><span style="color:#6272a4"></span>data, err = <span style="color:#50fa7b">ReadFrom</span>(os.Stdin, <span style="color:#bd93f9">11</span>)
+
+<span style="color:#6272a4">// 从普通文件读取，其中 file 是 os.File 的实例
+</span><span style="color:#6272a4"></span>data, err = <span style="color:#50fa7b">ReadFrom</span>(file, <span style="color:#bd93f9">9</span>)
+
+<span style="color:#6272a4">// 从字符串读取
+</span><span style="color:#6272a4"></span>data, err = <span style="color:#50fa7b">ReadFrom</span>(strings.<span style="color:#50fa7b">NewReader</span>(<span style="color:#f1fa8c">&#34;from string&#34;</span>), <span style="color:#bd93f9">12</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="writer-接口"><code>Writer</code>接口</h3></li>
+
+<li><p>定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">type</span> Write <span style="color:#8be9fd;font-style:italic">interface</span>{
+    <span style="color:#50fa7b">Write</span>(p []<span style="color:#8be9fd">byte</span>)(n ,<span style="color:#8be9fd">int</span>,err <span style="color:#8be9fd">error</span>)
+}</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>所有实现了<code>Write</code>方法的类型都实现了<code>io.Write</code>接口。</p></li>
+
+<li><p><code>Write</code>方法将<code>len(p)</code>个字节写入基本数据流(也就是传递数据的io实例，例如<code>os.Stdout</code>、<code>http.ResponseWriter</code>)，返回写入的字节数以及遇到的任何错误，不同的是，<code>Write</code>返回的字节数小于<code>p</code>的长度时，必须返回一个非nil的错误。</p></li>
+
+<li><p>参考文章：<a href="http://blog.studygolang.com/2013/02/%E4%BB%A5io-writer%E4%B8%BA%E4%BE%8B%E7%9C%8Bgo%E4%B8%AD%E7%9A%84interface/">《以io.Writer为例看go中的interface{}》</a></p></li>
+</ul>
+
+<h3 id="举例实现了-io-reader-接口或-io-writer-接口的标准库类型">举例实现了<code>io.Reader</code>接口或<code>io.Writer</code>接口的标准库类型</h3>
+
+<ul>
+<li>一个能查看接口所有的实现类型的官网镜像：<a href="http://docs.studygolang.com./">http://docs.studygolang.com</a></li>
+<li>举例一些标准库类型
+
+<ul>
+<li><code>os.File</code>同时实现了<code>io.Reader</code>和<code>io.Writer</code>接口</li>
+<li><code>strings.Reader</code></li>
+<li><code>bufio.Reader/Writer</code></li>
+<li><code>bytes.Buffer</code>同时实现了<code>io.Reader</code>和<code>io.Writer</code></li>
+<li><code>bytes.Reader</code></li>
+<li><code>compress/gzip.Reader/Writer</code></li>
+<li><code>crypto/cipher.StreamReader/StreamWriter</code></li>
+<li><code>crypto/tls.Conn</code>同时实现了<code>io.Reader</code>和<code>io.Writer</code></li>
+<li><code>encoding/csv.Reader/Writer</code></li>
+<li><code>mime/multipart.Part</code> 实现了<code>io.Reader</code></li>
+<li><code>net/conn</code>分别实现了<code>io.Reader</code>和<code>io.Writer</code>(<code>Conn</code>接口定义了<code>Read/Write</code>)</li>
+</ul></li>
+</ul>
+
+<h3 id="readerat-和-writerat-接口"><code>ReaderAt</code>和<code>WriterAt</code>接口</h3>
+
+<ul>
+<li><p>定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">type</span> ReaderAt <span style="color:#8be9fd;font-style:italic">interface</span>{
+    <span style="color:#50fa7b">ReadAt</span>(p []<span style="color:#8be9fd">byte</span>, off <span style="color:#8be9fd">int64</span>) (n <span style="color:#8be9fd">int</span>, err <span style="color:#8be9fd">error</span>)
+}
+<span style="color:#8be9fd;font-style:italic">type</span> WriterAt <span style="color:#8be9fd;font-style:italic">interface</span> {
+    <span style="color:#50fa7b">WriteAt</span>(p []<span style="color:#8be9fd">byte</span>, off <span style="color:#8be9fd">int64</span>) (n <span style="color:#8be9fd">int</span>, err <span style="color:#8be9fd">error</span>)
+} </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p><code>ReadAt()</code>和<code>WriteAt()</code>方法多了一个参数<code>off int64</code>，这个参数表示偏移量。实现的功能是从该制定的偏移量处读取/写入。</p></li>
+
+<li><p><code>ReadAt()</code>方法比<code>Read()</code>方法严格一些，当返回的字节数小于<code>p</code>的长度时，必须要返回一个非nil的错误，通知调用方。</p></li>
+
+<li><p>Example:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">reader <span style="color:#ff79c6">:=</span> strings.<span style="color:#50fa7b">NewReader</span>(<span style="color:#f1fa8c">&#34;Go标准库&#34;</span>)
+p <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">byte</span>,<span style="color:#bd93f9">9</span>)
+n, err <span style="color:#ff79c6">:=</span> reader.<span style="color:#50fa7b">ReadAt</span>(p,<span style="color:#bd93f9">2</span>)
+<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span>{
+    <span style="color:#8be9fd;font-style:italic">panic</span>(err)
+}
+fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s,%d\n&#34;</span>,p,n)</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>输出：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">标准库,9</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>注意</strong>：需要知道的是，如果上面代码中改成<code>p := make([]byte,10)</code>将会触发<code>panic</code>，输出<code>panic: EOF</code>，这就可以看出<code>ReadAt</code>比Read严格的错误机制了。</p></li>
+
+<li><p><code>WriteAt</code>方法基本一致，但是在写入的时候，会将从offset处开始到写入内容长度相同的这一段内容覆盖掉，举例:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#6272a4">// file是一个.txt文件，里面的内容是“Golang中文社区——这里是多余的”
+</span><span style="color:#6272a4"></span>n,err <span style="color:#ff79c6">:=</span> file.<span style="color:#50fa7b">WriteAt</span>([]<span style="color:#8be9fd;font-style:italic">byte</span>(<span style="color:#f1fa8c">&#34;Go语言中文网&#34;</span>),<span style="color:#bd93f9">24</span>)
+<span style="color:#ff79c6">//</span>最终file中的内容变成了“Golang中文社区——Go语言中文网”，也就是从offset=<span style="color:#bd93f9">24</span>处写入的内容，将之前的内容覆盖掉了</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="readerfrom-和-writerto-接口"><code>ReaderFrom</code>和<code>WriterTo</code>接口</h3></li>
+
+<li><p>定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">type</span> ReadFrom <span style="color:#8be9fd;font-style:italic">interface</span>{
+    <span style="color:#50fa7b">ReadFrom</span>(r Reader)(n <span style="color:#8be9fd">int64</span>,err <span style="color:#8be9fd">error</span>)
+}</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p><code>ReadFrom</code>方法从一个reader中读取数据，读取到文件末尾(EOF)或者发生错误是进行返回，返回读取的字节数，还有发生的错误，或者<code>io.EOF</code>。</p></li>
+</ul>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/go-by-example%E7%AC%94%E8%AE%B0/" id="next">
+                &larr; <span class="nav-title nav-title-next">Go by Example笔记</span> 
+            </a>  
+        <a rel="prev" href="/golang/golang%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%A4%84%E7%90%86/" id="prev">
+            <span class="nav-title nav-title-prev">Golang文本编码处理</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

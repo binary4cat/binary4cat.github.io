@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：Iterator迭代器  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    03 June 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：Iterator迭代器</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-迭代器的概述">1. 迭代器的概述</a></li>
+<li><a href="#2-迭代器的实现原理">2. 迭代器的实现原理</a></li>
+<li><a href="#3-迭代器代码实现">3. 迭代器代码实现</a></li>
+<li><a href="#4-迭代器的执行过程">4. 迭代器的执行过程</a></li>
+<li><a href="#5-集合迭代中的转型">5. 集合迭代中的转型</a></li>
+<li><a href="#6-foreach遍历数组">6. foreach遍历数组</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-迭代器的概述">1. 迭代器的概述</h1>
+
+<ul>
+<li><p>迭代器概述:</p>
+
+<ul>
+<li><p>Java中有很多种集合，这些集合在存储元素的时候，存储的方式都是不尽相同的，那么对应的我们在取出元素的时候也不相同，为每一种集合设计一个取出方式显然是不合理的，所以就出现了一种屏蔽集合间差异的读取元素的方式，就是迭代器。</p></li>
+
+<li><p>Collection集合元素的通用获取方式：在取元素之前先要判断集合中有没有元素，如果有，就把这个元素取出来，然后继续判断，如果有就继续取。一直把集合中的所有元素全部取出。这种取出方式专业术语称为迭代。</p></li>
+
+<li><p>每种集合的底层的数据结构不同,例如ArrayList是数组,LinkedList底层是链表,但是无论使用那种集合,我们都会有判断是否有元素
+以及取出里面的元素的动作,那么Java为我们提供一个迭代器定义了统一的判断元素和取元素的方法 。</p></li>
+</ul></li>
+</ul>
+
+<h1 id="2-迭代器的实现原理">2. 迭代器的实现原理</h1>
+
+<ul>
+<li>迭代器的实现原理:Collection接口定义了一个方法<code>Iterator  iterator()</code>,实现类重写这个方法就可以返回一个实现<code>Iterator</code>接口的对象，该对象就可以对集合中的元素进行迭代。
+
+<ul>
+<li>接口<code>Iterator</code> : 两个抽象方法
+
+<ul>
+<li><code>boolean hasNext()</code> 判断集合中还有没有可以被取出的元素,如果有返回true</li>
+<li><code>next()</code> 取出集合中的下一个元素</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h1 id="3-迭代器代码实现">3. 迭代器代码实现</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    Collection<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> coll <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;123&#34;</span><span style="color:#ff79c6">);</span>
+    coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;456&#34;</span><span style="color:#ff79c6">);</span>
+    coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;789&#34;</span><span style="color:#ff79c6">);</span>
+    coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;0&#34;</span><span style="color:#ff79c6">);</span>
+    <span style="color:#6272a4">//调用集合的方法iterator()获取一个实现Iterator接口的对象，用来执行集合迭代
+</span><span style="color:#6272a4"></span>    Iterator<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> it <span style="color:#ff79c6">=</span> coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+    <span style="color:#6272a4">//使用循环判断集合中是否有元素，如果有就取出
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">()){</span>
+        String s <span style="color:#ff79c6">=</span> it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#6272a4">//for (Iterator&lt;String&gt; it = coll.iterator(); it.hasNext();  ) {
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//     System.out.println(it.next());
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//}    
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-迭代器的执行过程">4. 迭代器的执行过程</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4">* An optimized version of AbstractList.Itr
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Itr</span> <span style="color:#8be9fd;font-style:italic">implements</span> Iterator<span style="color:#ff79c6">&lt;</span>E<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span> cursor<span style="color:#ff79c6">;</span>       <span style="color:#6272a4">// index of next element to return
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> lastRet <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span> <span style="color:#6272a4">// index of last element returned; -1 if no such
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> expectedModCount <span style="color:#ff79c6">=</span> modCount<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> cursor <span style="color:#ff79c6">!=</span> size<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    @SuppressWarnings<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;unchecked&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> E <span style="color:#50fa7b">next</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        checkForComodification<span style="color:#ff79c6">();</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> cursor<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&gt;=</span> size<span style="color:#ff79c6">)</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> NoSuchElementException<span style="color:#ff79c6">();</span>
+        Object<span style="color:#ff79c6">[]</span> elementData <span style="color:#ff79c6">=</span> ArrayList<span style="color:#ff79c6">.</span><span style="color:#50fa7b">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">elementData</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&gt;=</span> elementData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">)</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> ConcurrentModificationException<span style="color:#ff79c6">();</span>
+        cursor <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span>E<span style="color:#ff79c6">)</span> elementData<span style="color:#ff79c6">[</span>lastRet <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">];</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">remove</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>lastRet <span style="color:#ff79c6">&lt;</span> 0<span style="color:#ff79c6">)</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> IllegalStateException<span style="color:#ff79c6">();</span>
+        checkForComodification<span style="color:#ff79c6">();</span>
+
+        <span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+            ArrayList<span style="color:#ff79c6">.</span><span style="color:#50fa7b">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span>lastRet<span style="color:#ff79c6">);</span>
+            cursor <span style="color:#ff79c6">=</span> lastRet<span style="color:#ff79c6">;</span>
+            lastRet <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+            expectedModCount <span style="color:#ff79c6">=</span> modCount<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">catch</span> <span style="color:#ff79c6">(</span>IndexOutOfBoundsException ex<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> ConcurrentModificationException<span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+
+    @Override
+    @SuppressWarnings<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;unchecked&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">forEachRemaining</span><span style="color:#ff79c6">(</span>Consumer<span style="color:#ff79c6">&lt;?</span> <span style="color:#8be9fd;font-style:italic">super</span> E<span style="color:#ff79c6">&gt;</span> consumer<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        Objects<span style="color:#ff79c6">.</span><span style="color:#50fa7b">requireNonNull</span><span style="color:#ff79c6">(</span>consumer<span style="color:#ff79c6">);</span>
+        <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> size <span style="color:#ff79c6">=</span> ArrayList<span style="color:#ff79c6">.</span><span style="color:#50fa7b">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">size</span><span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> cursor<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&gt;=</span> size<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#8be9fd;font-style:italic">final</span> Object<span style="color:#ff79c6">[]</span> elementData <span style="color:#ff79c6">=</span> ArrayList<span style="color:#ff79c6">.</span><span style="color:#50fa7b">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">elementData</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&gt;=</span> elementData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> ConcurrentModificationException<span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">!=</span> size <span style="color:#ff79c6">&amp;&amp;</span> modCount <span style="color:#ff79c6">==</span> expectedModCount<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            consumer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">accept</span><span style="color:#ff79c6">((</span>E<span style="color:#ff79c6">)</span> elementData<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">++]);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// update once at end of iteration to reduce heap write traffic
+</span><span style="color:#6272a4"></span>        cursor <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+        lastRet <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        checkForComodification<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">checkForComodification</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>modCount <span style="color:#ff79c6">!=</span> expectedModCount<span style="color:#ff79c6">)</span>
+            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> ConcurrentModificationException<span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以看到初始化的时候，<code>lastRet</code>的值为-1，说明迭代开始前，指针在第一个元素前一位。</li>
+<li><code>hasNext</code>方法
+
+<ul>
+<li><code>cursor</code>游标，记录当前指向的索引值(位置)，<code>cursor</code>初始化值为0。这里判断是游标是否走到了最大位置。</li>
+<li><code>size</code>为集合初始化时的长度属性。</li>
+</ul></li>
+<li><code>next</code>方法
+
+<ul>
+<li>首先判断了当前的游标位置是否超出了集合的最大位置，超出了就抛出对应的异常。</li>
+<li>在下面首先将游标的值“++”操作，指向了下一个位置，并且返回了当前索引指向的元素</li>
+</ul></li>
+
+<li><p><code>int expectedModCount = modCount;</code></p>
+
+<ul>
+<li>由于<code>ArrayList</code>是线程不安全的，也就是在迭代的时候，还能对集合进行增删操作，这行代码实现了一个叫做“Fail-Fast(快速失败)机制”，在迭代的过程中有其他的线程修改了集合，就会抛出异常，快速失败。</li>
+<li><code>modCount</code>是ArrayList中的一个属性，对集合中的增删操作都会进行<code>modCount++</code>操作，它保存了对这个集合操作的次数。</li>
+<li><code>checkForComodification()</code>函数中对这个这个值进行了判断，看看是否在迭代的时候，对该集合进行了增删操作，所以如果两个值不一样，就会抛出异常。可以看到在<code>next</code>和<code>remove</code>的时候，都执行了该方法，就是对集合正确性的判断。</li>
+<li>比如下面的代码中，在迭代的时候，对集合进行了增加操作，就会抛出异常</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">()){</span>
+    String s <span style="color:#ff79c6">=</span> it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">);</span>
+    coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;haha&#34;</span><span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmf7hlgxx2j20r709owek.jpg" alt="" /></p></li>
+</ul>
+
+<h1 id="5-集合迭代中的转型">5. 集合迭代中的转型</h1>
+
+<ul>
+<li><p>在使用集合时，我们需要注意以下几点：</p>
+
+<ul>
+<li>集合中存储其实都是对象的地址。</li>
+<li>jdk1.5版本以后因为出现了基本类型包装类，它提供了自动装箱操作，这样，集合中的元素就是基本数值的包装类对象。
+<br /></li>
+</ul></li>
+
+<li><p>集合存储时默认使用了Object作为储存元素的类型。也就是说集合中可以存储任何类型的数据</p>
+
+<ul>
+<li>下面的代码中，存储了String和int类型，然后在迭代的时候，进行强转的时候就会发生错误。</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Collection coll <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">();</span>
+coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;123&#34;</span><span style="color:#ff79c6">);</span>
+coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>123<span style="color:#ff79c6">);</span>
+Iterator it <span style="color:#ff79c6">=</span> coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">//由于元素被存放进集合后全部被提升为Object类型
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">//当需要使用子类对象特有方法时，需要向下转型
+</span><span style="color:#6272a4"></span>    String str <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">)</span> it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">());</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>要灵活使用，就需要用到泛型
+
+<ul>
+<li>泛型限制了集合中存储的对象的类型，在编译期就会检测出集合元素的类型，避免发生异常</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Collection<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> coll <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;123&#34;</span><span style="color:#ff79c6">);</span>
+coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;456&#34;</span><span style="color:#ff79c6">);</span>
+Iterator it <span style="color:#ff79c6">=</span> coll<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+    String str <span style="color:#ff79c6">=</span> it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">();</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">());</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-foreach遍历数组">6. foreach遍历数组</h1>
+
+<ul>
+<li>JDK1.5版本后,出现新的接口<code>java.lang.Iterable</code>，对于任何实现<code>Iterator</code>接口的对象都可以使用<code>foreach</code>遍历。</li>
+<li>格式：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">(){</span>
+    <span style="color:#6272a4">//遍历数组
+</span><span style="color:#6272a4"></span>    String<span style="color:#ff79c6">[]</span> str <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;123&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;456&#34;</span><span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;789&#34;</span><span style="color:#ff79c6">};</span>
+    <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span>String s <span style="color:#ff79c6">:</span> str<span style="color:#ff79c6">){</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">());</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#6272a4">//遍历集合
+</span><span style="color:#6272a4"></span>    ArrayList<span style="color:#ff79c6">&lt;</span>Student<span style="color:#ff79c6">&gt;</span> array <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;</span>Student<span style="color:#ff79c6">&gt;();</span>
+    array<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> Student<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;zhangsan&#34;</span><span style="color:#ff79c6">,</span>22<span style="color:#ff79c6">));</span>
+    array<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> Student<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;lisi&#34;</span><span style="color:#ff79c6">,</span>11<span style="color:#ff79c6">));</span>
+    <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span>Person stu <span style="color:#ff79c6">:</span> array<span style="color:#ff79c6">){</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>stu<span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;-----&#34;</span> <span style="color:#ff79c6">+</span> stu<span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span><span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80%E6%B3%9B%E5%9E%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：泛型</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80%E9%9B%86%E5%90%88/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：集合</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

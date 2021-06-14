@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：正则表达式  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    22 May 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：正则表达式</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmdrn8b8i8j20go0dejrs.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-正则表达式的概念和作用">1. 正则表达式的概念和作用</a></li>
+<li><a href="#2-正则表达式语法规则">2. 正则表达式语法规则</a></li>
+<li><a href="#3-正则表达式相关的string类方法">3. 正则表达式相关的String类方法</a></li>
+<li><a href="#4-匹配示例">4. 匹配示例</a></li>
+<li><a href="#5-切割示例">5. 切割示例</a></li>
+<li><a href="#6-替换示例">6. 替换示例</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-正则表达式的概念和作用">1. 正则表达式的概念和作用</h1>
+
+<ul>
+<li>正则表达式的概述
+
+<ul>
+<li>正则表达式也是一个字符串，用来定义匹配规则，在Pattern类中有简单的规则定义。可以结合字符串类的方法使用。</li>
+<li>正则表达式是具有特殊含义的字符串。</li>
+</ul></li>
+<li>正则表达式的作用
+
+<ul>
+<li>比如注册账户,需要输入用户名和密码,一般会对其限制长度,这个限制长度的事情就是正则表达式做的</li>
+</ul></li>
+</ul>
+
+<h1 id="2-正则表达式语法规则">2. 正则表达式语法规则</h1>
+
+<ul>
+<li>正则表达式语法规则
+
+<ul>
+<li>字符
+
+<ul>
+<li><code>x</code>  代表的是字符x</li>
+<li><code>\\</code> 代表的是反斜线字符&rsquo;\&rsquo;</li>
+<li><code>\t</code> 代表的是制表符</li>
+<li><code>\n</code> 代表的是换行符</li>
+<li><code>\r</code> 代表的是回车符</li>
+</ul></li>
+<li>字符类
+
+<ul>
+<li><code>[abc]</code>    a、b 或 c（简单类）</li>
+<li><code>[^abc]</code>   任何字符，除了 a、b 或 c（否定）</li>
+<li><code>[a-zA-Z]</code> a到 z 或 A到 Z，两头的字母包括在内（范围）</li>
+<li><code>[0-9]</code>    0到9的字符都包括</li>
+<li><code>[a-zA-Z_0-9]</code> 代表的字母或者数字或者下划线</li>
+</ul></li>
+<li>预定义字符类
+
+<ul>
+<li><code>.</code> 任何字符。</li>
+<li><code>\d</code> 数字：[0-9]</li>
+<li><code>\w</code> 单词字符：[a-zA-Z_0-9]如&rdquo;com.itheima.tests&rdquo;/finish</li>
+</ul></li>
+<li>边界匹配器
+
+<ul>
+<li><code>^</code>  代表的是行的开头</li>
+<li><code>$</code>  代表的是行的结尾</li>
+<li><code>\b</code> 代表的是单词边界</li>
+</ul></li>
+<li>数量词
+
+<ul>
+<li><code>X?</code>     X，一次或一次也没有</li>
+<li><code>X*</code>     X，零次或多次</li>
+<li><code>X+</code>     X，一次或多次</li>
+<li><code>X{n}</code>   X，恰好 n 次</li>
+<li><code>X{n,}</code>  X，至少 n 次</li>
+<li><code>X{n,m}</code> X，至少 n 次，但是不超过 m 次</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h1 id="3-正则表达式相关的string类方法">3. 正则表达式相关的String类方法</h1>
+
+<ul>
+<li>正则表达式练习和相关的String类方法
+
+<ul>
+<li><code>boolean matches(String 正则的规则)</code>
+
+<ul>
+<li><code>&quot;abc&quot;.matches(&quot;[a]&quot;)</code></li>
+<li>匹配成功返回true</li>
+</ul></li>
+<li><code>String[] split(String 正则的规则)</code>
+
+<ul>
+<li><code>&quot;abc&quot;.split(&quot;a&quot;)</code></li>
+<li>使用规则将字符串进行切割</li>
+</ul></li>
+<li><code>String replaceAll( String 正则规则,String 字符串)</code>
+
+<ul>
+<li><code>&quot;abc0123&quot;.repalceAll(&quot;[\\d]&quot;,&quot;#&quot;)</code><br /></li>
+<li>按照正则的规则,替换字符串
+<br />
+<br /></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h1 id="4-匹配示例">4. 匹配示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  检查手机号码是否合法
+</span><span style="color:#6272a4">*  1开头 第二位可以是34578 位数固定11位
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">checkPhone</span><span style="color:#ff79c6">(){</span>
+	String telNumber <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;158123456789&#34;</span><span style="color:#ff79c6">;</span>
+	<span style="color:#6272a4">//String类的方法matches
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">boolean</span> b <span style="color:#ff79c6">=</span> telNumber<span style="color:#ff79c6">.</span><span style="color:#50fa7b">matches</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;1[34857][\\d]{9}&#34;</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>b<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//输出：true
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+				
+<span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  检查QQ号码是否合法
+</span><span style="color:#6272a4">*  0不能开头,全数字, 位数5,10位
+</span><span style="color:#6272a4">*  123456 
+</span><span style="color:#6272a4">*  \\d  \\D匹配不是数字
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">checkQQ</span><span style="color:#ff79c6">(){</span>
+	String QQ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;123456&#34;</span><span style="color:#ff79c6">;</span>
+	<span style="color:#6272a4">//检查QQ号码和规则是否匹配,String类的方法matches
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">boolean</span> b <span style="color:#ff79c6">=</span> QQ<span style="color:#ff79c6">.</span><span style="color:#50fa7b">matches</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;[1-9][\\d]{4,9}&#34;</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>b<span style="color:#ff79c6">);</span> <span style="color:#6272a4">//输出：true
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-切割示例">5. 切割示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">* String类方法split对字符串进行切割
+</span><span style="color:#6272a4">* www.baidu.com 按照 . 切割字符串
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">splitExample</span><span style="color:#ff79c6">(){</span>
+	String ip <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;www.baidu.com&#34;</span><span style="color:#ff79c6">;</span>
+	String<span style="color:#ff79c6">[]</span> strArr <span style="color:#ff79c6">=</span> ip<span style="color:#ff79c6">.</span><span style="color:#50fa7b">split</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;\\.&#34;</span><span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0 <span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> strArr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++){</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>strArr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>   <span style="color:#6272a4">//分别输出：www  baidu  com
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">* String类方法split对字符串进行切割
+</span><span style="color:#6272a4">* 按照空格切割字符串
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">splitExample</span><span style="color:#ff79c6">(){</span>
+	String str <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;h ai j     d&#34;</span><span style="color:#ff79c6">;</span>
+	String<span style="color:#ff79c6">[]</span> strArr <span style="color:#ff79c6">=</span> str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">split</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34; +&#34;</span><span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0 <span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> strArr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++){</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>strArr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>  <span style="color:#6272a4">//分别输出：h  ai  j  d
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">*  String类方法split对字符串进行切割
+</span><span style="color:#6272a4">*  按照-对字符串进行切割
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">splitExample</span><span style="color:#ff79c6">(){</span>
+    String str <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;hai-j-d&#34;</span><span style="color:#ff79c6">;</span>
+	<span style="color:#6272a4">//按照-对字符串进行切割,String类方法split
+</span><span style="color:#6272a4"></span>	String<span style="color:#ff79c6">[]</span> strArr <span style="color:#ff79c6">=</span> str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">split</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;-&#34;</span><span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0 <span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> strArr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++){</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>strArr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>  <span style="color:#6272a4">//分别输出：hai j d
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>	</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-替换示例">6. 替换示例</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4">* 将字符串中出现的所有数字替换掉
+</span><span style="color:#6272a4">* String类方法replaceAll(正则规则,替换的内容)
+</span><span style="color:#6272a4">*/</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">replaceExample</span><span style="color:#ff79c6">(){</span>
+	String str <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;hai123&#34;</span><span style="color:#ff79c6">;</span>
+	str <span style="color:#ff79c6">=</span> str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">replaceAll</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;[\\d]+&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;jd&#34;</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出haijd
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80data-calendar/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：Data&amp;Calendar</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80string%E7%B1%BB/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：String类</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

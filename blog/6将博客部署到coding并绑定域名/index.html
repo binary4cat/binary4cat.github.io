@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>6、将博客部署到coding并绑定域名  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    08 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">6、将博客部署到coding并绑定域名</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-将博客同时部署到coding上">1. 将博客同时部署到coding上</a>
+<ul>
+<li><a href="#1-1-注册coding账号并创建项目">1.1. 注册coding账号并创建项目</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　由于墙的原因，github访问速度很慢，而且github屏蔽了百度蜘蛛，所以将博客部署到github对国内的访客来说，并不是最好的选择，这一篇我们介绍一下，怎么将博客同时部署到github和coding上，然后绑定域名，并且分别指向国外和国内线路。</p>
+
+<h1 id="1-将博客同时部署到coding上">1. 将博客同时部署到coding上</h1>
+
+<p>　　之前是gitcafe+github的部署方式，奈何gitcafe被coding给收了，感叹世事变幻无常啊。还好coding也提供了pages服务，我们可以将博客部署到coding上。
+　　</p>
+
+<h2 id="1-1-注册coding账号并创建项目">1.1. 注册coding账号并创建项目</h2>
+
+<p>　　去<a href="https://www.coding.net">www.coding.net</a>注册一个账号，同时新建一个公开项目，项目名称与你的coding用户名一致。
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1pttpkn9ej20oz0h90th.jpg" alt="" /></p>
+
+<p>　　项目新建完成后，进入pages菜单，开启Pages服务：
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeegw1f28b69cyatj20r90eit8y.jpg" alt="" /></p>
+
+<p>　　然后绑定我们自己的域名(如果有的话)。
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeegw1f3u77wuci2j20jn06nq31.jpg" alt="" /></p>
+
+<p>　　现在需要上传我们的博客到coding.net网站，这时候，我们需要打开<code>_config.yml</code>文件填写部署到coding.net的地址。
+　　1. 打开博客根目录下的<code>_config.yml</code>文件。
+　　2. 找到<code>deploy</code>这个节点(就是配置部署到github地址的那个)。
+　　3. 修改代码为：
+　　4.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">deploy:
+  type: git
+  repo:
+  github: https://github.com/username/username.github.io.git,master
+  gitcafe: https://git.coding.net/hexoDemo/hexoDemo.git,master</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　4. 同样的，<code>gitcafe</code>的值就是你的博客在coding.net上面的项目地址，后面的master表示要部署的分支。
+　　5. 保存文件，执行部署命令<code>hexo d -g</code>
+　　6. 会提示你输入账号密码，很麻烦不是？下一边博客写一下怎么使用SSH传输，这样就不用每次提交都输入账号密码这么麻烦了。
+　　7. 不出意外，你已经上传成功了，如果没成功，请留言给我，我或许能帮到你。</p>
+
+<p>　　现在我们的博客已经部署到coding上了，但是coding规定了只有<code>coding-pages</code>这个分支下的代码才能使用pages服务，所以我们需要创建这个默认分支。
+　　新建一个名为<code>coding-pages</code>分支，并设置为默认分支
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeegw1f3u8fzcaatj20yt0bsglt.jpg" alt="" /><img src="http://ww3.sinaimg.cn/mw690/c55a7aeegw1f3u8m31zgxj20h5088dfs.jpg" alt="" /></p>
+
+<p>　　最后，我们需要修改<code>_config.yml</code>文件中coding.net部署的分支名：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">deploy:
+  type: git
+  repo:
+  github: https://github.com/username/username.github.io.git,master
+  gitcafe: https://git.coding.net/hexoDemo/hexoDemo.git,coding-pages</code></pre></td></tr></table>
+</div>
+</div>
+<p>到目前，我们的博客已经正常部署到github、coding.net两大网站了。接下来我们需要解析域名分别引流到这两个网站，将国内的访问指向coding，国外的指向github。
+由于排版的问题，解析域名在下一篇中单独写。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/blog/7%E8%A7%A3%E6%9E%90%E5%8D%9A%E5%AE%A2%E5%9F%9F%E5%90%8D/" id="next">
+                &larr; <span class="nav-title nav-title-next">7、解析博客域名</span> 
+            </a>  
+        <a rel="prev" href="/blog/5hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%86%99%E4%BD%9C/" id="prev">
+            <span class="nav-title nav-title-prev">5、Hexo博客的写作</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

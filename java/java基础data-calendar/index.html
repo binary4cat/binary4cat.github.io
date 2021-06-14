@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：Data&amp;Calendar  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    25 May 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：Data&amp;Calendar</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmdrn8b8i8j20go0dejrs.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-date类的构造方法">1. Date类的构造方法</a></li>
+<li><a href="#2-date类的get和set方法">2. Date类的get和set方法</a></li>
+<li><a href="#3-日期格式化simpledateformat">3. 日期格式化SimpleDateFormat</a></li>
+<li><a href="#4-字符串转成日期对象">4. 字符串转成日期对象</a></li>
+<li><a href="#5-calendar类">5. Calendar类</a></li>
+<li><a href="#6-set-int-field-int-value-和add-int-field-int-value-的区别">6. set(int field,int value)和add(int field, int value)的区别</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-date类的构造方法">1. Date类的构造方法</h1>
+
+<ul>
+<li>Date类的构造方法
+
+<ul>
+<li>空参构造
+
+<ul>
+<li><code>public Date()</code></li>
+</ul></li>
+<li>带参构造
+
+<ul>
+<li><code>public Date(long times)</code>
+<br /></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h1 id="2-date类的get和set方法">2. Date类的get和set方法</h1>
+
+<ul>
+<li>Date类的get和set方法
+
+<ul>
+<li><code>public long getTime()</code><br />
+
+<ul>
+<li>将当前的日期对象，转为对应的毫秒值</li>
+</ul></li>
+<li><code>public void setTime(long times);</code>
+
+<ul>
+<li>根据给定的毫秒值，生成对应的日期对象</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h1 id="3-日期格式化simpledateformat">3. 日期格式化SimpleDateFormat</h1>
+
+<ul>
+<li>日期格式化SimpleDateFormat
+
+<ul>
+<li>SimpleDateFormat函数的继承关系：
+java.lang.Object
+|
++&mdash;-java.text.Format
+   |
+   +&mdash;-java.text.DateFormat
+           |
+           +&mdash;-java.text.SimpleDateFormat</li>
+<li>对日期进行格式化(自定义)
+
+<ul>
+<li>对日期格式化的类 <code>java.text.DateFormat</code> 抽象类, 普通方法,也有抽象的方法</li>
+<li>实际使用是子类 <code>java.text.SimpleDateFormat</code> 可以使用父类普通方法,重写了抽象方法</li>
+</ul></li>
+<li>对日期进行格式化的步骤
+
+<ul>
+<li>创建<code>SimpleDateFormat</code>对象
+
+<ul>
+<li>在类构造方法中,写入字符串的日期格式 (自己定义)</li>
+</ul></li>
+<li><code>SimpleDateFormat</code>调用方法format对日期进行格式化
+
+<ul>
+<li><code>public String format(Date date)</code> 传递日期对象,返回字符串</li>
+<li>日期模式:
+
+<ul>
+<li>yyyy    年份</li>
+<li>MM      月份</li>
+<li>dd      月中的天数</li>
+<li>HH       0-23小时</li>
+<li>mm      小时中的分钟</li>
+<li>ss      秒</li>
+<li>yyyy年MM月dd日 HH点mm分钟ss秒</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">SimpleDateFormat myFmt<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> SimpleDateFormat<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;yyyy年MM月dd日 HH时mm分ss秒&#34;</span><span style="color:#ff79c6">);</span>
+SimpleDateFormat myFmt1<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> SimpleDateFormat<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;yy/MM/dd HH:mm&#34;</span><span style="color:#ff79c6">);</span> 
+Date now<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> Date<span style="color:#ff79c6">();</span>
+System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>myFmt<span style="color:#ff79c6">.</span><span style="color:#50fa7b">format</span><span style="color:#ff79c6">(</span>now<span style="color:#ff79c6">));</span>  <span style="color:#6272a4">//输出：2017年05月25日 18时17分35秒
+</span><span style="color:#6272a4"></span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>myFmt1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">format</span><span style="color:#ff79c6">(</span>now<span style="color:#ff79c6">));</span> <span style="color:#ff79c6">//</span>输出：17<span style="color:#ff79c6">/</span>05<span style="color:#ff79c6">/</span>25 <span style="color:#8be9fd;font-style:italic">18:</span>17</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-字符串转成日期对象">4. 字符串转成日期对象</h1>
+
+<ul>
+<li>字符串转成日期对象
+
+<ul>
+<li>使用步骤
+
+<ul>
+<li>创建SimpleDateFormat的对象
+
+<ul>
+<li>构造方法中,指定日期模式</li>
+</ul></li>
+<li>子类对象,调用方法 parse 传递String,返回Date
+
+<ul>
+<li>注意: 时间和日期的模式yyyy-MM-dd, 必须和字符串中的时间日期匹配</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">SimpleDateFormat myFmt<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> SimpleDateFormat<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;yyyy年MM月dd日 HH时mm分ss秒&#34;</span><span style="color:#ff79c6">);</span>
+String now <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;2017年05月25日 18时17分35秒&#34;</span><span style="color:#ff79c6">;</span>
+System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>myFmt<span style="color:#ff79c6">.</span><span style="color:#50fa7b">parse</span><span style="color:#ff79c6">(</span>now<span style="color:#ff79c6">));</span>  <span style="color:#ff79c6">//</span>输出：Thu May 25 <span style="color:#8be9fd;font-style:italic">18:17:</span>35 CST 2017</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-calendar类">5. Calendar类</h1>
+
+<ul>
+<li>日历类(抽象类)
+
+<ul>
+<li>所在包：<code>java.util.Calendar</code></li>
+</ul></li>
+<li>创建对象
+
+<ul>
+<li><code>Calendar</code>类写了静态方法 <code>getInstance()</code> 直接返回了子类的对象</li>
+<li>不需要直接new子类的对象,通过静态方法直接获取</li>
+</ul></li>
+<li>成员方法
+
+<ul>
+<li><code>getTime()</code> 把日历对象,转成Date日期对象</li>
+<li><code>get(int field)</code> 获取指定日期类型的值</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">Calendar c <span style="color:#ff79c6">=</span> Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getInstance</span><span style="color:#ff79c6">();</span>
+<span style="color:#6272a4">// 获取年份
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span> year <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">YEAR</span><span style="color:#ff79c6">);</span>
+<span style="color:#6272a4">// 获取月份
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span> month <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+<span style="color:#6272a4">// 获取天数
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">int</span> day <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">DAY_OF_MONTH</span><span style="color:#ff79c6">);</span>
+System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>year <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;年&#34;</span> <span style="color:#ff79c6">+</span> month <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;月&#34;</span> <span style="color:#ff79c6">+</span> day <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;日&#34;</span><span style="color:#ff79c6">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>成员方法
+ <code>set(int field,int value)</code>  给指定的日期类型设置时间 (field代表了Calendar定义的一些字段，例如:Calendar.YEAR=1，再这里写1和Calendar.YEAR都可以，都是int常量数值，但是推荐使用Calendar.YEAR这种形式，因为比较容易识别，也不容易写错)
+ <code>set(int year, int month, int date)</code>  设置指定的时间</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">CalendarFunc</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+	Calendar c <span style="color:#ff79c6">=</span> Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getInstance</span><span style="color:#ff79c6">();</span>
+	<span style="color:#6272a4">// 设置,月份,设置到10月分
+</span><span style="color:#6272a4"></span>	c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">,</span> 9<span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 设置年,月,日
+</span><span style="color:#6272a4"></span>	c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>2017<span style="color:#ff79c6">,</span> 5<span style="color:#ff79c6">,</span> 25<span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 获取年份
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> year <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">YEAR</span><span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 获取月份
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> month <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 获取天数
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> day <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">DAY_OF_MONTH</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>year <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;年&#34;</span> <span style="color:#ff79c6">+</span> month <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;月&#34;</span> <span style="color:#ff79c6">+</span> day <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;日&#34;</span><span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>成员方法
+
+<ul>
+<li><code>add(int field, int value)</code> 进行整数的偏移(给当前日期类型增加或减少)</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function_2</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+	Calendar c <span style="color:#ff79c6">=</span> Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getInstance</span><span style="color:#ff79c6">();</span>
+	<span style="color:#6272a4">// 让日历中的天数,向后移90天
+</span><span style="color:#6272a4"></span>	c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">DAY_OF_MONTH</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">-</span>90<span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 获取年份
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> year <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">YEAR</span><span style="color:#ff79c6">);</span>
+	<span style="color:#6272a4">// 获取月份
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> month <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+	<span style="color:#6272a4">// 获取天数
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> day <span style="color:#ff79c6">=</span> c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">DAY_OF_MONTH</span><span style="color:#ff79c6">);</span>
+	System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>year <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;年&#34;</span> <span style="color:#ff79c6">+</span> month <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;月&#34;</span> <span style="color:#ff79c6">+</span> day <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;日&#34;</span><span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：2017年3月27日
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-set-int-field-int-value-和add-int-field-int-value-的区别">6. set(int field,int value)和add(int field, int value)的区别</h1>
+
+<ul>
+<li>add：调整时间，在当前的时间的基础上增加或者减少，超过最大值，会全部增加。</li>
+<li>set：设置时间，直接将指定的日期类型设置成指定的值，超过类型的最大值，会自动计算，例如set(Calendar.MONTH,13)，那么就会折合成1年零一个月，年份增加1年，月份为折合后的余数。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">Calendar c <span style="color:#ff79c6">=</span> Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getInstance</span><span style="color:#ff79c6">();</span>
+c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>2017<span style="color:#ff79c6">,</span>5<span style="color:#ff79c6">,</span> 25<span style="color:#ff79c6">);</span>
+c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">,</span>1<span style="color:#ff79c6">);</span>    <span style="color:#6272a4">//获得：2017-1-25
+</span><span style="color:#6272a4"></span>c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">set</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">,</span>13<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//获得：2018-1-25
+</span><span style="color:#6272a4"></span>
+c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//获得：2017-6-25
+</span><span style="color:#6272a4"></span>c<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>Calendar<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MONTH</span><span style="color:#ff79c6">,</span> 13<span style="color:#ff79c6">);</span>  <span style="color:#ff79c6">//</span>获得：2018<span style="color:#ff79c6">-</span>6<span style="color:#ff79c6">-</span>25</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80%E5%8C%85%E8%A3%85%E7%B1%BB/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：JAVA基本类型和包装类</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：正则表达式</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>初探System.Threading.Channels  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    19 February 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">初探System.Threading.Channels</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-简介">1. 简介</a>
+<ul>
+<li><a href="#1-1-和go语言channel的一些比较">1.1. 和Go语言channel的一些比较</a></li>
+<li><a href="#1-2-生产者-消费者需要的方法">1.2. 生产者、消费者需要的方法</a></li>
+</ul></li>
+<li><a href="#2-示例代码">2. 示例代码</a>
+<ul>
+<li><a href="#2-1-写入器-读取器无等待">2.1. 写入器、读取器无等待</a></li>
+<li><a href="#2-2-读取器阻塞-等待">2.2. 读取器阻塞(等待)</a></li>
+<li><a href="#2-3-多个读取器同时读取">2.3. 多个读取器同时读取</a></li>
+</ul></li>
+<li><a href="#3-总结">3. 总结</a></li>
+<li><a href="#4-附加内容-go语言的channel使用方式">4. 附加内容（Go语言的channel使用方式）</a></li>
+<li><a href="#5-参考资料">5. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<p>最近再次看了一下C#并发编程的一些资料，对其中的Rx产生了一些兴趣和疑问，同时想起对比一下Go语言的并发特性，所以查阅了一些资料，今天谈谈一个新的并发操作类库<code>System.Threading.Channels</code>。</p>
+
+<h1 id="1-简介">1. 简介</h1>
+
+<p><code>System.Threading.Channels</code>是.Net Core基础类库中实现的一个多线程相关的库，专门处理数据流相关的操作，用来在生产者和订阅者之间传递数据（不知道可不可以理解为线程间传递数据，我把它类比成了Go语言中的Channel），使用时需要通过NuGet安装。</p>
+
+<p>这个库的前身是<code>System.Threading.Tasks.Channels</code>，来自实验性质的核心类库项目<a href="https://github.com/dotnet/corefxlab">https://github.com/dotnet/corefxlab</a>，但是在2017年9月就不再更新了，目前使用的话需要用到最新的<code>System.Threading.Channels</code>库，如果你也是第一次接触的话，就直接上手研究<code>System.Threading.Channels</code>就可以了。</p>
+
+<p><code>Channel</code> API操作基于<code>Channel</code>对象，其操作主要由<code>ChannelReader</code>和<code>ChannelWriter</code>两部分组成，由<code>Channel</code>t提供的工厂方法创建一个有容量限制（或者无限制、最大容量限制）的<code>channel</code>。这点类似于Go语言中的<code>chan</code>的容量，二者在这里有很多的类似的地方，也有不同的地方。</p>
+
+<h2 id="1-1-和go语言channel的一些比较">1.1. 和Go语言channel的一些比较</h2>
+
+<p>Go语言中的channel默认是没有容量的，在使用这个没有容量的channel时，生产者和消费者必须“流动”起来，否则将会阻塞，也就是当生产者写入channel一个数据时，必须同时有一个接收者接收，否则写入操作会停止，等待有一个消费者取走channel中的数据，写入操作才会继续。</p>
+
+<p>在<code>System.Threading.Channels</code>库中，没有类似Go语言的默认容量的机制，需要按需调用不同的<code>Channel</code>对象：</p>
+
+<ul>
+<li><code>public static Channel&lt;T&gt; CreateBounded&lt;T&gt;(int capacity);</code> ：可以创建一个带有容量限制的<code>Channel</code>实例对象。</li>
+<li><code>public static Channel&lt;T&gt; CreateBounded&lt;T&gt;(BoundedChannelOptions options)</code> ：创建一个自定义配置的<code>Channel</code>实例对象，可配置容量、以及在接收到新数据时的操作模式等等：
+
+<ul>
+<li><code>BoundedChannelFullMode.Wait</code>：等待当前写入完成</li>
+<li><code>BoundedChannelFullMode.DropNewest</code>：删除并忽略管道中写入的最新的数据</li>
+<li><code>BoundedChannelFullMode.DropOldest</code>：删除并忽略管道中最旧的数据</li>
+<li><code>BoundedChannelFullMode.DropWrite</code>：删除当前正在写的数据，以写入管道中的新数据</li>
+</ul></li>
+<li><code>public static Channel&lt;T&gt; CreateUnbounded&lt;T&gt;();</code> ：创建一个没有容量限制的<code>Channel</code>实例对象，在实际使用时应当谨慎使用该创建方式，因为可能会发生<code>OutOfMemoryException</code>。</li>
+<li><code>public static Channel&lt;T&gt; CreateUnbounded&lt;T&gt;(UnboundedChannelOptions options)</code>：创建一个自定义配置的没有容量限制的<code>Channel</code>实例对象。该配置选项因为没有容量限制所以不会有写入等待操作模式，只有默认的一些配置：
+
+<ul>
+<li><code>public bool SingleWriter { get; set; }</code>：是否需要一个一个读</li>
+<li><code>public bool SingleReader { get; set; }</code>：是否需要一个一个写</li>
+<li><code>public bool AllowSynchronousContinuations { get; set; }</code>：是否需要异步连续操作（我个人理解为异步操作时同时进行读写）</li>
+</ul></li>
+</ul>
+
+<p>Go语言的channel机制和<code>System.Threading.Channels</code>的不同之处有两个：</p>
+
+<ol>
+<li>Go语言没有无限容量的channel，而且就我个人的想法而言，无限容量并不“无限”，因为内存是有限的。</li>
+<li><code>System.Threading.Channels</code>没有单向的channel类型。在Go中可以创建“只读”或者“只写”的channel，但是<code>System.Threading.Channels</code>中没有提供这种操作。</li>
+</ol>
+
+<h2 id="1-2-生产者-消费者需要的方法">1.2. 生产者、消费者需要的方法</h2>
+
+<p>生产者需要使用的一些方法：<code>TryWrite</code>/<code>WriteAsync</code>/<code>WaitToWriteAsync</code>/<code>Complete</code>
+消费者需要使用的一些方法：<code>TryRead</code>/<code>ReadAsync</code>/<code>WaitToReadAsync</code>/<code>Completion</code></p>
+
+<p>方法介绍：</p>
+
+<ul>
+<li><code>TryRead/TryWrite</code>：尝试使用同步方式读取或写入一项数据，返回读取或者写入是否成功。<code>TryRead</code>同时会以<code>out</code>的形式返回读取到的数据。</li>
+<li><code>ReadAsync/WriteAsync</code>：使用异步方式写入或者读取一项数据。</li>
+<li><code>TryComplete/Completion</code>：可以将channel标记为完成状态，这样就不会写入多余的错误数据，如果从已完成状态的channel中<code>ReadAsync</code>时会抛出异常，所以在不需要异步读取时建议经常使用<code>TryRead</code>。</li>
+<li><code>WaitToReadAsync/WaitToWriteAsync</code>：在尝试读取或者写入数据之前，调用该方法可获得一个<code>Task&lt;bool&gt;</code>表示读取或者写入操作能否进行。</li>
+</ul>
+
+<h1 id="2-示例代码">2. 示例代码</h1>
+
+<p>创建一个控制台程序演示channel的用法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">84
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Threading.Channels;
+<span style="color:#ff79c6">using</span> System.Threading.Tasks;
+
+<span style="color:#ff79c6">namespace</span> ConsoleApp1
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Task.Run(<span style="color:#ff79c6">async</span> () =&gt;
+            {
+                <span style="color:#ff79c6">await</span> ChannelRun(<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">5</span>);
+            });
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;运行开始...&#34;</span>);
+            Console.ReadLine();
+        }
+
+        <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// channel运行
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;readDelayMs&#34;&gt;读取器每次读取完等待时间&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;writeDelayMs&#34;&gt;写入器每次写入完等待时间&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;finalNumberOfReaders&#34;&gt;几个读取器同时读取&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;howManyMessages&#34;&gt;写入器总共写入多少消息&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;maxCapacity&#34;&gt;channel最大容量&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">async</span> Task ChannelRun(<span style="color:#8be9fd">int</span> readDelayMs, <span style="color:#8be9fd">int</span> writeDelayMs, <span style="color:#8be9fd">int</span> finalNumberOfReaders,<span style="color:#8be9fd">int</span> howManyMessages, <span style="color:#8be9fd">int</span> maxCapacity )
+        {
+            <span style="color:#6272a4">// 创建channel
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">var</span> channel = Channel.CreateBounded&lt;<span style="color:#8be9fd">string</span>&gt;(maxCapacity);
+            <span style="color:#8be9fd">var</span> reader = channel.Reader;
+            <span style="color:#8be9fd">var</span> writer = channel.Writer;
+
+
+            <span style="color:#8be9fd">var</span> tasks = <span style="color:#ff79c6">new</span> List&lt;Task&gt;();
+            <span style="color:#6272a4">// 读取器执行读取任务，可以设置多个读取器同时读取
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">var</span> i = <span style="color:#bd93f9">0</span>; i &lt; finalNumberOfReaders; i++)
+            {
+                <span style="color:#8be9fd">var</span> idx = i;
+                tasks.Add(Task.Run(() =&gt; Read(reader, idx + <span style="color:#bd93f9">1</span>,readDelayMs)));
+            }
+
+            <span style="color:#6272a4">// 写入器执行写入操作
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">var</span> i = <span style="color:#bd93f9">0</span>; i &lt; howManyMessages; i++)
+            {
+                Console.WriteLine(<span style="color:#f1fa8c">$&#34;写入器在{DateTime.Now.ToLongTimeString()}写入：{i}&#34;</span>);
+                <span style="color:#ff79c6">await</span> writer.WriteAsync(<span style="color:#f1fa8c">$&#34;发布消息： &#39;{i}&#34;</span>);
+                <span style="color:#6272a4">// 写入完等待片刻
+</span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">await</span> Task.Delay(writeDelayMs);
+            }
+
+            <span style="color:#6272a4">// 写入器标记完成状态
+</span><span style="color:#6272a4"></span>            writer.Complete();
+            <span style="color:#6272a4">// 等待读取器读取完成
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">await</span> reader.Completion;
+            <span style="color:#6272a4">// 等待读取器所有的Task完成
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">await</span> Task.WhenAll(tasks);
+
+        }
+        <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// 读取数据任务
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;theReader&#34;&gt;读取器&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;readerNumber&#34;&gt;读取器编号&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;param name=&#34;delayMs&#34;&gt;读取完等待时间&lt;/param&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">/// &lt;returns&gt;任务&lt;/returns&gt;
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">async</span> Task Read(ChannelReader&lt;<span style="color:#8be9fd">string</span>&gt; theReader, <span style="color:#8be9fd">int</span> readerNumber, <span style="color:#8be9fd">int</span> delayMs)
+        {
+            <span style="color:#6272a4">// 循环判断读取器是否完成状态
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">while</span> (<span style="color:#ff79c6">await</span> theReader.WaitToReadAsync())
+            {
+                <span style="color:#6272a4">// 尝试读取数据
+</span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">while</span> (theReader.TryRead(<span style="color:#ff79c6">out</span> <span style="color:#8be9fd">var</span> theMessage))
+                {
+                    Console.WriteLine(<span style="color:#f1fa8c">$&#34;线程{readerNumber}号读取器在{DateTime.Now.ToLongTimeString()}读取到了消息： &#39;{theMessage}&#39;&#34;</span>);
+                    <span style="color:#6272a4">// 读取完等待片刻
+</span><span style="color:#6272a4"></span>                    <span style="color:#ff79c6">await</span> Task.Delay(delayMs);
+                }
+            }
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>借助代码中的注释应当可以理解示例代码的作用，对其中的关键点做个说明：</p>
+
+<ul>
+<li>写入器只有一个，写入的容量由channel的容量控制。</li>
+<li>读取器可以设置多个，由<code>Task</code>调度同时读取。</li>
+</ul>
+
+<h2 id="2-1-写入器-读取器无等待">2.1. 写入器、读取器无等待</h2>
+
+<p>写入器和读取器不等待，不停的读写数据，有一个读取器，总共写入50个数据，channel的容量为5，调用传参如下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Task.Run(<span style="color:#ff79c6">async</span> () =&gt;
+{
+    <span style="color:#ff79c6">await</span> ChannelRun(<span style="color:#bd93f9">0</span>,<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">5</span>);
+});</code></pre></td></tr></table>
+</div>
+</div>
+<p>结果：
+<img src="/image/2019-02-20-1.gif" alt="2019-02-20-1" /></p>
+
+<p>写入读取操作在一秒内完成了，观察输出可以发现，写入和读取交替进行，写入的数据会立刻被读取器读取出来打印在终端内。</p>
+
+<h2 id="2-2-读取器阻塞-等待">2.2. 读取器阻塞(等待)</h2>
+
+<p>将读取器的等待时间设置长一些，观察一下写入器是否会被阻塞，调用传参如下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Task.Run(<span style="color:#ff79c6">async</span> () =&gt;
+{
+    <span style="color:#ff79c6">await</span> ChannelRun(<span style="color:#bd93f9">10000</span>,<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">5</span>);
+});</code></pre></td></tr></table>
+</div>
+</div>
+<p>结果：
+<img src="/image/2019-02-20-2.gif" alt="2019-02-20-2" /></p>
+
+<p>从输出的结果可以看见，在程序开始时写入器写入了6个数据(但是调试的时候capacity的值时5，这里的机制有待考证)，然后每过10秒读取器读取一个数据后，写入器才能写入一个数据，由于读取器的速度限制相当于将写入器也进行了阻塞。</p>
+
+<h2 id="2-3-多个读取器同时读取">2.3. 多个读取器同时读取</h2>
+
+<p>读取器还是每读取一次暂停10秒，但是有5个Task同时读取，调用传参如下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">Task.Run(<span style="color:#ff79c6">async</span> () =&gt;
+{
+    <span style="color:#ff79c6">await</span> ChannelRun(<span style="color:#bd93f9">10000</span>,<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">5</span>);
+});</code></pre></td></tr></table>
+</div>
+</div>
+<p>结果：
+<img src="/image/2019-02-20-3.gif" alt="2019-02-20-3" /></p>
+
+<p>从输出可以看出来，5个读取器Task可以每10秒钟同时读取5个数据，而写入器也同样的几乎是每次写入5个数据。</p>
+
+<h1 id="3-总结">3. 总结</h1>
+
+<p><code>System.Threading.Channels</code>作为一个线程间通信的库，用来当作发布者/订阅者组件使用非常方便。但是比起Go语言中的channel还是有些区别的，因为c#的<code>Async</code>/<code>Await</code>从某中意义上讲，并不是真正的多线程。</p>
+
+<h1 id="4-附加内容-go语言的channel使用方式">4. 附加内容（Go语言的channel使用方式）</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#ff79c6">package</span> main
+
+<span style="color:#ff79c6">import</span> (
+	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+	<span style="color:#f1fa8c">&#34;time&#34;</span>
+)
+
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;运行开始...&#34;</span>)
+	<span style="color:#50fa7b">channelRun</span>(<span style="color:#bd93f9">2000</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">50</span>, <span style="color:#bd93f9">10</span>)
+}
+
+<span style="color:#6272a4">// channel运行实例
+</span><span style="color:#6272a4">// readDelayMs, writeDelayMs分别是读取器需要暂停的时间和写入器需要暂停的时间
+</span><span style="color:#6272a4">// finalNumberOfReaders是读取器个个数
+</span><span style="color:#6272a4">// howManyMessages是消息的总数
+</span><span style="color:#6272a4">// maxCapacity是channel的容量
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">channelRun</span>(readDelayMs, writeDelayMs, finalNumberOfReaders, howManyMessages, maxCapacity <span style="color:#8be9fd">int</span>) {
+	<span style="color:#6272a4">// 创建channel
+</span><span style="color:#6272a4"></span>	channel <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">chan</span> <span style="color:#8be9fd">string</span>, maxCapacity)
+	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; finalNumberOfReaders; i<span style="color:#ff79c6">++</span> {
+		<span style="color:#ff79c6">go</span> <span style="color:#8be9fd;font-style:italic">func</span>(i <span style="color:#8be9fd">int</span>) {
+			<span style="color:#50fa7b">read</span>(channel, i, readDelayMs)
+		}(i)
+	}
+
+	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; howManyMessages; i<span style="color:#ff79c6">++</span> {
+		fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;写入器在%v写入：%v\n&#34;</span>, time.<span style="color:#50fa7b">Now</span>().<span style="color:#50fa7b">Format</span>(<span style="color:#f1fa8c">&#34;2006-01-02 15:04:05.0000&#34;</span>), i)
+		channel <span style="color:#ff79c6">&lt;-</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;发布消息：%v&#34;</span>, i)
+		time.<span style="color:#50fa7b">Sleep</span>(time.<span style="color:#50fa7b">Duration</span>(writeDelayMs) <span style="color:#ff79c6">*</span> time.Millisecond)
+	}
+}
+
+<span style="color:#6272a4">// 读取器从channel中读取数据
+</span><span style="color:#6272a4">// channel时chan的实例
+</span><span style="color:#6272a4">// readerNumner代表了当前Goroutine的编号
+</span><span style="color:#6272a4">// delayMs表示当前的Goroutine读取完需要等待的时间
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">read</span>(channel <span style="color:#8be9fd;font-style:italic">chan</span> <span style="color:#8be9fd">string</span>, readerNumber, delayMs <span style="color:#8be9fd">int</span>) {
+	<span style="color:#6272a4">// 不断循环读取
+</span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">for</span> {
+		<span style="color:#ff79c6">select</span> {
+		<span style="color:#ff79c6">case</span> msg <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&lt;-</span>channel:
+			fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v号Gouroutine 读取器在%v读取到了消息：&#39;%s&#39;\n&#34;</span>, readerNumber, time.<span style="color:#50fa7b">Now</span>().<span style="color:#50fa7b">Format</span>(<span style="color:#f1fa8c">&#34;2006-01-02 15:04:05.0000&#34;</span>), msg)
+			time.<span style="color:#50fa7b">Sleep</span>(time.<span style="color:#50fa7b">Duration</span>(delayMs) <span style="color:#ff79c6">*</span> time.Millisecond)
+		}
+	}
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>结果：
+<img src="/image/Snipaste_2019-02-20_23-04-24.png" alt="Snipaste_2019-02-20_23-04-24.png" /></p>
+
+<h1 id="5-参考资料">5. 参考资料</h1>
+
+<p><a href="https://medium.com/@alexyakunin/go-vs-c-part-1-goroutines-vs-async-await-ac909c651c11">https://medium.com/@alexyakunin/go-vs-c-part-1-goroutines-vs-async-await-ac909c651c11</a>
+<a href="https://github.com/dotnet/corefx/blob/master/src/System.Threading.Channels/tests/ChannelTests.cs">https://github.com/dotnet/corefx/blob/master/src/System.Threading.Channels/tests/ChannelTests.cs</a>
+<a href="https://sachabarbs.wordpress.com/2018/11/28/system-threading-channels/">https://sachabarbs.wordpress.com/2018/11/28/system-threading-channels/</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/" id="prev">
+            <span class="nav-title nav-title-prev">在.Net Core中实现一个WebSocket路由</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

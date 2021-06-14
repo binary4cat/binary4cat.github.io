@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Angular on Haijd&#39;s Blog</title>
+    <link>/tags/angular/</link>
+    <description>Recent content in Angular on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Feb 2019 22:02:17 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/angular/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>6个Angular开发者必备的VSCode扩展</title>
+      <link>/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/</link>
+      <pubDate>Thu, 21 Feb 2019 22:02:17 +0800</pubDate>
+      
+      <guid>/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/</guid>
+      <description>在这篇文章，我将推荐6个我认为是使用VSCode开发Angular必备的扩展，如果你有喜欢的有用插件，也请推荐给我😁。
+1. 扩展推荐 1.1. TypeScript Hero 这是一个非常有用的插件，可以帮助你自动管理你的TypeScript import，当你复制一段代码是，TypeScript Hero会自动感知其中需要import的类型，并且自动import进来。有效节省你的时间。
+其他有用的功能包括排序、删除无用的import等。
+1.2. Angular Language Service 这个插件为Angular Template编辑提供了丰富的功能支持。假设你有一个Component如下：
+1 2 3 4 5 6  course = { title: &amp;#39;The Complete Angular Course&amp;#39;, author: { name: &amp;#39;Mosh Hamedani&amp;#39; } }    借助这个插件，你可以很方便的编辑你的Template: 1.3. Bracket Pair Colorizer 这个插件可以使用不同的颜色来标记不同类型的括号： 1.4. Move TS 随着你的项目的发展，也许你想要将你的modules分解的更小、更容易维护。这时你必须移动文件还有文件夹，但是有个问题是移动文件和文件夹后，路径会改变，原先所有import它们的地方将失效，这时可能每个文件的import需要一个一个手动处理。
+使用Move TS扩展，可以自动的帮助你管理移动文件和文件夹后的import。
+1.5. Material Icon Theme 一个Material风格的项目文件资源管理器图标主题。
+1.6. Angular TypeScript Snippets 另一个John Papa开发的有用扩展，可以在开发Angular项目时提高你的工作效率。
+这个插件包含了大量的代码段，可以帮助你快速生成代码，免去重复的码字过程。代码段覆盖了component、service、directive、template等等组件，它的可以给你提供如下的快捷代码段生成： 2. 参考资料 https://morioh.com/p/0e54a8cff696/6-essential-vscode-extensions-for-angular-developers</description>
+    </item>
+    
+    <item>
+      <title>Angular知识点汇总(5)：HTTP服务通信</title>
+      <link>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB5http%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1/</link>
+      <pubDate>Thu, 25 Oct 2018 21:04:40 +0800</pubDate>
+      
+      <guid>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB5http%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1/</guid>
+      <description>1. 响应式编程 在开始写HTTP通信之前，先简单的说一个必要的知识点：响应式编程，因为在Angular的HTTP通信中，返回的结果通常都是一个可观察对象，而响应式编程就是一个观察者模式(可观察对象)的实现。
+1.1. 名词解释  可观察对象（Observable）：可观察对象基本上可以理解为观察者订阅者模式，可观察对象可以发送多种类型的值(字面量、消息、事件)，无论这些值是同步发送还是异步发送的，我们都无需在意，只需要订阅这个可观察对象，并且消费它的数据即可，消费完取消订阅，无需其他的操作。 响应式编程：响应式编程是一种面向数据流和变更传播的异步编程范式（Wikipedia）。RxJS（响应式扩展的 JavaScript 版）是一个使用可观察对象进行响应式编程的库，它让组合异步代码和基于回调的代码变得更简单 (RxJS Docs)。RxJS 提供了一种对 Observable 类型的实现。  1.2. 简单例子 下面的代码基于rxjs6版本，6之前的版本语法差异较大，请自行查阅文档。
+1 2 3 4 5 6 7 8 9 10 11 12 13  import { from } from &amp;#39;rxjs&amp;#39;; import { filter } from &amp;#39;rxjs/operators&amp;#39;; viewObservable(obj: any) { const names: string[] = [&amp;#39;zhangsan&amp;#39;, &amp;#39;lisi&amp;#39;, &amp;#39;wangwu&amp;#39;, &amp;#39;zhaosi&amp;#39;]; from(names).pipe( filter(f =&amp;gt; f.indexOf(&amp;#39;san&amp;#39;) &amp;gt;= 0, )).subscribe( result =&amp;gt; console.log(result), error =&amp;gt; console.error(error), () =&amp;gt; console.</description>
+    </item>
+    
+    <item>
+      <title>Angular知识点汇总(4)：Form表单</title>
+      <link>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB4form%E8%A1%A8%E5%8D%95/</link>
+      <pubDate>Thu, 18 Oct 2018 23:03:59 +0800</pubDate>
+      
+      <guid>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB4form%E8%A1%A8%E5%8D%95/</guid>
+      <description>1. Angular的两种表单API 1.1. 概述 　Angular中有两种表单API，分别是模板式表单和响应式表单。模板式表单是通过Angular提供的指令在模板中对表单进行操作的，由于受限于HTML的语法功能，模板式表单只适合一些简单的表单使用场景。而响应式表单是通过组件中自定义数据模型实现对表单的操控。所以更适合复杂表单功能。
+　Angular表单都需要使用一个数据模型来接收存储表单的数据，而这个数据模型并不是我们自定义的类型，而是需要使用Angular提供的特定类型FormControl、FormGroup、FormArray等来组成。
+　在模板式表单中上述的数据模型是在HTML中使用Angular指令，由Angular帮我们生成的；响应式表单相反，这些都需要我们在组件中自定义，所以会更加灵活一些。
+　模板式表单存在于FormModule模块中，响应式表单存在于ReactiveFormModule模块中，在使用的时候一定要将对应的模块import到app.module.ts根模块中。 2. 响应式表单 2.1. 如何建响应式表单数据模型 创建响应式表首先需要创建表单需要用到的数据模型，然后将数据模型使用指令“映射”到模板上。
+要使用响应式表单需要将ReactiveFormsModule模块导入到app.module.ts模块中：
+1 2 3 4 5 6 7 8 9 10  import { ReactiveFormsModule } from &amp;#39;@angular/forms&amp;#39;; @NgModule({ ... imports: [ ... ReactiveFormsModule ], ... }) export class AppModule { }   定义表单的数据模型需要用到Angular提供的三个类型FormControl、FormGroup、FormArray。
+2.1.1. FormControl FormControl是表单模型的最小单位，也就相当于数据模型对象中的一个属性，具体到表单中可以保存的是一个input元素的值和其他元数据。
+1  title: FormControl = new FormControl(&amp;#39;默认标题&amp;#39;);    FormControl的构造函数可以传入一个参数，表示默认值，例如绑定在input元素上时，就是该元素的默认输入。  2.1.2. FormGroup FormGroup从语义上看就是代表整个表单，但是也可以保存表单的一部分，它里面可以包含多个FormControl，可以包含多个FormGroup。</description>
+    </item>
+    
+    <item>
+      <title>Angular知识点汇总(3)：数据绑定</title>
+      <link>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB3%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/</link>
+      <pubDate>Tue, 16 Oct 2018 22:36:15 +0800</pubDate>
+      
+      <guid>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB3%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/</guid>
+      <description>1. 事件绑定 1.1. 事件绑定的语法 事件绑定的语法：
+1 2  &amp;lt;input (input)=&amp;#34;onInputEvent($event)&amp;#34;&amp;gt; &amp;lt;button (click)=&amp;#34;onClickEvent()&amp;#34;&amp;gt;    (eventName)这种小括号包含事件名称的语法就是angular的事件绑定语法，可以将该事件绑定到组件中一个方法，该事件触发时，绑定的方法就会被执行。 &amp;lt;input (input)=&amp;quot;onInputEvent($event)&amp;quot;&amp;gt;  (input)：事件绑定语法，绑定的是DOM的原生事件。 onInputEvent：组件中的一个方法名称，该事件触发的时候就会调用这个方法了。 $event：浏览器的事件对象，包含当前事件的数据。   1.2. 组件中绑定的方法 1 2 3 4 5 6 7 8  ... export class TestComponent implements OnInit { constructor() { } ngOnInit() {} onInputEvent(event){ console.log(`您正在输入的内容：${event.target.value}`) } }    当输入事件触发的时候就会调用组件中的onInputEvent函数，在这里我们将输入的内容打印出来。 可以看到方法中接收一个浏览器的事件对象，要获取输入的值需要有两次调用.target.value。  1.3. 模板局部变量 上面的事件参数($event)输入的是原生的浏览器事件对象，有时我们只需要它的value就可以，这时我们可以使用angular提供的模板局部变量，语法的格式是：&amp;lt;input #valName&amp;gt;。
+在这里定义两个HTML标签，分别打印浏览器事件对象和模板局部变量：
+1 2  &amp;lt;input (input)=&amp;#34;onInputEvent($event)&amp;#34;&amp;gt; &amp;lt;input #myInput (input)=&amp;#34;onInputEvent(myInput)&amp;#34; id=&amp;#34;myInput&amp;#34;&amp;gt;    可以看到浏览器事件对象的属性较多，如果有需要更多数据的话可以使用该变量。 而模板局部变量只是一个DOM的引用，相当于是document.</description>
+    </item>
+    
+    <item>
+      <title>Angular知识点汇总(2)：路由系统</title>
+      <link>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB2%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sat, 13 Oct 2018 19:21:36 +0800</pubDate>
+      
+      <guid>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB2%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/</guid>
+      <description>1. 简介 　路由系统是Angular应用中不可或缺的组成，组件之间的导航关系都需要使用路由来进行规范，接下来先看一下Angular中的几个不同的路由对象，以及其作用：
+   路由对象 作用     Routes 路由数据配置对象，保存URL与组件之间的映射关系   RouterOutlet 一个做占位符作用的指令，表示路由组件的内容在此展示   Router 在应用运行时期可以操作路由的对象，例如跳转到其他的组件操作   RouterLink 在HTML标签中声明导航URL的指令   ActivatedRoute 保存着当前激活路由数据的对象，可以用它获取路由地址、路由参数等    2. 生成带路由的项目 下面我们使用例子讲解各个路由的使用，重新生成一个带路由模板的基架项目：
+1  ng new my-project-route --routing # routing参数可以生成一个带路由模块的项目   使用带routing参数生成的项目会在src/app文件夹下面多出来一个文件app-routing.module.ts，应用中用到的路由都在这里进行配置。
+也可以使用命令在已有项目中生成一个路由模块(同样生成名称为app-routing的路由模块)：
+1  ng generate module app-routing --flat --module=app   生成的模块文件中有下面代码，需要自行增加导入代码(查看这里)：
+1 2 3 4 5 6 7  import { NgModule } from &amp;#39;@angular/core&amp;#39;; import { RouterModule, Routes } from &amp;#39;@angular/router&amp;#39;; @NgModule({ exports: [ RouterModule ] }) export class AppRoutingModule {}   3.</description>
+    </item>
+    
+    <item>
+      <title>Angular知识点汇总(1)：起步和项目结构介绍</title>
+      <link>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB1%E8%B5%B7%E6%AD%A5%E5%92%8C%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Wed, 10 Oct 2018 22:13:31 +0800</pubDate>
+      
+      <guid>/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB1%E8%B5%B7%E6%AD%A5%E5%92%8C%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/</guid>
+      <description>1. 起步 1.1. 安装angular-cli 首次学习的同学可以进入到angular-cli wiki页面，学习关于angular-cli的知识。 使用npm安装angular-cli(也可以使用cnpm进行安装，避免网络问题造成失败)：
+1  npm install -g @angular/cli   或者可以使用yarn安装，同样可以避免网络问题：
+1  yarn add golbal @angular/cli   1.2. 生成项目 找一个合适的文件夹，在文件中打开命令行工具，执行生成命令，angular-cli会帮我们生成一个基础项目，避免从0开始搭建的麻烦：
+1 2  ng new my-project cd my-project   这里可能会因为网络的问题造成ng new my-project命令执行失败，造成生成的基架项目无法运行，可以将ng命令调用的包管理命令改成其他的工具，例如cnpm或者yarn：
+ 首先打开Home_Dir/.angular-config.json文件 然后修改其中packageManager的内容为指定的工具名：  1 2 3 4 5 6  { &amp;#34;version&amp;#34;: 1, &amp;#34;cli&amp;#34;: { &amp;#34;packageManager&amp;#34;: &amp;#34;yarn&amp;#34; // &amp;#34;cnpm&amp;#34; } }    然后再执行ng new my-project就不会因为网络问题失败了。  1.</description>
+    </item>
+    
+  </channel>
+</rss>

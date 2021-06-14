@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>git常用命令总结  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    28 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">git常用命令总结</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　本文持续更新&hellip;
+　　虽然很早就记录了很多的git命令在OneNote里面，但是作为手残党+健忘的我来说，敲命令行简直..那个啥。所以在开头推荐大家一款能够<a href="https://github.com/gitextensions/gitextensions/releases/tag/v2.48.05">鼠标点点点的git工具</a>，哪里不会点哪里，妈妈再也不用担心我记不住git命令啦！</p>
+
+<ul>
+<li><p><code>git init</code>  初始化git管理仓库</p></li>
+
+<li><p><code>git add xxx.txt</code>  将文件添加到暂存区中，可以单独添加文件，也可以使用“ git add . ”添加所有的未添加文件(“.”代表所有)。</p></li>
+
+<li><p><code>git commit -m &quot;提交说明&quot;</code>   提交暂存区中添加的文件到本地git库中。  题外话(注意，一定要写提交说明，而且要细粒度的提交，让工作更加细致)。</p></li>
+
+<li><p><code>git status</code>  查看当前仓库的状态，可以看详细的提示信息。Git status只能看到当前的仓库状态，当文件修改时，只能提示当前的文件修改了但是具体做了什么修改他是不知道的。</p></li>
+
+<li><p><code>git diff</code>    可以看到具体修改了什么内容</p></li>
+</ul>
+
+<ul>
+<li><p><code>git log</code> 查看历史记录，加上&rdquo;&ndash;pretty=oneline&rdquo;  可以显示简要信息。</p></li>
+
+<li><p><code>git reset</code>   可以回退到以前的版本，回退的时候需要看提交信息，git中使用HEAD表示当前的版本，相对上一个版本就是HEAD^，上上一个版本就是HEAD^^。比如要回退到上上个版本就要加入git reset &ndash;head HEAD^^</p></li>
+
+<li><p><code>git reset --head [commit id]</code>    这个命令是为了回退指定的版本，其中commit id是需要返回的版本的提交id，需要获得commit id执行下面的命令。</p></li>
+
+<li><p><code>git reflog</code>   记录着每一次的commit信息。</p></li>
+
+<li><p><code>git diff HEAD --[file name]</code> 可以查看工作区(就是你的项目文件夹)和版本库里面该文件的区别</p></li>
+
+<li><p><code>git checkout --[file name]</code>可以让指定的文件恢复到上一次add或者commit时的状态，也就是丢弃工作区的修改。(也就是刚才执行了add命令，那么回复的就是暂存区的版本，如果执行了commit命令，那就是回复的git库的版本)</p></li>
+
+<li><p><code>git reset HEAD [file name]</code>如果你想要丢弃当前工作区的修改，但是已经添加到暂存区了，那么就是该命令，丢弃暂存区修改。</p></li>
+
+<li><p><code>git rm [file name]</code>  删除掉版本库的文件，删除后执行commit命令，文件就从版本库中删除了。  如果删错了，执行checkout命令可以把版本库中的文件恢复。</p></li>
+
+<li><p><code>git push origin master</code>  把本地库推送到远程git库里面。如果是第一次提交就需要加入&rdquo;-u&rdquo;：git push -u origin master，以后推送就可以直接git push origin master (origin表示的是远程库的默认名称，master并不是指定的，需要将本地哪个分支push就写哪个分支的名字，git会自动的将相应的分支对应起来)</p></li>
+
+<li><p><code>git clone [git address]</code> 将远程git库的文件克隆到本地。</p></li>
+
+<li><p><code>git checkout -b [new branch]</code>    创建并且切换到一个新的分支。(-b的表示创建并切换，相当于执行了两条命令：git branch [new branch]   &gt;&gt;  git checkout [new branch]  );</p></li>
+
+<li><p><code>git branch</code>  列出所有分支，当前分支前面会加*号表示。</p></li>
+
+<li><p><code>git merge [branch name]</code> 用于把指定的分支合并到当前的分支；注意：需要先切回master分支然后把指定的分支合并到master分支中。</p></li>
+
+<li><p><code>git branch -d [branch name]</code> 删除指定的分支。(合并后就可以删除之前的分支了)</p></li>
+
+<li><p><code>git checkout [branch name]</code>  切换到指定的分支</p></li>
+
+<li><p><code>git log --graph</code> 可以查看分支合并图</p></li>
+
+<li><p><code>git stash</code>   将当前的工作区内容临时储藏起来(临时需要去修改别的一个文件，但是不想提交当前的内容时使用。)</p></li>
+
+<li><p><code>git stash list</code>  查看当前隐藏的所有工作区内容</p></li>
+
+<li><p><code>git stash apply &quot;[stash list param]&quot;</code>    恢复stash的工作区内容，但是不删除stash内容，“”引号中的参数可以恢复指定的stash内容。参数在stash list命令执行后内容的行首</p></li>
+
+<li><p><code>git stash drop</code>  删除stash内容</p></li>
+
+<li><p><code>git stash pop</code>   恢复stash内容的同时删除内容</p></li>
+
+<li><p><code>git branch -D [branch name]</code> 强制删除一个还没有合并的分支。</p></li>
+
+<li><p><code>git remote -v</code>   可以查看远程库的详细信息。</p></li>
+
+<li><p><code>git tag [tag name]</code>  给当前的分支创建标签，首先需要切换到需要打标签的分支上面。</p></li>
+
+<li><p><code>git tag</code> 可以查看当前的分支上面的所有的标签列表</p></li>
+
+<li><p><code>git show [tag name]</code> 可以查看标签的详细信息</p></li>
+
+<li><p><code>git tag -a [tag name] -m &quot;标签说明&quot;</code> 可以打上带有说明信息的标签。</p></li>
+
+<li><p><code>git tag -d [tag name]</code>   删除本地的标签</p></li>
+
+<li><p><code>git push origin :refs/tags/[tag name]</code>   可以删除远程库中的标签</p></li>
+
+<li><p><code>git push origin [tag name]</code>  推送某一个标签到远程库中</p></li>
+
+<li><p><code>git push origin --tags</code>  可以把所有没有推送的标签推送到远程库。</p></li>
+
+<li><p><code>git config --global color.ui true</code>   可以让git命令显示颜色</p></li>
+</ul>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/" id="next">
+                &larr; <span class="nav-title nav-title-next">对ASP.NET程序员非常有用的85个工具</span> 
+            </a>  
+        <a rel="prev" href="/tool/git%E9%80%9F%E6%9F%A5%E8%A1%A8%E5%A4%A7%E5%85%A8/" id="prev">
+            <span class="nav-title nav-title-prev">Git速查表大全</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

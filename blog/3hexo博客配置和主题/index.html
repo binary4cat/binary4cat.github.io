@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>3、Hexo博客配置和主题  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    05 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">3、Hexo博客配置和主题</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-博客网站信息配置">1. 博客网站信息配置</a></li>
+<li><a href="#2-主题的配置">2. 主题的配置</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　这一篇中，我们介绍一下对Hexo博客的配置，和主题的一些设置。</p>
+
+<h1 id="1-博客网站信息配置">1. 博客网站信息配置</h1>
+
+<p>　　在创建的博客文件夹根目录(比如我的是E:\Is2Blog),找到名为<code>_config.yml</code>的配置文件，使用编辑器打开，具体的配置信息说明在下面：</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">81
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># Hexo Configuration</span>
+<span style="color:#6272a4">## Docs: https://hexo.io/docs/configuration.html</span>
+<span style="color:#6272a4">## Source: https://github.com/hexojs/hexo/</span>
+
+<span style="color:#6272a4"># Site</span>
+title: Hexo博客搭建                <span style="color:#6272a4">#主标题</span>
+subtitle: Hexo博客很酷很炫很有逼格   <span style="color:#6272a4">#副标题</span>
+description: 这是给搜索引擎看的，百度蜘蛛你喜欢我这句话吗？  
+author: 人民群众        <span style="color:#6272a4">#网站作者名称</span>
+language: zh-CN   <span style="color:#6272a4">#语言</span>
+timezone: <span style="color:#6272a4">#不用填写</span>
+
+<span style="color:#6272a4"># URL</span>
+<span style="color:#6272a4">## If your site is put in a subdirectory, set url as &#39;http://yoursite.com/child&#39; and root as &#39;/child/&#39;</span>
+
+url: http://yoursite.com  如果有域名的话，可以在这里填写你指向的域名
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+<span style="color:#6272a4"># Directory</span>
+
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+<span style="color:#6272a4"># Writing   文章编写有关的设置，默认即可</span>
+
+new_post_name: :title.md <span style="color:#6272a4"># File name of new posts</span>
+default_layout: post
+titlecase: <span style="color:#ff79c6">false</span> <span style="color:#6272a4"># Transform title into titlecase</span>
+external_link: <span style="color:#ff79c6">true</span> <span style="color:#6272a4"># Open external links in new tab</span>
+filename_case: <span style="color:#bd93f9">0</span>
+render_drafts: <span style="color:#ff79c6">false</span>
+post_asset_folder: <span style="color:#ff79c6">false</span>
+relative_link: <span style="color:#ff79c6">false</span>
+future: <span style="color:#ff79c6">true</span>
+highlight:
+  enable: <span style="color:#ff79c6">true</span>
+  line_number: <span style="color:#ff79c6">true</span>
+  auto_detect: <span style="color:#ff79c6">false</span>
+  tab_replace:
+
+<span style="color:#6272a4"># Category &amp; Tag  标签和分类，这里不用修改</span>
+
+default_category: uncategorized
+category_map:
+tag_map:
+
+<span style="color:#6272a4"># Date / Time format   时间格式，默认即可</span>
+<span style="color:#6272a4">## Hexo uses Moment.js to parse and display date</span>
+<span style="color:#6272a4">## You can customize the date format as defined in</span>
+<span style="color:#6272a4">## http://momentjs.com/docs/#/displaying/format/</span>
+
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+<span style="color:#6272a4"># Pagination</span>
+<span style="color:#6272a4">## Set per_page to 0 to disable pagination</span>
+
+per_page: <span style="color:#bd93f9">10</span>        <span style="color:#6272a4">#表示每页显示多少条博客，可以修改</span>
+pagination_dir: page
+
+<span style="color:#6272a4"># Extensions</span>
+<span style="color:#6272a4">## Plugins: https://hexo.io/plugins/   </span>
+<span style="color:#6272a4">## Themes: https://hexo.io/themes/</span>
+
+theme: landscape     <span style="color:#6272a4">#这里是主题名称，使用哪个主题，这里就填写相应的主题名</span>
+
+<span style="color:#6272a4"># Deployment</span>
+<span style="color:#6272a4">## Docs: https://hexo.io/docs/deployment.html</span>
+
+deploy:
+  type: git
+  repository: https://github.com/username/username.github.io.git
+  branch: master</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　配置完成后，我们刷新一下网站(本地预览可以直接刷新，如果网络访问需要生成部署才能看到改变，建议本地预览，满意后再部署)：
+<img src="http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1mf831ho1j212n0m1dos.jpg" alt="" />
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1mfao9xf8j212n0m1416.jpg" alt="" /></p>
+
+<h1 id="2-主题的配置">2. 主题的配置</h1>
+
+<p>　　Hexo有很多好看有特色的主题，安装使用也非常方便，基本上都在github上开源了， 而且都有使用文档，很容易配置。
+　　这里就使用默认的主题，介绍一下Hexo主题的一些设置修改的方法。更多主题请访问：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a>  或者</p>
+
+<p>　　打开博客根目录下的<code>themes</code>文件夹，可以看到这里面有主题文件夹，这里我们打开<code>landscape</code>文件夹，里面有文件夹和文件，主题的配置文件就是<code>_config.yml</code>这个文件。
+　　使用编辑器打开：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6272a4"># Header</span>
+menu:  <span style="color:#6272a4">#这是标题栏的配置</span>
+  <span style="color:#6272a4">#Home: /</span>
+  <span style="color:#6272a4">#Archives: /archives</span>
+  首页: /   <span style="color:#6272a4">#表示根目录，也就是首页</span>
+  存档: /archives
+  关于: /about    <span style="color:#6272a4">#关于页面需要自己创建，文章后面有创建方法</span>
+rss: /atom.xml   <span style="color:#6272a4">#RSS订阅</span>
+
+<span style="color:#6272a4"># Content</span>
+<span style="color:#6272a4">#excerpt_link: Read More</span>
+excerpt_link: 阅读更多    
+fancybox: <span style="color:#ff79c6">true</span>   <span style="color:#6272a4">#一个JavaScript的图片浏览组件，参照我的博客中，点击图片后弹出图层，可以左右浏览的效果，true为打开，false为关闭</span>
+
+<span style="color:#6272a4"># Sidebar</span>
+sidebar: right   <span style="color:#6272a4">#侧边栏的位置</span>
+widgets:        <span style="color:#6272a4">#侧边栏小工具组件</span>
+- category      <span style="color:#6272a4">#分类</span>
+- tag           <span style="color:#6272a4">#标签</span>
+- tagcloud      <span style="color:#6272a4">#标签云</span>
+- archive       <span style="color:#6272a4">#存档</span>
+- recent_posts  <span style="color:#6272a4">#最新发布</span>
+
+<span style="color:#6272a4"># display widgets at the bottom of index pages (pagination == 2)</span>
+index_widgets:
+<span style="color:#6272a4"># - category</span>
+<span style="color:#6272a4"># - tagcloud</span>
+<span style="color:#6272a4"># - archive</span>
+
+<span style="color:#6272a4"># widget behavior</span>
+archive_type: <span style="color:#f1fa8c">&#39;monthly&#39;</span>   <span style="color:#6272a4">#归档时以月为单位记录，参考我的侧边栏</span>
+show_count: <span style="color:#ff79c6">false</span>         <span style="color:#6272a4">#是否显示数量</span>
+
+<span style="color:#6272a4"># Miscellaneous   #社交信息，都是国内被墙掉的，就不设置了。</span>
+google_analytics:
+favicon: /favicon.png
+twitter:
+google_plus:
+fb_admins:
+fb_app_id:</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>添加关于页面</strong>
+　　在“Git Bash Here”命令行窗口输入：<code>hexo new page &quot;about&quot;</code> 该命令创建一个新的页面，在博客根目录下依次打开<code>source/about/index.md</code>，然后在里面编辑内容即可。
+<img src="http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1nj1krgugj212n0c2jzb.jpg" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/blog/4hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/" id="next">
+                &larr; <span class="nav-title nav-title-next">4、Hexo博客主题的修改</span> 
+            </a>  
+        <a rel="prev" href="/blog/2%E5%AE%89%E8%A3%85%E5%B9%B6%E9%83%A8%E7%BD%B2hexo%E5%8D%9A%E5%AE%A2/" id="prev">
+            <span class="nav-title nav-title-prev">2、安装并部署Hexo博客</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

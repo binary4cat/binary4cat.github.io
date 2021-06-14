@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>委托(delegate)  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    20 May 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">委托(delegate)</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是委托">1. 什么是委托</a></li>
+<li><a href="#2-声明委托类型">2. 声明委托类型</a></li>
+<li><a href="#3-创建委托对象">3. 创建委托对象</a></li>
+<li><a href="#4-委托赋值">4. 委托赋值</a></li>
+<li><a href="#5-组合委托">5. 组合委托</a></li>
+<li><a href="#6-为委托增加和移除方法">6. 为委托增加和移除方法</a></li>
+<li><a href="#7-调用委托">7. 调用委托</a></li>
+<li><a href="#8-匿名方法">8. 匿名方法</a>
+<ul>
+<li><a href="#8-1-在什么地方使用匿名方法">8.1. 在什么地方使用匿名方法：</a></li>
+<li><a href="#8-2-匿名方法的语法">8.2. 匿名方法的语法：</a>
+<ul>
+<li><a href="#8-2-1-返回类型">8.2.1. 、返回类型：</a></li>
+<li><a href="#8-2-2-参数">8.2.2. 、参数</a></li>
+<li><a href="#8-2-3-params参数">8.2.3. 、params参数</a></li>
+</ul></li>
+<li><a href="#8-3-变量和参数的作用域">8.3. 变量和参数的作用域</a>
+<ul>
+<li><a href="#8-3-1-外部变量">8.3.1. 、外部变量</a></li>
+<li><a href="#8-3-2-被方法捕获变量的生命周期扩展">8.3.2. 、被方法捕获变量的生命周期扩展</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#9-lambda表达式">9. Lambda表达式</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么是委托">1. 什么是委托</h1>
+
+<p>　　<strong>委托</strong>是一个包含具有相同签名和返回值类型的有序方法列表。
+　　■ 方法的列表称为<strong>调用列表</strong>(invocation list)
+　　■ 当委托被调用时，它调用列表中的每一个方法。
+<img src="/image/cSharp/cSharp31.png" alt="" /></p>
+
+<p>包含单个方法的委托和C++的函数指针相似，然而，与函数指针不同的是，委托是面向对象的，并且是类型安全的(type-safe)的。
+　　
+　　<strong>“调用列表”中的方法</strong>：
+　　由委托保存的方法可以来自任何类或者结构，只要他们同时匹配委托的如下两点：
+　　■ 返回值
+　　■ 签名(包括ref和out修饰符)
+　　调用列表中的方法可以是实例方法或者静态方法。</p>
+
+<h1 id="2-声明委托类型">2. 声明委托类型</h1>
+
+<p>　　委托是一种数据类型，就好像类是类型一样。与类相同，委托类型必须在被用来创建变量以及类型的对象之前进行声明，才可以使用。
+<img src="/image/cSharp/cSharp32.png" alt="" />
+　　委托类型的声明看上去和方法的声明比较相似，有返回值类型和签名，<strong>返回值类型和签名指定了委托接受的方法的形式</strong>。
+　　上图中的代码声明了*MyDel*类型的委托。声明指定了这种类型的委托只会接受没有返回值(void)并且有单个int参数的方法。
+<img src="/image/cSharp/cSharp33.png" alt="" /></p>
+
+<p>　　<strong>委托类型声明与方法声明的两个不同方面</strong>：
+　　■ 以*delegate*关键字开头
+　　■ 没有方法主体</p>
+
+<h1 id="3-创建委托对象">3. 创建委托对象</h1>
+
+<p>　　<strong>委托是引用类型</strong>，因此有引用和对象。我们可以声明变量并创建类型的对象。
+<img src="/image/cSharp/cSharp34.png" alt="" /></p>
+
+<p>　　有两种创建委托对象的方式：
+　　第一种是使用带*new*运算符的对象创建表达式。
+<img src="/image/cSharp/cSharp35.png" alt="" />
+　　第二种是使用快捷语法，直接使用方法赋值。使用快捷语法方法名称和其相对应的委托类型之间有隐式转换。
+<img src="/image/cSharp/cSharp36.png" alt="" /></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">delegate</span> <span style="color:#ff79c6">void</span> MyDel(<span style="color:#8be9fd">int</span> x);       <span style="color:#6272a4">//声明委托类型
+</span><span style="color:#6272a4"></span>MyDel delVar,dVar;                <span style="color:#6272a4">//创建两个委托变量
+</span><span style="color:#6272a4"></span>
+delVar= <span style="color:#ff79c6">new</span> MyDel(myInstObj.MyM1);<span style="color:#6272a4">//创建委托并保存引用
+</span><span style="color:#6272a4"></span>dVar =<span style="color:#ff79c6">new</span> MyDel(SClass.OtherM2);  //创建委托并保存引用</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp37.png" alt="" />
+当然也可以这样创建：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel delVar=<span style="color:#ff79c6">new</span> MyDel(myInstObj.MyM1);
+MyDel dVar= <span style="color:#ff79c6">new</span> MyDel(SClass.OtherM2);</code></pre></td></tr></table>
+</div>
+</div>
+<p>或者使用快捷语法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel delVar=myInstObj.MyM1;
+MyDel dVar= SClass.OtherM2;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-委托赋值">4. 委托赋值</h1>
+
+<p>　　由于委托是引用类型，我们可以通过给它赋值来改变包含在委托变量中的引用，旧的委托对象会被GC回收。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel delVar;
+delVar = myInstObj.MyM1;
+<span style="color:#6272a4">//重新赋值
+</span><span style="color:#6272a4"></span>delVar = SClass.OtherM2;</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp38.png" alt="" /></p>
+
+<h1 id="5-组合委托">5. 组合委托</h1>
+
+<p>　　上面描述的委托的调用列表中都只有一个方法，委托可以使用<strong>+</strong>运算符来“组合”。这个运算最终会创建一个新的委托，新委托的调用列表是两个被操作委托调用列表的组合。
+　　<strong>组合委托</strong>的操作数委托没有被修改，当组合委托的操作发生时，参与运算的委托都没有发生改变，只是创建了一个新的委托。<strong>委托是恒定的，委托对象被创建后就不会再被改变。</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel delA = myInstObj.MyM1;
+MyDel delB = SClass.OtherM2;
+
+MyDel delC = delA + delB;    //组合委托会组合操作数委托的调用列表</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp39.png" alt="" /></p>
+
+<h1 id="6-为委托增加和移除方法">6. 为委托增加和移除方法</h1>
+
+<p>　　<strong>增加方法</strong>：
+　　虽然委托是不可变的，但是c#提供了看上去可以为委托增加方法的语法，我们可以通过使用“<strong>+=</strong>”运算符来为委托增加方法或者另一个委托。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel delVar = inst.MyM1;    <span style="color:#6272a4">//创建委托并初始化
+</span><span style="color:#6272a4"></span>delVar += SCl.m3;            <span style="color:#6272a4">//增加方法
+</span><span style="color:#6272a4"></span>delVar += X.Act;             //增加方法</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　<strong>在使用+=运算符时，实际上是创建了个新的委托，新委托的调用列表是左边的委托加上右边要添加的方法。</strong>
+<img src="/image/cSharp/cSharp40.png" alt="" /></p>
+
+<p>　　<strong>移除方法</strong>：
+　　可以使用<strong>-=</strong>运算符从委托移除方法。
+<code>delVar -= SCl.m3;    //从委托移除方法</code>
+　　与为委托增加方法一样，移除方法其实就是创建了一个新的委托。新的委托是就委托的副本——只是没有了已经移除方法的引用。
+　　移除委托时需要注意：
+　　■ 如果在调用列表中的方法有多个实例，<strong>-=</strong>运算符将从列表最后还是搜索，并且移除第一个与方法匹配的实例。
+　　■ 试图删除委托中不存在的方法没有效果。
+　　■ 试图调用空委托会抛出异常。
+　　■ 我们可以通过把委托和null进行比较来判断委托的调用列表是否为空。<strong>如果调用列表为空，则委托是null</strong>。</p>
+
+<h1 id="7-调用委托">7. 调用委托</h1>
+
+<p>　　可以向调用方法一样简单的调用委托。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">delegate</span> <span style="color:#ff79c6">void</span> MyDel (<span style="color:#8be9fd">int</span> x);
+MyDel delVar =inst.MyM1;
+delVar += SCl.m3;
+delVar += X.Act;
+   ....
+delVar(<span style="color:#bd93f9">55</span>);    <span style="color:#6272a4">//调用委托
+</span><span style="color:#6272a4"></span>   ....</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/cSharp/cSharp41.png" alt="" />
+　　当委托被调用时，它使用被调用时的相同参数来调用调用列表中的每一个方法。
+　　如果在调用列表里有好多个相同的方法，当委托被调用时，每次在列表中遇到这个方法时都会调用一次。
+　　</p>
+
+<p><strong>调用不带返回值的委托示例</strong>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Delegate
+{
+    <span style="color:#6272a4">//定义一个没有参数和返回值的委托
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">delegate</span> <span style="color:#ff79c6">void</span> PrintFunction();
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Test t = <span style="color:#ff79c6">new</span> Test();
+            PrintFunction pf; <span style="color:#6272a4">//创建一个空委托
+</span><span style="color:#6272a4"></span>            pf = t.Print1;    <span style="color:#6272a4">//初始化该委托
+</span><span style="color:#6272a4"></span>
+            <span style="color:#6272a4">//给委托增加方法
+</span><span style="color:#6272a4"></span>            pf += Test.Print2;
+            pf += t.Print1;
+
+            <span style="color:#6272a4">//调用委托
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">if</span> (pf != <span style="color:#ff79c6">null</span>)
+                pf();
+            <span style="color:#ff79c6">else</span>
+                Console.WriteLine(<span style="color:#f1fa8c">&#34;该委托为空！&#34;</span>);
+            Console.ReadKey();
+        }
+    }
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Test</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Print1()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;Print1--实例方法&#34;</span>);
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Print2()
+        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;Print2--静态方法&#34;</span>);
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/cSharp/cSharp42.png" alt="" />
+　　在上面的代码中，我们给委托增加了三个方法，其中有两个方法(Print1)是重复的，从运行结果可以看出，按照顺序，<code>Print1</code>被调用了2次。
+　　<strong>调用委托其实就是调用了委托的调用列表中的所有方法。</strong></p>
+
+<p><strong>调用带返回值的委托示例</strong>：
+　　如果委托有返回值，并且在调用列表中有一个以上的方法存在，那么：
+　　■ 调用列表中的最后一个方法的返回值就是委托调用返回的值。
+　　■ 调用列表中所有其他方法的返回值都会被忽略。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Delegate2
+{
+    <span style="color:#6272a4">//创建一个具有返回值，没有参数的委托
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">delegate</span> <span style="color:#8be9fd">int</span> MyDel();
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Test t = <span style="color:#ff79c6">new</span> Test();
+            MyDel mDel = t.Add2;
+            mDel += t.Add3;
+            mDel += t.Add2;
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;值为：{0}&#34;</span>,mDel());
+            Console.ReadKey();
+        }
+    }
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Test</span>
+    {
+        <span style="color:#8be9fd">int</span> <span style="color:#ff79c6">value</span> = <span style="color:#bd93f9">5</span>;
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Add2()
+        {
+            <span style="color:#ff79c6">value</span> += <span style="color:#bd93f9">2</span>;
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">value</span>;
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Add3()
+        {
+            <span style="color:#ff79c6">value</span> += <span style="color:#bd93f9">3</span>;
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">value</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/cSharp/cSharp43.png" alt="" />
+　　■ 上面代码中的委托添加了三个方法，分别是<code>Add2</code>、<code>Add3</code>、<code>Add2</code>。
+　　■ 在最后打印的时候调用了委托，执行的过程是：<img src="/image/cSharp/cSharp44.png" alt="" /></p>
+
+<p><strong>调用带引用参数的委托示例</strong>
+　　如果委托有引用参数，在调用委托列表中的下一个方法时，参数的新值(不是初始值)会传给下一个方法。以此类推。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Delegate3
+{
+    <span style="color:#ff79c6">delegate</span> <span style="color:#ff79c6">void</span> MyDel(<span style="color:#ff79c6">ref</span> <span style="color:#8be9fd">int</span> x);
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            Test t = <span style="color:#ff79c6">new</span> Test();
+            MyDel mDel = t.Add2;
+            mDel += t.Add3;
+            mDel += t.Add2;
+            <span style="color:#8be9fd">int</span> x = <span style="color:#bd93f9">5</span>;
+            mDel(<span style="color:#ff79c6">ref</span> x);
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;值为：{0}&#34;</span>,x);
+            Console.ReadKey();
+        }
+    }
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Test</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Add2(<span style="color:#ff79c6">ref</span> <span style="color:#8be9fd">int</span> x)
+        {
+            x += <span style="color:#bd93f9">2</span>;
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Add3(<span style="color:#ff79c6">ref</span> <span style="color:#8be9fd">int</span> x)
+        {
+            x += <span style="color:#bd93f9">3</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/cSharp/cSharp45.png" alt="" />
+　　■ 引用参数是按顺序在调用方法中一次传递的：<img src="/image/cSharp/cSharp46.png" alt="" /></p>
+
+<h1 id="8-匿名方法">8. 匿名方法</h1>
+
+<p>　　如果一个方法在调用列表中，或者说在委托的调用中只会被使用一次，那么则没有必要创建一个独立的具名方法，可以使用匿名方法。
+　　<strong>匿名方法</strong>(anonymous metfod)是在初始化委托是内联声明的方法。</p>
+
+<p><strong>具名方法代码示例：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Delegate4
+{
+    <span style="color:#ff79c6">delegate</span> <span style="color:#8be9fd">int</span> MyDel(<span style="color:#8be9fd">int</span> x);
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            MyDel md = Add;
+
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;具名方法的输出：{0}&#34;</span>,md(<span style="color:#bd93f9">5</span>));
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;具名方法的输出：{0}&#34;</span>,md(<span style="color:#bd93f9">6</span>));
+            Console.ReadKey();
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#8be9fd">int</span> Add(<span style="color:#8be9fd">int</span> x)
+        {
+            <span style="color:#ff79c6">return</span> x += <span style="color:#bd93f9">20</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：<img src="/image/cSharp/cSharp47.png" alt="" />
+<strong>匿名方法代码示例：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+
+<span style="color:#ff79c6">namespace</span> Delegate5
+{
+    <span style="color:#ff79c6">delegate</span> <span style="color:#8be9fd">int</span> MyDel(<span style="color:#8be9fd">int</span> x);
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            MyDel md = <span style="color:#ff79c6">delegate</span> (<span style="color:#8be9fd">int</span> x)
+              {
+                  <span style="color:#ff79c6">return</span> x += <span style="color:#bd93f9">20</span>;
+              };
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;匿名方法的输出：{0}&#34;</span>,md(<span style="color:#bd93f9">5</span>));
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;匿名方法的输出：{0}&#34;</span>,md(<span style="color:#bd93f9">6</span>));
+            Console.ReadKey();
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：<img src="/image/cSharp/cSharp48.png" alt="" />
+　　可以看到两种方式都得到了相同的计算结果。<strong>一个方法只会被使用一次，这个方法初始化委托时可以使用匿名方法的形式。</strong></p>
+
+<h2 id="8-1-在什么地方使用匿名方法">8.1. 在什么地方使用匿名方法：</h2>
+
+<p>　　■ 声明委托变量时作为初始化表达式
+　　■ 组合委托是在赋值语句的右边
+　　■ 为委托增加事件时在赋值语句的右边</p>
+
+<h2 id="8-2-匿名方法的语法">8.2. 匿名方法的语法：</h2>
+
+<p><img src="/image/cSharp/cSharp49.png" alt="" />
+　　■ <strong>delegate</strong>类型关键字。
+　　■ 参数列表，如果语句块没有使用任何参数则可以省略。
+　　■ 语句块，它包含了匿名方法的代码。
+　　</p>
+
+<h3 id="8-2-1-返回类型">8.2.1. 、返回类型：</h3>
+
+<p>　　<strong>匿名方法不会显示的声明返回值</strong>。但是匿名方法的实现本身的行为必须一个类型上与委托返回值类型想匹配的值。<strong>如果委托有void类型的返回值，那么匿名方法就不能有返回值</strong>。
+例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">delegate</span> <span style="color:#8be9fd">int</span> MyDel(<span style="color:#8be9fd">int</span> x);     <span style="color:#6272a4">//委托类型的返回值类型是int
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+{
+    MuDel md = <span style="color:#ff79c6">delegate</span> (<span style="color:#8be9fd">int</span> x)
+            {
+                <span style="color:#ff79c6">return</span> x + <span style="color:#bd93f9">20</span>; <span style="color:#6272a4">//匿名方法也必须返回一个int类型的值
+</span><span style="color:#6272a4"></span>            };
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="8-2-2-参数">8.2.2. 、参数</h3>
+
+<p>　　除了参数是数组的情况，匿名方法的参数列表必须在三个方面匹配委托：
+　　■ 参数数量
+　　■ 参数类型
+　　■ 修饰符
+　　
+　　<strong>我们可以在委托的参数列表不包含任何out参数，并且匿名方法不使用任何参数的情况下，通过圆括号为空或者直接省略圆括号来简化匿名方法的参数列表。</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">delegate</span> <span style="color:#ff79c6">void</span> MyDel(<span style="color:#8be9fd">int</span> x); 
+
+<span style="color:#6272a4">//调用委托
+</span><span style="color:#6272a4"></span>MyDel md = <span style="color:#ff79c6">delegate</span>      <span style="color:#6272a4">//省略的参数列表
+</span><span style="color:#6272a4"></span>        {
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;简化匿名方法！&#34;</span>);  
+        };</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="8-2-3-params参数">8.2.3. 、params参数</h3>
+
+<p>　　如果委托声明的参数列表中包含了params参数，那么使用匿名方法时，匿名方法的参数列表就会忽略params关键字。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">delegate void MyDel(int x,params int[] y);   //在委托类型的声明中使用了params关键字
+
+MyDel md = delegate(int x,int[] y)    //在匹配的匿名方法中忽略了params关键字
+        {
+           ......
+        };</pre></td></tr></table>
+</div>
+</div>
+<h2 id="8-3-变量和参数的作用域">8.3. 变量和参数的作用域</h2>
+
+<p>　　匿名方法的参数以及声明在匿名方法内部的局部变量的作用域限制在匿名方法的主体之内。
+<img src="/image/cSharp/cSharp50.png" alt="" /></p>
+
+<h3 id="8-3-1-外部变量">8.3.1. 、外部变量</h3>
+
+<p>　　匿名方法可以访问它的外围作用域的局部变量和环境。
+　　■ 外围作用域的变量叫做<strong>外部变量</strong>(outer variable)。
+　　■ 用在匿名方法实现代码中的外部变量称为<strong>被方法捕获</strong>(captured)。
+<img src="/image/cSharp/cSharp51.png" alt="" /></p>
+
+<h3 id="8-3-2-被方法捕获变量的生命周期扩展">8.3.2. 、被方法捕获变量的生命周期扩展</h3>
+
+<p><img src="/image/cSharp/cSharp52.png" alt="" />
+　　■ 局部变量x在块中声明和初始化
+　　■ 委托mDel被匿名方法初始化，该匿名方法捕获了外部变量x
+　　■ 当x离开块区域时，引用x的值会发生编译错误
+　　■ 但是，委托mDel中的匿名方法在它的环境中保留了变量x，并且在mDel被调用时可以输出x的值。</p>
+
+<h1 id="9-lambda表达式">9. Lambda表达式</h1>
+
+<p>　　c#2.0中引入了匿名方法，它允许我们在创建或者为委托增加方法时包含小段内联代码。
+　　c#3.0中引入了lambda表达式，简化了匿名方法的语法。
+　　
+　　在匿名方法的语法中，delegate关键字是有点多余的，因为编译器已经知道我们在将方法赋值给委托，我们可以把匿名方法转换为lambda表达式。
+　　■ 删除delegate关键字
+　　■ 在参数列表和匿名方法主体之间放lambda运算符“<strong>=&gt;</strong>”</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">MyDel md = <span style="color:#ff79c6">delegate</span>(<span style="color:#8be9fd">int</span> x)    {<span style="color:#ff79c6">return</span> x + <span style="color:#bd93f9">1</span>};   <span style="color:#6272a4">//匿名方法
+</span><span style="color:#6272a4"></span>MyDel md =         (<span style="color:#8be9fd">int</span> x) =&gt; {<span style="color:#ff79c6">return</span> x + <span style="color:#bd93f9">1</span>};   //lambda表达式</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　编译器通过推断允许我们更进一步简化lambda表达式：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">MyDel md  = delegate(int x)    {return x + 1};   //匿名方法
+MyDel md2 =         (int x) =&gt; {return x + 1};   //lambda表达式
+MyDel md3 =             (x) =&gt; {return x + 1};   //lambda表达式
+MyDel md4 =              x  =&gt; {return x + 1};   //lambda表达式
+MyDel md5 =              x  =&gt;         x + 1 ;   //lambda表达式</pre></td></tr></table>
+</div>
+</div>
+<p>　　■ 编译器还可以从委托的声明中知道委托参数的类型，因此lambda表达式允许我们省略类型参数，如上面代码中<code>md3</code>的赋值代码所示。
+　　　　□ 带有类型的参数列表称为显式类型
+　　　　□ 省略类型的参数列表称为隐式类型
+　　■ 如果只有一个隐式类型的参数，我们可以省略周围的圆括号，如上面代码中的<code>md4</code>赋值代码所示。
+　　■ <strong>lambda表达式允许表达式的主体是语句块或表达式</strong>。如果语句块包含了一个返回语句(return)，我们可以将语句块中的return关键字省略，直接写表达式。如<code>md5</code>的赋值代码所示。</p>
+
+<p>　　有关lambda表达式的参数列表的要点如下：
+　　■ lambda表达式参数列表中的参数必须在参数数量、类型和位置上与委托相匹配。
+　　■ 表达式的参数列表中的参数不一定需要包含类型(比如隐式类型)，除非委托有<code>ref</code>或者<code>out</code>参数，此时声明参数类型是必须的(比如显式类型)。
+　　■ 如果只有一个参数，并且是隐式类型，周围的圆括号可以被省略，否则圆括号就是必须写上的。
+　　■ 如果没有参数，则必须使用一组空的圆括号代替。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E4%BA%8B%E4%BB%B6-event/" id="next">
+                &larr; <span class="nav-title nav-title-next">事件(Event)</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%BC%82%E5%B8%B8-try%E8%AF%AD%E5%8F%A5/" id="prev">
+            <span class="nav-title nav-title-prev">异常(try语句)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

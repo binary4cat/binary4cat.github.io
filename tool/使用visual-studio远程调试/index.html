@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>使用Visual Studio远程调试  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    12 April 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">使用Visual Studio远程调试</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1ficp8vja6yj20zk0k0wen.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-准备工作">1. 准备工作</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>本篇记录使用本地Visual Studio对远程服务器上部署的web站点进行断点调试。</p>
+</blockquote>
+
+<h1 id="1-准备工作">1. 准备工作</h1>
+
+<ol>
+<li>复制vs远程调试文件到服务器c盘，文件夹路径：<code>Common7/IDE/Remote Debugger/x64</code> (整个文件夹复制进去)
+
+<ol>
+<li>运行其中的<code>msvsmon.exe</code>可执行程序</li>
+</ol></li>
+</ol>
+
+<ol>
+<li>选择 *工具&ndash;&gt;选项*，修改成 无身份验证，允许任何用户进行调试
+
+<ol>
+<li>VS中选择 <em>调试&ndash;&gt;附加到进程</em> :</li>
+<li>传输：远程(无身份验证)</li>
+<li>限定符：xxx.xxx.x.xx:4020</li>
+<li>勾选显示所有用户进程</li>
+<li>刷新，选择<code>w3wp.exe</code>，最后点击附加</li>
+</ol></li>
+</ol>
+
+<p># 关于无法命中的可能性处理
+ 1. 如果断点无法命中，复制本地项目文件夹 <code>bin</code>文件夹中的<code>pdb</code>文件到服务器发布项目文件夹的<code>bin</code>文件夹中。
+ 2. 确保服务器上部署的跟本地是同一版本。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/tool/wsl&#43;vscode%E4%BD%93%E9%AA%8Cubuntu%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%BC%80%E5%8F%91/" id="next">
+                &larr; <span class="nav-title nav-title-next">WSL&#43;VSCODE体验UBUNTU环境下的开发</span> 
+            </a>  
+        <a rel="prev" href="/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/" id="prev">
+            <span class="nav-title nav-title-prev">对ASP.NET程序员非常有用的85个工具</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

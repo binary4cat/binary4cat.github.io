@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>ASP.NET存储过程操作  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    06 April 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">ASP.NET存储过程操作</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-创建存储过程">1. 、创建存储过程</a></li>
+<li><a href="#2-调用存储过程">2. 、调用存储过程</a></li>
+<li><a href="#3-输出参数">3. 、输出参数</a></li>
+<li><a href="#4-return-返回值">4. 、Return 返回值</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>原文地址：<a href="http://www.cnblogs.com/libingql/archive/2010/05/02/1726104.html">http://www.cnblogs.com/libingql/archive/2010/05/02/1726104.html</a></p>
+
+<p>　　存储过程是存放在数据库服务器上的预先编译好的sql语句。使用存储过程，可以直接在数据库中存储并运行功能强大的任务。存储过程在第一应用程序执行时进行语法检查和编译，编译好的版本保存在高速缓存中。在执行重复任务时，存储过程可以提高性能和一致性。由于存储过程可以将一系列对数据库的操作放在数据库服务器上执行，因而可以降低Web服务器的负载，提高整个系统的性能。</p>
+
+<h1 id="1-创建存储过程">1. 、创建存储过程</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE Northwind
+<span style="color:#ff79c6">GO</span>
+<span style="color:#ff79c6">CREATE</span> PROC [DBO].[GetOrdersByOrderDate]
+    <span style="color:#ff79c6">@</span>OrderDate DATETIME
+<span style="color:#ff79c6">AS</span>
+    <span style="color:#ff79c6">SELECT</span>
+        [OrderID],[CustomerID],[OrderDate]
+    <span style="color:#ff79c6">FROM</span>
+        [Orders]
+    <span style="color:#ff79c6">WHERE</span>
+        [OrderDate] <span style="color:#ff79c6">&gt;=</span> <span style="color:#ff79c6">@</span>OrderDate
+
+
+USE Northwind
+<span style="color:#ff79c6">GO</span>
+<span style="color:#ff79c6">EXEC</span> GetByOrderDate <span style="color:#f1fa8c">&#39;1996-10-10 0:00:00&#39;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-调用存储过程">2. 、调用存储过程</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">SqlConnection conn = <span style="color:#ff79c6">new</span> SqlConnection(ConfigurationManager.ConnectionStrings<span style="color:#50fa7b">[&#34;Northwind&#34;]</span>.ConnectionString);
+
+            <span style="color:#ff79c6">try</span>
+            {
+                SqlCommand cmd = <span style="color:#ff79c6">new</span> SqlCommand();
+                cmd.CommandText = <span style="color:#f1fa8c">&#34;[GetOrdersByOrderDate]&#34;</span>;
+                cmd.Connection = conn;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@OrderDate&#34;</span>, SqlDbType.DateTime, <span style="color:#bd93f9">8</span>).Value = <span style="color:#f1fa8c">&#34;1998-5-5&#34;</span>;
+
+                conn.Open();
+
+                SqlDataAdapter da = <span style="color:#ff79c6">new</span> SqlDataAdapter();
+                da.SelectCommand = cmd;
+
+                DataSet ds = <span style="color:#ff79c6">new</span> DataSet();
+
+                da.Fill(ds);
+
+                gvOrders.DataSource = ds;
+                gvOrders.DataBind();
+            }
+            <span style="color:#ff79c6">catch</span> (SqlException ex)
+            {
+                <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> Exception(ex.Message, ex);
+            }
+            <span style="color:#ff79c6">finally</span>
+            {
+                conn.Close();
+            }
+        }</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-输出参数">3. 、输出参数</h1>
+
+<p>存储过程可以通过输出参数来返回值。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE Northwind
+<span style="color:#ff79c6">GO</span>
+<span style="color:#ff79c6">CREATE</span> PROC [DBO].[GetOrderDetailsTotalByProductID]
+    <span style="color:#ff79c6">@</span>ProductID <span style="color:#8be9fd;font-style:italic">INT</span>,
+    <span style="color:#ff79c6">@</span>Total MONEY <span style="color:#ff79c6">OUTPUT</span>
+<span style="color:#ff79c6">AS</span>
+    <span style="color:#ff79c6">SELECT</span> <span style="color:#ff79c6">@</span>Total <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">SUM</span>([UnitPrice]<span style="color:#ff79c6">*</span>[Quantity])
+    <span style="color:#ff79c6">FROM</span>
+        [<span style="color:#ff79c6">Order</span> Details]
+    <span style="color:#ff79c6">WHERE</span>
+        [ProductID] <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">@</span>ProductID</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">SqlConnection conn = <span style="color:#ff79c6">new</span> SqlConnection(ConfigurationManager.ConnectionStrings<span style="color:#50fa7b">[&#34;Northwind&#34;]</span>.ConnectionString);
+
+            <span style="color:#ff79c6">try</span>
+            {
+                SqlCommand cmd = <span style="color:#ff79c6">new</span> SqlCommand();
+                cmd.CommandText = <span style="color:#f1fa8c">&#34;[GetOrderDetailsTotalByProductID]&#34;</span>;
+                cmd.Connection = conn;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@ProductID&#34;</span>, SqlDbType.Int, <span style="color:#bd93f9">4</span>).Value = <span style="color:#bd93f9">21</span>;
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@Total&#34;</span>, SqlDbType.Money).Direction = ParameterDirection.Output;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                lblTotal.Text = cmd.Parameters<span style="color:#50fa7b">[&#34;@Total&#34;]</span>.Value.ToString();
+            }
+            <span style="color:#ff79c6">catch</span> (SqlException ex)
+            {
+                <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> Exception(ex.Message, ex);
+            }
+            <span style="color:#ff79c6">finally</span>
+            {
+                conn.Close();
+            }</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-return-返回值">4. 、Return 返回值</h1>
+
+<p>使用返回值表示存储过程的执行状态，它类似于输出参数，其区别：
+(1)、返回值只能返回sql整数值；
+(2)、返回值不能在存储过程内部声明，它使用Transcat-SQL的RETURN语句返回；</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">USE Northwind
+<span style="color:#ff79c6">GO</span>
+<span style="color:#ff79c6">CREATE</span> PROC [DBO].[GetOrdersByCustomerID]
+    <span style="color:#ff79c6">@</span>CustomerID <span style="color:#8be9fd;font-style:italic">INT</span>,
+    <span style="color:#ff79c6">@</span>OrderDate DATETIME <span style="color:#ff79c6">OUTPUT</span>
+<span style="color:#ff79c6">AS</span>
+    <span style="color:#ff79c6">SELECT</span> <span style="color:#ff79c6">@</span>OrderDate <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">MAX</span>([OrderDate])
+    <span style="color:#ff79c6">FROM</span>
+        [Orders]
+    <span style="color:#ff79c6">WHERE</span>
+        [CustomerID] <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">@</span>CustomerID
+
+    <span style="color:#ff79c6">IF</span> <span style="color:#ff79c6">@</span>OrderDate <span style="color:#ff79c6">IS</span> <span style="color:#ff79c6">NULL</span>
+        <span style="color:#ff79c6">RETURN</span> <span style="color:#bd93f9">0</span>
+    <span style="color:#ff79c6">ELSE</span>
+        <span style="color:#ff79c6">RETURN</span> <span style="color:#bd93f9">1</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">SqlConnection conn = <span style="color:#ff79c6">new</span> SqlConnection(ConfigurationManager.ConnectionStrings<span style="color:#50fa7b">[&#34;Northwind&#34;]</span>.ConnectionString);
+
+            <span style="color:#ff79c6">try</span>
+            {
+                SqlCommand cmd = <span style="color:#ff79c6">new</span> SqlCommand();
+                cmd.CommandText = <span style="color:#f1fa8c">&#34;[GetOrdersByEmployeeID]&#34;</span>;
+                cmd.Connection = conn;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@ReturnValue&#34;</span>, SqlDbType.Int, <span style="color:#bd93f9">4</span>).Direction = ParameterDirection.ReturnValue;
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@EmployeeID&#34;</span>, SqlDbType.Int, <span style="color:#bd93f9">4</span>).Value = <span style="color:#bd93f9">1</span>;
+                cmd.Parameters.Add(<span style="color:#f1fa8c">&#34;@OrderDate&#34;</span>, SqlDbType.DateTime).Direction = ParameterDirection.Output;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                lblReturnValue.Text = cmd.Parameters<span style="color:#50fa7b">[&#34;@ReturnValue&#34;]</span>.Value.ToString();
+                lblOrderDate.Text = cmd.Parameters<span style="color:#50fa7b">[&#34;@OrderDate&#34;]</span>.Value.ToString();
+            }
+            <span style="color:#ff79c6">catch</span> (SqlException ex)
+            {
+                <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> Exception(ex.Message, ex);
+            }
+            <span style="color:#ff79c6">finally</span>
+            {
+                conn.Close();
+            }</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/c-%E5%92%8C-net%E6%A1%86%E6%9E%B6/" id="next">
+                &larr; <span class="nav-title nav-title-next">c#和.NET框架</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" id="prev">
+            <span class="nav-title nav-title-prev">存储过程</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

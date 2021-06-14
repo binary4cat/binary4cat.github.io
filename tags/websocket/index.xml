@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Websocket on Haijd&#39;s Blog</title>
+    <link>/tags/websocket/</link>
+    <description>Recent content in Websocket on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 27 Jan 2019 17:41:16 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/websocket/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在.Net Core中实现一个WebSocket路由</title>
+      <link>/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/</link>
+      <pubDate>Sun, 27 Jan 2019 17:41:16 +0800</pubDate>
+      
+      <guid>/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/</guid>
+      <description>.Net Core中使用WebSocket默认是没有路由系统的，只能通过Request.Path==&amp;quot;/xxx&amp;quot;来判断请求，例如：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  app.Use(async (context, next) =&amp;gt; { if (context.Request.Path == &amp;#34;/ws&amp;#34;) { if (context.WebSockets.IsWebSocketRequest) { WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync(); await Echo(context, webSocket); } else { context.Response.StatusCode = 400; } } else { await next(); } });   要使用类似[HttpGet(&amp;quot;/xxx&amp;quot;)]这种特性标签的路由方式，可以自己写一个简单的Attribute来实现。
+1. 实现Attribute特性类 这个Attribute类很简单，只接收一个定义的Path，用来和开头提到的Request.Path对应。
+1 2 3 4 5 6 7 8 9 10 11 12 13  /// &amp;lt;summary&amp;gt;  /// WebSockets执行函数特性标签  /// &amp;lt;/summary&amp;gt; [AttributeUsage(AttributeTargets.</description>
+    </item>
+    
+  </channel>
+</rss>

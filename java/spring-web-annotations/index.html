@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Spring Web Annotations  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    13 June 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Spring Web Annotations</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528780019766&amp;di=68e5f2f2eef5b87bf5b5d54455fe994f&amp;imgtype=jpg&amp;src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D2161947716%2C2940818680%26fm%3D214%26gp%3D0.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-概览">1. 概览</a></li>
+<li><a href="#2-requestmapping">2. <code>@RequestMapping</code></a></li>
+<li><a href="#3-requestbody">3. <code>@RequestBody</code></a></li>
+<li><a href="#4-pathvariable">4. <code>@PathVariable</code></a></li>
+<li><a href="#5-requestparam">5. <code>@RequestParam</code></a></li>
+<li><a href="#6-响应相关的注解">6. 响应相关的注解</a>
+<ul>
+<li><a href="#6-1-responsebody">6.1. <code>@ResponseBody</code></a></li>
+<li><a href="#6-2-exceptionhandler">6.2. <code>@ExceptionHandler</code></a></li>
+<li><a href="#6-3-responsestatus">6.3. <code>@ResponseStatus</code></a></li>
+</ul></li>
+<li><a href="#7-其他web相关注解">7. 其他Web相关注解</a>
+<ul>
+<li><a href="#7-1-restcontroller">7.1. <code>@RestController</code></a></li>
+<li><a href="#7-2-modelattribute">7.2. <code>@ModelAttribute</code></a></li>
+<li><a href="#7-3-crossorigin">7.3. <code>@CrossOrigin</code></a></li>
+</ul></li>
+<li><a href="#8-总结">8. 总结</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>原文地址：<a href="http://www.baeldung.com/spring-mvc-annotations">http://www.baeldung.com/spring-mvc-annotations</a>
+此篇为译文，由于英语水平有限，可能对原文的理解有误，欢迎指正，不甚感激！</p>
+</blockquote>
+
+<h1 id="1-概览">1. 概览</h1>
+
+<p>在本篇教程中，我们将要探讨Spring web开发有关的注解(Spring MVC注解)，这些注解存在于<code>org.springframework.web.bind.annotation</code>包中。</p>
+
+<h1 id="2-requestmapping">2. <code>@RequestMapping</code></h1>
+
+<p>简而言之，<code>@RequestMapping</code>标记<code>@Controller</code>类中的请求处理器(request handler)方法。可用的配置有：
+- <code>path</code>：或者别名<code>name</code>、<code>value</code>都可以作为参数名，它指定了哪个URL映射到当前的方法。
+- <code>method</code>：协调处理HTTP请求的方法。
+- <code>params</code>：根据HTTP请求参数的存在、不存在或者值来过滤请求。
+- <code>headers</code>：根据HTTP请求的<code>headers</code>的存在、不存在或者值来过滤请求。
+- <code>consumes</code>：限制哪些HTTP请求主体中的媒体类型可以被该方法使用。
+- <code>produces</code>：限制改方法可以响应哪些HTTP媒体类型。</p>
+
+<p>来看一个简单的例子：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Controller
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleController</span> <span style="color:#ff79c6">{</span>
+ 
+    @RequestMapping<span style="color:#ff79c6">(</span>value <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;/vehicles/home&#34;</span><span style="color:#ff79c6">,</span> method <span style="color:#ff79c6">=</span> RequestMethod<span style="color:#ff79c6">.</span><span style="color:#50fa7b">GET</span><span style="color:#ff79c6">)</span>
+    String <span style="color:#50fa7b">home</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;home&#34;</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果我们在类级别上应用此注释，我们可以为<code>@Controller</code>类中的所有处理程序方法(request handler)提供默认设置。唯一的区别就是Spring在寻找URL映射的时候，不仅仅只看方法或者类上面的配置，而是会结合起来：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Controller
+@RequestMapping<span style="color:#ff79c6">(</span>value <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;/vehicles&#34;</span><span style="color:#ff79c6">,</span> method <span style="color:#ff79c6">=</span> RequestMethod<span style="color:#ff79c6">.</span><span style="color:#50fa7b">GET</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleController</span> <span style="color:#ff79c6">{</span>
+ 
+    @RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/home&#34;</span><span style="color:#ff79c6">)</span>
+    String <span style="color:#50fa7b">home</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;home&#34;</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>此外，可以使用<code>@GetMapping</code>、<code>@PostMapping</code>、<code>@PutMapping</code>、<code>@DeleteMapping</code>以及<code>@PatchMapping</code>这些不同的<code>@RequestMapping</code>变种，可以单独的设置<code>GET</code>、<code>POST</code>、<code>PUT</code>、<code>DELETE</code>、<code>PATCH</code>请求。</p>
+
+<p>这些是在Spring4.3版本以后可用的。</p>
+
+<h1 id="3-requestbody">3. <code>@RequestBody</code></h1>
+
+<p>使用<code>@RequestBody</code>注解可以将HTTP请求body体映射到一个对象：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@PostMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/save&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">saveVehicle</span><span style="color:#ff79c6">(</span>@RequestBody Vehicle vehicle<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>反序列化是自动的，当然着取决于请求的content type的类型。</p>
+
+<h1 id="4-pathvariable">4. <code>@PathVariable</code></h1>
+
+<p>接下来，我们来谈谈<code>@PathVariable</code>。</p>
+
+<p>此注解表示将方法参数绑定到URI模板变量。我们可以使用<code>@RequestMapping</code>注解指定URI模板变量，然后使用<code>@PathVariable</code>指定需要绑定的方法参数。</p>
+
+<p>我们可以使用<code>name</code>或者别名绑定，有<code>value</code>参数的例子：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/{id}&#34;</span><span style="color:#ff79c6">)</span>
+Vehicle <span style="color:#50fa7b">getVehicle</span><span style="color:#ff79c6">(</span>@PathVariable<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;id&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#8be9fd">long</span> id<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果方法的参数名和URI模板变量的名称一致，那么我们就不需要在<code>@PathVariable</code>注解中指定了：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/{id}&#34;</span><span style="color:#ff79c6">)</span>
+Vehicle <span style="color:#50fa7b">getVehicle</span><span style="color:#ff79c6">(</span>@PathVariable <span style="color:#8be9fd">long</span> id<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>此外，我们还可以标记这个URI模板变量是不是必需的：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/{id}&#34;</span><span style="color:#ff79c6">)</span>
+Vehicle <span style="color:#50fa7b">getVehicle</span><span style="color:#ff79c6">(</span>@PathVariable<span style="color:#ff79c6">(</span>required <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span><span style="color:#ff79c6">)</span> <span style="color:#8be9fd">long</span> id<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-requestparam">5. <code>@RequestParam</code></h1>
+
+<p>我们可以使用<code>@RequestParam</code>注解访问HTTP请求参数：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RequestMapping
+Vehicle <span style="color:#50fa7b">getVehicleByParam</span><span style="color:#ff79c6">(</span>@RequestParam<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;id&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#8be9fd">long</span> id<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>@RequestParam</code>注解的配置选项和<code>PathVariable</code>注解一致。</p>
+
+<p>除了一致的配置以外，当Spring从绑定的HTTP请求参数中获得了一个空值，或者根本没找到这个参数的时候，<code>@RequestParam</code>还可以为方法参数设置一个默认值，为了实现这一点，我们需要使用<code>defaultValue</code>这个参数：</p>
+
+<p>提供默认的值的情况下，<code>required</code>参数会被设置为<code>false</code>(博主注：也就是无论如何都赋一个值)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/buy&#34;</span><span style="color:#ff79c6">)</span>
+Car <span style="color:#50fa7b">buyCar</span><span style="color:#ff79c6">(</span>@RequestParam<span style="color:#ff79c6">(</span>defaultValue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;5&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#8be9fd">int</span> seatCount<span style="color:#ff79c6">){</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>除了访问HTTP请求的参数，像HTTP请求中的其他数据也可以访问到：<code>cookies</code>和<code>headers</code>，访问它们可以使用另外两个注解<code>@CookieValue</code>和<code>@RequestHeader</code>。可以像使用<code>@RequestParam</code>一样来配置这两个注解。</p>
+
+<h1 id="6-响应相关的注解">6. 响应相关的注解</h1>
+
+<h2 id="6-1-responsebody">6.1. <code>@ResponseBody</code></h2>
+
+<p>如果我们对一个请求处理器(request handler)方法使用<code>@ResponseBody</code>注解，那么Spring会把这个方法的返回值当作响应本身(博主注：也就是不会当作视图名称返回，当作rest API使用可以返回json数据)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ResponseBody
+@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/hello&#34;</span><span style="color:#ff79c6">)</span>
+String <span style="color:#50fa7b">hello</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;Hello World!&#34;</span><span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果我们在<code>@Controller</code>类上使用<code>@ResponseBody</code>注解，那么其内部所有的请求处理器(request handler)方法都会生效。</p>
+
+<h2 id="6-2-exceptionhandler">6.2. <code>@ExceptionHandler</code></h2>
+
+<p>使用这个注解，我们可以声明一个自定义的错误处理器(error handler)方法。当请求处理器(request handler)方法抛出任何指定的异常时，Spring会调用此自定义方法。</p>
+
+<p>被捕获的异常可以作为参数传递给方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ExceptionHandler<span style="color:#ff79c6">(</span>IllegalArgumentException<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onIllegalArgumentException</span><span style="color:#ff79c6">(</span>IllegalArgumentException exception<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>博主注：上面的方法定义了一个处理<code>IllegalArgumentException</code>类型异常的方法，当任何的请求处理器(request handler)方法抛出这个异常，就会自动执行该方法。</p>
+
+<h2 id="6-3-responsestatus">6.3. <code>@ResponseStatus</code></h2>
+
+<p>如果我们使用<code>@ResponseStatus</code>注解标注一个请求处理器(request handler)方法，则可以自定义一个期望返回的HTTP状态码。我们可以使用<code>code</code>参数声明状态码，或者别名也可以。</p>
+
+<p>另外，我们也可以使用<code>reason</code>参数提供一个“reason”。</p>
+
+<p>可以在<code>@ExceptionHandler</code>方法上使用<code>@ResponseStatus</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ExceptionHandler<span style="color:#ff79c6">(</span>IllegalArgumentException<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+@ResponseStatus<span style="color:#ff79c6">(</span>value <span style="color:#ff79c6">=</span> HttpStatus<span style="color:#ff79c6">.</span><span style="color:#50fa7b">BAD_REQUEST</span><span style="color:#ff79c6">,</span>reason <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;用户名和密码不匹配!&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onIllegalArgumentException</span><span style="color:#ff79c6">(</span>IllegalArgumentException exception<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>博主注：reason会在返回的响应体中出现。</p>
+
+<h1 id="7-其他web相关注解">7. 其他Web相关注解</h1>
+
+<p>一些注解并不能直接的管理HTTP请求或者响应，在这一节中，我们将介绍这种最常见的注解。</p>
+
+<h2 id="7-1-restcontroller">7.1. <code>@RestController</code></h2>
+
+<p><code>@RestController</code>注解合并了<code>@Controller</code>和<code>@ResponseBody</code>这两个注解的功能。(博主注：也就是实现rest API的关键)</p>
+
+<p>因此，下面这两组代码实现的功能是相同的：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Controller
+@ResponseBody
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleRestController</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@RestController
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleRestController</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="7-2-modelattribute">7.2. <code>@ModelAttribute</code></h2>
+
+<p>通过这个注解我们可以通过设置的数据模型(model)<code>key</code>访问已经在MVC控制器中的数据模型(model)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@PostMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/assemble&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">assembleVehicle</span><span style="color:#ff79c6">(</span>@ModelAttribute<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;vehicle&#34;</span><span style="color:#ff79c6">)</span> Vehicle vehicleInModel<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类似<code>@PathVariable</code>和<code>@RequestParam</code>注解，我们如果方法参数名和数据模型(model)<code>key</code>一致，就可省略：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@PostMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/assemble&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">assembleVehicle</span><span style="color:#ff79c6">(</span>@ModelAttribute Vehicle vehicle<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>除了这些，<code>@ModelAttribute</code>还有另外一个地方会用到：如果我们在一个方法上标注，Spring会自动将方法的返回值添加到这个数据模型(model)中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ModelAttribute<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;vehicle&#34;</span><span style="color:#ff79c6">)</span>
+Vehicle <span style="color:#50fa7b">getVehicle</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类似的，如果方法名和数据模型(model)<code>key</code>一致，那么也可以省略这个<code>key</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ModelAttribute
+Vehicle <span style="color:#50fa7b">vehicle</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Spring在调用请求处理器(request handler)方法之前，他会先调用该类中所有的<code>@ModelAttribute</code>注解方法。</p>
+
+<p>更多关于<code>@ModelAttribute</code>注解的信息，可以阅读<a href="http://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation">这篇文章</a>。</p>
+
+<h2 id="7-3-crossorigin">7.3. <code>@CrossOrigin</code></h2>
+
+<p><code>@CrossOrigin</code>注解可以在请求处理器(request handler)方法上启用允许跨域请求：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@CrossOrigin
+@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/hello&#34;</span><span style="color:#ff79c6">)</span>
+String <span style="color:#50fa7b">hello</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;Hello World!&#34;</span><span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果我们标记在一个类上，那么该类下面的所有请求处理器(request handler)方法都会允许跨域请求。</p>
+
+<p>我们可以用这个注解的参数来微调CORS行为。</p>
+
+<p>更多的信息，请查阅<a href="http://www.baeldung.com/spring-cors">这篇文章</a>。</p>
+
+<h1 id="8-总结">8. 总结</h1>
+
+<p>在这片文章中，我们展现了怎么在Spring MVC中处理HTTP请求和响应，同样，文章中的示例代码可以在我们的<a href="https://github.com/eugenp/tutorials/tree/master/spring-mvc-java">GitHub</a>上获得。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/spring-boot-annotations/" id="next">
+                &larr; <span class="nav-title nav-title-next">Spring Boot Annotations</span> 
+            </a>  
+        <a rel="prev" href="/java/spring-core-annotationss/" id="prev">
+            <span class="nav-title nav-title-prev">Spring Core Annotations</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

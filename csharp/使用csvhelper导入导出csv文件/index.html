@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>使用CsvHelper导入导出csv文件  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    25 February 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">使用CsvHelper导入导出csv文件</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-csv介绍">1. CSV介绍</a></li>
+<li><a href="#2-csvhelper">2. CsvHelper</a>
+<ul>
+<li><a href="#2-1-项目介绍">2.1. 项目介绍：</a></li>
+<li><a href="#2-2-examples">2.2. Examples</a>
+<ul>
+<li><a href="#2-2-1-write">2.2.1. Write</a></li>
+<li><a href="#2-2-2-read">2.2.2. Read</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#3-结束">3. 结束</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>今天记录一下使用<a href="https://github.com/JoshClose/CsvHelper">CsvHelper</a>导入导出CSV文件的方法。</p>
+</blockquote>
+
+<h1 id="1-csv介绍">1. CSV介绍</h1>
+
+<p>　　csv文件是一种纯文本存储的文件格式，行和列分别用逗号和换行来代替，可以直接使用Excel打开。在代码中可以直接使用<code>TextWrite</code> 操作，比较方便快速。</p>
+
+<h1 id="2-csvhelper">2. CsvHelper</h1>
+
+<h2 id="2-1-项目介绍">2.1. 项目介绍：</h2>
+
+<p>　　github主页：<a href="https://github.com/JoshClose/CsvHelper">https://github.com/JoshClose/CsvHelper</a>
+　　文档：<a href="http://joshclose.github.io/CsvHelper/">http://joshclose.github.io/CsvHelper/</a>
+　　wiki：<a href="https://github.com/JoshClose/CsvHelper/wiki">https://github.com/JoshClose/CsvHelper/wiki</a></p>
+
+<h2 id="2-2-examples">2.2. Examples</h2>
+
+<p>模拟场景是需要从数据库中导出导入用户信息，有如下一个类：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">People</span>{
+	<span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name{<span style="color:#ff79c6">get</span>;<span style="color:#ff79c6">set</span>;}
+	<span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Age{<span style="color:#ff79c6">get</span>;<span style="color:#ff79c6">set</span>}
+	<span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Gender{<span style="color:#ff79c6">get</span>;<span style="color:#ff79c6">set</span>;}
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　</p>
+
+<h3 id="2-2-1-write">2.2.1. Write</h3>
+
+<p>写入的时候需要注意列标题的名字问题，因为CsvHelper会默认将属性名作为列标题，想显示中文就得做映射(<a href="https://github.com/JoshClose/CsvHelper/wiki/Fluent-Class-Mapping">参考文档</a>)
+Map类：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 配置导出类映射
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">sealed</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">PeopleMap</span>:CsvClassMap&lt;People&gt;
+{
+    <span style="color:#ff79c6">public</span> PeopleMap()
+    {
+        Map(m =&gt; m.Name).Name(<span style="color:#f1fa8c">&#34;姓名&#34;</span>);
+        Map(m =&gt; m.Age).Name(<span style="color:#f1fa8c">&#34;年龄&#34;</span>);
+        Map(m =&gt; m.Gender).Name(<span style="color:#f1fa8c">&#34;性别&#34;</span>);
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的映射类可以根据需要调整，可以配置属性输出的列索引等，可以参考项目<a href="https://github.com/JoshClose/CsvHelper/wiki/Fluent-Class-Mapping">wiki</a>
+写入操作代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="color:#6272a4">// 代替数据库读取操作
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd">var</span> peoples= <span style="color:#ff79c6">new</span> List&lt;People&gt;();
+<span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">int</span> i = <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">100000</span>; i++)
+{
+    peoples.Add(<span style="color:#ff79c6">new</span> People()
+    {
+        Name = <span style="color:#f1fa8c">&#34;iCtr&#34;</span>,
+        Age = <span style="color:#bd93f9">100</span>,
+        Gender = <span style="color:#f1fa8c">&#34;未知&#34;</span>
+    });
+}
+<span style="color:#6272a4">//测试写入操作的时间
+</span><span style="color:#6272a4"></span>Stopwatch watch = <span style="color:#ff79c6">new</span> Stopwatch();
+watch.Start();
+<span style="color:#ff79c6">using</span> (TextWriter write = <span style="color:#ff79c6">new</span> StreamWriter(<span style="color:#f1fa8c">@&#34;C:\Users\ictr-jd.hai\Desktop\Test.csv&#34;</span>, <span style="color:#ff79c6">false</span>, Encoding.UTF8))
+{
+     <span style="color:#ff79c6">using</span> (<span style="color:#8be9fd">var</span> csv = <span style="color:#ff79c6">new</span> CsvWriter(write))
+     {
+          csv.Configuration.Encoding = Encoding.UTF8;
+          csv.Configuration.RegisterClassMap&lt;PeopleMap&gt;();  <span style="color:#6272a4">//映射
+</span><span style="color:#6272a4"></span>          csv.WriteHeader&lt;People&gt;(); <span style="color:#6272a4">//写入列标题
+</span><span style="color:#6272a4"></span>          <span style="color:#6272a4">//循环写入行
+</span><span style="color:#6272a4"></span>          <span style="color:#ff79c6">foreach</span> (<span style="color:#8be9fd">var</span> item <span style="color:#ff79c6">in</span> peoples)
+          {
+              csv.WriteRecord(item);
+          }
+     }
+}
+watch.Stop();
+Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+Console.ReadKey();</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="2-2-2-read">2.2.2. Read</h3>
+
+<p>读取操作代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cSharp" data-lang="cSharp"><span style="color:#8be9fd">var</span> objs = <span style="color:#ff79c6">new</span> List&lt;People&gt;();
+<span style="color:#6272a4">//测试读取的速度
+</span><span style="color:#6272a4"></span>Stopwatch watch = <span style="color:#ff79c6">new</span> Stopwatch();
+watch.Start();
+<span style="color:#ff79c6">using</span> (TextReader reader=<span style="color:#ff79c6">new</span> StreamReader(<span style="color:#f1fa8c">@&#34;C:\Users\ictr-jd.hai\Desktop\Test.csv&#34;</span>,Encoding.UTF8))
+{
+     <span style="color:#ff79c6">using</span> (<span style="color:#8be9fd">var</span> csv=<span style="color:#ff79c6">new</span> CsvReader(reader))
+     {
+          csv.Configuration.Encoding = Encoding.UTF8;
+          <span style="color:#6272a4">//csv.Configuration.RegisterClassMap&lt;PeopleMap&gt;();  //如果有标题头，那么也需要映射，而且字段名字必须匹配
+</span><span style="color:#6272a4"></span>          <span style="color:#6272a4">//csv.Configuration.HasHeaderRecord = false;        //如果没有标题头，那么就配置为false
+</span><span style="color:#6272a4"></span>          <span style="color:#6272a4">//一次行读取全部的行，也可以使用循环一行行读取(多种读取方式请参考文档)
+</span><span style="color:#6272a4"></span>          objs = csv.GetRecords&lt;People&gt;().ToList();
+     }
+}
+Console.WriteLine(objs.Count);
+watch.Stop();
+Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+Console.ReadKey();</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-结束">3. 结束</h1>
+
+<p>　　操作csv文件比较简单，就是读取一个文本文件的操作，借助CsvHelper的帮助，可以省去我们自己排版、映射类等操作，操作速度很快，其配置也多种多样，文档比较详细，推荐大家使用，在此感谢组件作者的工作。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%BE%AE%E4%BF%A1jssdk%E7%9A%84%E4%BD%BF%E7%94%A8/" id="next">
+                &larr; <span class="nav-title nav-title-next">微信JSSDK的使用</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/" id="prev">
+            <span class="nav-title nav-title-prev">值类型和引用类型</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

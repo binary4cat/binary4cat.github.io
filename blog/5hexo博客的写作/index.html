@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>5、Hexo博客的写作  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    07 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">5、Hexo博客的写作</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-创建文章">1. 创建文章</a></li>
+<li><a href="#2-写作">2. 写作</a></li>
+<li><a href="#3-相当于html中的-h1-标签">3. 相当于Html中的“h1”标签</a>
+<ul>
+<li><a href="#3-1-相当于html中的-h2-标签">3.1. 相当于Html中的“h2”标签</a>
+<ul>
+<li><a href="#3-1-1-相当于html中的-h3-标签">3.1.1. 相当于Html中的“h3”标签</a>
+<ul>
+<li><a href="#3-1-1-1-相当于html中的-h4-标签">3.1.1.1. 相当于Html中的“h4”标签</a>
+<ul>
+<li><a href="#3-1-1-1-1-相当于html中的-h5-标签">3.1.1.1.1. 相当于Html中的“h5”标签</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　这一篇介绍一下Hexo中怎么写博客的，无论怎么折腾，认认真真的写博客才是最主要的。
+　　</p>
+
+<h1 id="1-创建文章">1. 创建文章</h1>
+
+<p>　　Hexo创建一篇博文很简单，只需要在博客所在目录下打开“Git Bash Here”命令行窗口，输入：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hexo new <span style="color:#f1fa8c">&#34;你文章的名字&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>　　然后回车即可创建一篇文章。注意，在博客名称中没有特殊字符时可以不写双引号，但是建议大家每次都写上比较好。
+　　创建的博文默认在<code>\source\_posts\</code>目录下面，进入该文件夹，找到并打开即可。
+　　打开之后可以看到，自动生成了一些信息：</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">title: <span style="color:#bd93f9">5</span>、Hexo博客的写作   <span style="color:#6272a4">#文章标题</span>
+date: 2016-03-07 21:12:55   <span style="color:#6272a4">#创建时间</span>
+categories: Hexo       <span style="color:#6272a4">#分类</span>
+tags: Hexo博客搭建    <span style="color:#6272a4">#标签</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>　　如果有多个标签的话，可以这么写：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">tags:
+- 标签1
+- 标签2
+- 标签3
+...</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-写作">2. 写作</h1>
+
+<p>　　Hexo创建的文章默认是<a href="http://baike.baidu.com/link?url=wjIZLCebx9V8DDHvdOmhnXhSU24T-ICJ6b6RHeHyDW09y8mYs4we611G2VlF2tV9Zd_mXDeczdd41IfoGT66wa">Markdown</a>语言格式的，以“.md”为后缀。
+　　Markdown是一种文本标记语言，经过简单的书写，可以生成一定格式的网页文本。Markdown的语言非常简单，只要写过几次就会上手了，而且非常棒，我的博客网站中的所有博客都是用Markdown写的，从刚开始的陌生到现在觉得Markdown比富文本编辑器好用多了。
+　　编写Markdown文件可以使用文本编辑器打开，比如VS Code、Sublime等都支持Markdown语法。或者可以到网上找找专门的Markdown编辑器，提供了实时效果预览，很方便。</p>
+
+<p>Hexo对Markdown语法的支持不是特别全面，在写作的这段时间里，我总结一些Hexo支持的常用的语法：
+<strong>段落开头缩进两格</strong>
+　　可以在全角状态下输入两个空格，也就是将输入法切换到全角状态(shift键+空格键)，然后输入两个空格。</p>
+
+<p><strong>标题字体</strong>
+　　标题可以使用“#”号实现，比如下面演示的(注意#号之后的空格)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#6272a4"># 相当于Html中的“h1”标签</span>
+<span style="color:#6272a4">## 相当于Html中的“h2”标签</span>
+<span style="color:#6272a4">### 相当于Html中的“h3”标签</span>
+<span style="color:#6272a4">#### 相当于Html中的“h4”标签</span>
+<span style="color:#6272a4">##### 相当于Html中的“h5”标签</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>生成如下内容：</p>
+
+<h1 id="3-相当于html中的-h1-标签">3. 相当于Html中的“h1”标签</h1>
+
+<h2 id="3-1-相当于html中的-h2-标签">3.1. 相当于Html中的“h2”标签</h2>
+
+<h3 id="3-1-1-相当于html中的-h3-标签">3.1.1. 相当于Html中的“h3”标签</h3>
+
+<h4 id="3-1-1-1-相当于html中的-h4-标签">3.1.1.1. 相当于Html中的“h4”标签</h4>
+
+<h5 id="3-1-1-1-1-相当于html中的-h5-标签">3.1.1.1.1. 相当于Html中的“h5”标签</h5>
+
+<p><strong>粗体和斜体</strong>
+　　粗体和斜体分别可以使用两个或一个*号包围住要显示的内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">**这是粗体**
+*这是斜体*</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成内容如下：
+<strong>这是粗体</strong>
+<em>这是斜体</em></p>
+
+<p><strong>短代码</strong>
+　　输入一句代码或者一个代码变量，可以使用两个“ ` ”包围要显示的内容即可(在英文状态下，按Tab键上面一行，最左边的按键即可输入该字符)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">我要输出一段代码:<span style="color:#f1fa8c">`</span>public string userName <span style="color:#ff79c6">{</span>get; set; <span style="color:#ff79c6">}</span><span style="color:#f1fa8c">`</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>生成内容如下：
+我要输出一段代码:<code>public string userName {get; set; }</code></p>
+
+<p><strong>代码块</strong>
+　　和短代码差不多，不过要三个“ ` ”符号包围代码内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">helloWorld</span>
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> say()
+    {
+        Console.WriteLine(<span style="color:#f1fa8c">&#34;helloWorld&#34;</span>);
+        Console.ReadKey();
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>引用文字</strong>
+　　如果要突出一段文字是引用过来的，可以使用“&gt;”符号：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; 这是引用别人的名言：没有理想的时候，可以向钱看。</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成内容如下：
+&gt; 这是引用别人的名言：没有理想的时候，可以向钱看。</p>
+
+<p><strong>分割线</strong>
+　　分割线可以使用“&mdash;”符号实现(三个小横杠)。</p>
+
+<p><strong>加入图片</strong>
+　　加入图片可以加入本地图片和网络图片，本地图片可以在<code>\source\</code>文件夹下，新建一个随意名称的文件夹(比如image)，然后把图片放进去；网络图片可以使用图床获得图片的链接；具体使用方法如下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">![鼠标指向图片显示的内容](\image\face\捂脸哭.png)
+![](http://pic.qqtn.com/file/2013/2014-9/2014091009104543705.jpg)</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成内容如下：
+<img src="imageface捂脸哭.png" alt="鼠标图片显示的内容" />
+<img src="http://pic.qqtn.com/file/2013/2014-9/2014091009104543705.jpg" alt="" /></p>
+
+<p><strong>插入超链接</strong>
+　　插入超链接和插入图片差不多，只是去掉了“!”号：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">[Is2的博客](http://www.hais2.com)</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成如下内容：<a href="http://www.hais2.com">Is2的博客</a></p>
+
+<p><strong>插入音频</strong>
+　　可以在音乐网站，比如虾米音乐的web站点去找，每首歌后面都有一个分享的按钮，点击之后就可以获得该歌曲的嵌入代码了，直接粘贴在博客内容中即可，比如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">embed</span> <span style="color:#50fa7b">src</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;http://www.xiami.com/widget/0_1770127756/singlePlayer.swf&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;application/x-shockwave-flash&#34;</span> <span style="color:#50fa7b">width</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;257&#34;</span> <span style="color:#50fa7b">height</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;33&#34;</span> <span style="color:#50fa7b">wmode</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;transparent&#34;</span>&gt;&lt;/<span style="color:#ff79c6">embed</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成如下内容：
+<embed src="http://www.xiami.com/widget/0_1770127756/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></p>
+
+<p><strong>插入视频</strong>
+　　插入视频和插入音乐一样，去视频分享网站，比如youku，可以得到视频的嵌入代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">iframe</span> <span style="color:#50fa7b">height</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">498</span> <span style="color:#50fa7b">width</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">510</span> <span style="color:#50fa7b">src</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;http://player.youku.com/embed/XMTQ4MjI1ODUwOA==&#34;</span> <span style="color:#50fa7b">frameborder</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">0</span> <span style="color:#50fa7b">allowfullscreen</span>&gt;&lt;/<span style="color:#ff79c6">iframe</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成如下内容：
+<iframe height=498 width=510 src="http://player.youku.com/embed/XMTQ4MjI1ODUwOA==" frameborder=0 allowfullscreen></iframe></p>
+
+<p>　　刚开始使用Markdown语法写文章的时候，肯定会有些抵触心理，但是多写写，你就会发现使用起来确实很方便。希望大家能多些博客，分享自己的知识，大家共同进步。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/blog/6%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0coding%E5%B9%B6%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/" id="next">
+                &larr; <span class="nav-title nav-title-next">6、将博客部署到coding并绑定域名</span> 
+            </a>  
+        <a rel="prev" href="/blog/4hexo%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9/" id="prev">
+            <span class="nav-title nav-title-prev">4、Hexo博客主题的修改</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

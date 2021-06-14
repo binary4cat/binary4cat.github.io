@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>2、Umbraco后台管理功能介绍  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    02 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">2、Umbraco后台管理功能介绍</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　上一篇博客介绍了Umbraco的安装，这一篇里面介绍一下umbraco的后台管理的一些主要功能的使用方式。
+　　首先介绍一下侧边栏的几个主要功能：</p>
+
+<p>1、<strong>Content</strong>：从字面意思就可以看出来，这个功能是用来编辑网站内容的。
+　　　　2、<strong>Media</strong>：这是用来管理多媒体的功能，Umbraco支持图片、视频、音频，可以在这里进行统一的管理。
+　　　　3、<strong>Settings</strong>：这个功能是设置网站的一些代码、样式、还有对模板的一些操作；我们之后的编写操作会主要在这里进行。
+　　　　4、<strong>Developer</strong>：这是Umbraco的一些操作，设置数据库字段、安装功能和安装包、编辑Macros。
+　　　　5、<strong>User</strong>：这是对Umbraco网站后台的管理账号进行管理的，也就是管理员账号。
+　　　　6、<strong>Members</strong>：这个是针对网站会员的管理，如果是能够登陆的网站，可以在这里设置会员。
+　　　　7、<strong>Forms</strong>:这个是对编写网站表单的模块。
+<img src="/image/umbraco/backoffice1.png" alt="" /></p>
+
+<p>　　由于其他几个功能需要在网站模板设置之后才能进行编辑，这里就先主要介绍一下比较重要的<strong>Setting</strong>这个功能选项。
+　　点开<strong>Setting</strong>选项，我们可以看到几个文件夹图标的功能，这些功能都是用来编辑网站样式和功能代码的，我们一一介绍一下：
+　　<strong>Stylesheets</strong>：这里是编辑网站的style样式的，css代码可以写在这里。使用的时候只需要创建新文件，并且直接将css代码写在文件中就可以了。
+　　<strong>Templates</strong>：这里是编辑模板代码的选项，相当于MVC中的view模块，而且代码也是使用MVC中view的写法，也就是*razor*语法。
+　　<strong>Partial Views</strong>：部分视图功能，相当于MVC中的<code>@Html.Partial()</code>语法使用的视图代码。
+　　<strong>Scripts</strong>：编辑创建javascript脚本的功能。
+　　<strong>Dictionary</strong>：字典，如果你的网站是面向国际用户的，在这里可以设置多语言功能。
+　　<strong>Languages</strong>：语言选项，设置网站语言。
+　　<strong>Media Types</strong>：媒体类型，设置网站用到的媒体类型，比如设置上传图片的大小之类的功能。
+　　<strong>Document Types</strong>：文档类型，这可以说是umbraco中最重要的部分，文档类型对应着网站应该显示什么内容，延伸到数据库中就是设置网站中要显示的数据字段。
+    <img src="/image/umbraco/backoffice3.png" alt="" />
+　　
+　　这一篇简单的介绍了一下umbraco中的一些设置，其他的在之后的篇幅中，将会继续介绍。从下一篇开始，我们从一个UmbracoNewsSite网站开始，逐步的实际体验学习Umbraco的使用。
+　　</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/3umbraconewssite-%E4%B8%80/" id="next">
+                &larr; <span class="nav-title nav-title-next">3、UmbracoNewsSite：文档类型设置</span> 
+            </a>  
+        <a rel="prev" href="/csharp/umbraco%E7%AE%80%E4%BB%8B/" id="prev">
+            <span class="nav-title nav-title-prev">1、Umbraco简介和安装</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

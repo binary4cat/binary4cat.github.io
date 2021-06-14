@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>MVC延伸：MVP、MVVM  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    19 September 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">MVC延伸：MVP、MVVM</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-mvc">1. MVC</a></li>
+<li><a href="#2-mvp">2. MVP</a></li>
+<li><a href="#3-mvvm">3. MVVM</a></li>
+<li><a href="#4-总结">4. 总结</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　学习和使用ASP.NET MVC也有一段时间了，对这种开发方式(模式)有了更进一步的了解，今天就跳出ASP.NET的圈子，说一说我了解到的MVC，以及延伸到的MVP、MVVM。(如果理解的不到位希望有看到的这篇博文的同学在评论中指出😛)</p>
+
+<h1 id="1-mvc">1. MVC</h1>
+
+<p>　　一开始接触MVC时最先想到的是，MVC算不算是一种设计模式？为什么GoF的23种设计模式中没有MVC模式？</p>
+
+<p>这个问题困扰了我很长时间，常常疑惑MVC为什么不是一种设计模式。之后看了大漠老师的一片博文<a href="http://damoqiongqiu.iteye.com/blog/1949256">《为什么MVC不是一种设计模式？ &mdash;比较Backbone和Ext4.x在MVC实现上的差异》</a>，反复读了几遍，感觉获益颇深。
+　　今天我们暂时不讨论这个问题，我的啰嗦就此作罢，进入正题。😛😛😛</p>
+
+<p>　　按照惯例，上图！👀
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f1d510o2nfj20dt08ht8y.jpg" alt="" />
+　　如图中所示的，M、V、C三个组件都是单向联系的关系。
+　　■ View(V):首先View在交互层面被触发，将信息传递给Controller&copy;。
+　　■ Controller&copy;:Controller收到了来自View的交互请求，判断该请求需要执行的操作和获取的数据。然后将View所需的数据信息发送给Model(M)。
+　　■ Model(M):Model接收到了请求数据的消息，然后组织所需的数据，交给View展示。
+　　上面所述的算是MVC的一个完整的执行流程，可能在不同的技术栈中实现是不相同的，但是大致上架构思路却也相同。</p>
+
+<h1 id="2-mvp">2. MVP</h1>
+
+<p><img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f17gi6rfa9j20e308yaac.jpg" alt="" />
+　　作为MVC的延伸，MVP取消掉了View(V)和Model(M)之间的联系，并且将单向的关系变成了双向。
+　　■ 将Controller&copy;变成了Presenter(P)，并且View(V)的变化由Presenter负责，因为它们之间是双向关系。
+　　■ Presenter(P)负责了主要的业务逻辑，View和Model都由它来负责了。</p>
+
+<h1 id="3-mvvm">3. MVVM</h1>
+
+<p><img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f17gunrixcj20dp090t8z.jpg" alt="" />
+　　与MVP很相似，切断了Model(M)和View(V)之间的联系；比MVP更有趣的地方在于，ViewModel(VM)和View(V)之间是双向绑定的关系，也就是只要一方更新，另一方会自动的接受信息并相应的更新。如果学过WPF或者AngularJS这种体会会更深刻。
+　　■ ViewModel和View之间双向绑定，一方的变动会自动的反应在另一方。</p>
+
+<h1 id="4-总结">4. 总结</h1>
+
+<p>　　① MVC模式中，有一部分的交互逻辑可能会出现在View层，造成View太厚，所以MVP的出现就是要将主要的代码逻辑放在Presenter中，让View只做展示。
+　　② MVC模式有两种可能的交互方式：第一种，直接在View层交互，比如用户点击按钮等触发操作；第二种就是直接触发Controller，比如直接修改输入URL连接。
+　　③ 在MVP和MVVM模式中，P或者VM包揽了大部分的交互逻辑，View只负责展示数据。
+　　④ 三种模式的优点在于将关注点分离，每一个组件都只负责自己的事情，比如Controller、Persenter、ViewModel只负责业务逻辑的处理，它不用去管Model是怎么处理数据的、View是怎么展示的，甚至并不知道这两者的存在。
+　　⑤ 在ASP.NET MVC中View负责了一部分的展示逻辑处理，使用<code>HtmlHelper</code>处理一些交互逻辑，但是在一个大项目中，可能对前端人员造成困扰，它们必须要能看懂这种特殊的语法。这种情况在MVC6中得到了改善，新的<code>HtmlHelper</code>语法更符合HTML标签的语义，让前端人员可以“猜”出来代码所表示的交互逻辑。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/umbraco%E7%AE%80%E4%BB%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">1、Umbraco简介和安装</span> 
+            </a>  
+        <a rel="prev" href="/csharp/html%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95/" id="prev">
+            <span class="nav-title nav-title-prev">HTML辅助方法</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

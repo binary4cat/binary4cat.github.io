@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Architect on Haijd&#39;s Blog</title>
+    <link>/categories/architect/</link>
+    <description>Recent content in Architect on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Oct 2017 21:10:08 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/architect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MQ技术架构</title>
+      <link>/architect/mq%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Tue, 17 Oct 2017 21:10:08 +0800</pubDate>
+      
+      <guid>/architect/mq%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
+      <description>&lt;h1 id=&#34;1-什么时候使用mq&#34;&gt;1. 什么时候使用MQ&lt;/h1&gt;
+
+&lt;h2 id=&#34;1-1-什么是mq&#34;&gt;1.1. 什么是MQ？&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;消息队列(Message Queue)是一种跨进程的通信机制，用于上下游传递消息。&lt;/li&gt;
+&lt;li&gt;使用MQ，消息发送上只需要依赖MQ，逻辑上和物理上都不需要依赖其他的服务，对业务进行了解耦，消息上下游互相不依赖，只需要知道MQ的存在即可。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;MQ的不足之处：&lt;/li&gt;
+&lt;li&gt;多了一个MQ组件，使系统更加复杂。&lt;/li&gt;
+&lt;li&gt;消息的传递延时会增加(队列处理)&lt;/li&gt;
+&lt;li&gt;消息可靠性和重复性互为矛盾(消息丢失后难以保证下次是否会重复执行该消息)&lt;/li&gt;
+&lt;li&gt;下游无法知道上游的执行结果(上下游完全解耦，没有互相调用)&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：this&amp;super关键字  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    10 April 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：this&amp;super关键字</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-为什么要有构造方法">1. 为什么要有构造方法？</a></li>
+<li><a href="#2-构造方法的定义和运行特点">2. 构造方法的定义和运行特点</a></li>
+<li><a href="#3-默认添加的构造方法">3. 默认添加的构造方法</a></li>
+<li><a href="#4-构造方法的内存">4. 构造方法的内存</a></li>
+<li><a href="#5-构造方法的重载">5. 构造方法的重载</a></li>
+<li><a href="#6-this在构造方法调用的内存">6. this在构造方法调用的内存</a></li>
+<li><a href="#7-super关键字">7. super关键字</a></li>
+<li><a href="#8-创建子类对象过程的细节">8. 创建子类对象过程的细节</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-为什么要有构造方法">1. 为什么要有构造方法？</h1>
+
+<ul>
+<li>构造方法的作用:
+
+<ul>
+<li>在new的同时给成员变量赋值,给对象属性进行初始化。
+<br /></li>
+</ul></li>
+</ul>
+
+<h1 id="2-构造方法的定义和运行特点">2. 构造方法的定义和运行特点</h1>
+
+<ul>
+<li>构造方法定义
+构造方法的格式：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">修饰符 <span style="color:#50fa7b">构造方法名</span><span style="color:#ff79c6">(</span>参数列表<span style="color:#ff79c6">)</span>
+<span style="color:#ff79c6">{</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>构造方法的体现：
+
+<ul>
+<li>构造方法没有返回值类型。也不需要写返回值。因为它是为构建对象的，对象创建完，方法就执行结束。</li>
+<li>构造方法名称必须和类型保持一致。</li>
+<li>构造方法没有具体的返回值。</li>
+</ul></li>
+<li>构造方法运行特点:
+
+<ul>
+<li>在new 对象的时候自动调用执行。</li>
+</ul></li>
+</ul>
+
+<h1 id="3-默认添加的构造方法">3. 默认添加的构造方法</h1>
+
+<ul>
+<li>每一class类都必须有一个构造方法，构造方法不写也有。</li>
+<li>编译的时候，javac，系统会自动检查类中是否有构造方法，如果没有编译器就会自动添加一个构造方法
+<br /></li>
+</ul>
+
+<h1 id="4-构造方法的内存">4. 构造方法的内存</h1>
+
+<ul>
+<li><p>内存加载的过程</p>
+
+<ul>
+<li><p>例如有一个Person类, 创建Person 对象new Person()</p>
+
+<ol>
+<li>首先会将main方法压入栈中，执行main方法中的 new Person(23,&ldquo;张三&rdquo;);</li>
+<li>在堆内存中分配一片区域，用来存放创建的Person对象，这片内存区域会有属于自己的内存地址（0x0001）。然后给成员变量进行默认初始化（name=null，age=0）。</li>
+<li>执行构造方法中的代码（age = a ; name = nm;）,将变量a对应的23赋值给age，将变量nm对应的“张三”赋值给name，这段代码执行结束后，成员变量age和name的值已经改变。执行结束之后构造方法弹栈，Person对象创建完成。将Person对象的内存地址0x0001赋值给p。</li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> String name<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">,</span>String nm<span style="color:#ff79c6">){</span>
+        age <span style="color:#ff79c6">=</span> a<span style="color:#ff79c6">;</span>
+        name <span style="color:#ff79c6">=</span> nm<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">.......</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">){</span>
+    Person p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">(</span>23<span style="color:#ff79c6">,</span><span style="color:#f1fa8c">&#34;张三&#34;</span><span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul></li>
+</ul>
+
+<h1 id="5-构造方法的重载">5. 构造方法的重载</h1>
+
+<ul>
+<li>构造方法的细节：
+
+<ul>
+<li>一个类中可以有多个构造方法，多个构造方法是以重载的形式存在的</li>
+<li>构造方法是可以被private修饰的，作用：其他程序无法创建该类的对象。</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
+	<span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
+		
+	<span style="color:#6272a4">// 私有无参数的构造方法，即外界不能通过new Person();语句创建本类对象
+</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#ff79c6">}</span>		
+	<span style="color:#6272a4">// 多个构造方法是以重载的形式存在
+</span><span style="color:#6272a4"></span>	Person<span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		age <span style="color:#ff79c6">=</span> a<span style="color:#ff79c6">;</span>
+	<span style="color:#ff79c6">}</span>		
+	Person<span style="color:#ff79c6">(</span>String nm<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		name <span style="color:#ff79c6">=</span> nm<span style="color:#ff79c6">;</span>
+		age <span style="color:#ff79c6">=</span> a<span style="color:#ff79c6">;</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-this在构造方法调用的内存">6. this在构造方法调用的内存</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
+	<span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
+
+	Person<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{}</span>
+	Person<span style="color:#ff79c6">(</span>String nm<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		name <span style="color:#ff79c6">=</span> nm<span style="color:#ff79c6">;</span>
+	<span style="color:#ff79c6">}</span>
+	Person<span style="color:#ff79c6">(</span>String nm<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		<span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span>nm<span style="color:#ff79c6">);</span>
+		age <span style="color:#ff79c6">=</span> a<span style="color:#ff79c6">;</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">PersonDemo</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		Person p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;张三&#34;</span><span style="color:#ff79c6">,</span> 23<span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>构造方法调用的过程
+
+<ol>
+<li>先执行main方法，main方法压栈，执行其中的new Person(“张三”,23);</li>
+<li>堆内存中开辟空间，并为其分配内存地址0x001，，紧接着成员变量默认初始化（name=null  age = 0）；</li>
+<li>拥有两个参数的构造方法（Person（String nm , int a））压栈，在这个构造方法中有一个隐式的this，因为构造方法是给对象初始化的，那个对象调用到这个构造方法，this就指向堆中的那个对象。</li>
+<li>由于Person（String nm , int a）构造方法中使用了this(nm);构造方法Person(String nm)就会压栈，并将“张三”传递给nm。在Person（String nm , int a）构造方法中同样也有隐式的this，this的值同样也为0x001，这时会执行其中name = nm，即把“张三”赋值给成员的name。当赋值结束后Person（String nm , int a）构造方法弹栈。</li>
+<li>程序继续执行构造方法（Person（String nm , int a）中的age = a；这时会将23赋值给成员属性age。赋值结束构造方法（Person（String nm , int a）弹栈。</li>
+<li>当构造方法（Person（String nm , int a）弹栈结束后，Person对象在内存中创建完成，并将0x001赋值给main方法中的p引用变量。
+<br /></li>
+</ol></li>
+</ul>
+
+<h1 id="7-super关键字">7. super关键字</h1>
+
+<ul>
+<li>子父类中构造方法的调用
+
+<ul>
+<li>在创建子类对象时，父类的构造方法会先执行，因为子类中所有构造方法的第一行有默认的隐式<code>super();</code>语句。</li>
+</ul></li>
+
+<li><p>格式：</p>
+
+<ul>
+<li>调用本类中的构造方法
+<code>this(实参列表);</code></li>
+<li>调用父类中的空参数构造方法
+<code>super();</code></li>
+<li>调用父类中的有参数构造方法
+<code>super(实参列表);</code></li>
+</ul></li>
+
+<li><p>子类构造方法,有一个默认添加的构造方法</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Student</span> <span style="color:#8be9fd;font-style:italic">extends</span> Person <span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Student</span><span style="color:#ff79c6">(){</span>
+		<span style="color:#8be9fd;font-style:italic">super</span><span style="color:#ff79c6">();</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>为什么子类对象创建都要访问父类中的构造方法？因为子类继承了父类的内容，所以创建对象时，必须要先看父类是如何对其内容进行初始化的</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span> <span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+		<span style="color:#ff79c6">new</span> Zi<span style="color:#ff79c6">();</span>
+	<span style="color:#ff79c6">}</span>		
+<span style="color:#ff79c6">}</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Fu</span><span style="color:#ff79c6">{</span>
+	<span style="color:#8be9fd">int</span> num <span style="color:#ff79c6">;</span>
+	Fu<span style="color:#ff79c6">(){</span>
+		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Fu构造方法&#34;</span><span style="color:#ff79c6">+</span>num<span style="color:#ff79c6">);</span>
+		num <span style="color:#ff79c6">=</span> 4<span style="color:#ff79c6">;</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Zi</span> <span style="color:#8be9fd;font-style:italic">extends</span> Fu<span style="color:#ff79c6">{</span>
+	Zi<span style="color:#ff79c6">(){</span>
+		<span style="color:#6272a4">//super(); 调用父类空参数构造方法
+</span><span style="color:#6272a4"></span>		System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Zi构造方法&#34;</span><span style="color:#ff79c6">+</span>num<span style="color:#ff79c6">);</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>执行结果：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Fu构造方法0
+Zi构造方法4</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>创建子类对象的时候会必须调用父类的构造方法。</p>
+
+<ul>
+<li>子类默认会调用父类的无参构造，但如果父类没有无参构造，子类的构造方法继续调用父类的无参构造就会报错。</li>
+<li>因此子类构造方法的第一行需要调用父类的构造方法，既可以调用父类的无参构造，也可以调用父类的有参构造，这样语法上就不会报错。
+<br /></li>
+</ul></li>
+
+<li><p>构造方法第一行,写this()还是super()</p>
+
+<ul>
+<li>this() 是调用本类的构造方法,super()是调用父类的构造方法, 且两条语句不能同时存在</li>
+<li>保证子类的所有构造方法调用到父类的构造方法即可
+<br /></li>
+</ul></li>
+
+<li><p>小结:</p>
+
+<ul>
+<li>无论如何,子类的所有构造方法,直接或间接必须调用到父类构造方法;</li>
+<li>子类的构造方法什么都不写,默认的构造方法第一行super()
+
+<br /></li>
+</ul></li>
+</ul>
+
+<h1 id="8-创建子类对象过程的细节">8. 创建子类对象过程的细节</h1>
+
+<ul>
+<li><p>创建子类对象过程的细节</p>
+
+<ul>
+<li>如果子类的构造方法第一行写了this调用了本类其他构造方法，那么super调用父类的语句还有吗？
+
+<ul>
+<li>这时是没有的，因为this()或者super(),只能定义在构造方法的第一行，因为初始化动作要先执行。</li>
+</ul></li>
+<li>父类构造方法中是否有隐式的super呢？
+
+<ul>
+<li>只要是构造方法默认第一行都是super();</li>
+</ul></li>
+<li>父类的父类是谁呢？super调用的到底是谁的构造方法呢？
+
+<ul>
+<li>Java定义了一个所有对象的父类Object</li>
+</ul></li>
+</ul></li>
+
+<li><p>注意：</p>
+
+<ul>
+<li>类中的构造方法默认第一行都有隐式的super()语句，在访问父类中的空参数构造方法。所以父类的构造方法既可以给自己的对象初始化，也可以给自己的子类对象初始化。</li>
+<li>如果默认的隐式super()语句在父类中没有对应的构造方法，那么必须在构造方法中通过this或者super的形式明确要调用的构造方法。</li>
+</ul></li>
+</ul>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80final%E5%8C%BF%E5%90%8D%E7%B1%BB%E4%BB%A3%E7%A0%81%E5%9D%97/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：final&amp;匿名类&amp;代码块</span> 
+            </a>  
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

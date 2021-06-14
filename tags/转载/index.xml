@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>转载 on Haijd&#39;s Blog</title>
+    <link>/tags/%E8%BD%AC%E8%BD%BD/</link>
+    <description>Recent content in 转载 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 May 2017 19:45:09 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/%E8%BD%AC%E8%BD%BD/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java基础：JAVA基本类型和包装类</title>
+      <link>/java/java%E5%9F%BA%E7%A1%80%E5%8C%85%E8%A3%85%E7%B1%BB/</link>
+      <pubDate>Sat, 27 May 2017 19:45:09 +0800</pubDate>
+      
+      <guid>/java/java%E5%9F%BA%E7%A1%80%E5%8C%85%E8%A3%85%E7%B1%BB/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;转载自：&lt;a href=&#34;http://alexyyek.github.io/2014/12/29/wrapperClass/&#34;&gt;http://alexyyek.github.io/2014/12/29/wrapperClass/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-java的包装类&#34;&gt;1. JAVA的包装类&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Java语言是一个面向对象的语言，但是Java中的基本数据类型却是不面向对象的，这在实际使用时存在很多的不便，为了解决这个不足，在设计类时为每个基本数据类型设计了一个对应的类进行代表，这样八个和基本数据类型对应的类统称为包装类(Wrapper Class)，有些地方也翻译为外覆类或数据类型类，如下表所示：&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>对ASP.NET程序员非常有用的85个工具</title>
+      <link>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sun, 09 Oct 2016 23:01:48 +0800</pubDate>
+      
+      <guid>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
+      <description>&lt;h1 id=&#34;1-介绍&#34;&gt;1. 介绍&lt;/h1&gt;
+
+&lt;p&gt;　　这篇文章列出了针对ASP.NET开发人员的有用工具。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-工具&#34;&gt;2. 工具&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-visual-studio&#34;&gt;2.1. Visual Studio&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/34ebc6a2-2777-421d-8914-e29c1dfa7f5d&#34;&gt;Visual Studio Productivity Power tool&lt;/a&gt;：Visual Studio专业版（及以上）的扩展，具有丰富的功能，如快速查找，导航解决方案，可搜索的附加参考对话框等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jetbrains.com/resharper/&#34;&gt;ReSharper&lt;/a&gt;：提高.NET开发人员生产力的工具，提高代码质量，通过提供快速修复消除错误，等等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mztools.com/v8/features.aspx#FindCodeFaster&#34;&gt;MZ-Tools&lt;/a&gt;：它可以在方法、文件、项目、解决方案或项目组、选定的文本，文件组合或项目组合中找到字符串。结果示于下面的结果窗口中，比由Microsoft IDE提供的要更方便。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/ee6e6d8c-c837-41fb-886a-6b50ae2d06a2&#34;&gt;Web Essentials&lt;/a&gt;：提高生产力和帮助高效编写CSS，JavaScript，HTML等&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>什么才算是真正的编程能力？</title>
+      <link>/%E6%96%87%E9%9B%86/%E4%BB%80%E4%B9%88%E6%89%8D%E7%AE%97%E6%98%AF%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B/</link>
+      <pubDate>Fri, 25 Mar 2016 22:04:19 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E4%BB%80%E4%B9%88%E6%89%8D%E7%AE%97%E6%98%AF%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B/</guid>
+      <description>&lt;p&gt;转载自&lt;a href=&#34;http://www.imooc.com/article/1097&#34;&gt;慕课网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;知乎上看到一题主的发问：
+还在读书，也在实验室帮忙做了些东西，自己也搭过几个网站。在周围人看来似乎好像我很厉害，做了那么多东西，但是我发现这些东西虽然是我做的，但是实际上我手把手自己写的代码却并没有多少，很多都是用开源的东西，我写的代码无非是把别人的东西整合下，类似于胶水一样的工作。&lt;/p&gt;
+
+&lt;p&gt;我之前所认为的编程是全手动一行一行敲代码，但是现在我发现哪怕是工程上也有很多人是复制黏贴来解决问题的，并且提倡不要重复造轮子。&lt;/p&gt;
+
+&lt;p&gt;但是靠谷歌和复制别人的轮子，虽然我做出了很多东西，可是我并不觉得自己能力上有提升，倒是利用搜索引擎的能力的确提升了不少。而学校里另外一波搞ACM的人，他们每天刷题练算法，或许倒是的确提升了点编程能力，但是对工程几乎一窍不通。&lt;/p&gt;
+
+&lt;p&gt;所以我现在就很困惑，所谓的编程能力到底是什么，我该如何提升自己的编程能力？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>值得收藏的10个jQuery小技巧</title>
+      <link>/frontend/%E5%80%BC%E5%BE%97%E6%94%B6%E8%97%8F%E7%9A%8410%E4%B8%AAjquery%E5%B0%8F%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Fri, 25 Mar 2016 21:25:54 +0800</pubDate>
+      
+      <guid>/frontend/%E5%80%BC%E5%BE%97%E6%94%B6%E8%97%8F%E7%9A%8410%E4%B8%AAjquery%E5%B0%8F%E6%8A%80%E5%B7%A7/</guid>
+      <description>&lt;p&gt;转载自&lt;a href=&#34;http://www.imooc.com/article/1686&#34;&gt;慕课网&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;1-返回顶部按钮&#34;&gt;1.返回顶部按钮&lt;/h1&gt;
+
+&lt;p&gt;你可以利用 animate 和 scrollTop 来实现返回顶部的动画，而不需要使用其他插件。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;// Back to top
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;$(&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;a.top&amp;#39;&lt;/span&gt;).click(&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;function&lt;/span&gt; () {
+  $(&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;document&lt;/span&gt;.body).animate({scrollTop&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#bd93f9&#34;&gt;0&lt;/span&gt;}, &lt;span style=&#34;color:#bd93f9&#34;&gt;800&lt;/span&gt;);
+  &lt;span style=&#34;color:#ff79c6&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;false&lt;/span&gt;;
+});
+&lt;span style=&#34;color:#6272a4&#34;&gt;&amp;lt;!--&lt;/span&gt; Create an anchor tag &lt;span style=&#34;color:#ff79c6&#34;&gt;--&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;&amp;lt;&lt;/span&gt;a &lt;span style=&#34;color:#ff79c6&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;top&amp;#34;&lt;/span&gt; href&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#34;#&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;&amp;gt;&lt;/span&gt;Back to top&lt;span style=&#34;color:#ff79c6&#34;&gt;&amp;lt;&lt;/span&gt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;改变 scrollTop 的值可以调整返回距离顶部的距离，而 animate 的第二个参数是执行返回动作需要的时间(单位：毫秒)。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET-.NET Core中的配置</title>
+      <link>/csharp/net-net-core%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 20 Feb 2016 13:31:43 +0800</pubDate>
+      
+      <guid>/csharp/net-net-core%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;就在截稿时间之前，Microsoft 宣布了更改 ASP.NET 5 和相关堆叠的名称。ASP.NET 5 已更名为 ASP.NET Core 1.0。Entity Framework (EF) 7 已更名为 Entity Framework (EF) Core 1.0。虽然 ASP.NET 5 和 EF7 程序包以及命名空间将会发生变化，但新的命名法不会对本文中的课程造成任何影响。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;使用 ASP.NET 5 的同仁们自然都会注意到此平台中新增了配置支持，可用于 NuGet 包的 Microsoft.Extensions.Configuration 集合。&lt;/p&gt;
+
+&lt;p&gt;新的配置支持名称/值对列表（可分入多层层次结构）。例如，您可以将一个设置存储在 SampleApp:Users:InigoMontoya:MaximizeMainWindow 中，将另一个设置存储在 SampleApp:AllUsers:Default:MaximizeMainWindow 中。&lt;/p&gt;
+
+&lt;p&gt;存储的所有值都会映射到字符串，您可以借助内置的绑定支持，将设置反序列化为自定义 POCO 对象。已经熟悉新配置 API 的同仁们可能最初是在 ASP.NET 5 注意到的。不过，此 API 绝不仅限于 ASP.NET。实际上，本文中的所有列表都是使用 Microsoft .NET Framework 4.5.1（同时引用 ASP.NET 5 RC1 中的 Microsoft.Extensions.Configuration 包）在 Visual Studio 2015 单元测试项目中创建（有关源代码，请访问 &lt;a href=&#34;http://github.com/IntelliTect/Articles&#34;&gt;gitHub.com/IntelliTect/Articles&lt;/a&gt;）。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>数据点-重构ASP.NET5/EF6项目和依赖关系注入</title>
+      <link>/csharp/%E6%95%B0%E6%8D%AE%E7%82%B9-%E9%87%8D%E6%9E%84asp-net5-ef6%E9%A1%B9%E7%9B%AE%E5%92%8C%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Tue, 16 Feb 2016 13:05:29 +0800</pubDate>
+      
+      <guid>/csharp/%E6%95%B0%E6%8D%AE%E7%82%B9-%E9%87%8D%E6%9E%84asp-net5-ef6%E9%A1%B9%E7%9B%AE%E5%92%8C%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5/</guid>
+      <description>&lt;p&gt;就在截稿时间之前，Microsoft 宣布了更改 ASP.NET 5 和相关堆叠的名称。ASP.NET 5 已更名为 ASP.NET Core 1.0。Entity Framework (EF) 7 已更名为 Entity Framework (EF) Core 1.0。虽然 ASP.NET 5 和 EF7 程序包以及命名空间将会发生变化，但新的命名法不会对本文中的课程造成任何影响。&lt;/p&gt;
+
+&lt;p&gt;依赖关系注入 (DI) 都是关于松耦合的 (&lt;a href=&#34;http://bit.ly/1TZWVtW&#34;&gt;bit.ly/1TZWVtW&lt;/a&gt;。您从其他位置（理想情况下是类构造函数）请求获取您依赖的类，而不是将这些类硬编码为其他类。这遵循的是显式依赖关系原则，可以更明确地告知类用户此类所需的协作者。这样一来，您还可以在类对象实例有备选配置的情况下构建更灵活的软件，同时这也对编写这种类的自动测试真正有益。我的工作领域就是和 Entity Framework代码不停地打交道。典型的例子是：在不使用松耦合的情况下编码就是在创建可直接实例化 DbContext 的存储库或控制器。我已经上千次这样做过。实际上，我撰写这篇文章的目标是为了向我在专栏“EF6、EF7 与 ASP.NET 5 组合”(&lt;a href=&#34;http://msdn.com/magazine/dn973011&#34;&gt;msdn.com/magazine/dn973011&lt;/a&gt;) 中编写的代码应用我所学到的 DI知识。例如，在下面的方法中，我就直接实例化了 DbContext：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git速查表大全</title>
+      <link>/tool/git%E9%80%9F%E6%9F%A5%E8%A1%A8%E5%A4%A7%E5%85%A8/</link>
+      <pubDate>Fri, 12 Feb 2016 22:06:36 +0800</pubDate>
+      
+      <guid>/tool/git%E9%80%9F%E6%9F%A5%E8%A1%A8%E5%A4%A7%E5%85%A8/</guid>
+      <description>&lt;p&gt;题图来自&lt;a href=&#34;http://www.imooc.com&#34;&gt;慕课网&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;1-git常用命令速查表&#34;&gt;1. Git常用命令速查表&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1d54uf2jkj21kw146tqg.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET存储过程操作</title>
+      <link>/csharp/asp-net%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 06 Apr 2015 17:21:22 +0800</pubDate>
+      
+      <guid>/csharp/asp-net%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;http://www.cnblogs.com/libingql/archive/2010/05/02/1726104.html&#34;&gt;http://www.cnblogs.com/libingql/archive/2010/05/02/1726104.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;　　存储过程是存放在数据库服务器上的预先编译好的sql语句。使用存储过程，可以直接在数据库中存储并运行功能强大的任务。存储过程在第一应用程序执行时进行语法检查和编译，编译好的版本保存在高速缓存中。在执行重复任务时，存储过程可以提高性能和一致性。由于存储过程可以将一系列对数据库的操作放在数据库服务器上执行，因而可以降低Web服务器的负载，提高整个系统的性能。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-创建存储过程&#34;&gt;1. 、创建存储过程&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;USE Northwind
+&lt;span style=&#34;color:#ff79c6&#34;&gt;GO&lt;/span&gt;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;CREATE&lt;/span&gt; PROC [DBO].[GetOrdersByOrderDate]
+    &lt;span style=&#34;color:#ff79c6&#34;&gt;@&lt;/span&gt;OrderDate DATETIME
+&lt;span style=&#34;color:#ff79c6&#34;&gt;AS&lt;/span&gt;
+    &lt;span style=&#34;color:#ff79c6&#34;&gt;SELECT&lt;/span&gt;
+        [OrderID],[CustomerID],[OrderDate]
+    &lt;span style=&#34;color:#ff79c6&#34;&gt;FROM&lt;/span&gt;
+        [Orders]
+    &lt;span style=&#34;color:#ff79c6&#34;&gt;WHERE&lt;/span&gt;
+        [OrderDate] &lt;span style=&#34;color:#ff79c6&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#ff79c6&#34;&gt;@&lt;/span&gt;OrderDate
+
+
+USE Northwind
+&lt;span style=&#34;color:#ff79c6&#34;&gt;GO&lt;/span&gt;
+&lt;span style=&#34;color:#ff79c6&#34;&gt;EXEC&lt;/span&gt; GetByOrderDate &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;1996-10-10 0:00:00&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASP.NET中的Url重写</title>
+      <link>/csharp/asp-net%E4%B8%AD%E7%9A%84url%E9%87%8D%E5%86%99/</link>
+      <pubDate>Wed, 11 Feb 2015 13:47:48 +0800</pubDate>
+      
+      <guid>/csharp/asp-net%E4%B8%AD%E7%9A%84url%E9%87%8D%E5%86%99/</guid>
+      <description>&lt;h1 id=&#34;1-一-为了页面更有利于seo优化-url重写程序需要做出的不可缺少的手段之一&#34;&gt;1. 一. 为了页面更有利于seo优化，url重写程序需要做出的不可缺少的手段之一。&lt;/h1&gt;
+
+&lt;h1 id=&#34;2-二-目前url重写最常见的两种方法有&#34;&gt;2. 二.目前url重写最常见的两种方法有：&lt;/h1&gt;
+
+&lt;p&gt;　　1. 通过熟悉页面的内部执行流程，也就是asp.net请求管道中的相关知识点，进行url重写。
+　　2. 通过使用微软提供的UrlRewriter.dll实现url重写（简单）；&lt;/p&gt;
+
+&lt;h1 id=&#34;3-三-在请求管道中的第一个请求管道中拦截url并使其完成url重写功能&#34;&gt;3. 三、在请求管道中的第一个请求管道中拦截url并使其完成url重写功能：&lt;/h1&gt;
+
+&lt;p&gt;　　1. 熟悉请求管道实现程序运行的全过程：
+　　　　(1)：BeginRequest: 开始处理请求
+　　　　(2)：AuthenticateRequest授权验证请求，获取用户授权信息
+　　　　(3):PostAuthenticateRequest获取成功
+　　　　(4): AunthorizeRequest 授权，一般来检查用户是否获得权限&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vscode on Haijd&#39;s Blog</title>
+    <link>/tags/vscode/</link>
+    <description>Recent content in Vscode on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Feb 2019 22:02:17 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>6个Angular开发者必备的VSCode扩展</title>
+      <link>/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/</link>
+      <pubDate>Thu, 21 Feb 2019 22:02:17 +0800</pubDate>
+      
+      <guid>/frontend/6%E4%B8%AAangular%E5%BC%80%E5%8F%91%E8%80%85%E5%BF%85%E5%A4%87%E7%9A%84vscode%E6%89%A9%E5%B1%95/</guid>
+      <description>在这篇文章，我将推荐6个我认为是使用VSCode开发Angular必备的扩展，如果你有喜欢的有用插件，也请推荐给我😁。
+1. 扩展推荐 1.1. TypeScript Hero 这是一个非常有用的插件，可以帮助你自动管理你的TypeScript import，当你复制一段代码是，TypeScript Hero会自动感知其中需要import的类型，并且自动import进来。有效节省你的时间。
+其他有用的功能包括排序、删除无用的import等。
+1.2. Angular Language Service 这个插件为Angular Template编辑提供了丰富的功能支持。假设你有一个Component如下：
+1 2 3 4 5 6  course = { title: &amp;#39;The Complete Angular Course&amp;#39;, author: { name: &amp;#39;Mosh Hamedani&amp;#39; } }    借助这个插件，你可以很方便的编辑你的Template: 1.3. Bracket Pair Colorizer 这个插件可以使用不同的颜色来标记不同类型的括号： 1.4. Move TS 随着你的项目的发展，也许你想要将你的modules分解的更小、更容易维护。这时你必须移动文件还有文件夹，但是有个问题是移动文件和文件夹后，路径会改变，原先所有import它们的地方将失效，这时可能每个文件的import需要一个一个手动处理。
+使用Move TS扩展，可以自动的帮助你管理移动文件和文件夹后的import。
+1.5. Material Icon Theme 一个Material风格的项目文件资源管理器图标主题。
+1.6. Angular TypeScript Snippets 另一个John Papa开发的有用扩展，可以在开发Angular项目时提高你的工作效率。
+这个插件包含了大量的代码段，可以帮助你快速生成代码，免去重复的码字过程。代码段覆盖了component、service、directive、template等等组件，它的可以给你提供如下的快捷代码段生成： 2. 参考资料 https://morioh.com/p/0e54a8cff696/6-essential-vscode-extensions-for-angular-developers</description>
+    </item>
+    
+  </channel>
+</rss>

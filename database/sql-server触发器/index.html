@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>SQL Server触发器  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    16 April 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">SQL Server触发器</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么是触发器">1. 什么是触发器</a>
+<ul>
+<li><a href="#1-1-分类">1.1. 分类</a>
+<ul>
+<li><a href="#1-1-1-dml触发器">1.1.1. DML触发器</a></li>
+<li><a href="#1-1-2-ddl触发器">1.1.2. DDL触发器</a></li>
+<li><a href="#1-1-3-登录触发器">1.1.3. 登录触发器</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#2-编写触发器">2. 编写触发器</a>
+<ul>
+<li><a href="#2-1-语法">2.1. 语法</a></li>
+<li><a href="#2-2-示例代码">2.2. 示例代码</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　</p>
+
+<h1 id="1-什么是触发器">1. 什么是触发器</h1>
+
+<p>　　触发器是一种特殊的存储过程，和存储过程不同的是，触发器是由事件被触发时自动进行调用的。
+　　触发器的执行不是由程序调用，也不是手工启动，而是有事件来触发，比如当对一个表进行操作(insert、delete、update)是就会激活触发器执行。触发器常用于加强数据的完整性约束和业务规则。</p>
+
+<h2 id="1-1-分类">1.1. 分类</h2>
+
+<p>　　SQL Server包括了三种常规类型的触发器：DML触发器、DDL触发器和登录触发器。</p>
+
+<h3 id="1-1-1-dml触发器">1.1.1. DML触发器</h3>
+
+<p>　　当数据库中的表中的数据发生变化时(insert、delete、update)，我们如果已经定义了一个触发器(DML触发器)，那么这个触发器就会自动执行。DML触发器的主要作用在于强制执行业务规则，扩展SQL Server约束、默认值等。约束只能约束同一个表中的数据，但是触发器可以执行任意的SQL命令。</p>
+
+<h3 id="1-1-2-ddl触发器">1.1.2. DDL触发器</h3>
+
+<p>　　SQL Server2005中新增的触发器，用来审核规范对数据库中表、触发器、视图等结构上的操作，比如在修改表，修改列，新增表，新增列等。它在数据库结构发生变化时执行，我们主要用它来记录数据库的修改过程，以及限制程序员对数据库的修改，比如不允许删除某些指定表等。</p>
+
+<h3 id="1-1-3-登录触发器">1.1.3. 登录触发器</h3>
+
+<p>　　登录触发器会相应login事件并自动执行，与 SQL Server 实例建立用户会话时将引发此事件。登录触发器将在登录的身份验证阶段完成之后且用户会话实际建立之前激发。因此，来自触发器内部且通常将到达用户的所有消息(例如错误消息和来自print语句的消息)会传送到 SQL Server 错误日志。如果身份验证失败，将不激发登录触发器。</p>
+
+<h1 id="2-编写触发器">2. 编写触发器</h1>
+
+<h2 id="2-1-语法">2.1. 语法</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">　　<span style="color:#ff79c6">create</span> <span style="color:#ff79c6">trigger</span> tr_name
+　　<span style="color:#ff79c6">on</span> 表名 <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">update</span><span style="color:#ff79c6">|</span><span style="color:#ff79c6">insert</span><span style="color:#ff79c6">|</span><span style="color:#ff79c6">delete</span>
+　　<span style="color:#ff79c6">as</span>
+　　　　 执行代码...</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-2-示例代码">2.2. 示例代码</h2>
+
+<p><strong>inster</strong>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">create</span> <span style="color:#ff79c6">trigger</span> tri_insert
+<span style="color:#ff79c6">on</span> student
+<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">insert</span>
+<span style="color:#ff79c6">as</span>
+<span style="color:#ff79c6">declare</span> <span style="color:#ff79c6">@</span>student_idchar(<span style="color:#bd93f9">10</span>)
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">@</span>student_id<span style="color:#ff79c6">=</span>s.student_id <span style="color:#ff79c6">from</span> students
+<span style="color:#ff79c6">inner</span> <span style="color:#ff79c6">join</span> insertedion s.student_id<span style="color:#ff79c6">=</span>i.student_id
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">@</span>student_id<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;0000000001&#39;</span>
+<span style="color:#ff79c6">begin</span>
+raiserror(<span style="color:#f1fa8c">&#39;不能插入1的学号!&#39;</span>,<span style="color:#bd93f9">16</span>,<span style="color:#bd93f9">8</span>)
+rollbacktran
+<span style="color:#ff79c6">end</span>
+<span style="color:#ff79c6">go</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>update</strong>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">create</span> <span style="color:#ff79c6">trigger</span> tri_update
+<span style="color:#ff79c6">on</span> student
+<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">update</span>
+<span style="color:#ff79c6">as</span>
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">update</span>(student_id)
+<span style="color:#ff79c6">begin</span>
+raiserror(<span style="color:#f1fa8c">&#39;学号不能修改!&#39;</span>,<span style="color:#bd93f9">16</span>,<span style="color:#bd93f9">8</span>)
+rollbacktran
+<span style="color:#ff79c6">end</span>
+<span style="color:#ff79c6">go</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>delete</strong>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">create</span> <span style="color:#ff79c6">trigger</span> tri_delete
+<span style="color:#ff79c6">on</span> student
+<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">delete</span>
+<span style="color:#ff79c6">as</span>
+<span style="color:#ff79c6">declare</span> <span style="color:#ff79c6">@</span>student_idvarchar(<span style="color:#bd93f9">10</span>)
+<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">@</span>student_id<span style="color:#ff79c6">=</span>student_id <span style="color:#ff79c6">from</span> deleted
+<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">@</span>student_id<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;admin&#39;</span>
+<span style="color:#ff79c6">begin</span>
+raiserror(<span style="color:#f1fa8c">&#39;错误&#39;</span>,<span style="color:#bd93f9">16</span>,<span style="color:#bd93f9">8</span>)
+rollbacktran
+<span style="color:#ff79c6">end</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>参考<a href="http://baike.baidu.com/link?url=EgX0DwE_DlHS4WDkzP1_KXARO9scURthngH_fwxltRTZ2f86F1zTXv2Kf9KQ0vjOjkDQbcBHpJzq-jBpx4CELRuIDwsTsVVk--hLbIjQD1W">百度百科</a></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/database/sql-server%E8%A1%A8%E8%BF%9E%E6%8E%A5-join/" id="next">
+                &larr; <span class="nav-title nav-title-next">SQL Server表连接(Join)</span> 
+            </a>  
+        <a rel="prev" href="/database/sql-server%E8%81%94%E5%90%88%E7%BB%93%E6%9E%9C%E9%9B%86-union/" id="prev">
+            <span class="nav-title nav-title-prev">SQL Server联合结果集(union)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

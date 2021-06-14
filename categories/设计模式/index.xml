@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on Haijd&#39;s Blog</title>
+    <link>/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Jan 2016 17:12:30 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>抽象工厂模式(Abstract Factory)：抽象工厂</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</link>
+      <pubDate>Sat, 23 Jan 2016 17:12:30 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;提供一个接口，让该接口负责创建一系列“相关或相互依赖的对象”，无需指定他们的具体类。      ————GoF&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　在抽象工厂中有两种抽象存在：系列的抽象、产品的抽象。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>抽象工厂模式(Abstract Factory)：工厂方法</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 23 Jan 2016 00:10:49 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;p&gt;　　学习抽象工厂之前，我们有必要对另外两个：简单工厂、工厂方法进行学习，以更好的掌握抽象工厂的使用。
+&amp;gt;定义一个用于创建对象的接口，让子类决定实例化哪一个产品，Factory Method使得一个产品类的实例化延迟到子类。  ————GoF&lt;/p&gt;
+
+&lt;p&gt;　　 在软件系统中经常面临着某个对象(产品)的创建工作由于需求的变化，这个对象(产品)经常面临中剧烈的变化，但是他却拥有比较稳定的接口。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>抽象工厂模式(Abstract Factory)：简单工厂</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82/</link>
+      <pubDate>Fri, 15 Jan 2016 17:28:48 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82/</guid>
+      <description>&lt;p&gt;　　学习抽象工厂之前，我们有必要对另外两个：简单工厂、工厂方法进行学习，以更好的掌握抽象工厂的使用。&lt;/p&gt;
+
+&lt;h1 id=&#34;1-简单工厂&#34;&gt;1. 简单工厂&lt;/h1&gt;
+
+&lt;p&gt;　　简单工厂并不是一种模式，而是面向对象方式的一种体现。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>适配器模式(Adapter)</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-adapter/</link>
+      <pubDate>Tue, 12 Jan 2016 20:52:41 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-adapter/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;将一个类的接口转换成客户希望的另一个接口。Adapter模式是将原本由于接口不兼容而不能工作在一起的那些类可以在一起工作。       ————GoF&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　在软件系统中，由于应用环境的变化，常常需要将一些老的系统放在新的系统中使用，但是新的系统要求的接口和老的系统不一致，这就需要一个中间的适配器去将新老系统转换连接，使之能够正常工作。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>单例模式(Singleton)</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton/</link>
+      <pubDate>Mon, 11 Jan 2016 11:26:52 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;保证一个类仅有一个实例，并且提供一个该实例的全局访问点。     ————GoF　　&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　
+　　在软件系统中，经常有这样一些特殊的类，必须保证它们在系统中只存在一个实例，才能确保它们的逻辑正确性、以及良好的效率。
+　　用户不能随便的使用*new*去创建一个类，这应该是设计者应该控制的。
+&lt;img src=&#34;/image/Design Pattern/design pattern1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>面向对象设计模式与原则</title>
+      <link>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%8E%9F%E5%88%99/</link>
+      <pubDate>Sun, 10 Jan 2016 23:22:53 +0800</pubDate>
+      
+      <guid>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%8E%9F%E5%88%99/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心。  ————Chistopher Alexander&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　设计模式描述了软件设计过程中一些常见问题的一般性解决方案。
+　　面向对象设计模式描述了面向对象设计过程中、特定场景下、类与相互通信的对象之间常见的组织关系。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

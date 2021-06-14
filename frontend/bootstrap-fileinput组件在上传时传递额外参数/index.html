@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>bootstrap-fileinput组件在上传时传递额外参数  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    23 November 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">bootstrap-fileinput组件在上传时传递额外参数</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="#ZgotmplZ">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-解决方法">1. 解决方法</a></li>
+<li><a href="#2-关键点">2. 关键点：</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>该问题的使用场景是：在微信平台素材上传的页面使用，在上传时需要发送一个参数，让后台判断是临时素材还是永久素材。 但是该组件在一开始就已经初始化(问题所在)了要发送的参数，也就是说没有办法后期追加额外的参数。</p>
+</blockquote>
+
+<p>　　由于英文水平问题，阅读官方文档时没有找到该问题的解决方法，于是去github提了一个<a href="https://github.com/kartik-v/bootstrap-fileinput/issues/795">issue</a> ，得到的答案是仔细阅读文档，里面有一个回调函数可以解决问题😍</p>
+
+<h1 id="1-解决方法">1. 解决方法</h1>
+
+<p>　　关键的配置参数是<a href="http://plugins.krajee.com/file-input#option-uploadextradata">uploadExtraData</a></p>
+
+<p>　　具体的代码如下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#6272a4">//获得额外参数的方法
+</span><span style="color:#6272a4"></span>    fodderType <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span>() {
+            <span style="color:#ff79c6">return</span> $(<span style="color:#f1fa8c">&#34;#fodderTypeSelect&#34;</span>).val();
+        };
+　　        
+    <span style="color:#6272a4">//初始化fileinput控件（第一次初始化）
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">function</span> initFileInput(ctrlName, FileExtensions, fileSize) {
+            <span style="color:#8be9fd;font-style:italic">var</span> control <span style="color:#ff79c6">=</span> $(<span style="color:#f1fa8c">&#39;#&#39;</span> <span style="color:#ff79c6">+</span> ctrlName);
+
+            control.fileinput({
+                language<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;zh&#39;</span>, <span style="color:#6272a4">//设置语言
+</span><span style="color:#6272a4"></span>                uploadUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;/WxMedia/ImageUpload&#34;</span>, <span style="color:#6272a4">//上传的地址
+</span><span style="color:#6272a4"></span>                allowedFileExtensions<span style="color:#ff79c6">:</span> FileExtensions, <span style="color:#6272a4">//接收的文件后缀
+</span><span style="color:#6272a4"></span>                showUpload<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">true</span>, <span style="color:#6272a4">//是否显示上传按钮
+</span><span style="color:#6272a4"></span>                showCaption<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">true</span>, <span style="color:#6272a4">//是否显示标题,
+</span><span style="color:#6272a4"></span>                maxFileSize<span style="color:#ff79c6">:</span> fileSize <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">1000</span>, <span style="color:#6272a4">//单位为kb，如果为0表示不限制文件大小
+</span><span style="color:#6272a4"></span>                browseClass<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;btn btn-primary&#34;</span>, <span style="color:#6272a4">//按钮样式
+</span><span style="color:#6272a4"></span>                previewFileIcon<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;&lt;i class=&#39;glyphicon glyphicon-king&#39;&gt;&lt;/i&gt;&#34;</span>,
+                initialCaption<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;请选择上传素材&#34;</span>,
+                uploadExtraData<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span>(previewId, index) {   <span style="color:#6272a4">//额外参数的关键点
+</span><span style="color:#6272a4"></span>                    <span style="color:#8be9fd;font-style:italic">var</span> obj <span style="color:#ff79c6">=</span> {};
+                    obj.fodder <span style="color:#ff79c6">=</span> fodderType();
+                    console.log(obj);
+                    <span style="color:#ff79c6">return</span> obj;
+                }
+            });
+        }
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-关键点">2. 关键点：</h1>
+
+<p>　　可以看到配置文件中<code>uploadExtraData</code>的参数是一个函数形式，这是一个回调函数，会在上传时调用，读取配置的额外参数。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/%E4%BD%BF%E7%94%A8ckeditor%E6%97%B6%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/" id="next">
+                &larr; <span class="nav-title nav-title-next">使用CKEditor时碰到的一个坑</span> 
+            </a>  
+        <a rel="prev" href="/frontend/%E5%80%BC%E5%BE%97%E6%94%B6%E8%97%8F%E7%9A%8410%E4%B8%AAjquery%E5%B0%8F%E6%8A%80%E5%B7%A7/" id="prev">
+            <span class="nav-title nav-title-prev">值得收藏的10个jQuery小技巧</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

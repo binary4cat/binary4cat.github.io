@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>directive中写template遇见的问题  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    18 July 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">directive中写template遇见的问题</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　记录一下先前在写指令时，遇到的一个令人无语的错误，避免以后重犯。</p>
+
+<p>　　错误的代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">app.directive( <span style="color:#f1fa8c">&#39; ckqlnfo&#39;</span> ,[<span style="color:#8be9fd;font-style:italic">function</span>(){
+        <span style="color:#ff79c6">return</span> {
+    　　　restrict<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39; AE &#39;</span> 
+    　　　replace: <span style="color:#8be9fd">true</span>, 
+    　　　template <span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&lt;p&gt;模板&lt;/p&gt;&lt;p&gt;模板&lt;/p&gt; &#39;</span> 
+        ｝
+    ｝</code></pre></td></tr></table>
+</div>
+</div>
+<p>首先看看指令中template的值<code>&lt;p&gt;模板&lt;/p&gt;&lt;p&gt;模板&lt;/p&gt;</code>，这段看起来并没有什么错，但是在实际运行中会造成程序抛出异常，因为这段html代码有两个<strong>p</strong>节点，在Angular解析这个指令的时候，不知道应该解析template所标注的哪一个<strong>p</strong>节点。</p>
+
+<p>正确的代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">app.directive( <span style="color:#f1fa8c">&#39; ckqlnfo&#39;</span> ,[<span style="color:#8be9fd;font-style:italic">function</span>(){
+        <span style="color:#ff79c6">return</span> {
+    　　　restrict<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39; AE &#39;</span> 
+    　　　replace: <span style="color:#8be9fd">true</span>, 
+    　　　template <span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&lt;div&gt;&lt;p&gt;模板&lt;/p&gt;&lt;p&gt;模板&lt;/p&gt;&lt;/div&gt;&#39;</span> 
+        ｝
+    ｝</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　这段代码中我们为template模板代码中添加了一对<code>div</code>标签，这样就能被Angular正确的解析了，因为模板有了一个明确的渲染开始和结束。</p>
+
+<p><strong>温馨提示</strong>：
+　　上面的指令我们使用了<code>template</code>直接以字符串的形式编写模板，有时候我们的模板代码较多，会使用<code>templateUrl</code>引用一个新的html模板文件。</p>
+
+<p>看下面的两个模板代码：
+*模板A*：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#6272a4">&lt;!--这是模板A的注释--&gt;</span>
+&lt;<span style="color:#ff79c6">div</span>&gt;
+    &lt;<span style="color:#ff79c6">p</span>&gt;模板&lt;/<span style="color:#ff79c6">p</span>&gt;
+    &lt;<span style="color:#ff79c6">p</span>&gt;模板&lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>*模板B*：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span>&gt;
+    <span style="color:#6272a4">&lt;!--这是模板B的注释--&gt;</span>
+    &lt;<span style="color:#ff79c6">p</span>&gt;模板&lt;/<span style="color:#ff79c6">p</span>&gt;
+    &lt;<span style="color:#ff79c6">p</span>&gt;模板&lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>告诉你们真相</strong>：注释也是一个节点元素，也会被解析……
+别问我怎么知道的，也别问我静静是谁&hellip;<img src="/image/face/捂脸哭.png" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/%E5%80%BC%E5%BE%97%E6%94%B6%E8%97%8F%E7%9A%8410%E4%B8%AAjquery%E5%B0%8F%E6%8A%80%E5%B7%A7/" id="next">
+                &larr; <span class="nav-title nav-title-next">值得收藏的10个jQuery小技巧</span> 
+            </a>  
+        <a rel="prev" href="/frontend/angular-module-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" id="prev">
+            <span class="nav-title nav-title-prev">angular.module()的简单使用</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

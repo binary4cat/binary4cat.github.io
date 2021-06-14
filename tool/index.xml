@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tools on Haijd&#39;s Blog</title>
+    <link>/tool/</link>
+    <description>Recent content in Tools on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 29 Jun 2019 14:46:11 +0800</lastBuildDate>
+    
+	<atom:link href="/tool/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL&#43;VSCODE体验UBUNTU环境下的开发</title>
+      <link>/tool/wsl&#43;vscode%E4%BD%93%E9%AA%8Cubuntu%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Sat, 29 Jun 2019 14:46:11 +0800</pubDate>
+      
+      <guid>/tool/wsl&#43;vscode%E4%BD%93%E9%AA%8Cubuntu%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%BC%80%E5%8F%91/</guid>
+      <description>配置 WSL 环境 首先安装 WSL，我这里选择的是 ubuntu18.04 这个应用。
+切换 WSL 的默认用户为 root 用户 切换成 root 用户主要是避免后续开发中遇到权限问题比较麻烦，直接默认 root 解决问题。
+找到ubuntu安装目录，一般在C:\Program Files\WindowsApps\CanonicalGroupLimited.Ubuntu18.04onWindows_1804.2019.522.0_x64__79rhkp1fndgsc文件夹下面。
+在文件夹中打开 powershell 运行下面的命令：
+1 2 3 4  ./ubuntu1804.exe config --default-user root # 重启WSL服务 net stop LxssManager net start LxssManager   如果显示拒绝访问，就用管理员权限打开 powershell，或者直接在资源管理器中找到LxssManager这个服务重新启动。
+切换 apt 源为清华源 默认的软件源下载太慢，替换为国内的清华大学软件源。
+Ubuntu 清华源的地址：https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/
+切换 WSL 默认的 shell 为 zsh zsh 的优点在我看来就是配置丰富，最重要的就是好看。
+执行下面的命令安装zsh和oh-my-zsh
+1 2 3  sudo apt-get update sudo apt-get install zsh sh -c &amp;#34;$(wget https://raw.</description>
+    </item>
+    
+    <item>
+      <title>使用Visual Studio远程调试</title>
+      <link>/tool/%E4%BD%BF%E7%94%A8visual-studio%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</link>
+      <pubDate>Wed, 12 Apr 2017 21:18:28 +0800</pubDate>
+      
+      <guid>/tool/%E4%BD%BF%E7%94%A8visual-studio%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本篇记录使用本地Visual Studio对远程服务器上部署的web站点进行断点调试。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-准备工作&#34;&gt;1. 准备工作&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;复制vs远程调试文件到服务器c盘，文件夹路径：&lt;code&gt;Common7/IDE/Remote Debugger/x64&lt;/code&gt; (整个文件夹复制进去)
+
+&lt;ol&gt;
+&lt;li&gt;运行其中的&lt;code&gt;msvsmon.exe&lt;/code&gt;可执行程序&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>对ASP.NET程序员非常有用的85个工具</title>
+      <link>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sun, 09 Oct 2016 23:01:48 +0800</pubDate>
+      
+      <guid>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
+      <description>&lt;h1 id=&#34;1-介绍&#34;&gt;1. 介绍&lt;/h1&gt;
+
+&lt;p&gt;　　这篇文章列出了针对ASP.NET开发人员的有用工具。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-工具&#34;&gt;2. 工具&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-visual-studio&#34;&gt;2.1. Visual Studio&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/34ebc6a2-2777-421d-8914-e29c1dfa7f5d&#34;&gt;Visual Studio Productivity Power tool&lt;/a&gt;：Visual Studio专业版（及以上）的扩展，具有丰富的功能，如快速查找，导航解决方案，可搜索的附加参考对话框等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jetbrains.com/resharper/&#34;&gt;ReSharper&lt;/a&gt;：提高.NET开发人员生产力的工具，提高代码质量，通过提供快速修复消除错误，等等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mztools.com/v8/features.aspx#FindCodeFaster&#34;&gt;MZ-Tools&lt;/a&gt;：它可以在方法、文件、项目、解决方案或项目组、选定的文本，文件组合或项目组合中找到字符串。结果示于下面的结果窗口中，比由Microsoft IDE提供的要更方便。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/ee6e6d8c-c837-41fb-886a-6b50ae2d06a2&#34;&gt;Web Essentials&lt;/a&gt;：提高生产力和帮助高效编写CSS，JavaScript，HTML等&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>git常用命令总结</title>
+      <link>/tool/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 28 Mar 2016 21:16:58 +0800</pubDate>
+      
+      <guid>/tool/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;p&gt;　　本文持续更新&amp;hellip;
+　　虽然很早就记录了很多的git命令在OneNote里面，但是作为手残党+健忘的我来说，敲命令行简直..那个啥。所以在开头推荐大家一款能够&lt;a href=&#34;https://github.com/gitextensions/gitextensions/releases/tag/v2.48.05&#34;&gt;鼠标点点点的git工具&lt;/a&gt;，哪里不会点哪里，妈妈再也不用担心我记不住git命令啦！&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git init&lt;/code&gt;  初始化git管理仓库&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git add xxx.txt&lt;/code&gt;  将文件添加到暂存区中，可以单独添加文件，也可以使用“ git add . ”添加所有的未添加文件(“.”代表所有)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git commit -m &amp;quot;提交说明&amp;quot;&lt;/code&gt;   提交暂存区中添加的文件到本地git库中。  题外话(注意，一定要写提交说明，而且要细粒度的提交，让工作更加细致)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git status&lt;/code&gt;  查看当前仓库的状态，可以看详细的提示信息。Git status只能看到当前的仓库状态，当文件修改时，只能提示当前的文件修改了但是具体做了什么修改他是不知道的。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git diff&lt;/code&gt;    可以看到具体修改了什么内容&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git速查表大全</title>
+      <link>/tool/git%E9%80%9F%E6%9F%A5%E8%A1%A8%E5%A4%A7%E5%85%A8/</link>
+      <pubDate>Fri, 12 Feb 2016 22:06:36 +0800</pubDate>
+      
+      <guid>/tool/git%E9%80%9F%E6%9F%A5%E8%A1%A8%E5%A4%A7%E5%85%A8/</guid>
+      <description>&lt;p&gt;题图来自&lt;a href=&#34;http://www.imooc.com&#34;&gt;慕课网&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;1-git常用命令速查表&#34;&gt;1. Git常用命令速查表&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://ww3.sinaimg.cn/mw690/c55a7aeejw1f1d54uf2jkj21kw146tqg.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>git知识点总结</title>
+      <link>/tool/git%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 14 Oct 2015 20:30:45 +0800</pubDate>
+      
+      <guid>/tool/git%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;对git的理解&lt;/strong&gt;：
+　　1、git跟踪的不是文件，而是修改，这就是git优秀而且快速的原因。
+　　2、当你从远程克隆的时候，其实就是把git本地的master分支和远程的master分支对应起来了，远程仓库的默认名称是*origin*。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

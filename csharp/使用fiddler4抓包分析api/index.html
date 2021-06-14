@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>使用Fiddler抓包分析API  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    17 July 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">使用Fiddler抓包分析API</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#准备">准备</a></li>
+<li><a href="#设置fiddler">设置Fiddler</a></li>
+<li><a href="#设置手机端">设置手机端</a></li>
+<li><a href="#开始抓包分析数据">开始抓包分析数据</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>Fiddler是一个http协议调试代理工具，它能够记录并且检查所有你的电脑和互联网之间的http通讯，设置断点，查看所有的“进出”Fiddler的数据（指cookie,html,js,css等文件，这些都可以让你胡乱修改的意思）。 Fiddler 要比其他的网络调试器要更加简单，因为它不仅仅暴露http通讯还提供了一个用户友好的格式。Fiddler 是用C#写出来的,它包含一个简单却功能强大的基于JScript .NET 事件脚本子系统，它的灵活性非常棒，可以支持众多的http调试任务，并且能够使用.net框架语言进行扩展。</p>
+</blockquote>
+
+<p>　　摘录一下百科的解释，简单点说Fiddler是个抓包工具，测试人员可能用的比较多，在UWP开发中使用的，就是为了开发第三方的软件而进行分析API接口，至于为啥要开发第三方的UWP，这得把巨硬抓起来打一顿就知道了。
+　　</p>
+
+<h1 id="准备">准备</h1>
+
+<p>　　需要的工具：Android手机，电脑，WiFi。
+　　首先我们去官网(<a href="https://www.telerik.com/download/fiddler">www.telerik.com</a>)下载并安装Fiddler软件。</p>
+
+<h1 id="设置fiddler">设置Fiddler</h1>
+
+<p>　　<strong>设置HTTPS代理和允许客户端/服务端代理</strong>
+　　打开软件，依次选择Tools&gt;Fiddler Options&hellip;打开该选项卡。
+　　进入*HTTPS*选项，勾选下列项：
+<img src="http://ww3.sinaimg.cn/mw690/c55a7aeejw1f5wvo3emwej20f10a7glv.jpg" alt="" />
+　　进入*connections*选项，勾选下列项，并填写端口号(默认为8888)：
+<img src="http://ww4.sinaimg.cn/mw690/c55a7aeejw1f5wwxb99qaj20f60af74m.jpg" alt="" />
+　　因为我们现在需要抓包手机，所以为了避免电脑端通讯的干扰，我们要检查一下电脑是否被Fiddler代理，如果是的话就关闭该代理。
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f5wx0q0nisj20px0gp0tb.jpg" alt="" /></p>
+
+<h1 id="设置手机端">设置手机端</h1>
+
+<p>　　<strong>首先，保证手机和PC处于同一局域网中(PC分享WiFi给手机，或者笔记本和手机连接同一个WiFi)。</strong>
+　　1. 使用命令行(ipconfig)查看电脑的IP地址。(我这里使用的笔记本分享的网络，选择了手机连接的这个网络的IP地址)
+<img src="http://ww2.sinaimg.cn/mw690/c55a7aeejw1f5wy9i9wncj20r60ckgmr.jpg" alt="" />
+　　2. 手机连接该WiFi，然后在高级设置中，配置HTTP代理。
+<img src="http://ww3.sinaimg.cn/mw690/c55a7aeejw1f5wy8pts28j20u01hcthj.jpg" alt="" /></p>
+
+<h1 id="开始抓包分析数据">开始抓包分析数据</h1>
+
+<p>　　接下来，我们以网易公开课App为例，说明一下如何分析接口数据。</p>
+
+<p>　　1. 打开网易公开课App，然后观察Fiddler软件抓取到的数据。
+　　2. 对比App和Fiddler中的数据。</p>
+
+<p>　　</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">值类型和引用类型</span> 
+            </a>  
+        <a rel="prev" href="/csharp/uwp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BD%BF%E7%94%A8grid%E5%92%8Cstackpanel%E5%B8%83%E5%B1%80/" id="prev">
+            <span class="nav-title nav-title-prev">UWP学习笔记:使用Grid和StackPanel布局</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

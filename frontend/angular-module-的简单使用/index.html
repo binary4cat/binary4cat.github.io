@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>angular.module()的简单使用  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    13 July 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">angular.module()的简单使用</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　今天记录一下angularJS的核心入口ng-module。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">var</span> myApp<span style="color:#ff79c6">=</span>angular.module(<span style="color:#f1fa8c">&#39;app&#39;</span>,[]); //创建ng-app的模型</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　这一句是我们写AngularJS代码的入口，也是基础知识。整个文件或者项目的运行就是基于这个方法得以继续的。在AngularJS的源代码中<code>module</code>方法是作为一个方法函数赋值给了<code>angular</code>这个全局对象的，所以有<code>angular</code>这个顶层对象直接调用。</p>
+
+<p>作为整个AngularJS程序的入口，<code>module</code>只能有一个，准确的来说应该是在html代码中只能有一个<code>ng-app</code>指令(这并不是绝对的，在开发中我们也可以借用<code>bootstrap</code>这个工具方法去加载其他的<code>ng-app</code>指令，但是这样做可能会造成混乱，暂时不讨论这个问题，默认一个程序只有一个<code>ng-app</code>指令)。</p>
+
+<p>　　<code>module</code>方法需要两个参数，一个是<code>ng-app</code>的参数名称，第二个参数是程序AngularJS程序需要的一些依赖项(如果没有依赖就写空数组)。</p>
+
+<p>　　在大多数编码中，我们需要将程序的不同功能拆分开来，形成细分，让结构更明确，代码易于维护。这是我们会考虑如何去创建这些功能，假如我们需要使用<code>controller</code>和<code>service</code>的话，我们必须在<code>angulr.module</code>的基础上去调用他们的方法，我们如何在另一个拆分的功能中拿到这个唯一的<code>angular.module</code>呢？</p>
+
+<p>如果代码像是这样：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">var</span> myApp1<span style="color:#ff79c6">=</span>angular.module(<span style="color:#f1fa8c">&#39;app&#39;</span>,[]);
+myApp1.controller(...);
+myApp1.factory(...);
+
+<span style="color:#8be9fd;font-style:italic">var</span> myApp2<span style="color:#ff79c6">=</span>angular.module(<span style="color:#f1fa8c">&#39;app&#39;</span>,[]);
+myApp2.controller(...);
+myApp2.factory(...);</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　这显然是错误的方法，排除掉使用<code>bootstrap</code>强制注册的方式，我们已经注册过一个<code>app</code>的模型，继续注册肯定是行不通的。</p>
+
+<p>正确的代码是：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">var</span> myApp1<span style="color:#ff79c6">=</span>angular.module(<span style="color:#f1fa8c">&#39;app&#39;</span>,[]);
+myApp1.controller(...);
+myApp1.factory(...);
+
+<span style="color:#8be9fd;font-style:italic">var</span> myApp2<span style="color:#ff79c6">=</span>angular.module(<span style="color:#f1fa8c">&#39;app&#39;</span>);
+myApp2.controller(...);
+myApp2.factory(...);</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　这段代码跟之前的区别就是<code>module</code>方法没有了第二个参数，把传递依赖的数组去掉了。这样就代表了调用，我们调用了之前<code>app</code>的模型，而不是创建一个新的模型。</p>
+
+<p>　　所以当需要拆分一个AngularJS代码时，给<code>module</code>方法传入<code>ng-app</code>的名称这一个参数，实现调用已经注册的模型。</p>
+
+<p>　　在弱类型的javascript中，我们还可以使用另一种方式实现调用<code>ng-app</code>的模型，就是使用自运行函数去调用，但是其原理还是一致的，就是通过给<code>module</code>传递ng-app的名称这样一个参数去进行模型的调用。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/directive%E4%B8%AD%E5%86%99template%E9%81%87%E8%A7%81%E7%9A%84%E9%97%AE%E9%A2%98/" id="next">
+                &larr; <span class="nav-title nav-title-next">directive中写template遇见的问题</span> 
+            </a>  
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>8、UmbracoNewsSite：添加新闻列表  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    08 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">8、UmbracoNewsSite：添加新闻列表</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　在上一篇中添加了新闻详情页面，但是没有任何可以指向这条新闻内容的跳转，所以需要将新闻添加到新闻列表中展示。</p>
+
+<p>　　现在我们找到<strong>News List</strong>模板，对其中的代码进行编辑，以展示新闻列表。</p>
+
+<p><img src="/image/umbraco/backoffice49.png" alt="" /></p>
+
+<p>　　<strong>News List</strong>模板的代码如下：
+　　解释一下这段代码：<code>Model</code>在Umbraco是也是起到和MVC中的Model一样的作用，和<code>CurrentPage</code>的作用都是获得数据，但是<code>CurrentPage</code>是动态类型，只能在内容发布后才能拿到数据，相对<code>Model</code>来说可能书用起来比较麻烦，不如<code>Model</code>更加灵活一些。
+　　<code>OrderByDescending</code>是Umbraco自己重写的排序方法，使用和原生的Linq一样，都是lambda表达式的方式。
+　　<code>GetCropUrl</code>方法是用来获得*crop*图片的路径的方法，需要两个参数，第一个是设置图片的属性的名字，第二个是数据类型中设置的<strong>Crop name</strong>。
+　　<code>Umbraco.Truncate</code>是Umbraco实现的一个方法，用来截取指定长度的字符，有8个重载，在这里用到了三个参数的重载，这三个参数分别是：要截取的字符串；截取的长度；是否显示省略号。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = &#34;Master.cshtml&#34;;
+    var newsLists = Model.Content.Children().OrderByDescending(o =&gt; o.CreateDate); //按照新闻创建时间倒序排列
+}
+&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;container&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;row&#34;</span>&gt;
+        @foreach (var post in newsLists)
+        {
+            &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;row&#34;</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;margin-top:10px&#34;</span>&gt;
+                &lt;<span style="color:#ff79c6">a</span> <span style="color:#50fa7b">href</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;@post.Url&#34;</span>&gt;
+                    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;col-lg-4 col-sm-6&#34;</span>&gt;
+                        &lt;<span style="color:#ff79c6">img</span> <span style="color:#50fa7b">src</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;@post.GetCropUrl(&#34;</span><span style="color:#50fa7b">newsImage</span>&#34;, &#34;<span style="color:#50fa7b">newsImage</span>&#34;)&#34; <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;img-responsive img-thumbnail&#34;</span> /&gt;
+                    &lt;/<span style="color:#ff79c6">div</span>&gt;
+                    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;col-lg-8 col-sm-6&#34;</span> <span style="color:#50fa7b">style</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;color:#000000&#34;</span>&gt;
+                        &lt;<span style="color:#ff79c6">h3</span>&gt;@post.GetPropertyValue(&#34;title&#34;)&lt;/<span style="color:#ff79c6">h3</span>&gt;&lt;<span style="color:#ff79c6">b</span>&gt;@post.CreateDate.ToLongDateString()&lt;/<span style="color:#ff79c6">b</span>&gt;
+                        &lt;<span style="color:#ff79c6">p</span>&gt;@Umbraco.Truncate((post.GetPropertyValue(&#34;introduction&#34;)).ToString(),150,true)&lt;/<span style="color:#ff79c6">p</span>&gt;
+                    &lt;/<span style="color:#ff79c6">div</span>&gt;
+                &lt;/<span style="color:#ff79c6">a</span>&gt;
+            &lt;/<span style="color:#ff79c6">div</span>&gt;
+            &lt;<span style="color:#ff79c6">hr</span> /&gt;
+        }
+    &lt;/<span style="color:#ff79c6">div</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　现在看一下初步的效果，可以看到已经能在新闻列表页看到新闻的缩略图、标题和简介了。
+<img src="/image/umbraco/backoffice50.png" alt="" /></p>
+
+<p>　　我们多添加些新闻，在下一篇博客将对新闻列表进行分页处理，并且在首页对几个新闻板块的新闻做一个概览，也就是把最新的新闻展示在首页。
+　　再此之前，我们对<strong>Content</strong>中的编辑器做一些调整，我们现在编辑的每条新闻都是在<strong>keji</strong>这个节点下面的，如果添加新闻很多，管理起来也不方便，所以我们需要设置一下，
+<img src="/image/umbraco/backoffice51.png" alt="" /></p>
+
+<p>　　进入<strong>Document Types</strong>功能下，打开<strong>News List</strong>类型的*Structure*选项卡，勾选<strong>Enable list view</strong>选项，然后保存。因为我们要对<strong>News List</strong>这个节点下的内容进行管理，所以要对<strong>News List</strong>文档类型进行设置。
+<img src="/image/umbraco/backoffice52.png" alt="" /></p>
+
+<p>　　现在回到<strong>Content</strong>节点下，可以看到原本存在于<strong>keji</strong>节点下的新闻详细内容页，可以使用表格的形式进行管理了。新闻内容再多也可以很容易的进行管理啦😄
+<img src="/image/umbraco/backoffice53.png" alt="" /></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/9umbraconewssite%E5%88%86%E9%A1%B5/" id="next">
+                &larr; <span class="nav-title nav-title-next">9、UmbracoNewsSite：分页</span> 
+            </a>  
+        <a rel="prev" href="/csharp/7umbraconewssite%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85%E9%A1%B5%E5%92%8C%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA/" id="prev">
+            <span class="nav-title nav-title-prev">7、UmbracoNewsSite：新闻详情页</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

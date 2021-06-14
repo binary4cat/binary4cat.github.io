@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Angular知识点汇总(3)：数据绑定  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    16 October 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Angular知识点汇总(3)：数据绑定</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-事件绑定">1. 事件绑定</a>
+<ul>
+<li><a href="#1-1-事件绑定的语法">1.1. 事件绑定的语法</a></li>
+<li><a href="#1-2-组件中绑定的方法">1.2. 组件中绑定的方法</a></li>
+<li><a href="#1-3-模板局部变量">1.3. 模板局部变量</a></li>
+</ul></li>
+<li><a href="#2-属性绑定">2. 属性绑定</a>
+<ul>
+<li><a href="#2-1-html属性绑定和dom属性绑定之间的区别">2.1. HTML属性绑定和DOM属性绑定之间的区别</a></li>
+<li><a href="#2-2-dom属性绑定">2.2. DOM属性绑定</a></li>
+<li><a href="#2-3-html属性绑定">2.3. HTML属性绑定</a>
+<ul>
+<li><a href="#2-3-1-css类绑定">2.3.1. CSS类绑定</a></li>
+<li><a href="#2-3-2-样式绑定">2.3.2. 样式绑定</a></li>
+</ul></li>
+<li><a href="#2-4-双向绑定">2.4. 双向绑定</a></li>
+</ul></li>
+<li><a href="#3-管道-pipe">3. 管道(pipe)</a>
+<ul>
+<li><a href="#3-1-内置管道">3.1. 内置管道</a></li>
+<li><a href="#3-2-自定义管道">3.2. 自定义管道</a></li>
+</ul></li>
+<li><a href="#4-参考资料">4. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-事件绑定">1. 事件绑定</h1>
+
+<h2 id="1-1-事件绑定的语法">1.1. 事件绑定的语法</h2>
+
+<p>事件绑定的语法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">input</span> (<span style="color:#50fa7b">input</span>)=&#34;<span style="color:#50fa7b">onInputEvent</span>($<span style="color:#50fa7b">event</span>)&#34;&gt;
+&lt;<span style="color:#ff79c6">button</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">onClickEvent</span>()&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>(eventName)</code>这种小括号包含事件名称的语法就是angular的事件绑定语法，可以将该事件绑定到组件中一个方法，该事件触发时，绑定的方法就会被执行。</li>
+<li><code>&lt;input (input)=&quot;onInputEvent($event)&quot;&gt;</code>
+
+<ul>
+<li><code>(input)</code>：事件绑定语法，绑定的是DOM的原生事件。</li>
+<li><code>onInputEvent</code>：组件中的一个方法名称，该事件触发的时候就会调用这个方法了。</li>
+<li><code>$event</code>：浏览器的事件对象，包含当前事件的数据。</li>
+</ul></li>
+</ul>
+
+<h2 id="1-2-组件中绑定的方法">1.2. 组件中绑定的方法</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">...
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#ff79c6">constructor</span>() { }
+  ngOnInit() {}
+  onInputEvent(event){
+      console.log(<span style="color:#f1fa8c">`您正在输入的内容：</span><span style="color:#f1fa8c">${</span>event.target.value<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>)
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>当输入事件触发的时候就会调用组件中的<code>onInputEvent</code>函数，在这里我们将输入的内容打印出来。</li>
+<li>可以看到方法中接收一个浏览器的事件对象，要获取输入的值需要有两次调用<code>.target.value</code>。</li>
+</ul>
+
+<h2 id="1-3-模板局部变量">1.3. 模板局部变量</h2>
+
+<p>上面的事件参数(<code>$event</code>)输入的是原生的浏览器事件对象，有时我们只需要它的value就可以，这时我们可以使用angular提供的模板局部变量，语法的格式是：<code>&lt;input #valName&gt;</code>。</p>
+
+<p>在这里定义两个HTML标签，分别打印浏览器事件对象和模板局部变量：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">input</span> (<span style="color:#50fa7b">input</span>)=&#34;<span style="color:#50fa7b">onInputEvent</span>($<span style="color:#50fa7b">event</span>)&#34;&gt;
+&lt;<span style="color:#ff79c6">input</span> #<span style="color:#50fa7b">myInput</span> (<span style="color:#50fa7b">input</span>)=&#34;<span style="color:#50fa7b">onInputEvent</span>(<span style="color:#50fa7b">myInput</span>)&#34; <span style="color:#50fa7b">id</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;myInput&#34;</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/Snipaste_2018-10-16_23-05-48.png" alt="模板局部变量" /></p>
+
+<ul>
+<li>可以看到浏览器事件对象的属性较多，如果有需要更多数据的话可以使用该变量。</li>
+<li>而模板局部变量只是一个DOM的引用，相当于是<code>document.getElementById(&quot;myInput&quot;)</code>的引用。</li>
+</ul>
+
+<p>在只需要传递值的时候，可以使用模板局部变量：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">input</span> #<span style="color:#50fa7b">myInput</span> (<span style="color:#50fa7b">input</span>)=&#34;<span style="color:#50fa7b">onInputEvent</span>(<span style="color:#50fa7b">myInput</span>.<span style="color:#50fa7b">value</span>)&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>直接传入value值即可。</li>
+<li>要注意写法：声明的时候要加<code>#</code>号(<code>#myInput</code>)，在取参的时候不需要<code>#</code>号(<code>myInput.value</code>)。</li>
+</ul>
+
+<h1 id="2-属性绑定">2. 属性绑定</h1>
+
+<h2 id="2-1-html属性绑定和dom属性绑定之间的区别">2.1. HTML属性绑定和DOM属性绑定之间的区别</h2>
+
+<p>用例子演示一下：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">// template
+&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;123&#34;</span> (<span style="color:#50fa7b">input</span>)=&#34;<span style="color:#50fa7b">onInputEvent</span>($<span style="color:#50fa7b">event</span>)&#34;&gt;
+
+// component
+onInputEvent(event: any) {
+    console.log(`DOM属性value的值为：${event.target.value}`);
+    console.log(`HTML属性value的值为：${event.target.getAttribute(&#39;value&#39;)}`);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出效果：<br />
+<img src="/image/Snipaste_2018-10-16_23-30-02.png" alt="输出" /></p>
+
+<ul>
+<li>HTML属性在页面渲染完成后就确定下来了，以后就不再改变了，有点类似于上一篇说过的快照参数。</li>
+<li>DOM属性是当前DOM对象的属性，属于是浏览器的一员，所以总是反映当前属性的状态(值)。</li>
+<li>HTML属性的值不能改变，但是DOM属性的值是可以改变的。</li>
+<li>因为DOM属性可变这个特性，模板绑定是通过DOM属性和事件结合来实现的。</li>
+</ul>
+
+<h2 id="2-2-dom属性绑定">2.2. DOM属性绑定</h2>
+
+<p>属性绑定语法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">img</span> [<span style="color:#50fa7b">src</span>]=&#34;<span style="color:#50fa7b">imageUrl</span>&#34;&gt;  <span style="color:#6272a4">&lt;!--属性绑定形式--&gt;</span>
+&lt;<span style="color:#ff79c6">img</span> <span style="color:#50fa7b">src</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;{{imageUrl}}&#34;</span>&gt;  <span style="color:#6272a4">&lt;!--插值表达式形式--&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>属性绑定的语法就是将DOM属性名字用<code>[]</code>中括号包括起来，然后付给一个组件中的属性作为值，就相当于给此DOM属性赋值了属性值。</li>
+<li>使用插值表达式形式也可以给属性赋值，两种方式随意选择就好，只有写法上的区别。</li>
+<li>这种绑定形式不会改变HTML属性的值，只作用于DOM属性的值范围。</li>
+</ul>
+
+<h2 id="2-3-html属性绑定">2.3. HTML属性绑定</h2>
+
+<p>基本的HTML属性绑定语法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">td</span> [<span style="color:#50fa7b">attr</span>.<span style="color:#50fa7b">colspan</span>]=&#34;<span style="color:#50fa7b">tableColspan</span>&#34;&gt;...&lt;/<span style="color:#ff79c6">td</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>为什么有了DOM属性绑定又有HTML属性绑定呢？上面的代码解释了其意义，因为有些标签的属性是没有对应的DOM属性的，例如<code>td</code>标签的<code>colspan</code>属性只有HTML属性，这时如果直接给其绑定值<code>&lt;td colspan=&quot;tableColspan&quot;&gt;</code>就会抛出异常，说不能绑定<code>colsoan</code>。</li>
+<li>HTML绑定的语法也是使用中括号包括属性名字，不过HTML属性绑定中，属性有一个前缀<code>attr</code>，<code>attr</code>在这里就表示属性的意思。</li>
+</ul>
+
+<h3 id="2-3-1-css类绑定">2.3.1. CSS类绑定</h3>
+
+<p>可以给属性绑定CSS类，多用来修改样式。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;classA classB&#34;</span> [<span style="color:#50fa7b">class</span>]=&#34;<span style="color:#50fa7b">myClass</span>&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在已经有class属性的情况下，直接使用属性绑定这种方式，会完全替换原先已有的class属性。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;classA classB&#34;</span> [<span style="color:#50fa7b">class</span>.<span style="color:#50fa7b">classB</span>]=&#34;<span style="color:#50fa7b">isShow</span>&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面这种class绑定的形式，可以控制已有class中的某一个是否起作用(不会影响其他的class属性)。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;classA classB&#34;</span> [<span style="color:#50fa7b">ngClass</span>]=&#34;{&#39;<span style="color:#50fa7b">classA</span>&#39; <span style="color:#50fa7b">:</span> <span style="color:#50fa7b">isShowA</span>, &#39;<span style="color:#50fa7b">classB</span>&#39; <span style="color:#50fa7b">:</span> <span style="color:#50fa7b">isShowB</span>}&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>ngClass</code>是Angular内置的指令，它的值是一个对象，可以同时控制多个class是否起作用。</li>
+</ul>
+
+<h3 id="2-3-2-样式绑定">2.3.2. 样式绑定</h3>
+
+<p>可以直接在HTML标签中设置样式代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">style</span>.<span style="color:#50fa7b">color</span>]=&#34;<span style="color:#50fa7b">isColor</span> ? &#39;<span style="color:#50fa7b">red</span>&#39; <span style="color:#50fa7b">:</span> &#39;<span style="color:#50fa7b">yellow</span>&#39;&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这种直接使用中括号包括的<code>style</code>点样式属性的方式，可以直接给样式的这个属性赋值。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">ngStyle</span>]=&#34;{&#39;<span style="color:#50fa7b">color</span>&#39;<span style="color:#50fa7b">:</span> <span style="color:#50fa7b">isColor</span>? &#39;<span style="color:#50fa7b">red</span>&#39;<span style="color:#50fa7b">:</span> &#39;<span style="color:#50fa7b">yellow</span>&#39;}&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>ngStyle</code>是Angular内置的指令，它的值是一个对象，可以直接给多个CSS样式赋值。</li>
+</ul>
+
+<h2 id="2-4-双向绑定">2.4. 双向绑定</h2>
+
+<p>前面的属性绑定都属于是单向绑定，也就是绑定在这些属性上的组件属性变量，只能由组件内部进行改变，HTML对其任何改变都不影响这个属性变量的值：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">input</span> [<span style="color:#50fa7b">value</span>]=&#34;<span style="color:#50fa7b">name</span>&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面的代码给<code>input</code>标签的<code>value</code>DOM属性绑定了一个组件的属性变量<code>name</code>，那么value的值是多少是随<code>name</code>的值改变而改变的，但是如果我们使用DOM操作修改了value的值，并不会造成<code>name</code>的值改变。 这就是单向绑定。</li>
+</ul>
+
+<p>双向绑定可以让我们实时的接收DOM元素的值的改变：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">input</span> [(<span style="color:#50fa7b">ngModel</span>)]= &#34;<span style="color:#50fa7b">name</span>&#34;&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>ngModel</code>是Angular内置的指令，结合<code>[()]</code>“中括号包围小括号”的语法，可以实现双向绑定，将input用户输入的值，实时的反映给<code>name</code>属性变量。</li>
+<li>双向绑定多用在form表单上，获取用户的输入。</li>
+</ul>
+
+<h1 id="3-管道-pipe">3. 管道(pipe)</h1>
+
+<h2 id="3-1-内置管道">3.1. 内置管道</h2>
+
+<p>Angular管道可以把输入的数据转换成指定格式输出，可以简化为数据的个性化操作。</p>
+
+<p>演示一个Angular内置的管道<code>date</code>的使用：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">p</span>&gt;当前的时间是：{{time | date }}&lt;/<span style="color:#ff79c6">p</span>&gt;  <span style="color:#6272a4">&lt;!--格式化时间的管道--&gt;</span>
+&lt;<span style="color:#ff79c6">p</span>&gt;当前的时间是：{{time | date | uppercase}}&lt;/<span style="color:#ff79c6">p</span>&gt; <span style="color:#6272a4">&lt;!--可以多个管道连接接使用--&gt;</span>
+&lt;<span style="color:#ff79c6">p</span>&gt;当前的时间是：{{time | date:&#39;yyyy-MM-dd HH:mm:ss&#39;}}&lt;/<span style="color:#ff79c6">p</span>&gt;  <span style="color:#6272a4">&lt;!--管道也可以接收参数--&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/Snipaste_2018-10-17_23-13-32.png" alt="管道" /></p>
+
+<ul>
+<li>第一个是使用<code>date</code>这个管道将时间格式化成默认的时间格式</li>
+<li>第二个是使用管道的连接，将<code>date</code>管道的输出作为<code>uppercase</code>管道的输入，最终输出了默认格式时间的大写形式</li>
+<li>第三个是给管道传入了参数，例子里面传入了一个时间格式化格式字符串，<code>date</code>会将时间格式化成参数规定的格式。</li>
+</ul>
+
+<p>Angular其余的内置管道可以看<a href="https://www.angular.cn/guide/pipes#built-in-pipes">这部分文档</a>了解。</p>
+
+<h2 id="3-2-自定义管道">3.2. 自定义管道</h2>
+
+<p>使用angular-cli命令<code>ng g pipe [name]</code>生成一个管道，该管道的作用是从一个数组中筛选出包含关键字的数据：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g pipe mypipes/filterKeyword</code></pre></td></tr></table>
+</div>
+</div>
+<p>生成的<code>filter-keyword.pipe.ts</code>文件初始内容：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Pipe, PipeTransform } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Pipe</span>({
+  name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;filterKeyword&#39;</span>
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> FilterKeywordPipe <span style="color:#ff79c6">implements</span> PipeTransform {
+
+  transform(value: <span style="color:#8be9fd">any</span>, args?: <span style="color:#8be9fd">any</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">null</span>;
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>@Pipe</code>是管道的装饰器，可以修饰一个普通的class作为管道。
+
+<ul>
+<li><code>name</code>：装饰器属性，它的值是此管道的名称，也就是在实际在页面上使用的时候用的名字。</li>
+</ul></li>
+<li><code>PipeTransform</code>：自定义管道必须实现的接口。</li>
+<li><code>transform</code>：实现<code>Pipetransform</code>接口后必须实现的方法，它默认有两个参数，第一个数传入管道的数据，也就是需要被管道处理的数据；第二个参数是一个可空的参数，也就是管道需要使用的参数，可以有多个管道使用的参数，可空与否看自己的实际需求定义。</li>
+<li>管道的返回值就是最终输出的结果。</li>
+</ul>
+
+<p>编写完成的管道：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Pipe, PipeTransform } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Pipe</span>({
+  name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;filterKeyword&#39;</span>
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> FilterKeywordPipe <span style="color:#ff79c6">implements</span> PipeTransform {
+
+  transform(list: <span style="color:#8be9fd">string</span>[], keyword: <span style="color:#8be9fd">string</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#6272a4">// 如果没有关键字，就返回全部的数组数据
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>keyword) {
+      <span style="color:#ff79c6">return</span> list;
+    }
+    <span style="color:#6272a4">// 按照关键词过滤，获取过滤后的数组
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> result <span style="color:#ff79c6">=</span> list.filter(item <span style="color:#ff79c6">=&gt;</span> {
+      <span style="color:#ff79c6">return</span> item.indexOf(keyword) <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span>;
+    });
+    <span style="color:#ff79c6">return</span> result;
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们在组件中演示一下：</p>
+
+<p>首先将我们自定义的管道加入到主模块<code>app.module.ts</code>的声明中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  declarations<span style="color:#ff79c6">:</span> [
+    ...
+    FilterKeywordPipe
+  ],
+  ...
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<p>在组件中定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// component
+</span><span style="color:#6272a4"></span>names: <span style="color:#8be9fd">string</span>[] <span style="color:#ff79c6">=</span> [<span style="color:#f1fa8c">&#39;张三&#39;</span>, <span style="color:#f1fa8c">&#39;李四&#39;</span>, <span style="color:#f1fa8c">&#39;王五&#39;</span>, <span style="color:#f1fa8c">&#39;王六&#39;</span>];
+
+<span style="color:#6272a4">// template
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">&lt;</span>p <span style="color:#ff79c6">*</span>ngFor<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;let name of names | filterKeyword:&#39;王&#39;&#34;</span><span style="color:#ff79c6">&gt;</span>{{name}}<span style="color:#ff79c6">&lt;</span>/p&gt;  &lt;!--按照&#39;王&#39;字过滤--&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>最终会在页面上循环输出“王五”“王六”。</p>
+
+<h1 id="4-参考资料">4. 参考资料</h1>
+
+<p><a href="https://my.oschina.net/u/3412211/blog/896636">https://my.oschina.net/u/3412211/blog/896636</a><br />
+<a href="https://www.angular.cn/guide/displaying-data">https://www.angular.cn/guide/displaying-data</a><br />
+<a href="https://www.angular.cn/guide/pipes">https://www.angular.cn/guide/pipes</a><br />
+<a href="https://www.angular.cn/guide/template-syntax#html-attribute-vs-dom-property">https://www.angular.cn/guide/template-syntax#html-attribute-vs-dom-property</a><br />
+<a href="https://www.angular.cn/guide/pipes">https://www.angular.cn/guide/pipes</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB4form%E8%A1%A8%E5%8D%95/" id="next">
+                &larr; <span class="nav-title nav-title-next">Angular知识点汇总(4)：Form表单</span> 
+            </a>  
+        <a rel="prev" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB2%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/" id="prev">
+            <span class="nav-title nav-title-prev">Angular知识点汇总(2)：路由系统</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

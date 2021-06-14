@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>WSL&#43;VSCODE体验UBUNTU环境下的开发  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    29 June 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">WSL&#43;VSCODE体验UBUNTU环境下的开发</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#配置-wsl-环境">配置 WSL 环境</a>
+<ul>
+<li><a href="#切换-wsl-的默认用户为-root-用户">切换 WSL 的默认用户为 root 用户</a></li>
+<li><a href="#切换-apt-源为清华源">切换 apt 源为清华源</a></li>
+<li><a href="#切换-wsl-默认的-shell-为-zsh">切换 WSL 默认的 shell 为 zsh</a>
+<ul>
+<li><a href="#配置-zsh-的主题为-agnoster">配置 zsh 的主题为 agnoster</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#安装-remote-wsl-插件">安装 Remote-WSL 插件</a>
+<ul>
+<li><a href="#切换默认终端为-zsh">切换默认终端为 zsh</a></li>
+<li><a href="#安装-wsl-下的-vs-code-扩展">安装 WSL 下的 VS code 扩展</a></li>
+</ul></li>
+<li><a href="#测试-wsl-下的-net-core-开发">测试 WSL 下的.net core 开发</a>
+<ul>
+<li><a href="#创建并运行">创建并运行</a></li>
+<li><a href="#在-vs-code-中修改编译运行">在 VS code 中修改编译运行</a>
+<ul>
+<li><a href="#在-terminal-中编译为-linux-版本运行">在 terminal 中编译为 Linux 版本运行</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#结尾">结尾</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="配置-wsl-环境">配置 WSL 环境</h1>
+
+<p>首先安装 WSL，我这里选择的是 ubuntu18.04 这个应用。</p>
+
+<h2 id="切换-wsl-的默认用户为-root-用户">切换 WSL 的默认用户为 root 用户</h2>
+
+<p>切换成 root 用户主要是避免后续开发中遇到权限问题比较麻烦，直接默认 root 解决问题。</p>
+
+<p>找到<code>ubuntu</code>安装目录，一般在<code>C:\Program Files\WindowsApps\CanonicalGroupLimited.Ubuntu18.04onWindows_1804.2019.522.0_x64__79rhkp1fndgsc</code>文件夹下面。</p>
+
+<p>在文件夹中打开 powershell 运行下面的命令：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./ubuntu1804.exe config --default-user root
+<span style="color:#6272a4"># 重启WSL服务</span>
+net stop LxssManager
+net start LxssManager</code></pre></td></tr></table>
+</div>
+</div>
+<p>如果显示拒绝访问，就用管理员权限打开 powershell，或者直接在资源管理器中找到<code>LxssManager</code>这个服务重新启动。</p>
+
+<h2 id="切换-apt-源为清华源">切换 apt 源为清华源</h2>
+
+<p>默认的软件源下载太慢，替换为国内的清华大学软件源。</p>
+
+<p>Ubuntu 清华源的地址：<a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/">https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
+
+<h2 id="切换-wsl-默认的-shell-为-zsh">切换 WSL 默认的 shell 为 zsh</h2>
+
+<p>zsh 的优点在我看来就是配置丰富，最重要的就是好看。</p>
+
+<p>执行下面的命令安装<code>zsh</code>和<code>oh-my-zsh</code></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt-get update
+sudo apt-get install zsh
+sh -c <span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">$(</span>wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -<span style="color:#ff79c6">)</span><span style="color:#f1fa8c">&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>查看当前机器上的 shell 类型：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cat /etc/shells
+
+<span style="color:#6272a4"># 输出下面类似内容</span>
+/bin/sh
+/bin/bash
+/bin/rbash
+/bin/dash
+/usr/bin/tmux
+/usr/bin/screen
+/bin/zsh
+/usr/bin/zsh</code></pre></td></tr></table>
+</div>
+</div>
+<p>切换登陆时默认的 shell 为 zsh</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">chsh -s /bin/zsh</code></pre></td></tr></table>
+</div>
+</div>
+<p>重新打开 ubuntu 窗口，或者重新在 VS code 中连接 WSL，就可以使用新设置的 shell 了。</p>
+
+<h3 id="配置-zsh-的主题为-agnoster">配置 zsh 的主题为 agnoster</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vi ~/.zshrc
+
+<span style="color:#6272a4"># 修改下面的属性：</span>
+<span style="color:#8be9fd;font-style:italic">ZSH_THEME</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;agnoster&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>配置完成之后执行<code>source ~/.zshrc</code>命令生效，之后发现展示的内容有乱码，这是因为字体的问题，由于主要在 VS code 中使用，这里就不处理默认窗口的字体问题了。</p>
+
+<h1 id="安装-remote-wsl-插件">安装 Remote-WSL 插件</h1>
+
+<p>在 VS code 中搜索<code>Remote-WSL</code>并安装，完成之后在左下角会出现这个图标：</p>
+
+<p><img src="/image/Snipaste_2019-06-28_22-17-35.png" alt="" /></p>
+
+<p>点击该图标，选择 New Window</p>
+
+<p><img src="/image/Snipaste_2019-06-28_22-19-26.png" alt="" /></p>
+
+<p>第一次有些慢，需要安装组件：</p>
+
+<p><img src="/image/Snipaste_2019-06-28_22-20-17.png" alt="" /></p>
+
+<h2 id="切换默认终端为-zsh">切换默认终端为 zsh</h2>
+
+<p>进入后打开 terminal 发现默认还是 bash，需要配置一下切换为 zsh 终端：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">vi ~/.bashrc
+
+<span style="color:#6272a4"># 在打开的文件中（末尾即可）增加下面内容</span>
+<span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">test</span> -t <span style="color:#bd93f9">1</span>; <span style="color:#ff79c6">then</span>
+    <span style="color:#8be9fd;font-style:italic">exec</span> zsh
+<span style="color:#ff79c6">fi</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>关闭掉终端再打开，就可以发现默认 shell 切换成 zsh 了。</p>
+
+<p>解决乱码问题，修改 VS code 的字体即可，这里推荐<a href="https://github.com/tonsky/FiraCode">Fira Code</a>字体，下载安装该字体，并修改为 VS code 的默认字体，再打开终端就是下面的效果了：</p>
+
+<p><img src="/image/Snipaste_2019-06-29_12-45-47.png" alt="" /></p>
+
+<h2 id="安装-wsl-下的-vs-code-扩展">安装 WSL 下的 VS code 扩展</h2>
+
+<p>进入 WSL 中时 VS code 的本地扩展都是没有的，需要在 WSL 下在安装一边，也就是点点点就行：</p>
+
+<p><img src="/image/Snipaste_2019-06-29_12-49-44.png" alt="" /></p>
+
+<p>把已安装过的插件上显示&rdquo;Install on WSL&rdquo;的都点击安装上就行啦。</p>
+
+<h1 id="测试-wsl-下的-net-core-开发">测试 WSL 下的.net core 开发</h1>
+
+<p>来个<a href="https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/install">hello world</a></p>
+
+<p>按照上面的官方文档在 terminal 中安装.net core：</p>
+
+<p><img src="/image/Snipaste_2019-06-29_13-26-52.png" alt="" /></p>
+
+<h2 id="创建并运行">创建并运行</h2>
+
+<p>进入我们本机的指定磁盘下新建项目（本机的文件系统挂载在 WSL 中的<code>/mnt</code>文件目录下）：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#6272a4"># 进入我的本机e盘下面</span>
+<span style="color:#8be9fd;font-style:italic">cd</span> /mnt/e/dotnet
+dotnet new console -o myApp
+<span style="color:#8be9fd;font-style:italic">cd</span> myApp
+dotnet run</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/Snipaste_2019-06-29_14-11-35.png" alt="" /></p>
+
+<h2 id="在-vs-code-中修改编译运行">在 VS code 中修改编译运行</h2>
+
+<p>在 VS code 中编辑 myApp 的内容，然后运行：</p>
+
+<p><img src="/image/Snipaste_2019-06-29_14-14-04.png" alt="" /></p>
+
+<p>将<code>Hello World!</code>修改为<code>Hello WSL!</code></p>
+
+<p><img src="/image/Snipaste_2019-06-29_14-15-07.png" alt="" /></p>
+
+<h3 id="在-terminal-中编译为-linux-版本运行">在 terminal 中编译为 Linux 版本运行</h3>
+
+<p><img src="/image/Snipaste_2019-06-29_14-20-26.png" alt="" /></p>
+
+<h1 id="结尾">结尾</h1>
+
+<p>至此就可以在 VS code 中体验 Linux 环境下做开发了，只要在 VS code 中连上 WSL 就可以在 Linux 下开发、编译、测试 Linux 下的应用，而不用再准备一台 Linux 机器写代码、编译测试，感觉很爽。</p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/tool/%E4%BD%BF%E7%94%A8visual-studio%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/" id="prev">
+            <span class="nav-title nav-title-prev">使用Visual Studio远程调试</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

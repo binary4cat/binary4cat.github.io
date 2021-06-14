@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>抽象工厂模式(Abstract Factory)：抽象工厂  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    23 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">抽象工厂模式(Abstract Factory)：抽象工厂</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>提供一个接口，让该接口负责创建一系列“相关或相互依赖的对象”，无需指定他们的具体类。      ————GoF</p>
+</blockquote>
+
+<p>　　在抽象工厂中有两种抽象存在：系列的抽象、产品的抽象。</p>
+
+<p><img src="/image/Design Pattern/design pattern15.png" alt="" /></p>
+
+<p>　　在这个类图中，*ConcreteFactory1*和*ConcreteFactory2*是系列的抽象，*AbstractProductA*和*AbstractProductB*是产品的抽象。
+　　当客户端创建了*AbstractFactory*这个抽象工厂时，调用*ConcreteFactory1*和*ConcreteFactory2*创建出不同的产品A1、B1和A2、B2。</p>
+
+<p><img src="/image/Design Pattern/design pattern16.png" alt="" /></p>
+
+<p><strong>实现要点</strong>：
+　　抽象工厂将产品对象的创建延迟到它的具体工厂的子类。
+　　通常在运行时创建一个具体工厂类的实例，这一具体工厂的创建具有特定实现的产品对象，为了创建不同的产品对象，客户应使用不同的工厂。
+　　把工厂作为单件，一个应用中一般每个产品系列只需要一个具体的工厂实例，因此，工厂通常最好实现为一个单例模式。
+　　创建产品，抽象工厂声明一个创建产品的接口，真正创建产品是由具体工厂类创建的，最通常的办法是为每一个产品定义一个工厂方法，一个具体的工厂将为每个产品重定义该工厂方法，以指定产品，虽然这样的实现很简单，但是它要求每个产品系列都要有一个新的具体工厂子类，即使这些产品系列的差别很小。</p>
+
+<p><strong>Code</strong>：
+　　我们假设有两个系列(品牌)和两种产品，客户端只需要调用产品的抽象，而无须知道具体产品的工厂。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">128
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Text;
+<span style="color:#ff79c6">using</span> System.Threading.Tasks;
+
+<span style="color:#ff79c6">namespace</span> AbstractFactory
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Program</span>
+    {
+        <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            <span style="color:#6272a4">//客户端只需要知道产品的抽象和工厂的抽象
+</span><span style="color:#6272a4"></span>            PC pc = <span style="color:#ff79c6">null</span>;
+            Pad pad = <span style="color:#ff79c6">null</span>;
+            Producer producer = <span style="color:#ff79c6">null</span>;
+
+            <span style="color:#6272a4">//我们需要哪个系列的产品，就调用该工厂的具体实现(子工厂)
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">//我们这里假设需要联想品牌的产品
+</span><span style="color:#6272a4"></span>            producer = <span style="color:#ff79c6">new</span> LenovoFactory();
+            pc = producer.productionPC();
+            pad = producer.productionPad();
+
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;电脑是：{0},平板是：{1}&#34;</span>,pc,pad);
+            Console.ReadKey();
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 产品A抽象
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">PC</span>
+    {
+
+    }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 产品B抽象
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Pad</span>
+    {
+
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 工厂的抽象
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Producer</span>
+    {
+        <span style="color:#6272a4">//制造PC
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> PC productionPC();
+        <span style="color:#6272a4">//制造平板
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">abstract</span> Pad productionPad();
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 系列1的产品A
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LenovoPC</span> : PC
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">string</span> ToString()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;联想电脑&#34;</span>;
+        }
+    }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 系列2的产品A
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">DellPC</span>:PC
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">string</span> ToString()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;戴尔电脑&#34;</span>;
+        }
+    }
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 系列1的产品B
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LenovoPad</span> : Pad
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">string</span> ToString()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;联想平板电脑&#34;</span>;
+        }
+    }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 系列2的产品B
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">DellPad</span>:Pad
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> <span style="color:#8be9fd">string</span> ToString()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;戴尔平板电脑&#34;</span>;
+        }
+    }
+
+
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 联想工厂
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LenovoFactory</span> : Producer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Pad productionPad()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> LenovoPad();
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> PC productionPC()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> LenovoPC();
+        }
+    }
+    <span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// 戴尔工厂
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">DellFactory</span> : Producer
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> Pad productionPad()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> DellPad();
+        }
+
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">override</span> PC productionPC()
+        {
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">new</span> DellPC();
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行结果：
+<img src="/image/Design Pattern/design pattern17.png" alt="" /></p>
+
+<p>　　在上述代码中，我们的变化点在于创建(new)具体的工厂这一步骤，需要不同的系列的产品，就可以创建不同的子工厂，我们修改一下客户端调用的代码，就可以看出来了：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">static</span> <span style="color:#ff79c6">void</span> Main(<span style="color:#8be9fd">string</span><span style="color:#50fa7b">[]</span> args)
+        {
+            <span style="color:#6272a4">//客户端只需要知道产品的抽象和工厂的抽象
+</span><span style="color:#6272a4"></span>            PC pc = <span style="color:#ff79c6">null</span>;
+            Pad pad = <span style="color:#ff79c6">null</span>;
+            Producer producer = <span style="color:#ff79c6">null</span>;
+
+            <span style="color:#6272a4">//我们需要哪个系列的产品，就调用该工厂的具体实现(子工厂)
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">//我们这里假设需要联想品牌的产品
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">//producer = new LenovoFactory();
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">//*********戴尔系列产品*************
+</span><span style="color:#6272a4"></span>            producer = <span style="color:#ff79c6">new</span> DellFactory();
+            <span style="color:#6272a4">//**********************************
+</span><span style="color:#6272a4"></span>            pc = producer.productionPC();
+            pad = producer.productionPad();
+
+            Console.WriteLine(<span style="color:#f1fa8c">&#34;电脑是：{0},平板是：{1}&#34;</span>,pc,pad);
+            Console.ReadKey();
+        }</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/image/Design Pattern/design pattern18.png" alt="" /></p>
+
+<p>　　同样的，我们可以使用反射来动态的实现工厂的创建(new)工作，这样就可以体现设计模式的好处了。</p>
+
+<p><strong>适用性</strong>：
+　　一个系统不应当依赖于产品类实例如何被创建、组合和表达的细节，这对于所有形态的工厂模式都是重要的。
+　　这个系统有多于一个产品系列，而系统只需要消费其中的某一个产品系列。
+　　系统提供一个产品类的库，所有的产品以同样的接口出现，从而使客户端不依赖于实现。</p>
+
+<p><strong>总结</strong>：
+　　如果没有应对“构建多个产品系列”的需求变化，则没有必要使用抽象工厂模式，这时候使用简单的静态工厂完全可以。
+　　“系列对象”指的是这些对象之间有相互依赖或相互作用的关系。
+　　抽象工厂模式主要是应对“新系列”的需求变动，但是缺点是难以应对“新产品”的需求变动。比如说上面的代码例子，我们如果需要添加华硕品牌，只需要继承*Producer*工厂的抽象就可以了，但是如果添加*Phone*这个新产品的话，就需要改动好几处工厂代码。
+　　抽象工厂模式经常和工厂方法模式共同组合来应对“新产品”的需求变化。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/" id="prev">
+            <span class="nav-title nav-title-prev">抽象工厂模式(Abstract Factory)：工厂方法</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

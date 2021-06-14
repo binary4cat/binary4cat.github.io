@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：Set接口  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    16 June 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：Set接口</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://img.mp.sohu.com/upload/20170809/7f6678264b154d028f0e36e9159c8e9a.png">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-set接口">1. Set接口</a></li>
+<li><a href="#2-实现类hashset的存储和迭代">2. 实现类HashSet的存储和迭代</a></li>
+<li><a href="#3-字符串对象的哈希值">3. 字符串对象的哈希值</a>
+<ul>
+<li><a href="#3-1-hashset的存储过程">3.1. HashSet的存储过程</a></li>
+<li><a href="#3-2-linkedhashset集合">3.2. LinkedHashSet集合</a></li>
+</ul></li>
+<li><a href="#4-arraylist-hashset判断对象是否重复">4. ArrayList,HashSet判断对象是否重复</a></li>
+<li><a href="#5-hashcode和equals方法">5. hashCode和equals方法</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-set接口">1. Set接口</h1>
+
+<ul>
+<li>Set接口的特点
+
+<ul>
+<li>Set接口是不能包含重复元素的集合。</li>
+<li>Set集合取出元素的方式可以采用：迭代器、foreach。</li>
+</ul></li>
+</ul>
+
+<h1 id="2-实现类hashset的存储和迭代">2. 实现类HashSet的存储和迭代</h1>
+
+<ul>
+<li>HashSet (哈希表)无序集合,存储和取出的顺序不同,没有索引,不存储重复元素</li>
+<li>内部使用的<code>map</code>存储的，添加操作在内部实现是当作map的key存储的，所以不会出现重复元素。 <!-- more --></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">){</span>
+    Set<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> set<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> HashSet<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>   <span style="color:#6272a4">//相同数据会存储失败
+</span><span style="color:#6272a4"></span>    Iterator<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> iterator<span style="color:#ff79c6">=</span>set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">iterator</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasNext</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>iterator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">next</span><span style="color:#ff79c6">());</span>  <span style="color:#6272a4">//输出：a1 a2 a3
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>String str <span style="color:#ff79c6">:</span> set<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">);</span>              <span style="color:#6272a4">//输出：a1 a2 a3
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-字符串对象的哈希值">3. 字符串对象的哈希值</h1>
+
+<ul>
+<li>计算对象的散列值，String类重写了父类Object的hashCode方法</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * Returns a hash code for this string. The hash code for a
+</span><span style="color:#6272a4">     * {@code String} object is computed as
+</span><span style="color:#6272a4">     * &lt;blockquote&gt;&lt;pre&gt;
+</span><span style="color:#6272a4">     * s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+</span><span style="color:#6272a4">     * &lt;/pre&gt;&lt;/blockquote&gt;
+</span><span style="color:#6272a4">     * using {@code int} arithmetic, where {@code s[i]} is the
+</span><span style="color:#6272a4">     * &lt;i&gt;i&lt;/i&gt;th character of the string, {@code n} is the length of
+</span><span style="color:#6272a4">     * the string, and {@code ^} indicates exponentiation.
+</span><span style="color:#6272a4">     * (The hash value of the empty string is zero.)
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @return  a hash code value for this object.
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">hashCode</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> h <span style="color:#ff79c6">=</span> hash<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>h <span style="color:#ff79c6">==</span> 0 <span style="color:#ff79c6">&amp;&amp;</span> value<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">&gt;</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">char</span> val<span style="color:#ff79c6">[]</span> <span style="color:#ff79c6">=</span> value<span style="color:#ff79c6">;</span>
+
+            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> value<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#6272a4">//val字节数组在这里记录了字符串的所有字符，在计算的时候转成了ASCII码参与运算。
+</span><span style="color:#6272a4"></span>                h <span style="color:#ff79c6">=</span> 31 <span style="color:#ff79c6">*</span> h <span style="color:#ff79c6">+</span> val<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>  
+            <span style="color:#ff79c6">}</span>
+            hash <span style="color:#ff79c6">=</span> h<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> h<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>String类重写的hashCode返回一串数字</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> String s1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> String<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;abc&#34;</span><span style="color:#ff79c6">);</span>
+ String s2 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> String<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;abc&#34;</span><span style="color:#ff79c6">);</span>
+ System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>s1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hashCode</span><span style="color:#ff79c6">());</span>
+ <span style="color:#6272a4">//输出：96354 System.out.println(s2.hashCode());
+</span><span style="color:#6272a4"></span> <span style="color:#6272a4">//输出：96354 System.out.println(&#34;哈哈&#34;.hashCode());
+</span><span style="color:#6272a4"></span> <span style="color:#6272a4">//输出：694528 System.out.println(&#34;呵呵&#34;.hashCode());
+</span><span style="color:#6272a4"></span> <span style="color:#ff79c6">//</span>输出：691872</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-1-hashset的存储过程">3.1. HashSet的存储过程</h2>
+
+<ol>
+<li>首先调用当前数据类型本类的hashCode()方法算出哈希值(自定义类型调用的是Object的方法，也可以自己重写hashCode方法)</li>
+<li>在map容器中找是否与新元素哈希值相同的已有元素
+
+<ul>
+<li>如果没有直接存入</li>
+<li>如果有转到第三步</li>
+</ul></li>
+<li>新元素会与该索引位置下的已有元素利用equals方法一一对比
+
+<ul>
+<li>新元素.equals(已有元素)返回true，则停止对比，说明重复，不再存入</li>
+<li>如果与该索引位置下的已有元素都通过equals方法对比返回false,说明没有重复，存入容器</li>
+</ul></li>
+</ol>
+
+<h2 id="3-2-linkedhashset集合">3.2. LinkedHashSet集合</h2>
+
+<ul>
+<li>LinkedHashSet是Set的一个实现，LinkedHashSet继承于HashSet，并且其内部是通过LinkedHashMap来实现的。</li>
+<li>LinkedHashSet具有顺序，也就是怎么存进去的怎么拿出来，顺序不会乱。</li>
+<li>LinkedHashSet是线程不安全的，也就是说会有两个线程操作同一个LinkedHashSet集合的情况发生。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">function</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    LinkedHashSet<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> lsh<span style="color:#ff79c6">=</span><span style="color:#ff79c6">new</span> LinkedHashSet<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;();</span>
+    lsh<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a1&#34;</span><span style="color:#ff79c6">);</span>
+    lsh<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a2&#34;</span><span style="color:#ff79c6">);</span>
+    lsh<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a3&#34;</span><span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>String string <span style="color:#ff79c6">:</span> lsh<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>string<span style="color:#ff79c6">);</span>  <span style="color:#6272a4">//输出：a1 a2 a3
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-arraylist-hashset判断对象是否重复">4. ArrayList,HashSet判断对象是否重复</h1>
+
+<ul>
+<li><p>ArrayList的contains方法底层依赖于equals方法</p>
+
+<ul>
+<li>ArrayList的contains方法在执行时，会使用调用方法时传入的元素(类型)的equals方法依次与集合中的已有元素进行比较，根据返回的Boolean值判断是否有重复元素。</li>
+<li>当ArrayList存放自定义类型(对象)时，如果自定义类型没有重写equals方法，判断存入的对象是否重复的依据是对象在堆中的地址值，所以如果想根据对象的属性等内容判断是否为重复元素，就应该重写元素的equals方法。</li>
+</ul></li>
+
+<li><p>HashSet的<code>add()</code>方法和<code>contains方法()</code>底层都依赖<code>hashCode()</code>方法与<code>equals()</code>方法</p>
+
+<ul>
+<li><p>HashSet集合由于是无序的，其判断唯一的依据是元素类型的<code>hashCode</code>与<code>equals</code>方法的返回结果:</p></li>
+
+<li><p>先判断新元素与集合内已有元素的<code>HashCode</code>值</p></li>
+
+<li><p>如果不同，说明是不同元素，添加到集合。</p></li>
+
+<li><p>如果相同，再判断equals比较结果。返回true则相同元素；返回false则不同元素，添加到集合。</p></li>
+
+<li><p>使用HashSet存储自定义类型，如果没有重写该类的hashCode与equals方法，则判断重复时，使用的是地址值，如果想通过内容比较元素是否相同，需要重写该元素类的<code>hashcode</code>与<code>equals</code>方法。</p></li>
+</ul></li>
+</ul>
+
+<h1 id="5-hashcode和equals方法">5. hashCode和equals方法</h1>
+
+<blockquote>
+<p><a href="http://www.cnblogs.com/Qian123/p/5703507.html">推荐阅读</a></p>
+</blockquote>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80map%E6%8E%A5%E5%8F%A3/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：Map接口</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80list%E6%8E%A5%E5%8F%A3/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：List接口</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

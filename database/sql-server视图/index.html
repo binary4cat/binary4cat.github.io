@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>SQL Server视图  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    27 April 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">SQL Server视图</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#什么是视图">什么是视图</a></li>
+<li><a href="#视图的优点和使用规则-http-www-cnblogs-com-careyson-archive-2011-12-07-2279522-html"><a href="http://www.cnblogs.com/CareySon/archive/2011/12/07/2279522.html">视图的优点和使用规则</a></a>
+<ul>
+<li><a href="#为什么要使用视图">为什么要使用视图</a></li>
+<li><a href="#规则">规则</a></li>
+</ul></li>
+<li><a href="#编写视图">编写视图</a>
+<ul>
+<li><a href="#语法">语法</a></li>
+<li><a href="#示例代码">示例代码</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="什么是视图">什么是视图</h1>
+
+<p>　　视图就是一张虚拟表，是基于SQL语句的<strong>结果集</strong>的可视化的表，视图中的字段是来自一个或多个表中的字段(相当于子查询的结果集那样)。
+　　视图简单的理解为一个统一访问数据的接口，用户只需要访问这个接口，而不需要知道具体的表的结构和表之间的关系。
+　　数据库的结构和设计不会受到视图中的函数、where、join语句的影响。</p>
+
+<h1 id="视图的优点和使用规则-http-www-cnblogs-com-careyson-archive-2011-12-07-2279522-html"><a href="http://www.cnblogs.com/CareySon/archive/2011/12/07/2279522.html">视图的优点和使用规则</a></h1>
+
+<h2 id="为什么要使用视图">为什么要使用视图</h2>
+
+<p>•   视图隐藏了底层的表结构，简化了数据访问操作
+•   因为隐藏了底层的表结构，所以大大加强了安全性，用户只能看到视图提供的数据
+•   使用视图，方便了权限管理，让用户对视图有权限而不是对底层表有权限进一步加强了安全性
+•   视图提供了一个用户访问的接口，当底层表改变后，改变视图的语句来进行适应，使已经建立在这个视图上客户端程序不受影响</p>
+
+<h2 id="规则">规则</h2>
+
+<p>•   在View中，除非有TOP关键字，否则不能用Order By子句（如果你一意孤行要用Order by,这里有个hack是使用Top 100 percent…..)
+•   View在每个Schema中命名必须独一无二
+•   View嵌套不能超过32层（其实实际工作中谁嵌套超过两层就要被打PP了-.-)
+•   Compute,compute by,INTO关键字不允许出现在View中
+•   View不能建立在临时表上
+•   View不能对全文索引进行查询</p>
+
+<h1 id="编写视图">编写视图</h1>
+
+<h2 id="语法">语法</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">create</span> <span style="color:#ff79c6">view</span> vw_name
+<span style="color:#ff79c6">as</span>
+　　查询命令</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="示例代码">示例代码</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">exists</span>(<span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> sysobjects <span style="color:#ff79c6">where</span> name<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;vw_GetStaffInfo&#39;</span>)
+    <span style="color:#ff79c6">drop</span> <span style="color:#ff79c6">view</span> vw_GetStaffInfo
+
+<span style="color:#ff79c6">create</span> <span style="color:#ff79c6">view</span> vw_GetStaffInfo
+<span style="color:#ff79c6">as</span>
+    <span style="color:#ff79c6">select</span> Name,Age,ClassId <span style="color:#ff79c6">from</span> Staff <span style="color:#ff79c6">where</span> ClassId<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;.NET&#39;</span>
+    
+    
+<span style="color:#6272a4">--调用视图，和使用表的方法一样
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">from</span> vw_GetStaffInfo</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/database/sql-server%E8%A1%A8%E8%BF%9E%E6%8E%A5-join/" id="prev">
+            <span class="nav-title nav-title-prev">SQL Server表连接(Join)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

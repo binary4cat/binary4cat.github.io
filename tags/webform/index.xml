@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webform on Haijd&#39;s Blog</title>
+    <link>/tags/webform/</link>
+    <description>Recent content in Webform on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Mar 2016 23:30:19 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/webform/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在ashx页中使用Session</title>
+      <link>/csharp/%E5%9C%A8ashx%E9%A1%B5%E4%B8%AD%E4%BD%BF%E7%94%A8session/</link>
+      <pubDate>Sun, 20 Mar 2016 23:30:19 +0800</pubDate>
+      
+      <guid>/csharp/%E5%9C%A8ashx%E9%A1%B5%E4%B8%AD%E4%BD%BF%E7%94%A8session/</guid>
+      <description>&lt;p&gt;　　&lt;/p&gt;
+
+&lt;h1 id=&#34;1-正文&#34;&gt;1. 正文&lt;/h1&gt;
+
+&lt;p&gt;　　在ashx中使用Session不能直接&lt;code&gt;context.Session[&amp;quot;sessionName&amp;quot;]=value;&lt;/code&gt; ,需要引入一个命名空间和继承一个接口。
+　　命名空间：&lt;code&gt;using System.Web.SessionState;&lt;/code&gt;  作用：“IRequiresSessionState”接口的命名空间
+　　接口：&lt;code&gt;IRequiresSessionState&lt;/code&gt;    作用:指定目标 HTTP 处理程序需要对会话状态值具有读写访问权&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Angular知识点汇总(4)：Form表单  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    18 October 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Angular知识点汇总(4)：Form表单</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-angular的两种表单api">1. Angular的两种表单API</a>
+<ul>
+<li><a href="#1-1-概述">1.1. 概述</a></li>
+</ul></li>
+<li><a href="#2-响应式表单">2. 响应式表单</a>
+<ul>
+<li><a href="#2-1-如何建响应式表单数据模型">2.1. 如何建响应式表单数据模型</a>
+<ul>
+<li><a href="#2-1-1-formcontrol">2.1.1. <code>FormControl</code></a></li>
+<li><a href="#2-1-2-formgroup">2.1.2. <code>FormGroup</code></a></li>
+<li><a href="#2-1-3-formarray">2.1.3. <code>FormArray</code></a></li>
+</ul></li>
+<li><a href="#2-2-响应式表单用到的指令">2.2. 响应式表单用到的指令</a></li>
+<li><a href="#2-3-响应式表单的特点">2.3. 响应式表单的特点</a></li>
+<li><a href="#2-4-响应式表单的例子">2.4. 响应式表单的例子</a>
+<ul>
+<li><a href="#2-4-1-使用-formgroup-编写表单并且获取提交">2.4.1. 使用<code>FormGroup</code>编写表单并且获取提交</a></li>
+<li><a href="#2-4-2-formarray-绑定动态表单">2.4.2. <code>FormArray</code>绑定动态表单</a></li>
+</ul></li>
+<li><a href="#2-5-可单独使用的-formcontrol-指令">2.5. 可单独使用的<code>formControl</code>指令</a></li>
+<li><a href="#2-6-formbuilder">2.6. <code>FormBuilder</code></a></li>
+</ul></li>
+<li><a href="#3-模板式表单">3. 模板式表单</a>
+<ul>
+<li><a href="#3-1-概述">3.1. 概述</a></li>
+<li><a href="#3-2-模板式表单对-form-元素的处理">3.2. 模板式表单对<form>元素的处理</a></li>
+<li><a href="#3-3-模板式表单调用表单对象的实例">3.3. 模板式表单调用表单对象的实例</a></li>
+<li><a href="#3-4-模板式表单的提交">3.4. 模板式表单的提交</a></li>
+<li><a href="#3-5-模板式表单绑定-ngmodel">3.5. 模板式表单绑定<code>ngModel</code></a></li>
+</ul></li>
+<li><a href="#4-响应式表单校验">4. 响应式表单校验</a>
+<ul>
+<li><a href="#4-1-angular校验器">4.1. Angular校验器</a></li>
+<li><a href="#4-2-校验器的使用">4.2. 校验器的使用</a></li>
+<li><a href="#4-3-校验器信息的获取">4.3. 校验器信息的获取</a></li>
+<li><a href="#4-4-实现自定义的校验器">4.4. 实现自定义的校验器</a></li>
+<li><a href="#4-5-在模板中显示校验信息">4.5. 在模板中显示校验信息</a></li>
+<li><a href="#4-6-将校验失败的信息编写在校验器中">4.6. 将校验失败的信息编写在校验器中</a></li>
+<li><a href="#4-7-异步校验器">4.7. 异步校验器</a></li>
+<li><a href="#4-8-校验器的状态字段">4.8. 校验器的状态字段</a>
+<ul>
+<li><a href="#4-8-1-touched-untouched">4.8.1. <code>touched</code>/<code>untouched</code></a></li>
+<li><a href="#4-8-2-pristine-dirty">4.8.2. <code>pristine</code>/<code>dirty</code></a></li>
+<li><a href="#4-8-3-pending">4.8.3. <code>pending</code></a></li>
+</ul></li>
+<li><a href="#4-9-带有状态的class属性">4.9. 带有状态的class属性</a></li>
+</ul></li>
+<li><a href="#5-模板式表单校验">5. 模板式表单校验</a>
+<ul>
+<li><a href="#5-1-angular内置校验指令">5.1. Angular内置校验指令</a></li>
+<li><a href="#5-2-自定义指令">5.2. 自定义指令</a>
+<ul>
+<li><a href="#5-2-1-指令校验器">5.2.1. 指令校验器</a>
+<ul>
+<li><a href="#5-2-1-1-指令校验器的使用">5.2.1.1. 指令校验器的使用</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#5-3-获取校验结果">5.3. 获取校验结果</a></li>
+<li><a href="#5-4-错误消息">5.4. 错误消息</a></li>
+<li><a href="#5-5-状态字段">5.5. 状态字段</a></li>
+</ul></li>
+<li><a href="#6-参考资料">6. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-angular的两种表单api">1. Angular的两种表单API</h1>
+
+<h2 id="1-1-概述">1.1. 概述</h2>
+
+<p>　　Angular中有两种表单API，分别是模板式表单和响应式表单。模板式表单是通过Angular提供的指令在模板中对表单进行操作的，由于受限于HTML的语法功能，模板式表单只适合一些简单的表单使用场景。而响应式表单是通过组件中自定义数据模型实现对表单的操控。所以更适合复杂表单功能。</p>
+
+<p>　　Angular表单都需要使用一个数据模型来接收存储表单的数据，而这个数据模型并不是我们自定义的类型，而是需要使用Angular提供的特定类型<code>FormControl</code>、<code>FormGroup</code>、<code>FormArray</code>等来组成。</p>
+
+<p>　　在模板式表单中上述的数据模型是在HTML中使用Angular指令，由Angular帮我们生成的；响应式表单相反，这些都需要我们在组件中自定义，所以会更加灵活一些。</p>
+
+<p>　　模板式表单存在于<code>FormModule</code>模块中，响应式表单存在于<code>ReactiveFormModule</code>模块中，在使用的时候一定要将对应的模块import到<code>app.module.ts</code>根模块中。
+<img src="/image/Snipaste_2018-10-20_16-33-45.png" alt="模块" /></p>
+
+<h1 id="2-响应式表单">2. 响应式表单</h1>
+
+<h2 id="2-1-如何建响应式表单数据模型">2.1. 如何建响应式表单数据模型</h2>
+
+<p>创建响应式表首先需要创建表单需要用到的数据模型，然后将数据模型使用指令“映射”到模板上。</p>
+
+<p>要使用响应式表单需要将<code>ReactiveFormsModule</code>模块导入到<code>app.module.ts</code>模块中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { ReactiveFormsModule } from <span style="color:#f1fa8c">&#39;@angular/forms&#39;</span>;
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  ...
+  imports<span style="color:#ff79c6">:</span> [
+    ...
+    ReactiveFormsModule
+  ],
+  ...
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<p>定义表单的数据模型需要用到Angular提供的三个类型<code>FormControl</code>、<code>FormGroup</code>、<code>FormArray</code>。</p>
+
+<h3 id="2-1-1-formcontrol">2.1.1. <code>FormControl</code></h3>
+
+<p><code>FormControl</code>是表单模型的最小单位，也就相当于数据模型对象中的一个属性，具体到表单中可以保存的是一个<code>input</code>元素的值和其他元数据。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">title: <span style="color:#8be9fd">FormControl</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormControl(<span style="color:#f1fa8c">&#39;默认标题&#39;</span>);</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormControl</code>的构造函数可以传入一个参数，表示默认值，例如绑定在<code>input</code>元素上时，就是该元素的默认输入。</li>
+</ul>
+
+<h3 id="2-1-2-formgroup">2.1.2. <code>FormGroup</code></h3>
+
+<p><code>FormGroup</code>从语义上看就是代表整个表单，但是也可以保存表单的一部分，它里面可以包含多个<code>FormControl</code>，可以包含多个<code>FormGroup</code>。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">regist: <span style="color:#8be9fd">FormGroup</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormGroup({
+    account: <span style="color:#8be9fd">new</span> FormControl(),
+    password: <span style="color:#8be9fd">new</span> FormGroup({
+      pwd: <span style="color:#8be9fd">new</span> FormControl(),
+      repwd: <span style="color:#8be9fd">new</span> FormControl()
+    })
+});</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormGroup</code>的构造函数需要传入一个对象，对象内部可以是<code>FormControl</code>和<code>FormGroup</code>。</li>
+<li>在上面的代码中定义了一个演示的注册信息表单，包含了账号和密码两个主要数据，但是密码分成了两个<code>FormControl</code>，分别是密码和重复密码，这两个从业务上是同一个数据，所以在这里包含在一个<code>FormGroup</code>中了。</li>
+</ul>
+
+<h3 id="2-1-3-formarray">2.1.3. <code>FormArray</code></h3>
+
+<p><code>FormArray</code>本质上和<code>FormGroup</code>是一样的，只不过<code>FormGroup</code>中的<code>FormControl</code>数量是固定的，初始化多少个就是多少个；<code>FormArray</code>中的<code>FormControl</code>的数量是可变的，可以动态增减。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">address: <span style="color:#8be9fd">FormArray</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormArray([
+    <span style="color:#ff79c6">new</span> FormControl(<span style="color:#f1fa8c">&#39;北京&#39;</span>),
+    <span style="color:#ff79c6">new</span> FormControl(<span style="color:#f1fa8c">&#39;上海&#39;</span>),
+    <span style="color:#ff79c6">new</span> FormControl()
+]);</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>FormArray</code>的构造函数需要传入一个数组类型，数组中包含一个或多个<code>FormControl</code>对象。</li>
+</ul>
+
+<p><strong><code>FormGroup</code>和<code>FormArray</code>的另一个不同点就是访问内部<code>FormControl</code>的方式</strong>：</p>
+
+<ul>
+<li><code>FormGroup</code>可以通过对象的属性名来访问具体的<code>FormControl</code>。</li>
+<li><code>FormArray</code>只能通过下标(索引)来访问<code>FormControl</code>。</li>
+</ul>
+
+<h2 id="2-2-响应式表单用到的指令">2.2. 响应式表单用到的指令</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">类</th>
+<th align="left">指令(1)</th>
+<th align="left">指令(2)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>FormGroup</code></td>
+<td align="left"><code>formGroup</code></td>
+<td align="left"><code>formGroupName</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>FormControl</code></td>
+<td align="left"><code>formControl</code></td>
+<td align="left"><code>formControlName</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>FormArray</code></td>
+<td align="left"></td>
+<td align="left"><code>formArrayName</code></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>指令(1)列的指令都是需要用属性绑定语法使用的，指令(2)列的指令都是不需要属性绑定语法直接使用的。</li>
+</ul>
+
+<h2 id="2-3-响应式表单的特点">2.3. 响应式表单的特点</h2>
+
+<ul>
+<li>响应式表单的指令都是以<code>form</code>开头的，模板式表单都是用<code>ng</code>开头的。</li>
+<li>响应式表单中不能用模板本地变量。</li>
+</ul>
+
+<h2 id="2-4-响应式表单的例子">2.4. 响应式表单的例子</h2>
+
+<h3 id="2-4-1-使用-formgroup-编写表单并且获取提交">2.4.1. 使用<code>FormGroup</code>编写表单并且获取提交</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// testComponent
+</span><span style="color:#6272a4"></span>...
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+  regist: <span style="color:#8be9fd">FormGroup</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormGroup({
+    account: <span style="color:#8be9fd">new</span> FormControl(),
+    password: <span style="color:#8be9fd">new</span> FormGroup({
+      pwd: <span style="color:#8be9fd">new</span> FormControl(),
+      repwd: <span style="color:#8be9fd">new</span> FormControl()
+    })
+  });
+  onSubmit() {
+    console.log(<span style="color:#ff79c6">this</span>.regist);
+  }
+}</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">form</span> [<span style="color:#50fa7b">formGroup</span>]=&#34;<span style="color:#50fa7b">regist</span>&#34; (<span style="color:#50fa7b">submit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>()&#34;&gt;
+    账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">formGroupName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span>&gt;
+        密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pwd&#34;</span>&gt;
+        重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;repwd&#34;</span>&gt;
+    &lt;/<span style="color:#ff79c6">div</span>&gt;
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;确定&#34;</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>[FormGroup]</code>将组件中定义的<code>FormGroup</code>数据模型绑定到表单上。</li>
+<li><code>formControlName</code>与<code>fromGroupName</code>分别将数据模型内的<code>FormControl</code>和<code>FormGroup</code>对象绑定到相应的元素上面。</li>
+<li>上面有使用属性绑定方式(<code>[xxx]=ooo</code>)，也有没有使用的，这是因为使用属性绑定的<code>regist</code>是组件中的一个属性，而表单内部的<code>account</code>、<code>password</code>、<code>pwd</code>、<code>repwd</code>都是一个字符串(属性名)，所以直接赋值了。</li>
+</ul>
+
+<p>页面的输出：
+<img src="/image/Snipaste_2018-10-20_19-13-49.png" alt="页面" /></p>
+
+<ul>
+<li>可以看到<code>FormGroup</code>这个对象中包含很多的属性和方法，如果只关注其表单值的话，可以直接使用其<code>value</code>属性。</li>
+</ul>
+
+<h3 id="2-4-2-formarray-绑定动态表单">2.4.2. <code>FormArray</code>绑定动态表单</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// testComponent
+</span><span style="color:#6272a4"></span>...
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+  regist: <span style="color:#8be9fd">FormGroup</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormGroup({
+    account: <span style="color:#8be9fd">new</span> FormControl(),
+    password: <span style="color:#8be9fd">new</span> FormGroup({
+      pwd: <span style="color:#8be9fd">new</span> FormControl(),
+      repwd: <span style="color:#8be9fd">new</span> FormControl()
+    }),
+    address: <span style="color:#8be9fd">new</span> FormArray([
+      <span style="color:#ff79c6">new</span> FormControl(),
+      <span style="color:#ff79c6">new</span> FormControl()
+    ])
+  });
+  onSubmit() {
+    console.log(<span style="color:#ff79c6">this</span>.regist);
+  }
+  addAddress() {
+    <span style="color:#ff79c6">const</span> address <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;address&#39;</span>) <span style="color:#ff79c6">as</span> FormArray;
+    address.push(<span style="color:#ff79c6">new</span> FormControl());
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们在<code>regist</code>数据模型中增加了一个<code>address</code>的<code>FormArray</code>的动态表单组合，默认有两个<code>FormControl</code>对象，也就是默认会有两个空的输入框。</li>
+<li><code>addAddress()</code>函数是响应页面上的一个按钮，用来向动态表单增加<code>FormControl</code>，表现在页面上就是每点一次增加一个输入框。</li>
+<li>可以看到在<code>addAddress()</code>函数中获取<code>address</code>的过程有点奇怪，这是因为<code>regist</code>是一个<code>FormGroup</code>对象，而我们定义的模型都是从构造函数传入的，所以在<code>FormGroup</code>对象中必须用它暴露的<code>get()</code>函数传入属性名来获取。并且需要使用类型转换后才能使用。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">// template
+
+&lt;<span style="color:#ff79c6">form</span> [<span style="color:#50fa7b">formGroup</span>]=&#34;<span style="color:#50fa7b">regist</span>&#34; (<span style="color:#50fa7b">submit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>()&#34;&gt;
+    账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">formGroupName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span>&gt;
+        密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pwd&#34;</span>&gt;
+        重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;repwd&#34;</span>&gt;
+    &lt;/<span style="color:#ff79c6">div</span>&gt;
+    &lt;<span style="color:#ff79c6">br</span>&gt;
+    &lt;<span style="color:#ff79c6">div</span>&gt;
+        &lt;<span style="color:#ff79c6">ul</span> <span style="color:#50fa7b">formArrayName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;address&#34;</span>&gt;
+            &lt;<span style="color:#ff79c6">li</span> *<span style="color:#50fa7b">ngFor</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;let a of this.regist.get(&#39;address&#39;).controls; let i=index;&#34;</span>&gt;
+                收货地址：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> [<span style="color:#50fa7b">formControlName</span>]=&#34;<span style="color:#50fa7b">i</span>&#34;&gt;
+            &lt;/<span style="color:#ff79c6">li</span>&gt;
+        &lt;/<span style="color:#ff79c6">ul</span>&gt;
+        &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">addAddress</span>()&#34;&gt;增加地址栏&lt;/<span style="color:#ff79c6">button</span>&gt;
+    &lt;/<span style="color:#ff79c6">div</span>&gt;
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;确定&#34;</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在收货地址的input元素上绑定<code>formControlName</code>可以看到使用了属性绑定的方式，这里可能会有疑问：不是说包含<code>Name</code>结尾的指令都是不需要属性绑定的吗？ 这个需要看使用的情况了，而这也是<code>FormArray</code>的特殊的地方，它不能通过属性名去访问成员，只能用下标，所以这里我们传递给<code>formControlName</code>的值<code>i</code>并不是一个字符串(属性名)，而是一个实实在在的变量，所以需要使用属性绑定的方式传递。</li>
+</ul>
+
+<p>输入页面效果：
+<img src="/image/Snipaste_2018-10-20_19-43-38.png" alt="页面" /></p>
+
+<ul>
+<li>我们增加两个收货地址输入框，然后在其中三个输入了内容，填写其他的内容后，点击提交可以看到控制台输出了结果：<code>address</code>的值是一个数组形式，最后一个没有填的值为null。</li>
+</ul>
+
+<h2 id="2-5-可单独使用的-formcontrol-指令">2.5. 可单独使用的<code>formControl</code>指令</h2>
+
+<p><code>fromControl</code>这个指令比较特殊，它不能出现在<code>formGroup</code>的内部，否则就会直接报错：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">// component
+</span><span style="color:#6272a4"></span>formModel: <span style="color:#8be9fd">FormGroup</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormGroup({
+  youName: <span style="color:#8be9fd">new</span> FormControl(<span style="color:#f1fa8c">&#39;你的名字&#39;</span>)
+});
+userNamr: <span style="color:#8be9fd">FormControl</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> FormControl(<span style="color:#f1fa8c">&#39;名字&#39;</span>);
+
+<span style="color:#6272a4">// template
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">&lt;</span>form [formGroup]<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;formModel&#34;</span><span style="color:#ff79c6">&gt;</span>
+  <span style="color:#ff79c6">&lt;</span>input formControlName<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;youName&#34;</span><span style="color:#ff79c6">&gt;</span>
+  <span style="color:#ff79c6">&lt;</span>input [formControl]<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;userName&#34;</span><span style="color:#ff79c6">&gt;</span>
+<span style="color:#ff79c6">&lt;</span>/form&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到如果<code>[formControl]</code>出现在<code>[formGroup]</code>的内部就会引发错误：
+<img src="/image/Snipaste_2018-10-20_20-03-36.png" alt="错误" /></p>
+
+<p>将<code>[formControl]</code>拿出去放在<code>[formGroup]</code>的外面就不会出现错误了。 之前曾在数据绑定一篇说过，插值表达式绑定的是单向绑定的，那么<code>[formControl]</code>的作用就显而易见了，可以创建一个需要双向绑定的数据和组件关联。</p>
+
+<h2 id="2-6-formbuilder">2.6. <code>FormBuilder</code></h2>
+
+<p>Angualr还提供了一个<code>FormBuilder</code>对象来简化数据模型的创建，可以将之前的代码修改成<code>FormBuilder</code>创建的：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> fb: <span style="color:#8be9fd">FormBuilder</span>) { }
+  regist <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.fb.group({
+    account<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;账号&#39;</span>],
+    password: <span style="color:#8be9fd">this.fb.group</span>({
+      pwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;密码&#39;</span>],
+      repwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;重复密码&#39;</span>]
+    }),
+    address: <span style="color:#8be9fd">this.fb.array</span>([<span style="color:#f1fa8c">&#39;地址1&#39;</span>, <span style="color:#f1fa8c">&#39;地址2&#39;</span>, <span style="color:#f1fa8c">&#39;&#39;</span>])
+  });
+  ...
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>页面输出同样的内容：
+<img src="/image/Snipaste_2018-10-20_20-15-11.png" alt="输出" /></p>
+
+<ul>
+<li><code>FormBuilder</code>对象只有三个方法：
+<img src="/image/Snipaste_2018-10-20_20-18-12.png" alt="FormBuilder" /></li>
+<li>这三个方法分别对应着三个表单模型的对象。</li>
+<li>使用<code>FormBuilder</code>会减少一些代码，并且方便接下来的表单验证的使用。</li>
+</ul>
+
+<h1 id="3-模板式表单">3. 模板式表单</h1>
+
+<h2 id="3-1-概述">3.1. 概述</h2>
+
+<p>模板式表单前面说过不用在组件中定义数据模型，Angular会隐式的帮助我们创建底层数据模型，其实对应的就是<code>FormControl</code>和<code>FormGroup</code>：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">模板表单指令</th>
+<th align="left">表单模型对象</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>NgForm</code></td>
+<td align="left"><code>FormGroup</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>NgModel</code></td>
+<td align="left"><code>FormControl</code></td>
+</tr>
+
+<tr>
+<td align="left"><code>NgModelGroup</code></td>
+<td align="left"><code>FormGroup</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>模板式表单依赖<code>FormsModule</code>模块的功能，所以首先需要将该模块import到<code>app.module.ts</code>主模块中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { FormsModule } from <span style="color:#f1fa8c">&#39;@angular/forms&#39;</span>;
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  ...
+  imports<span style="color:#ff79c6">:</span> [
+    FormsModule,
+  ],
+  ...
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-2-模板式表单对-form-元素的处理">3.2. 模板式表单对<form>元素的处理</h2>
+
+<p>如果一个Angular模板中出现了<code>&lt;form&gt;</code>标签，那么就会自动被Angular管理，其所有的原生属性和事件都会失去作用，完全交由Angular掌管。</p>
+
+<p>还有一种显示的标注form表单的方式，就是给任意一个标签加上<code>ngForm</code>属性，使其变成一个Angular表单：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">ngForm</span>&gt;
+    ...
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>如果不想一个form元素被Angular接管，那么需要在元素上标注<code>ngNoForm</code>表示该表达不需要Angular管理：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">form</span> <span style="color:#50fa7b">ngNoForm</span>&gt;
+    ...
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-3-模板式表单调用表单对象的实例">3.3. 模板式表单调用表单对象的实例</h2>
+
+<p>在模板式表单中由于没有显示的定义<code>FormGroup</code>，所以想要获取表单的值或者调用表单对象的方法，需要用到模板局部变量。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">form</span> #<span style="color:#50fa7b">myForm</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;ngForm&#34;</span> <span style="color:#50fa7b">action</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/regist&#34;</span> <span style="color:#50fa7b">method</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;POST&#34;</span>&gt;
+  账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">viewMyForm</span>(<span style="color:#50fa7b">myForm</span>)&#34;&gt;查看模板本地变量&lt;/<span style="color:#ff79c6">button</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span>&gt;确定&lt;/<span style="color:#ff79c6">button</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>将<code>ngForm</code>代表的<code>FormGroup</code>实例赋值给模板局部变量<code>myForm</code>。</li>
+</ul>
+
+<p>在组件中编写“查看模板本地变量”按钮的点击事件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">viewMyForm(obj: <span style="color:#8be9fd">any</span>) {
+    console.log(obj);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出内容：<br />
+<img src="/image/Snipaste_2018-10-20_21-30-21.png" alt="输出" /></p>
+
+<ul>
+<li>可以看到虽然我们输入了内容，但是value属性中没有获取到数据，这是因为我们还没有为表单中的模型标签绑定属性。</li>
+</ul>
+
+<p>这里我们可以看一下响应式表单的<code>FormGroup</code>和<code>NgForm</code>实例之间的对比，有大多属性、方法是一样的：
+<img src="/image/Snipaste_2018-10-20_21-36-09.png" alt="对比" /></p>
+
+<h2 id="3-4-模板式表单的提交">3.4. 模板式表单的提交</h2>
+
+<p>Angular接管form表单后，默认会阻止原生的<code>submit</code>事件，取而代之的是Angular提供的<code>ngSubmit</code>事件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">form</span> #<span style="color:#50fa7b">myForm</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;ngForm&#34;</span> (<span style="color:#50fa7b">ngSubmit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>(<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">value</span>)&#34;&gt;
+  账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">viewMyForm</span>(<span style="color:#50fa7b">myForm</span>)&#34;&gt;查看模板本地变量&lt;/<span style="color:#ff79c6">button</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span>&gt;确定&lt;/<span style="color:#ff79c6">button</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以将<code>ngSubmit</code>事件绑定到组件中的自定义方法上，然后传入一个模板局部变量代表的<code>NgForm</code>的value属性参数，相当于是把表单填写的数据传递到了组件。</li>
+</ul>
+
+<h2 id="3-5-模板式表单绑定-ngmodel">3.5. 模板式表单绑定<code>ngModel</code></h2>
+
+<p>前面只演示了使用<code>ngModel</code>的value属性可以获取表单的填写内容，但是实际上什么都没获取到，因为对填写的标签没有进行任何的绑定，其填写的数据没法获取。
+想要获取各个表单标签的数据，需要在对应的标签上面加上<code>ngModel</code>指令，并且指定一个<code>name</code>属性的值，这个<code>name</code>属性的值就对应了模型数据的属性名。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">// template
+
+&lt;<span style="color:#ff79c6">form</span> #<span style="color:#50fa7b">myForm</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;ngForm&#34;</span> (<span style="color:#50fa7b">ngSubmit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>(<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">value</span>)&#34;&gt;
+  账号：&lt;<span style="color:#ff79c6">input</span> #<span style="color:#50fa7b">account</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;ngModel&#34;</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">ngModelGroup</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span>&gt;
+      密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pwd&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+      重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;repwd&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">viewMyForm</span>(<span style="color:#50fa7b">myForm</span>)&#34;&gt;查看模板本地变量&lt;/<span style="color:#ff79c6">button</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span>&gt;确定&lt;/<span style="color:#ff79c6">button</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>#account=&quot;ngModel&quot;</code>：同样可以将单个<code>ngModel</code>的值绑定到模板本地变量上，以供在模板中使用。</li>
+<li><code>ngModelGroup</code>可以实现响应式表单中同样的功能，将一组<code>ngModel</code>组合起来。</li>
+</ul>
+
+<p>这时我们点击“查看模板本地变量”按钮看看打印出的数据：
+<img src="/image/Snipaste_2018-10-20_22-21-58.png" alt="打印" /></p>
+
+<h1 id="4-响应式表单校验">4. 响应式表单校验</h1>
+
+<h2 id="4-1-angular校验器">4.1. Angular校验器</h2>
+
+<p>不管是响应式表单校验还是模板式表单校验，都会用到Anglar校验器，Angular校验器其实是一个方法，它接收一个<code>AbstractControl</code>类型的参数，<code>FormControl</code>、<code>FormGroup</code>、<code>FormArray</code>都是继承自该参数类型的实例对象，也就是可以传入这三个模型数据中的任何一个，返回的值是一个任意的对象，只要该对象的key是一个string类型的数据。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">xxoo(control: <span style="color:#8be9fd">AbstractControl</span>)<span style="color:#ff79c6">:</span> {[key: <span style="color:#8be9fd">string</span>]<span style="color:#ff79c6">:</span> any} {
+  <span style="color:#ff79c6">return</span> {xo: <span style="color:#8be9fd">true</span>};
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>Angular中内置的校验器存在于<code>Validators</code>这个类中，例如<code>Validators.required</code>是校验必填项、<code>Validators.minLength()</code>是校验输入最少字符的。Angular内置的验证器可以查看此篇<a href="https://www.angular.cn/api/forms/Validators">文档内容</a>。</p>
+
+<h2 id="4-2-校验器的使用">4.2. 校验器的使用</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">regist <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.fb.group({
+    <span style="color:#6272a4">// account: [&#39;账号&#39;, Validators.required],
+</span><span style="color:#6272a4"></span>    account<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;账号&#39;</span>, [Validators.required, Validators.minLength(<span style="color:#bd93f9">8</span>)]],
+    password: <span style="color:#8be9fd">this.fb.group</span>({
+      pwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;密码&#39;</span>, Validators.required],
+      repwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;重复密码&#39;</span>, Validators.required]
+    },{validator<span style="color:#ff79c6">:</span> [Validators.max]}),
+    address: <span style="color:#8be9fd">this.fb.array</span>([<span style="color:#f1fa8c">&#39;地址1&#39;</span>, <span style="color:#f1fa8c">&#39;地址2&#39;</span>, <span style="color:#f1fa8c">&#39;&#39;</span>], [Validators.required])
+  });</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用<code>FormBuilder</code>可以对响应式表单进行校验，只需要在代替<code>FormControl</code>的数组中传入第二个参数就可以对该<code>FormControl</code>进行校验。</li>
+<li>校验器可以是一个也可以是多个，一个的时候就是直接传入参数，多个时需要写成数组形式。</li>
+<li><code>FormGroup</code>的校验器传入需要在第二个参数传入一个对象，属性为<code>validator</code>，参数为校验器。</li>
+<li><code>FormArray</code>的校验器与<code>FormControl</code>一致，都是在第二个参数传入一个或多个校验器。</li>
+</ul>
+
+<h2 id="4-3-校验器信息的获取">4.3. 校验器信息的获取</h2>
+
+<p>可以获取单独的字段的校验结果和校验错误信息：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">onSubmit() {
+    <span style="color:#ff79c6">const</span> isValid: <span style="color:#8be9fd">boolean</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;account&#39;</span>).valid;
+    console.log(<span style="color:#f1fa8c">`账号的校验结果是:</span><span style="color:#f1fa8c">${</span>isValid<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+    <span style="color:#ff79c6">const</span> err: <span style="color:#8be9fd">any</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;account&#39;</span>).errors;
+    console.log(<span style="color:#f1fa8c">`账号的校验错误信息是:</span><span style="color:#f1fa8c">${</span>JSON.stringify(err)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>.valid</code>可以获取当前字段的校验结果，该结果是一个bool类型的值。</li>
+<li><code>.errors</code>可以获取当前字段校验未通过时的错误信息，该结果是一个对象(any)类型。</li>
+</ul>
+
+<h2 id="4-4-实现自定义的校验器">4.4. 实现自定义的校验器</h2>
+
+<p>创建一个新的ts文件，在其中编写通用的校验器：</p>
+
+<p><code>user-info-valids.ts</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { FormControl, FormGroup, FormArray } from <span style="color:#f1fa8c">&#39;@angular/forms&#39;</span>;
+
+<span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * email邮箱验证器
+</span><span style="color:#6272a4"> * @param control FormControl
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> emailValidator(control: <span style="color:#8be9fd">FormControl</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">const</span> reg <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">/[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+(?:\.[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/</span>;
+    <span style="color:#ff79c6">const</span> valid <span style="color:#ff79c6">=</span> reg.test(control.value);
+    <span style="color:#ff79c6">return</span> valid <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">:</span> { email<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;email格式不正确&#39;</span> };
+}
+<span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * 两次密码输入对比验证
+</span><span style="color:#6272a4"> * @param group FormGroup
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> passwordEqualValidator(group: <span style="color:#8be9fd">FormGroup</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">const</span> pwd: <span style="color:#8be9fd">FormControl</span> <span style="color:#ff79c6">=</span> group.get(<span style="color:#f1fa8c">&#39;pwd&#39;</span>) <span style="color:#ff79c6">as</span> FormControl;
+    <span style="color:#ff79c6">const</span> repwd: <span style="color:#8be9fd">FormControl</span> <span style="color:#ff79c6">=</span> group.get(<span style="color:#f1fa8c">&#39;repwd&#39;</span>) <span style="color:#ff79c6">as</span> FormControl;
+    <span style="color:#6272a4">// 返回密码对比的结果
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> valid: <span style="color:#8be9fd">boolean</span> <span style="color:#ff79c6">=</span> pwd.value <span style="color:#ff79c6">===</span> repwd.value;
+    <span style="color:#ff79c6">return</span> valid <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">:</span> { equal<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;两次输入的密码不一致&#39;</span> };
+}
+
+<span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * 验证地址都不能为空
+</span><span style="color:#6272a4"> * @param array FormArray
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> addressValidator(array: <span style="color:#8be9fd">FormArray</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd;font-style:italic">let</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;</span> array.controls.length; i<span style="color:#ff79c6">++</span>) {
+        <span style="color:#ff79c6">const</span> val <span style="color:#ff79c6">=</span> array.controls[i] <span style="color:#ff79c6">as</span> FormControl;
+        <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>val.value) {
+            <span style="color:#ff79c6">return</span> { address<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;地址不能为空&#39;</span> };
+        }
+    }
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">null</span>;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后在<code>test.component.ts</code>组件中调用：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { emailValidator, passwordEqualValidator, addressValidator } from <span style="color:#f1fa8c">&#39;../myValid/user-info-valids&#39;</span>;
+...
+
+  <span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">private</span> fb: <span style="color:#8be9fd">FormBuilder</span>) { }
+  regist <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.fb.group({
+    <span style="color:#6272a4">// account: [&#39;账号&#39;, Validators.required],
+</span><span style="color:#6272a4"></span>    account<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;账号&#39;</span>, emailValidator],
+    password: <span style="color:#8be9fd">this.fb.group</span>({
+      pwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;密码&#39;</span>, Validators.minLength(<span style="color:#bd93f9">8</span>)],
+      repwd<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;重复密码&#39;</span>]
+    }, {validator: <span style="color:#8be9fd">passwordEqualValidator</span>}),
+    address: <span style="color:#8be9fd">this.fb.array</span>([<span style="color:#f1fa8c">&#39;地址1&#39;</span>, <span style="color:#f1fa8c">&#39;地址2&#39;</span>, <span style="color:#f1fa8c">&#39;&#39;</span>], addressValidator)
+  });
+
+  <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">   * 提交按钮响应事件，这里展示校验结果数据
+</span><span style="color:#6272a4">   */</span>
+  onSubmit() {
+    <span style="color:#ff79c6">const</span> isValid: <span style="color:#8be9fd">boolean</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.valid;
+    console.log(<span style="color:#f1fa8c">`表单的校验结果是:</span><span style="color:#f1fa8c">${</span>isValid<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+    <span style="color:#ff79c6">const</span> err1: <span style="color:#8be9fd">any</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;account&#39;</span>).errors;
+    console.log(<span style="color:#f1fa8c">`账号的校验错误信息是:</span><span style="color:#f1fa8c">${</span>JSON.stringify(err1)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+    <span style="color:#ff79c6">const</span> err2: <span style="color:#8be9fd">any</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;password&#39;</span>).errors;
+    console.log(<span style="color:#f1fa8c">`密码的校验错误信息是:</span><span style="color:#f1fa8c">${</span>JSON.stringify(err2)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+    <span style="color:#ff79c6">const</span> err3: <span style="color:#8be9fd">any</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.regist.get(<span style="color:#f1fa8c">&#39;address&#39;</span>).errors;
+    console.log(<span style="color:#f1fa8c">`地址的校验错误信息是:</span><span style="color:#f1fa8c">${</span>JSON.stringify(err3)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+  }</code></pre></td></tr></table>
+</div>
+</div>
+<p>页面展示：<br />
+<img src="/image/Snipaste_2018-10-23_00-11-27.png" alt="页面" /></p>
+
+<ul>
+<li>可以看到只要有未校验通过的元素，整个表单的校验结果就是false；</li>
+<li>如果校验未通过，就会展示我们在校验器中自定义的返回对象了，获取这个数据有助于我们个性化处理校验。</li>
+</ul>
+
+<h2 id="4-5-在模板中显示校验信息">4.5. 在模板中显示校验信息</h2>
+
+<p>要在模板中显示校验的信息，那么就需要在模板中获取校验结果，下面我们看看怎么才能在模板中获取校验的数据；</p>
+
+<p>沿用前面的<code>test.component.ts</code>文件中的代码，我们在<code>test.component.html</code>文件中使用HTML的<code>hidden</code>属性来模拟控制错误信息的展示与否：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">form</span> [<span style="color:#50fa7b">formGroup</span>]=&#34;<span style="color:#50fa7b">regist</span>&#34; (<span style="color:#50fa7b">submit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>()&#34;&gt;
+  账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;账号必须是合法的邮箱地址！&lt;/<span style="color:#ff79c6">p</span>&gt;
+  &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">formGroupName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span>&gt;
+    密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pwd&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">minlength</span>&#39;,[&#39;<span style="color:#50fa7b">password</span>&#39;,&#39;<span style="color:#50fa7b">pwd</span>&#39;])&#34;&gt;密码至少是8个字符&lt;/<span style="color:#ff79c6">p</span>&gt;
+    重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;repwd&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">equal</span>&#39;,&#39;<span style="color:#50fa7b">password</span>&#39;)&#34;&gt;两次输入的密码不一致&lt;/<span style="color:#ff79c6">p</span>&gt;
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+  &lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">div</span>&gt;
+    &lt;<span style="color:#ff79c6">ul</span> <span style="color:#50fa7b">formArrayName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;address&#34;</span>&gt;
+      &lt;<span style="color:#ff79c6">li</span> *<span style="color:#50fa7b">ngFor</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;let a of this.regist.get(&#39;address&#39;).controls; let i=index;&#34;</span>&gt;
+        收货地址：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> [<span style="color:#50fa7b">formControlName</span>]=&#34;<span style="color:#50fa7b">i</span>&#34;&gt;
+      &lt;/<span style="color:#ff79c6">li</span>&gt;
+      &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">address</span>&#39;,&#39;<span style="color:#50fa7b">address</span>&#39;)&#34;&gt;收货地址不能为空&lt;/<span style="color:#ff79c6">p</span>&gt;
+    &lt;/<span style="color:#ff79c6">ul</span>&gt;
+    &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">addAddress</span>()&#34;&gt;增加地址栏&lt;/<span style="color:#ff79c6">button</span>&gt;
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+  &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;确定&#34;</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>模型对象的<code>hasError()</code>函数可以获取指定的校验器是否有错误。</li>
+<li>在<code>FormControl</code>上调用<code>hasError()</code>函数时，第一个参数是校验器校验失败时，返回对象的key值(<em>注意并不是校验器的名字，而是校验器校验失败时返回的对象的key的名字</em>)，可以看看前面我们定义的账号校验器失败时返回的对象的key是<code>email</code>；第二个参数是当前校验的字段的<code>formControName</code>。</li>
+<li>校验<code>FormGroup</code>里面的一个字段时，传入<code>hasError()</code>的第二个参数有所变化，需要传入一个数组，数组的第一个参数是当前的<code>formGroupName</code>，第二个才是当前校验字段的<code>formControlName</code>; 看上面的代码中，因为我们在“密码”所在的字段上标注了<code>Validators.minLength(8)</code>校验器，所以它就是在<code>FormGroup</code>内部的校验；而两次密码不一致的校验属于是<code>FromGroup</code>的校验，这就可以直接传入与前面<code>FormControl</code>校验时类似的两个参数就可以。</li>
+</ul>
+
+<p>看看页面上的效果 ：<br />
+<img src="/image/Snipaste_2018-10-23_22-18-18.png" alt="页面" /></p>
+
+<h2 id="4-6-将校验失败的信息编写在校验器中">4.6. 将校验失败的信息编写在校验器中</h2>
+
+<p>前面我们是将校验失败的信息写在了HTML中，我们也可以定义在校验器中，直接在HTML中用插值表达式绑定，这样更加的灵活：</p>
+
+<p><code>user-info-valids.ts</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * email邮箱验证器
+</span><span style="color:#6272a4"> * @param control FormControl
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> emailValidator(control: <span style="color:#8be9fd">FormControl</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">const</span> reg <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">/[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+(?:\.[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/</span>;
+    <span style="color:#ff79c6">const</span> valid <span style="color:#ff79c6">=</span> reg.test(control.value);
+    <span style="color:#ff79c6">return</span> valid <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">:</span> { email<span style="color:#ff79c6">:</span> {errDesc<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;邮箱的格式不正确！&#39;</span>} };
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们将校验失败返回对象的属性值改成了一个对象形式，对象的属性名可以任意，这里我起的是<code>errDesc</code>，它的值就是想要显示的错误消息。</li>
+</ul>
+
+<p><code>test.component.html</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+&lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+  {{regist.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+&lt;/<span style="color:#ff79c6">p</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们将之前硬编码在<p>标签中的错误消息换成了插值表达式绑定。</li>
+<li>这里又用了一个新方法<code>getError()</code>，它的参数和之前的<code>hasError</code>一模一样，就是返回值不相同，<code>getError()</code>的返回值是校验器中定义的失败时返回的对象，然后调用该返回对象的属性名，就可以获得定义的错误消息了；这里为了避免返回一个空对象，使用了<code>?</code>避免报错。</li>
+</ul>
+
+<p>再打开页面就可以看到，错误信息显示成我们在校验器中设置的内容了。</p>
+
+<h2 id="4-7-异步校验器">4.7. 异步校验器</h2>
+
+<p>响应式表单还支持一种“异步校验器”，它可以在需要调用远程服务器校验的情况下使用，其写法和普通的校验器一致，就是返回的结果是一个响应流(<code>Observable</code>)，关于<code>Observable</code>的信息会在下一节“HTTP服务”中讲到。</p>
+
+<p>将<code>user-info-valids.ts</code>中的email校验改成异步校验器：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { of } from <span style="color:#f1fa8c">&#39;rxjs&#39;</span>;
+<span style="color:#ff79c6">import</span> { delay } from <span style="color:#f1fa8c">&#39;rxjs/operators&#39;</span>;
+
+<span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * email邮箱验证器
+</span><span style="color:#6272a4"> * @param control FormControl
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> emailValidator(control: <span style="color:#8be9fd">FormControl</span>)<span style="color:#ff79c6">:</span> any {
+    <span style="color:#ff79c6">const</span> reg <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">/[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+(?:\.[\w!#$%&amp;&#39;*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/</span>;
+    <span style="color:#ff79c6">const</span> valid <span style="color:#ff79c6">=</span> reg.test(control.value);
+    <span style="color:#ff79c6">return</span> of(valid <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">:</span> { email<span style="color:#ff79c6">:</span> {errDesc<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;邮箱的格式不正确！&#39;</span>} }).pipe(delay(<span style="color:#bd93f9">3000</span>));
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>上面的代码只更改了返回值，返回了一个可观测的流，为了演示使用了<code>delay(3000)</code>延迟3秒返回结果；</li>
+<li>这里使用的是<code>rxjs</code>6的新语法，版本5和版本6的更改比较大，可以<a href="https://github.com/ReactiveX/rxjs/blob/master/docs_app/content/guide/v6/migration.md">在这里查阅</a>更改。或者使用<a href="https://www.joshmorony.com/username-availability-with-an-asynchronous-validator-in-angular/">Promise方式</a>也可以。</li>
+</ul>
+
+<p>在页面上查看跟先前的校验没有区别，在本例中会等待3秒再显示错误消息。</p>
+
+<h2 id="4-8-校验器的状态字段">4.8. 校验器的状态字段</h2>
+
+<p>在前面显示错误信息的一节，我们看到错误信息在一开始就出现在页面上的，而正确的验证一般都是用户选中、或者光标离开的时候才进行验证，Angular的状态字段可以获取验证字段的几种状态：</p>
+
+<h3 id="4-8-1-touched-untouched">4.8.1. <code>touched</code>/<code>untouched</code></h3>
+
+<p>用来表示某个元素有没有获取过焦点(被点击过)，如果获取过那么<code>touched</code>的值就是<code>true</code>，同时<code>untouched</code>的值就是<code>false</code>；反之亦然。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">valid</span>||<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">untouched</span>&#34;&gt;
+  &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+    {{regist.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+  &lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用<code>FormFroup</code>的<code>get()</code>函数可以获取表单的验证状态<code>valid</code>和<code>touched</code>/<code>untouched</code>字段；</li>
+<li>这里我们判断验证通过(<code>valid=true</code>)或者用户没有点击输入框(<code>untouched=true</code>)的时候，隐藏错误信息</li>
+</ul>
+
+<h3 id="4-8-2-pristine-dirty">4.8.2. <code>pristine</code>/<code>dirty</code></h3>
+
+<p>用来判断一个字段的值有没有被修改过，如果修改过<code>pristine</code>的值就是<code>true</code>，同时<code>dirty</code>的值就是<code>false</code>，反之亦然。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">valid</span>||<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">pristine</span>&#34;&gt;
+  &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+    {{regist.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+  &lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>调用的方式和之前一样，都在<code>FormGroup</code>的<code>get()</code>函数调用；</li>
+<li>这时只有当我们修改字段的值(必须是修改值)，才会触发验证，进而展示错误提示。</li>
+</ul>
+
+<h3 id="4-8-3-pending">4.8.3. <code>pending</code></h3>
+
+<p>用来获取异步校验的状态，当一个字段处于异步校验过程中时，<code>pending</code>的值为true，这时就可根据需要显示一个验证中的提示，告知用户，获得更好的用户体验。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">formControlName</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">valid</span>||<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">pristine</span>&#34;&gt;
+  &lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">get</span>(&#39;<span style="color:#50fa7b">account</span>&#39;).<span style="color:#50fa7b">pending</span>&#34;&gt;
+    正在验证邮箱的格式是否正确，请稍后...
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">regist</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+    {{regist.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+  &lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们在之前的验证中加了一个“请稍后”的提示，在异步验证的过程中会出现，异步验证结束会隐藏。</li>
+</ul>
+
+<p><img src="/image/20181024pending.gif" alt="pending" /></p>
+
+<h2 id="4-9-带有状态的class属性">4.9. 带有状态的class属性</h2>
+
+<p>Angular表单默认会在输入框等表单组件上根据状态增减class属性，我们可以对这些class属性进行自定义样式，从而定制字段DOM元素的外观样式。</p>
+
+<p><img src="/image/Snipaste_2018-10-24_22-04-54.png" alt="样式" /></p>
+
+<ul>
+<li>我们在第一次进入页面没有对页面的表单字段元素进行任何操作的时候，可以看到表单元素的class属性中默认有三个class属性：
+
+<ul>
+<li><code>ng-untouched</code>：表示没有获得过焦点，可以自由发挥设置没有获得过焦点的样式。</li>
+<li><code>ng-pristine</code>：表示没有修改过字段的值，同样可以自由发挥编辑样式。</li>
+<li><code>ng-invalid</code>：表示当前的验证是无效的，这是因为没有输入过任何值。</li>
+</ul></li>
+</ul>
+
+<p><img src="/image/Snipaste_2018-10-24_22-09-23.png" alt="样式" /></p>
+
+<ul>
+<li>当我们在“账号”输入框输入格式正确的邮箱时，会发现字段元素的class属性动态的变化了：
+
+<ul>
+<li><code>ng-dirty</code>：表示字段被修改过了</li>
+<li><code>ng-valid</code>：表示字段通过了验证</li>
+<li><code>ng-touched</code>：表示字段已经获取过焦点了</li>
+</ul></li>
+</ul>
+
+<p><img src="/image/Snipaste_2018-10-24_22-12-43.png" alt="样式" /></p>
+
+<ul>
+<li>在异步校验发生的时候，还会增加一个<code>ng-pending</code>的class属性，校验完成后会自动去掉，这个也可以自由控制样式。</li>
+</ul>
+
+<h1 id="5-模板式表单校验">5. 模板式表单校验</h1>
+
+<p>模板式表单的校验需要用到专门的指令来进行校验，Angular内置了一部分校验指令，也可以自定义校验指令。</p>
+
+<p>指令(<code>directive</code>)和组件(<code>component</code>)差不多，只不过指令没有模板，除此之外可以和组件实现相同的功能。</p>
+
+<h2 id="5-1-angular内置校验指令">5.1. Angular内置校验指令</h2>
+
+<p>angular内置有位数不多的几个校验指令<code>required</code>/<code>minlength</code>/<code>maxlength</code>等，具体可以在<a href="https://www.angular.cn/api/forms#%E6%8C%87%E4%BB%A4">这部分文档</a>查看。</p>
+
+<p>模板式表单的指令使用比较简单，不管是自定义的还是内置的，直接写在HTML元素的标签上即可：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">maxlength</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;50&#34;</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="5-2-自定义指令">5.2. 自定义指令</h2>
+
+<p>自定义指令需要创建指令：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng g directive myDriective/emailValidDriective</code></pre></td></tr></table>
+</div>
+</div>
+<p>看看生成的指令<code>email-valid-driective-drictive.ts</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Directive } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Directive</span>({
+  selector<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;[appEmailValidDriective]&#39;</span>
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> EmailValidDriectiveDirective {
+
+  <span style="color:#ff79c6">constructor</span>() { }
+
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>指令装饰器中的<code>selector</code>值是作为标签的一个属性的：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">  &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">selectorValue</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>组件装饰器的<code>selector</code>的值是标签选择器：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">  &lt;<span style="color:#ff79c6">selectorValue</span>&gt;&lt;/<span style="color:#ff79c6">selectorValue</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="5-2-1-指令校验器">5.2.1. 指令校验器</h3>
+
+<p>只生成一个指令还不能作为校验器使用，要实现一个可以用来校验的指令，需要将一个普通的校验器包装起来，从而使该指令具有被包装校验器的功能。</p>
+
+<p>我们将之前的<code>emailValidator</code>校验器包装成指令：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Directive } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+<span style="color:#ff79c6">import</span> { NG_VALIDATORS } from <span style="color:#f1fa8c">&#39;@angular/forms&#39;</span>;
+<span style="color:#ff79c6">import</span> { emailValidator } from <span style="color:#f1fa8c">&#39;../myValid/user-info-valids&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Directive</span>({
+  selector<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;[appEmailValidDriective]&#39;</span>,
+  providers<span style="color:#ff79c6">:</span> [{provide: <span style="color:#8be9fd">NG_VALIDATORS</span>, useValue: <span style="color:#8be9fd">emailValidator</span>, multi: <span style="color:#8be9fd">true</span>}]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> EmailValidDriectiveDirective {
+  <span style="color:#ff79c6">constructor</span>() { }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>在指令装饰器的内部新增一个<code>providers</code>属性，在其值内部传入一个对象，该对象有三个属性：
+
+<ul>
+<li><code>provide</code>：该属性存储一个“token”，通常是Angular提供的一个常量<code>NG_VALIDATORS</code>，代表当前的指令。</li>
+<li><code>useValue</code>：这个属性绑定了我们要包装的校验器。</li>
+<li><code>multi</code>：这个字段表示是否可以在同一个“token下包装多个不同的校验器，因为我们会在同一个<code>NG_VALIDATORS</code>下包装多个校验器，所以设置为true，代表允许多个。</li>
+</ul></li>
+<li>指令的内部不需要任何实现，其实就是一个壳子，真正的校验工作是校验器的内部实现。</li>
+</ul>
+
+<p><strong>注意</strong>
+要使自定义指令校验器生效，需要将指令导入到<code>app.module.ts</code>根模块中，一般只要我们使用<code>ng g drictive name</code>生成的指令都会自动导入，到根模块中，无需我们手动导入，但是如果指令没有生效，可以首先排查这里是否导入：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { EmailValidDriectiveDirective } from <span style="color:#f1fa8c">&#39;./myDriective/email-valid-driective.directive&#39;</span>;
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  declarations<span style="color:#ff79c6">:</span> [
+    ...
+    EmailValidDriectiveDirective
+  ],
+  ...
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="5-2-1-1-指令校验器的使用">5.2.1.1. 指令校验器的使用</h4>
+
+<p>和之前描述的一样，只要将我们写的指令校验器的<code>selector</code>的值写在需要校验的元素的标签上即可。</p>
+
+<h2 id="5-3-获取校验结果">5.3. 获取校验结果</h2>
+
+<p>由于模板式表单没有编写数据模型对象，所以不能直接在组件中直接通过<code>FormGroup</code>对象调用来得知表单的校验通过与否；我们可以通过模板局部变量将校验结果传到方法的参数中，拿到组件中进行使用：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">// template
+
+&lt;<span style="color:#ff79c6">form</span> #<span style="color:#50fa7b">myForm</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;ngForm&#34;</span> (<span style="color:#50fa7b">ngSubmit</span>)=&#34;<span style="color:#50fa7b">onSubmit</span>(<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">value</span>,<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">valid</span>)&#34;&gt;
+  账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">maxlength</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;50&#34;</span> <span style="color:#50fa7b">appEmailValidDriective</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">ngModelGroup</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span>&gt;
+      密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pwd&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+      重复密码：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;repwd&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;button&#34;</span> (<span style="color:#50fa7b">click</span>)=&#34;<span style="color:#50fa7b">viewMyForm</span>(<span style="color:#50fa7b">myForm</span>)&#34;&gt;查看模板本地变量&lt;/<span style="color:#ff79c6">button</span>&gt;
+  &lt;<span style="color:#ff79c6">button</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span>&gt;确定&lt;/<span style="color:#ff79c6">button</span>&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>我们在表单中定义了一个模板局部变量<code>myForm</code>，通过将<code>myForm</code>变量的<code>value</code>和<code>valid</code>属性传递给<code>onSubmit</code>函数，可以在组件中获取表单的值和校验结果：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">onSubmit(val: <span style="color:#8be9fd">any</span>, valid: <span style="color:#8be9fd">boolean</span>) {
+  console.log(val);
+  console.log(valid);
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>页面效果：<br />
+<img src="/image/Snipaste_2018-10-24_23-25-07.png" alt="页面" /></p>
+
+<h2 id="5-4-错误消息">5.4. 错误消息</h2>
+
+<p>在模板式表单中依然可以使用<code>hasError</code>函数来获取错误消息，其参数和响应式表单完全一致，只不过在模板式表单中需要用模板局部变量的<code>form</code>属性来调用它：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">maxlength</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;50&#34;</span> <span style="color:#50fa7b">appEmailValidDriective</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">form</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+  {{myForm.form.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>可以看到除了使用模板局部变量的<code>form</code>属性调用<code>hasError()</code>函数与<code>getError()</code>函数外，其余的参数等都是一致的，两个函数的第一个参数依然是校验器失败返回对象的key，第二个依然是字段的名称。</li>
+</ul>
+
+<h2 id="5-5-状态字段">5.5. 状态字段</h2>
+
+<p>状态字段同样可以使用模板局部变量来调用，状态的类型和响应式表单的几种类型一致，我们看一下使用方式</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">账号：&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">ngModel</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;account&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">maxlength</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;50&#34;</span> <span style="color:#50fa7b">appEmailValidDriective</span>&gt;&lt;<span style="color:#ff79c6">br</span>&gt;
+&lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">valid</span>||<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">untouched</span>&#34;&gt;
+  &lt;<span style="color:#ff79c6">div</span> [<span style="color:#50fa7b">hidden</span>]=&#34;!<span style="color:#50fa7b">myForm</span>.<span style="color:#50fa7b">form</span>.<span style="color:#50fa7b">hasError</span>(&#39;<span style="color:#50fa7b">email</span>&#39;,&#39;<span style="color:#50fa7b">account</span>&#39;)&#34;&gt;
+    {{myForm.form.getError(&#39;email&#39;,&#39;account&#39;)?.errDesc}}
+  &lt;/<span style="color:#ff79c6">div</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-参考资料">6. 参考资料</h1>
+
+<p><a href="https://www.angular.cn/guide/reactive-forms">https://www.angular.cn/guide/reactive-forms</a><br />
+<a href="https://www.angular.cn/guide/forms">https://www.angular.cn/guide/forms</a><br />
+<a href="https://www.angular.cn/guide/form-validation">https://www.angular.cn/guide/form-validation</a><br />
+<a href="https://www.joshmorony.com/username-availability-with-an-asynchronous-validator-in-angular/">https://www.joshmorony.com/username-availability-with-an-asynchronous-validator-in-angular/</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB5http%E6%9C%8D%E5%8A%A1%E9%80%9A%E4%BF%A1/" id="next">
+                &larr; <span class="nav-title nav-title-next">Angular知识点汇总(5)：HTTP服务通信</span> 
+            </a>  
+        <a rel="prev" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB3%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" id="prev">
+            <span class="nav-title nav-title-prev">Angular知识点汇总(3)：数据绑定</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

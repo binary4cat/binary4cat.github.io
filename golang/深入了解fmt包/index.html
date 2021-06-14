@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>深入了解fmt包  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    12 January 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">深入了解fmt包</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#formatting-output">Formatting Output</a>
+<ul>
+<li><a href="#v-t"><code>%v</code>&amp;<code>%T</code></a></li>
+<li><a href="#宽度">宽度</a></li>
+<li><a href="#参数位置索引">参数位置索引</a></li>
+<li><a href="#v"><code>%v</code></a></li>
+</ul></li>
+<li><a href="#fmt-stringer-fmt-formatter">fmt.Stringer &amp; fmt.Formatter</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<blockquote>
+<p>英文原文：<a href="https://blog.gopheracademy.com/advent-2018/fmt/">https://blog.gopheracademy.com/advent-2018/fmt/</a></p>
+</blockquote>
+
+<p><code>fmt</code>包是我们最常使用的package，我们使用它打印输出一些内容，也可以当作字符串formatter工具。在这篇内容中我们再更进一步了解fmt的使用技巧。</p>
+
+<h1 id="formatting-output">Formatting Output</h1>
+
+<p>Go <code>fmt</code>的方法支持多个“描述符”，一些常见的“描述符”例如：<code>%s</code>表示格式化输出为字符串，<code>%d</code>表示格式化输出为整数型，<code>%f</code>表示格式化输出为浮点类型。除了这些常见的，这里介绍一些其他的<code>fmt</code>包的“描述符”：</p>
+
+<h2 id="v-t"><code>%v</code>&amp;<code>%T</code></h2>
+
+<p><code>%v</code>将会格式化输出任意的变量的值，<code>%T</code>则会格式化输出任意变量的类型（type）</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">var</span> e <span style="color:#8be9fd;font-style:italic">interface</span>{} = <span style="color:#bd93f9">2.7182</span>
+fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;e = %v (%T)\n&#34;</span>, e, e)</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8be9fd;font-style:italic">e</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>.7182 <span style="color:#ff79c6">(</span>float64<span style="color:#ff79c6">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="宽度">宽度</h2>
+
+<p>可以在格式化输出的时候，指定输出内容的宽度，例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;[%10d]\n&#34;</span>, <span style="color:#bd93f9">353</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ff79c6">[</span>       <span style="color:#bd93f9">353</span><span style="color:#ff79c6">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到输出的内容在353前面多了7个空格(我真的数了)，加上“353”正好是10个字符，这就是“宽度”的意思，把变量格式化为指定的宽度输出。当然指定的宽度如果小于要输出的内容，那么就不会生效了。</p>
+
+<p>这个宽度可以用在其他的“描述符”中，<code>%s</code>、<code>%f</code>、<code>%T</code>等等，对于<code>%T</code>这种使用宽度时，会给类型描述设置宽度，这么描述可能不清楚，可以看看代码：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">s <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;123&#34;</span>
+fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;[%10T]\n&#34;</span>, s)  <span style="color:#ff79c6">//</span> 输出：[    <span style="color:#8be9fd">string</span>]</code></pre></td></tr></table>
+</div>
+</div>
+<p>也可以在参数中指定宽度的数值，使用<code>*</code>来指代宽度数值参数，例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%*d&#34;</span>, <span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">353</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ff79c6">[</span>       <span style="color:#bd93f9">353</span><span style="color:#ff79c6">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>例如在打印一组数字集合时，宽度可以用来使输出内容对其，这样更方便对比查看：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#ff79c6">package</span> main
+
+<span style="color:#ff79c6">import</span> (
+    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+    <span style="color:#f1fa8c">&#34;math&#34;</span>
+)
+
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    nums <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">12</span>, <span style="color:#bd93f9">237</span>, <span style="color:#bd93f9">3878</span>, <span style="color:#bd93f9">3</span>}
+    size <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">alignSize</span>(nums)
+    <span style="color:#ff79c6">for</span> i, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> nums {
+        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%02d %*d\n&#34;</span>, i, size, n)
+    }
+}
+
+<span style="color:#6272a4">// 计算数组中数字的最大宽度(返回的最大宽度最终+1)
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">alignSize</span>(nums []<span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">int</span> {
+    <span style="color:#6272a4">// 宽度的初始值为0
+</span><span style="color:#6272a4"></span>    size <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>
+    <span style="color:#6272a4">// 循环数组，找出最大的宽度，并且赋值给size
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> _, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> nums {
+        <span style="color:#6272a4">// log10的对数，可以近似为数字的个数
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> s <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">int</span>(math.<span style="color:#50fa7b">Log10</span>(<span style="color:#8be9fd;font-style:italic">float64</span>(n))) <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>; s &gt; size {
+            size = s
+        }
+    }
+    <span style="color:#ff79c6">return</span> size
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#bd93f9">00</span>   <span style="color:#bd93f9">12</span>
+<span style="color:#bd93f9">01</span>  <span style="color:#bd93f9">237</span>
+<span style="color:#bd93f9">02</span> <span style="color:#bd93f9">3878</span>
+<span style="color:#bd93f9">03</span>    <span style="color:#bd93f9">3</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="参数位置索引">参数位置索引</h2>
+
+<p>如果你在一个格式化输出中，想要在多处““描述符””中引用一个变量，那么可以使用参数位置索引，使用<code>%[n]d</code>这种语法就能做到，其中<code>n</code>代表参数的位置，位置从1开始（如果写了参数索引为0，就会出现错误<code>BADINDEX</code>）。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;您购买了%[1]s 消费 $%[2]d元. 合计$%[2]d元!\n&#34;</span>, <span style="color:#f1fa8c">&#34;机械键盘&#34;</span>, <span style="color:#bd93f9">2300</span>)</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">您购买了机械键盘 消费 <span style="color:#8be9fd;font-style:italic">$2300</span>元. 合计<span style="color:#8be9fd;font-style:italic">$2300</span>元!</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="v"><code>%v</code></h2>
+
+<p><code>%v</code>可以格式化输出一个值，在输出一个struct类型的值时，可以使用<code>+</code>前缀同时输出字段的名字，也可以使用<code>#</code>前缀同时输出字段的名字和struct的类型：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    p <span style="color:#ff79c6">:=</span> person{<span style="color:#f1fa8c">&#34;hai&#34;</span>, <span style="color:#bd93f9">26</span>}
+    s <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;123&#34;</span>
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v %+v %#v\n&#34;</span>, p, p, p)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v %+v %#v\n&#34;</span>, <span style="color:#ff79c6">&amp;</span>p, <span style="color:#ff79c6">&amp;</span>p, <span style="color:#ff79c6">&amp;</span>p)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v %+v %#v\n&#34;</span>, s, s, s)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%v %+v %#v\n&#34;</span>, <span style="color:#ff79c6">&amp;</span>s, <span style="color:#ff79c6">&amp;</span>s, <span style="color:#ff79c6">&amp;</span>s)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ff79c6">{</span>hai <span style="color:#bd93f9">26</span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">{</span>name:hai age:26<span style="color:#ff79c6">}</span> main.person<span style="color:#ff79c6">{</span>name:<span style="color:#f1fa8c">&#34;hai&#34;</span>, age:26<span style="color:#ff79c6">}</span>
+&amp;<span style="color:#ff79c6">{</span>hai <span style="color:#bd93f9">26</span><span style="color:#ff79c6">}</span> &amp;<span style="color:#ff79c6">{</span>name:hai age:26<span style="color:#ff79c6">}</span> &amp;main.person<span style="color:#ff79c6">{</span>name:<span style="color:#f1fa8c">&#34;hai&#34;</span>, age:26<span style="color:#ff79c6">}</span>
+<span style="color:#bd93f9">123</span> <span style="color:#bd93f9">123</span> <span style="color:#f1fa8c">&#34;123&#34;</span>
+0xc0420461c0 0xc0420461c0 <span style="color:#ff79c6">(</span>*string<span style="color:#ff79c6">)(</span>0xc0420461c0<span style="color:#ff79c6">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="fmt-stringer-fmt-formatter">fmt.Stringer &amp; fmt.Formatter</h1>
+
+<p>有些情况下你也许需要精细的控制要格式化输出的内容，举个例子，你可能想把一些错误信息分成两种格式化输出：用户端显示简化的错误信息，日志内输出详细的错误内容。</p>
+
+<p>要自定义控制对象的格式化输出，你需要实现<a href="https://golang.org/pkg/fmt/#Formatter"><code>fmt.Formatter</code></a>接口和可选的<a href="https://golang.org/pkg/fmt/#Stringer"><code>fmt.Stringer</code></a>接口。一个使用<code>fmt.Formatter</code>接口最优秀的例子是<a href="https://github.com/pkg/errors"><code>github.com/pkg/errors</code></a>项目。</p>
+
+<p>假如你的项目中有一个加载配置文件的错误发生，你可以给用户展示简洁的错误，在日志中输出详细的错误信息。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">cfg, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">loadConfig</span>(<span style="color:#f1fa8c">&#34;/no/such/config.toml&#34;</span>)
+<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;error: %s\n&#34;</span>, err)
+    log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;can&#39;t load config\n%+v&#34;</span>, err)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>展示给用户的错误信息：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">error: can&#39;t open config file: open /no/such/file.toml: no such file or directory</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出到日志文件的错误信息：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#bd93f9">2018</span>/11/28 <span style="color:#bd93f9">10</span>:43:00 can<span style="color:#f1fa8c">&#39;t load config
+</span><span style="color:#f1fa8c">open /no/such/file.toml: no such file or directory
+</span><span style="color:#f1fa8c">can&#39;</span>t open config file
+main.loadConfig
+    /home/miki/Projects/gopheracademy-web/content/advent-2018/fmt.go:101
+main.main
+    /home/miki/Projects/gopheracademy-web/content/advent-2018/fmt.go:135
+runtime.main
+    /usr/lib/go/src/runtime/proc.go:201
+runtime.goexit
+    /usr/lib/go/src/runtime/asm_amd64.s:1333</code></pre></td></tr></table>
+</div>
+</div>
+<p>接下来说明一下怎么使用<code>fmt.Formatter</code>和<code>fmt.Stringer</code>来精细化控制格式化信息。</p>
+
+<p>假如有一个存储用户认证信息的struct <code>AthInfo</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">type</span> AuthInfo <span style="color:#8be9fd;font-style:italic">struct</span> {
+    Login  <span style="color:#8be9fd">string</span>
+    ACL    <span style="color:#8be9fd">uint</span>
+    APIKey <span style="color:#8be9fd">string</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>在格式化输出(error或者information ..)的时候，应该不能直接把<code>APIKey</code>的值展示出来，最好的做法是使用掩码<code>******</code>替代。所以可以定义一个常量：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">const</span> (
+    keyMask = <span style="color:#f1fa8c">&#34;******&#34;</span>
+)</code></pre></td></tr></table>
+</div>
+</div>
+<p>首先实现<code>fmt.Stringer</code>接口，以用来使用掩码隐藏<code>APIKey</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#6272a4">// 实现https://golang.org/pkg/fmt/#Stringer接口
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (ai <span style="color:#ff79c6">*</span>AuthInfo) <span style="color:#50fa7b">String</span>() <span style="color:#8be9fd">string</span> {
+    key <span style="color:#ff79c6">:=</span> ai.APIKey
+    <span style="color:#ff79c6">if</span> key <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+        key = keyMask
+    }
+    <span style="color:#6272a4">// 返回使用掩码格式化后的内容
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;Login:%s, ACL:%08b, APIKey:%s&#34;</span>, ai.Login, ai.ACL, key)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>接下来实现<code>fmt.Formatter</code>接口，该接口只有一个方法<code>Format(f State, c rune)</code>，这个方法可以实现对格式化输出的自定义操作，其中第一个参数是提供给自定义<code>Formatter</code>的一个“printer”的状态数据(struct)，其中包含了当前格式化输出的一些数据，例如当前正在格式化的“描述符”。</p>
+
+<p>当我们的struct实现了<code>Format</code>方法，在使用<code>Printf</code>格式化方法时，会自动调用自定义的<code>Format</code>方法，从而实现对格式化输出的精细化控制。</p>
+
+<p><code>Format</code>函数会在<code>fmt\print.go</code>文件中的<code>handleMethods</code>方法中被调用，我们可以看看这个方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">func</span> (p <span style="color:#ff79c6">*</span>pp) <span style="color:#50fa7b">handleMethods</span>(verb <span style="color:#8be9fd">rune</span>) (handled <span style="color:#8be9fd">bool</span>) {
+    <span style="color:#ff79c6">if</span> p.erroring {
+        <span style="color:#ff79c6">return</span>
+    }
+    <span style="color:#6272a4">// p是当前操作的printer，这是一个使用sync.pool生成的对象，因为所有的格式化输出都需要用到它，
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 所以借助池，减少创建对象时的开销。
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// p.arg 就是当前正在格式化的参数(因为一个格式化输出操作，
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 可能包含多个“描述符”和参数，所以必不可少的使用循环，来一对一[verb &lt;=&gt; p.arg]操作)
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 因为我们的参数(对象)有可能实现了Format方法，所以如果断言它是Formatter接口类型，
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// 那么就可以调用自定义的Format方法了
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">if</span> formatter, ok <span style="color:#ff79c6">:=</span> p.arg.(Formatter); ok {
+        handled = <span style="color:#ff79c6">true</span>
+        <span style="color:#ff79c6">defer</span> p.<span style="color:#50fa7b">catchPanic</span>(p.arg, verb)
+        <span style="color:#6272a4">// 调用自定义的Format函数，传入printer和描述符
+</span><span style="color:#6272a4"></span>        formatter.<span style="color:#50fa7b">Format</span>(p, verb)
+        <span style="color:#ff79c6">return</span>
+    }
+
+    <span style="color:#ff79c6">...</span>
+    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>解释完了<code>Formatter</code>接口，为了接下来的例子，先实现一个存储需要格式化输出struct的所有字段名字的数组，可以在<code>init</code>函数中获取，获取也很简单，直接使用<code>reflect</code>反射操作：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">var</span> authInfoFields []<span style="color:#8be9fd">string</span>
+
+<span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+    typ <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">TypeOf</span>(AuthInfo{})
+    authInfoFields = <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">string</span>, typ.<span style="color:#50fa7b">NumField</span>())
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; typ.<span style="color:#50fa7b">NumField</span>(); i<span style="color:#ff79c6">++</span> {
+        authInfoFields[i] = typ.<span style="color:#50fa7b">Field</span>(i).Name
+    }
+    sort.<span style="color:#50fa7b">Strings</span>(authInfoFields) 
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>最后一步，实现我们的自定义<code>Format</code>方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">func</span> (ai <span style="color:#ff79c6">*</span>AuthInfo) <span style="color:#50fa7b">Format</span>(state fmt.State, verb <span style="color:#8be9fd">rune</span>) {
+    <span style="color:#ff79c6">switch</span> verb {
+    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#39;s&#39;</span>, <span style="color:#f1fa8c">&#39;q&#39;</span>:
+        val <span style="color:#ff79c6">:=</span> ai.<span style="color:#50fa7b">String</span>()
+        <span style="color:#ff79c6">if</span> verb <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;q&#39;</span> {
+            val = fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%q&#34;</span>, val)
+        }
+        fmt.<span style="color:#50fa7b">Fprint</span>(state, val)
+    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#39;v&#39;</span>:
+        <span style="color:#6272a4">// 如果描述符标志为“#”号，就先将格式化参数的类型写入“state”
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> state.<span style="color:#50fa7b">Flag</span>(<span style="color:#f1fa8c">&#39;#&#39;</span>) {
+            fmt.<span style="color:#50fa7b">Fprintf</span>(state, <span style="color:#f1fa8c">&#34;%T&#34;</span>, ai)
+        }
+        <span style="color:#6272a4">// 做拼接操作
+</span><span style="color:#6272a4"></span>        fmt.<span style="color:#50fa7b">Fprint</span>(state, <span style="color:#f1fa8c">&#34;{&#34;</span>)
+        val <span style="color:#ff79c6">:=</span> reflect.<span style="color:#50fa7b">ValueOf</span>(<span style="color:#ff79c6">*</span>ai)
+        <span style="color:#ff79c6">for</span> i, name <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> authInfoFields {
+            <span style="color:#ff79c6">if</span> state.<span style="color:#50fa7b">Flag</span>(<span style="color:#f1fa8c">&#39;#&#39;</span>) <span style="color:#ff79c6">||</span> state.<span style="color:#50fa7b">Flag</span>(<span style="color:#f1fa8c">&#39;+&#39;</span>) {
+                fmt.<span style="color:#50fa7b">Fprintf</span>(state, <span style="color:#f1fa8c">&#34;%s:&#34;</span>, name)
+            }
+            fld <span style="color:#ff79c6">:=</span> val.<span style="color:#50fa7b">FieldByName</span>(name)
+            <span style="color:#6272a4">// 字段名称为`APIKey`并且值的长度大于0，就需要使用掩码替代
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">if</span> name <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;APIKey&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> fld.<span style="color:#50fa7b">Len</span>() &gt; <span style="color:#bd93f9">0</span> {
+                fmt.<span style="color:#50fa7b">Fprint</span>(state, keyMask)
+            } <span style="color:#ff79c6">else</span> {
+                fmt.<span style="color:#50fa7b">Fprint</span>(state, fld)
+            }
+
+            <span style="color:#ff79c6">if</span> i &lt; <span style="color:#8be9fd;font-style:italic">len</span>(authInfoFields)<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span> {
+                fmt.<span style="color:#50fa7b">Fprint</span>(state, <span style="color:#f1fa8c">&#34; &#34;</span>)
+            }
+        }
+        fmt.<span style="color:#50fa7b">Fprint</span>(state, <span style="color:#f1fa8c">&#34;}&#34;</span>)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>最后测试一个格式化输出结果：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+    ai <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>AuthInfo{
+        Login:  <span style="color:#f1fa8c">&#34;daffy&#34;</span>,
+        ACL:    <span style="color:#bd93f9">1</span>,
+        APIKey: <span style="color:#f1fa8c">&#34;dck season&#34;</span>,
+    }
+    fmt.<span style="color:#50fa7b">Println</span>(ai.<span style="color:#50fa7b">String</span>())
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;ai %%s 描述符输出: %s\n&#34;</span>, ai)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;ai %%q 描述符输出: %q\n&#34;</span>, ai)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;ai %%v 描述符输出: %v\n&#34;</span>, ai)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;ai %%+v 描述符输出: %+v\n&#34;</span>, ai)
+    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;ai %%#v 描述符输出: %#v\n&#34;</span>, ai)
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>输出结果：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Login:daffy, ACL:00000001, APIKey:******
+ai %s 描述符输出: Login:daffy, ACL:00000001, APIKey:******
+ai %q 描述符输出: <span style="color:#f1fa8c">&#34;Login:daffy, ACL:00000001, APIKey:******&#34;</span>
+ai %v 描述符输出: <span style="color:#ff79c6">{</span><span style="color:#bd93f9">1</span> ****** daffy<span style="color:#ff79c6">}</span>
+ai %+v 描述符输出: <span style="color:#ff79c6">{</span>ACL:1 APIKey:****** Login:daffy<span style="color:#ff79c6">}</span>
+ai %#v 描述符输出: *main.AuthInfo<span style="color:#ff79c6">{</span>ACL:1 APIKey:****** Login:daffy<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考资料">参考资料</h1>
+
+<p>本文参照翻译<a href="https://blog.gopheracademy.com/advent-2018/fmt/">https://blog.gopheracademy.com/advent-2018/fmt/</a> 并且修改增加了部分内容。</p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/golang/win10&#43;wsl%E9%85%8D%E7%BD%AEgolang%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" id="next">
+                &larr; <span class="nav-title nav-title-next">Win10&#43;WSL配置Golang开发环境</span> 
+            </a>  
+        <a rel="prev" href="/golang/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%BB%E8%BE%91%E8%8B%B1%E8%AF%AD%E9%9F%B3%E9%A2%91%E5%B0%8F%E7%88%AC%E8%99%AB/" id="prev">
+            <span class="nav-title nav-title-prev">一个简单的逻辑英语音频小爬虫</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

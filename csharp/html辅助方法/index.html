@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>HTML辅助方法  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    02 August 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">HTML辅助方法</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-超链接-html-actionlink">1. 超链接：Html.ActionLink</a></li>
+<li><a href="#2-表单提交-html-beginform">2. 表单提交：Html.BeginForm</a></li>
+<li><a href="#3-使用get方式提交表单">3. 使用GET方式提交表单</a></li>
+<li><a href="#4-使用上传-提交-文件功能">4. 使用上传(提交)文件功能</a></li>
+<li><a href="#5-常用的表单输入辅助方法">5. 常用的表单输入辅助方法</a></li>
+<li><a href="#6-强类型的辅助方法">6. 强类型的辅助方法</a>
+<ul>
+<li><a href="#6-1-使用强类型辅助方法的例子">6.1. 使用强类型辅助方法的例子</a></li>
+<li><a href="#6-2-使用辅助方法加载分布视图">6.2. 使用辅助方法加载分布视图</a></li>
+</ul></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　HTML辅助方法，也就是<code>HtmlHelper</code>，就是帮助快捷的产生HTML标签的作用。
+　　HTML辅助方法可以编写超链接、表单(<form>)、输入框、选项、加载其他的分布视图(Partial View)等。</p>
+
+<h1 id="1-超链接-html-actionlink">1. 超链接：Html.ActionLink</h1>
+
+<p>　　<code>@Html.ActionLink()</code>用于产生超链接。并且链接的文字部分会自动的进行HTML编码(HtmlEncode)。</p>
+
+<p><strong>Html.ActionLink()方法重载</strong>:
+　　<code>@Html.ActionLink(&quot;链接文字&quot;,&quot;Action_Name&quot;)</code>：该语法生成的超链接，点击后会跳转到“Action_Name(控制器方法)”所指向的Action。由于这里并没有指定“Controller”的名字，所以会指向默认(该页面所属)的控制器。
+　　<code>@Html.ActionLink(&quot;链接文字&quot;,&quot;Action_Name&quot;,&quot;Controller_Name&quot;)</code>：如要将链接指向其他控制器(不是当前页面所属)时，应该在第三参数中注明控制器的名称。
+　　<code>@Html.ActionLink(&quot;链接文字&quot;,&quot;Action_Name&quot;,new {id = 12,page = 5})</code>：当链接需要额外的路由参数时，可以传入匿名类型的数据。比如这里会生成这样的标签：<code>&lt;a href=&quot;/Controller_Name/Action_Name?id=12&amp;page=5&quot;&gt;链接文字&lt;/a&gt;</code>
+　　<code>@Html.ActionLink(&quot;链接文字&quot;,&quot;Action_Name&quot;,null,new {@class = &quot;btnLink&quot;})</code>：当要在生成的HTML标签中加入额外的HTML属性时，可以在第四个参数中加入。比如设置HTML的class属性。但是由于class是c#中的关键字，所以在 这里使用时需要在前面加上@符号；而且当需要输出带有“-”数属性时(HTML5的属性)，比如“data-value”，需要将“-”换成“_”。</p>
+
+<p>　　<strong>使用Html.ActionLink()时，第一个参数不能输入空字符串或者null值，否则就会抛出异常。</strong></p>
+
+<h1 id="2-表单提交-html-beginform">2. 表单提交：Html.BeginForm</h1>
+
+<p>　　<code>@Html.BeginForm()</code>可以生成表单提交标签。表单的提交方式默认为Post，可以使用参数将提交方式修改为GET。
+　　
+Html.BeginForm()的两种使用方法：
+1. 使用<code>@using{}</code>包裹住Html.BeginForm()以及表单中的标签成员</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">@using(Html.BeginForm())
+{
+    &lt;p&gt;账号：@html.TextBox(<span style="color:#f1fa8c">&#34;Account&#34;</span>)&lt;/p&gt;
+    &lt;p&gt;密码：@Html.PassWord(<span style="color:#f1fa8c">&#34;PassWord&#34;</span>)&lt;/p&gt;
+    &lt;input type=<span style="color:#f1fa8c">&#34;submit&#34;</span> <span style="color:#ff79c6">value</span>=<span style="color:#f1fa8c">&#34;注册&#34;</span> /&gt;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>在开头和结尾分别使用<code>Html.BeginForm()</code>、<code>Html.EndForm()</code></li>
+</ol>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@{Html.BeginForm(&#34;About&#34;,&#34;Home&#34;);}
+    @Html.TextArea(&#34;Date&#34;)
+    @Html.TextArea(&#34;123&#34;)
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> /&gt;
+@{Html.EndForm();}</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　<strong>推荐使用using的方式编写Html.BeginForm(),因为代码比较可看。</strong></p>
+
+<h1 id="3-使用get方式提交表单">3. 使用GET方式提交表单</h1>
+
+<p>　　如果要使用GET方式提交表单，可以输入第三个参数<code>FormMethod.Get</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@using(Html.BeginForm(&#34;Search&#34;,&#34;Home&#34;,FormMethod.Get))
+{
+    @Html.TextArea(&#34;2333&#34;)
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> /&gt;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-使用上传-提交-文件功能">4. 使用上传(提交)文件功能</h1>
+
+<p>　　想要实现上传文件的功能，需要在<code>&lt;form&gt;</code>表单中增加一个<code>enctype</code>属性，所以在Html.BeginForm()中需要添加第四个参数：
+　　因为Html辅助方法中没有File方法，所以需要借助TextBox方法来代替，然后给TextBox传入第三个参数将type属性修改为file。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@using(Html.BeginForm(&#34;Upload&#34;,&#34;File&#34;,FormMethod.Post,new {enctype = &#34;multipart/from-data&#34;}))
+{
+    @Html.TextBox(&#34;FileName&#34;,&#34;&#34;,new {type=&#34;file&#34;,size=&#34;10&#34;})
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> /&gt;
+}
+
+<span style="color:#6272a4">&lt;!--输出的HTML代码为：--&gt;</span>
+&lt;<span style="color:#ff79c6">form</span> <span style="color:#50fa7b">action</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/File/Upload&#34;</span> <span style="color:#50fa7b">enctype</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;multipart/from-data&#34;</span> <span style="color:#50fa7b">method</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;post&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">id</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;FileName&#34;</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;FileName&#34;</span> <span style="color:#50fa7b">size</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;10&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;file&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;&#34;</span> /&gt;
+    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> /&gt;
+&lt;/<span style="color:#ff79c6">form</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-常用的表单输入辅助方法">5. 常用的表单输入辅助方法</h1>
+
+<p>　　● <code>Html.BeginForm()</code>：输出<code>&lt;form&gt;</code>标签
+　　● <code>Html.EndForm()</code>：输出<code>&lt;/form&gt;</code>标签
+　　● <code>Html.Lable()</code>：输出<code>&lt;lable&gt;</code>标签
+　　● <code>Html.TextBox()</code>：输出<code>&lt;input type=&quot;text&quot; /&gt;</code>标签
+　　● <code>Html.TextArea()</code>：输出<code>&lt;textarea&gt;</code>标签，可以指定rows和column的值。
+　　● <code>Html.PassWord()</code>：输出<code>&lt;input type=&quot;password&quot; /&gt;</code>标签
+　　● <code>Html.Checkbox()</code>：输出<code>&lt;input type=&quot;checkbox&quot; /&gt;</code>标签
+　　● <code>Html.RadioButton()</code>：输出<code>&lt;input type=&quot;radio&quot; /&gt;</code>标签，可以指定是否要默认选取预设值<code>@Html.ReadioButton(&quot;name&quot;,&quot;vlaue&quot;,true)</code>。
+　　● <code>Html.DropDownList()</code>：输出<code>&lt;select&gt;</code>标签
+　　● <code>Html.ListBox()</code>：输出<code>&lt;select mulitiple&gt;</code>标签
+　　● <code>Html.Hidden()</code>：输出<code>&lt;input type=&quot;hidden&quot;/&gt;</code>标签
+　　● <code>Html.ValidationSummary()</code>：输出表单验证失败是的错误信息摘要</p>
+
+<p>　　这些标签大多都有重载，比如<code>@Html.TextBox()</code>重载：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@Html.TextBox(&#34;UserName&#34;,&#34;Is2&#34;,new{id=&#34;textId&#34;})
+<span style="color:#6272a4">&lt;!--输出下面的HTML代码：--&gt;</span>
+&lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">id</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;textId&#34;</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;UserName&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">value</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;Is2&#34;</span> /&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-强类型的辅助方法">6. 强类型的辅助方法</h1>
+
+<p>　　强类型的辅助方法也就是可以在辅助方法中使用@model加载需要的内容，而且可以使用简洁的lambda表达式。
+　　强类型的辅助方法名称基本上就是“原本的名字后面加上For”，比如<code>@Html.TextBox()</code>的强类型形式就是<code>@Html.TextBoxFor()</code>。
+　　要使用强类型的辅助方法，需要在View最开始注明强类型模式:<code>@model MvcApplicationTest.Product</code>。</p>
+
+<h2 id="6-1-使用强类型辅助方法的例子">6.1. 使用强类型辅助方法的例子</h2>
+
+<p><strong>数据模型：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System.ComponentModel;
+<span style="color:#ff79c6">using</span> System.ComponentModel.DataAnnotations;
+
+<span style="color:#ff79c6">namespace</span> MvcApplicationTest
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Product</span>
+    {
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Id{ <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }<span style="color:#50fa7b">
+</span><span style="color:#50fa7b">        [Required]
+</span><span style="color:#50fa7b">        [DisplayName(&#34;产品名称&#34;)]</span>
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Name{ <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }<span style="color:#50fa7b">
+</span><span style="color:#50fa7b">        [Required]
+</span><span style="color:#50fa7b">        [DisplayName(&#34;产品说明&#34;)]</span>
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Description{ <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }<span style="color:#50fa7b">
+</span><span style="color:#50fa7b">        [Required]</span>
+        <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> UnitPrice{ <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>View：</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@model MvcApplicationTest.Product
+
+@using(Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    &lt;<span style="color:#ff79c6">fieldset</span>&gt;
+        &lt;<span style="color:#ff79c6">h2</span>&gt;产品信息&lt;/<span style="color:#ff79c6">h2</span>&gt;
+        &lt;<span style="color:#ff79c6">div</span>&gt;
+            @Html.LableFor(model=&gt;model.Name)
+        &lt;/<span style="color:#ff79c6">div</span>&gt;
+        &lt;<span style="color:#ff79c6">div</span>&gt;
+            @Html.LableFor(model=&gt;model.Description)
+        &lt;/<span style="color:#ff79c6">div</span>&gt;
+        &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;submit&#34;</span> /&gt;
+    &lt;/<span style="color:#ff79c6">fieldset</span>&gt;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="6-2-使用辅助方法加载分布视图">6.2. 使用辅助方法加载分布视图</h2>
+
+<p>　　使用<code>@Html.Partial()</code>方法可以在View中加载一个分布视图(Partial View)。
+　　因为分布视图是片段式的，所以需要在一个完整页面中加载分布视图。如果分布视图中需要参数，也可以在方法中传入。</p>
+
+<p><strong>index.cshtml</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">@model MvcApplicationTest.Product
+
+@Html.Partial(<span style="color:#f1fa8c">&#34;ProductInfo&#34;</span>,(<span style="color:#8be9fd">object</span>)model.Name)</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>Partial View(ProductInfo)</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">@model System.String
+
+@Html.TextBox(model)</code></pre></td></tr></table>
+</div>
+</div>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/mvc%E5%BB%B6%E4%BC%B8mvpmvvm/" id="next">
+                &larr; <span class="nav-title nav-title-next">MVC延伸：MVP、MVVM</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%8F%8D%E5%B0%84-reflection/" id="prev">
+            <span class="nav-title nav-title-prev">反射(reflection)</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

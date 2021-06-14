@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>值得收藏的10个jQuery小技巧  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    25 March 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">值得收藏的10个jQuery小技巧</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-返回顶部按钮">1.返回顶部按钮</a></li>
+<li><a href="#2-预加载图片">2.预加载图片</a></li>
+<li><a href="#3-检查图片是否加载完成">3.检查图片是否加载完成</a></li>
+<li><a href="#4-自动修改破损图像">4.自动修改破损图像</a></li>
+<li><a href="#5-鼠标悬停-hover-切换-class-属性">5.鼠标悬停(hover)切换 class 属性</a></li>
+<li><a href="#6-禁用-input-字段">6.禁用 input 字段</a></li>
+<li><a href="#7-阻止链接加载">7.阻止链接加载</a></li>
+<li><a href="#8-切换-fade-slide">8.切换 fade/slide</a></li>
+<li><a href="#9-简单的手风琴效果">9.简单的手风琴效果</a></li>
+<li><a href="#10-让两个-div-高度相同">10.让两个 DIV 高度相同</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>转载自<a href="http://www.imooc.com/article/1686">慕课网</a></p>
+
+<h1 id="1-返回顶部按钮">1.返回顶部按钮</h1>
+
+<p>你可以利用 animate 和 scrollTop 来实现返回顶部的动画，而不需要使用其他插件。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#6272a4">// Back to top
+</span><span style="color:#6272a4"></span>$(<span style="color:#f1fa8c">&#39;a.top&#39;</span>).click(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  $(<span style="color:#8be9fd;font-style:italic">document</span>.body).animate({scrollTop<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">0</span>}, <span style="color:#bd93f9">800</span>);
+  <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>;
+});
+<span style="color:#6272a4">&lt;!--</span> Create an anchor tag <span style="color:#ff79c6">--&gt;</span>
+<span style="color:#ff79c6">&lt;</span>a <span style="color:#ff79c6">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;top&#34;</span> href<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;#&#34;</span><span style="color:#ff79c6">&gt;</span>Back to top<span style="color:#ff79c6">&lt;</span>/a&gt;
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>改变 scrollTop 的值可以调整返回距离顶部的距离，而 animate 的第二个参数是执行返回动作需要的时间(单位：毫秒)。</p>
+
+<h1 id="2-预加载图片">2.预加载图片</h1>
+
+<p>如果你的页面中使用了很多不可见的图片（如：hover 显示），你可能需要预加载它们：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$.preloadImages <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+  <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd;font-style:italic">var</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;</span> arguments.length; i<span style="color:#ff79c6">++</span>) {
+    $(<span style="color:#f1fa8c">&#39;&lt;img&gt;&#39;</span>).attr(<span style="color:#f1fa8c">&#39;src&#39;</span>, arguments[i]);
+  }
+};
+
+$.preloadImages(<span style="color:#f1fa8c">&#39;img/hover1.png&#39;</span>, <span style="color:#f1fa8c">&#39;img/hover2.png&#39;</span>);
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-检查图片是否加载完成">3.检查图片是否加载完成</h1>
+
+<p>有时候你需要确保图片完成加载完成以便执行后面的操作：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;img&#39;</span>).load(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  console.log(<span style="color:#f1fa8c">&#39;image load successful&#39;</span>);
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>你可以把 img 替换为其他的 ID 或者 class 来检查指定图片是否加载完成</p>
+
+<h1 id="4-自动修改破损图像">4.自动修改破损图像</h1>
+
+<p>如果你碰巧在你的网站上发现了破碎的图像链接，你可以用一个不易被替换的图像来代替它们。添加这个简单的代码可以节省很多麻烦：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;img&#39;</span>).on(<span style="color:#f1fa8c">&#39;error&#39;</span>, <span style="color:#8be9fd;font-style:italic">function</span> () {
+  $(<span style="color:#ff79c6">this</span>).prop(<span style="color:#f1fa8c">&#39;src&#39;</span>, <span style="color:#f1fa8c">&#39;img/broken.png&#39;</span>);
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>即使你的网站没有破碎的图像链接，添加这段代码也没有任何害处。</p>
+
+<h1 id="5-鼠标悬停-hover-切换-class-属性">5.鼠标悬停(hover)切换 class 属性</h1>
+
+<p>假如当用户鼠标悬停在一个可点击的元素上时，你希望改变其效果，下面这段代码可以在其悬停在元素上时添加 class 属性，当用户鼠标离开时，则自动取消该 class 属性：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;.btn&#39;</span>).hover(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  $(<span style="color:#ff79c6">this</span>).addClass(<span style="color:#f1fa8c">&#39;hover&#39;</span>);
+  }, <span style="color:#8be9fd;font-style:italic">function</span> () {
+    $(<span style="color:#ff79c6">this</span>).removeClass(<span style="color:#f1fa8c">&#39;hover&#39;</span>);
+  });
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>你只需要添加必要的CSS代码即可。如果你想要更简洁的代码，可以使用 toggleClass 方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;.btn&#39;</span>).hover(<span style="color:#8be9fd;font-style:italic">function</span> () { 
+  $(<span style="color:#ff79c6">this</span>).toggleClass(<span style="color:#f1fa8c">&#39;hover&#39;</span>); 
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>注：直接使用CSS实现该效果可能是更好的解决方案，但你仍然有必要知道该方法。</p>
+
+<h1 id="6-禁用-input-字段">6.禁用 input 字段</h1>
+
+<p>有时你可能需要禁用表单的 submit 按钮或者某个 input 字段，直到用户执行了某些操作（例如，检查“已阅读条款”复选框）。可以添加 disabled 属性，直到你想启用它时：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;input[type=&#34;submit&#34;]&#39;</span>).prop(<span style="color:#f1fa8c">&#39;disabled&#39;</span>, <span style="color:#ff79c6">true</span>);
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>你要做的就是执行 removeAttr 方法，并把要移除的属性作为参数传入：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;input[type=&#34;submit&#34;]&#39;</span>).removeAttr(<span style="color:#f1fa8c">&#39;disabled&#39;</span>);
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="7-阻止链接加载">7.阻止链接加载</h1>
+
+<p>有时你不希望链接到某个页面或者重新加载它，你可能希望它来做一些其他事情或者触发一些其他脚本，你可以这么做：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">$(<span style="color:#f1fa8c">&#39;a.no-link&#39;</span>).click(<span style="color:#8be9fd;font-style:italic">function</span> (e) {
+  e.preventDefault();
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="8-切换-fade-slide">8.切换 fade/slide</h1>
+
+<p>fade 和 slide 是我们在 jQuery 中经常使用的动画效果，它们可以使元素显示效果更好。但是如果你希望元素显示时使用第一种效果，而消失时使用第二种效果，则可以这么做：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#6272a4">// Fade
+</span><span style="color:#6272a4"></span>$(<span style="color:#f1fa8c">&#39;.btn&#39;</span>).click(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  $(<span style="color:#f1fa8c">&#39;.element&#39;</span>).fadeToggle(<span style="color:#f1fa8c">&#39;slow&#39;</span>);
+});
+<span style="color:#6272a4">// Toggle
+</span><span style="color:#6272a4"></span>$(<span style="color:#f1fa8c">&#39;.btn&#39;</span>).click(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  $(<span style="color:#f1fa8c">&#39;.element&#39;</span>).slideToggle(<span style="color:#f1fa8c">&#39;slow&#39;</span>);
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="9-简单的手风琴效果">9.简单的手风琴效果</h1>
+
+<p>这是一个实现手风琴效果快速简单的方法：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#6272a4">// Close all panels
+</span><span style="color:#6272a4"></span>$(<span style="color:#f1fa8c">&#39;#accordion&#39;</span>).find(<span style="color:#f1fa8c">&#39;.content&#39;</span>).hide();
+<span style="color:#6272a4">// Accordion
+</span><span style="color:#6272a4"></span>$(<span style="color:#f1fa8c">&#39;#accordion&#39;</span>).find(<span style="color:#f1fa8c">&#39;.accordion-header&#39;</span>).click(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  <span style="color:#8be9fd;font-style:italic">var</span> next <span style="color:#ff79c6">=</span> $(<span style="color:#ff79c6">this</span>).next();
+  next.slideToggle(<span style="color:#f1fa8c">&#39;fast&#39;</span>);
+  $(<span style="color:#f1fa8c">&#39;.content&#39;</span>).not(next).slideUp(<span style="color:#f1fa8c">&#39;fast&#39;</span>);
+  <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">false</span>;
+});
+</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="10-让两个-div-高度相同">10.让两个 DIV 高度相同</h1>
+
+<p>有时你需要让两个 div 高度相同，而不管它们里面的内容多少。可以使用下面的代码片段：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#8be9fd;font-style:italic">var</span> $columns <span style="color:#ff79c6">=</span> $(<span style="color:#f1fa8c">&#39;.column&#39;</span>);
+<span style="color:#8be9fd;font-style:italic">var</span> height <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+$columns.each(<span style="color:#8be9fd;font-style:italic">function</span> () {
+  <span style="color:#ff79c6">if</span> ($(<span style="color:#ff79c6">this</span>).height() <span style="color:#ff79c6">&gt;</span> height) {
+    height <span style="color:#ff79c6">=</span> $(<span style="color:#ff79c6">this</span>).height();
+  }
+});
+$columns.height(height);
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码会循环一组元素，并设置它们的高度为元素中的最大高。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/bootstrap-fileinput%E7%BB%84%E4%BB%B6%E5%9C%A8%E4%B8%8A%E4%BC%A0%E6%97%B6%E4%BC%A0%E9%80%92%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0/" id="next">
+                &larr; <span class="nav-title nav-title-next">bootstrap-fileinput组件在上传时传递额外参数</span> 
+            </a>  
+        <a rel="prev" href="/frontend/directive%E4%B8%AD%E5%86%99template%E9%81%87%E8%A7%81%E7%9A%84%E9%97%AE%E9%A2%98/" id="prev">
+            <span class="nav-title nav-title-prev">directive中写template遇见的问题</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

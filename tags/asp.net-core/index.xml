@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asp.net Core on Haijd&#39;s Blog</title>
+    <link>/tags/asp.net-core/</link>
+    <description>Recent content in Asp.net Core on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 20 Feb 2016 13:31:43 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/asp.net-core/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>.NET-.NET Core中的配置</title>
+      <link>/csharp/net-net-core%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 20 Feb 2016 13:31:43 +0800</pubDate>
+      
+      <guid>/csharp/net-net-core%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;就在截稿时间之前，Microsoft 宣布了更改 ASP.NET 5 和相关堆叠的名称。ASP.NET 5 已更名为 ASP.NET Core 1.0。Entity Framework (EF) 7 已更名为 Entity Framework (EF) Core 1.0。虽然 ASP.NET 5 和 EF7 程序包以及命名空间将会发生变化，但新的命名法不会对本文中的课程造成任何影响。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;使用 ASP.NET 5 的同仁们自然都会注意到此平台中新增了配置支持，可用于 NuGet 包的 Microsoft.Extensions.Configuration 集合。&lt;/p&gt;
+
+&lt;p&gt;新的配置支持名称/值对列表（可分入多层层次结构）。例如，您可以将一个设置存储在 SampleApp:Users:InigoMontoya:MaximizeMainWindow 中，将另一个设置存储在 SampleApp:AllUsers:Default:MaximizeMainWindow 中。&lt;/p&gt;
+
+&lt;p&gt;存储的所有值都会映射到字符串，您可以借助内置的绑定支持，将设置反序列化为自定义 POCO 对象。已经熟悉新配置 API 的同仁们可能最初是在 ASP.NET 5 注意到的。不过，此 API 绝不仅限于 ASP.NET。实际上，本文中的所有列表都是使用 Microsoft .NET Framework 4.5.1（同时引用 ASP.NET 5 RC1 中的 Microsoft.Extensions.Configuration 包）在 Visual Studio 2015 单元测试项目中创建（有关源代码，请访问 &lt;a href=&#34;http://github.com/IntelliTect/Articles&#34;&gt;gitHub.com/IntelliTect/Articles&lt;/a&gt;）。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>数据点-重构ASP.NET5/EF6项目和依赖关系注入</title>
+      <link>/csharp/%E6%95%B0%E6%8D%AE%E7%82%B9-%E9%87%8D%E6%9E%84asp-net5-ef6%E9%A1%B9%E7%9B%AE%E5%92%8C%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5/</link>
+      <pubDate>Tue, 16 Feb 2016 13:05:29 +0800</pubDate>
+      
+      <guid>/csharp/%E6%95%B0%E6%8D%AE%E7%82%B9-%E9%87%8D%E6%9E%84asp-net5-ef6%E9%A1%B9%E7%9B%AE%E5%92%8C%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5/</guid>
+      <description>&lt;p&gt;就在截稿时间之前，Microsoft 宣布了更改 ASP.NET 5 和相关堆叠的名称。ASP.NET 5 已更名为 ASP.NET Core 1.0。Entity Framework (EF) 7 已更名为 Entity Framework (EF) Core 1.0。虽然 ASP.NET 5 和 EF7 程序包以及命名空间将会发生变化，但新的命名法不会对本文中的课程造成任何影响。&lt;/p&gt;
+
+&lt;p&gt;依赖关系注入 (DI) 都是关于松耦合的 (&lt;a href=&#34;http://bit.ly/1TZWVtW&#34;&gt;bit.ly/1TZWVtW&lt;/a&gt;。您从其他位置（理想情况下是类构造函数）请求获取您依赖的类，而不是将这些类硬编码为其他类。这遵循的是显式依赖关系原则，可以更明确地告知类用户此类所需的协作者。这样一来，您还可以在类对象实例有备选配置的情况下构建更灵活的软件，同时这也对编写这种类的自动测试真正有益。我的工作领域就是和 Entity Framework代码不停地打交道。典型的例子是：在不使用松耦合的情况下编码就是在创建可直接实例化 DbContext 的存储库或控制器。我已经上千次这样做过。实际上，我撰写这篇文章的目标是为了向我在专栏“EF6、EF7 与 ASP.NET 5 组合”(&lt;a href=&#34;http://msdn.com/magazine/dn973011&#34;&gt;msdn.com/magazine/dn973011&lt;/a&gt;) 中编写的代码应用我所学到的 DI知识。例如，在下面的方法中，我就直接实例化了 DbContext：&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C#学习笔记 on Haijd&#39;s Blog</title>
+    <link>/tags/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in C#学习笔记 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Jul 2016 19:00:41 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>值类型和引用类型</title>
+      <link>/csharp/%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sun, 17 Jul 2016 19:00:41 +0800</pubDate>
+      
+      <guid>/csharp/%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>反射(reflection)</title>
+      <link>/csharp/%E5%8F%8D%E5%B0%84-reflection/</link>
+      <pubDate>Thu, 18 Jun 2015 16:01:14 +0800</pubDate>
+      
+      <guid>/csharp/%E5%8F%8D%E5%B0%84-reflection/</guid>
+      <description>&lt;h1 id=&#34;1-什么是反射&#34;&gt;1. 什么是反射&lt;/h1&gt;
+
+&lt;p&gt;　　一个运行的程序查看本身或者其他程序的元数据的行为称为反射(reflection)。
+　　元数据(metadata)：有关程序及其类型的数据称为元数据，它们保存在程序的程序集中。&lt;/p&gt;
+
+&lt;p&gt;　　&lt;strong&gt;反射功能引用自system.Reflection命名空间&lt;/strong&gt;，要使用反射需要使用&lt;code&gt;System.Reflection&lt;/code&gt;命名空间。
+　　BCL(基类库)声明了一个叫做&lt;code&gt;Type&lt;/code&gt;的抽象类，它被设计用来包含类型的特性，使用这个类的对象能让我们获取程序使用的类型的信息。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>数组(array)</title>
+      <link>/csharp/%E6%95%B0%E7%BB%84-array/</link>
+      <pubDate>Sun, 07 Jun 2015 00:20:12 +0800</pubDate>
+      
+      <guid>/csharp/%E6%95%B0%E7%BB%84-array/</guid>
+      <description>&lt;h1 id=&#34;1-数组&#34;&gt;1. 数组&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;strong&gt;数组实际上是由一个变量名称表示的一组同类型的数据元素&lt;/strong&gt;，每一个元素都可以通过变量名称和一个或多个方括号中的索引名称来访问，例如：&lt;code&gt;MyArray[1]&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-定义&#34;&gt;2. 定义&lt;/h1&gt;
+
+&lt;p&gt;　　■ 元素：数组中&lt;strong&gt;独立的数据项&lt;/strong&gt;被称为元素。数组的所有元素必须是相同类型的，或继承自相同的类型。
+　　■ 秩/维度：数组可以有任何为正数的维度数(也就是几维数组的意思，例如二维数组的秩等于2)，数组的维度数称为秩(rank)。
+　　■ 维度长度：数组的每一个维度有一个长度，就是这个方向的位置个数。
+　　■ 数组长度：数组的所有维度中的元素的总和称为数组的长度。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>枚举(enumerate)</title>
+      <link>/csharp/%E6%9E%9A%E4%B8%BE-enumerate/</link>
+      <pubDate>Thu, 04 Jun 2015 23:14:38 +0800</pubDate>
+      
+      <guid>/csharp/%E6%9E%9A%E4%B8%BE-enumerate/</guid>
+      <description>&lt;h1 id=&#34;1-什么是枚举&#34;&gt;1. 什么是枚举&lt;/h1&gt;
+
+&lt;p&gt;　　枚举是程序员自己定义的类型，与类和结构一样。
+　　■ 与结构一样，枚举是值类型，因此直接存储它们的数据，而不是分成引用和数据去存储。
+　　■ 不能对枚举成员使用修饰符，它们都隐式的具有和枚举相同的可访问性。
+　　■ 枚举只有一种类型的成员：命名的整数值常量。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//声明枚举的关键字是“enum”
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;enum&lt;/span&gt; TrafficLight
+{
+    Green,  &lt;span style=&#34;color:#6272a4&#34;&gt;//成员之间用逗号分隔
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;    Yellow,  
+    Red
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>接口(interface)</title>
+      <link>/csharp/%E6%8E%A5%E5%8F%A3-interface/</link>
+      <pubDate>Wed, 03 Jun 2015 01:08:11 +0800</pubDate>
+      
+      <guid>/csharp/%E6%8E%A5%E5%8F%A3-interface/</guid>
+      <description>&lt;h1 id=&#34;1-什么是接口&#34;&gt;1. 什么是接口&lt;/h1&gt;
+
+&lt;p&gt;　　接口是一种能力的体现。
+　　接口是表示一组&lt;strong&gt;函数成员&lt;/strong&gt;而不是实现成员的引用类型，类和结构可以实现接口。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-声明接口&#34;&gt;2. 声明接口&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//声明接口的关键字是“interface”
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;interface&lt;/span&gt; IMyInterface
+{
+    &lt;span style=&#34;color:#6272a4&#34;&gt;//接口中的方法没有方法体(也就是没有具体的实现)
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#8be9fd&#34;&gt;int&lt;/span&gt; GetSum(&lt;span style=&#34;color:#8be9fd&#34;&gt;int&lt;/span&gt; num1,&lt;span style=&#34;color:#8be9fd&#34;&gt;int&lt;/span&gt; num2); 
+    &lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt; Speak(&lt;span style=&#34;color:#8be9fd&#34;&gt;string&lt;/span&gt; str);
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>结构(struct)</title>
+      <link>/csharp/%E7%BB%93%E6%9E%84-struct/</link>
+      <pubDate>Sun, 24 May 2015 23:26:37 +0800</pubDate>
+      
+      <guid>/csharp/%E7%BB%93%E6%9E%84-struct/</guid>
+      <description>&lt;h1 id=&#34;1-什么是结构&#34;&gt;1. 什么是结构&lt;/h1&gt;
+
+&lt;p&gt;　　结构是程序员定义的数据类型，非常类似于类，都有数据成员和函数成员。
+　　结构就是轻量级的类，使用方式和枚举差不多，方便归类存储数据。
+　　结构和类的区别是：
+　　■ 类是引用类型而结构是值类型。
+　　■ 结构是隐式密封的，这意味着结构不能被派生。
+&lt;strong&gt;声明结构&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-csharp&#34; data-lang=&#34;csharp&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;//声明结构的关键字是“struct”
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#50fa7b&#34;&gt;StructName&lt;/span&gt;
+{
+    MemberDeclarations
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>泛型(generic)</title>
+      <link>/csharp/%E6%B3%9B%E5%9E%8B-generic/</link>
+      <pubDate>Fri, 22 May 2015 16:17:54 +0800</pubDate>
+      
+      <guid>/csharp/%E6%B3%9B%E5%9E%8B-generic/</guid>
+      <description>&lt;h1 id=&#34;1-什么是泛型&#34;&gt;1. 什么是泛型&lt;/h1&gt;
+
+&lt;p&gt;　　我们平常所用到的类型都是特定的类型——由编程语言或者BCL(基类库)、程序员自己定义的。为了让代码更加的灵活、解耦，我们可以将类的行为提取出来，使这些相似性的特征不仅可以用在当前的数据类型上，而且还可以扩展到其他的类型上，这样使类更加的有用。
+　　泛型就是专门处理这种情况的，泛型就可以替代这种抽象的数据类型，泛型就相当于是类型的占位符。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>事件(Event)</title>
+      <link>/csharp/%E4%BA%8B%E4%BB%B6-event/</link>
+      <pubDate>Thu, 21 May 2015 23:07:00 +0800</pubDate>
+      
+      <guid>/csharp/%E4%BA%8B%E4%BB%B6-event/</guid>
+      <description>&lt;h1 id=&#34;1-事件是什么&#34;&gt;1. 事件是什么&lt;/h1&gt;
+
+&lt;p&gt;　　事件是对象与对象之间的通信工具。
+　　事件的很多方面和委托相似，事件就好像是被简化后的针对特殊用途的委托。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>委托(delegate)</title>
+      <link>/csharp/%E5%A7%94%E6%89%98-delegate/</link>
+      <pubDate>Wed, 20 May 2015 16:47:52 +0800</pubDate>
+      
+      <guid>/csharp/%E5%A7%94%E6%89%98-delegate/</guid>
+      <description>&lt;h1 id=&#34;1-什么是委托&#34;&gt;1. 什么是委托&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;strong&gt;委托&lt;/strong&gt;是一个包含具有相同签名和返回值类型的有序方法列表。
+　　■ 方法的列表称为&lt;strong&gt;调用列表&lt;/strong&gt;(invocation list)
+　　■ 当委托被调用时，它调用列表中的每一个方法。
+&lt;img src=&#34;/image/cSharp/cSharp31.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>异常(try语句)</title>
+      <link>/csharp/%E5%BC%82%E5%B8%B8-try%E8%AF%AD%E5%8F%A5/</link>
+      <pubDate>Tue, 19 May 2015 17:29:08 +0800</pubDate>
+      
+      <guid>/csharp/%E5%BC%82%E5%B8%B8-try%E8%AF%AD%E5%8F%A5/</guid>
+      <description>&lt;h1 id=&#34;1-什么是异常&#34;&gt;1. 什么是异常&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;strong&gt;异常&lt;/strong&gt;是程序中的运行时错误，它违反了一个系统的约束或应用程序约束，或出现了在正常操作是位于聊的情形。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-try语句&#34;&gt;2. try语句&lt;/h1&gt;
+
+&lt;p&gt;　　&lt;strong&gt;try&lt;/strong&gt;语句用来包裹住可能发生异常的代码块，如果异常发生的话，就提供代码处理该异常。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>c#类型、存储和变量</title>
+      <link>/csharp/c-%E7%B1%BB%E5%9E%8B%E5%AD%98%E5%82%A8%E5%92%8C%E5%8F%98%E9%87%8F/</link>
+      <pubDate>Wed, 13 May 2015 22:02:53 +0800</pubDate>
+      
+      <guid>/csharp/c-%E7%B1%BB%E5%9E%8B%E5%AD%98%E5%82%A8%E5%92%8C%E5%8F%98%E9%87%8F/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;c#程序是一组类型声明&lt;/strong&gt;
+　　如果广泛的描述C和C++程序源代码的特征，可以说C程序是一组函数数据类型，C++程序是一组函数和类，然而c#程序是一组类型声明。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;类型是一种模板&lt;/strong&gt;
+　　既然c#程序是一组类型声明，那么使用c#就是创建和使用类型。
+　　可以把类型想象成一个用来创建数据结构的模板。这个模板本身不是数据结构，但是详细说明了由该模板构造的对象的特征：
+&lt;img src=&#34;/image/cSharp/cSharp8.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>c#和.NET框架</title>
+      <link>/csharp/c-%E5%92%8C-net%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Tue, 12 May 2015 00:24:34 +0800</pubDate>
+      
+      <guid>/csharp/c-%E5%92%8C-net%E6%A1%86%E6%9E%B6/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;.NET框架的组成&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;　　.NET由三部分组成，如图所示：
+&lt;img src=&#34;/image/cSharp/cSharp1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

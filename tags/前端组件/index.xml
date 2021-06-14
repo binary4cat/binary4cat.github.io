@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端组件 on Haijd&#39;s Blog</title>
+    <link>/tags/%E5%89%8D%E7%AB%AF%E7%BB%84%E4%BB%B6/</link>
+    <description>Recent content in 前端组件 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Feb 2017 21:54:03 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/%E5%89%8D%E7%AB%AF%E7%BB%84%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用CKEditor时碰到的一个坑</title>
+      <link>/frontend/%E4%BD%BF%E7%94%A8ckeditor%E6%97%B6%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</link>
+      <pubDate>Sun, 26 Feb 2017 21:54:03 +0800</pubDate>
+      
+      <guid>/frontend/%E4%BD%BF%E7%94%A8ckeditor%E6%97%B6%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</guid>
+      <description>&lt;h1 id=&#34;1-问题&#34;&gt;1. 问题&lt;/h1&gt;
+
+&lt;p&gt;　　CKEditor的配置文件有很多配置项，我们在使用的时候如果不指定需要那些工具条按钮，默认就会全部显示出来，在配置文件中可以只选择我们需要的一些按钮，比如纯文本编辑的时候，我们会把图片上传按钮去掉，或者不允许斜体加粗之类的操作。
+   工具条具体的配置是：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;config.toolbarGroups &lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt; [
+        { name&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;basicstyles&amp;#39;&lt;/span&gt;, groups&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; [&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;basicstyles&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;cleanup&amp;#39;&lt;/span&gt;] },
+        { name&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;paragraph&amp;#39;&lt;/span&gt;, groups&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; [&lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;list&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;indent&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;blocks&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;align&amp;#39;&lt;/span&gt;] },
+        { name&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;styles&amp;#39;&lt;/span&gt; },
+        { name&lt;span style=&#34;color:#ff79c6&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#f1fa8c&#34;&gt;&amp;#39;colors&amp;#39;&lt;/span&gt; }
+    ];
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>bootstrap-fileinput组件在上传时传递额外参数</title>
+      <link>/frontend/bootstrap-fileinput%E7%BB%84%E4%BB%B6%E5%9C%A8%E4%B8%8A%E4%BC%A0%E6%97%B6%E4%BC%A0%E9%80%92%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Wed, 23 Nov 2016 20:54:46 +0800</pubDate>
+      
+      <guid>/frontend/bootstrap-fileinput%E7%BB%84%E4%BB%B6%E5%9C%A8%E4%B8%8A%E4%BC%A0%E6%97%B6%E4%BC%A0%E9%80%92%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;该问题的使用场景是：在微信平台素材上传的页面使用，在上传时需要发送一个参数，让后台判断是临时素材还是永久素材。 但是该组件在一开始就已经初始化(问题所在)了要发送的参数，也就是说没有办法后期追加额外的参数。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　由于英文水平问题，阅读官方文档时没有找到该问题的解决方法，于是去github提了一个&lt;a href=&#34;https://github.com/kartik-v/bootstrap-fileinput/issues/795&#34;&gt;issue&lt;/a&gt; ，得到的答案是仔细阅读文档，里面有一个回调函数可以解决问题😍&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

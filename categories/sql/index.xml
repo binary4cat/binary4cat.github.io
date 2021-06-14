@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sql on Haijd&#39;s Blog</title>
+    <link>/categories/sql/</link>
+    <description>Recent content in Sql on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Mar 2015 11:25:35 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/sql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>存储过程</title>
+      <link>/csharp/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Thu, 26 Mar 2015 11:25:35 +0800</pubDate>
+      
+      <guid>/csharp/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>&lt;h1 id=&#34;1-什么是存储过程&#34;&gt;1. 什么是存储过程&lt;/h1&gt;
+
+&lt;p&gt;　　调用&lt;a href=&#34;http://baike.baidu.com/link?url=c2abUFqhD2LK7x4of_AqDRsR9zA_O8N7DSr-IK1oY_7C8_0OxNX-3mVmBfbPpYo5yhMm8nUGydsNQV0NJ73EL_&#34;&gt;百度百科&lt;/a&gt;的解释:存储过程（Stored Procedure）是在大型数据库系统中，一组为了完成特定功能的SQL 语句集，存储在数据库中，经过第一次编译后再次调用不需要再次编译，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。存储过程是数据库中的一个重要对象，任何一个设计良好的数据库应用程序都应该用到存储过程。
+　　简单来说，存储过程就像是c#中的&lt;strong&gt;方法&lt;/strong&gt;，该方法实现某一特定的功能，在需要的地方直接调用就行了。而且该方法还是单例的。
+　　存储过程不仅仅是一组SQL语句的组合，存储过程和一般的SQL语句还是有区别的。
+　　&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

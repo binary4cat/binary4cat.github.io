@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>随笔 on Haijd&#39;s Blog</title>
+    <link>/tags/%E9%9A%8F%E7%AC%94/</link>
+    <description>Recent content in 随笔 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Oct 2016 23:01:48 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>对ASP.NET程序员非常有用的85个工具</title>
+      <link>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sun, 09 Oct 2016 23:01:48 +0800</pubDate>
+      
+      <guid>/tool/%E5%AF%B9asp-net%E7%A8%8B%E5%BA%8F%E5%91%98%E9%9D%9E%E5%B8%B8%E6%9C%89%E7%94%A8%E7%9A%8485%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
+      <description>&lt;h1 id=&#34;1-介绍&#34;&gt;1. 介绍&lt;/h1&gt;
+
+&lt;p&gt;　　这篇文章列出了针对ASP.NET开发人员的有用工具。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-工具&#34;&gt;2. 工具&lt;/h1&gt;
+
+&lt;h2 id=&#34;2-1-visual-studio&#34;&gt;2.1. Visual Studio&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/34ebc6a2-2777-421d-8914-e29c1dfa7f5d&#34;&gt;Visual Studio Productivity Power tool&lt;/a&gt;：Visual Studio专业版（及以上）的扩展，具有丰富的功能，如快速查找，导航解决方案，可搜索的附加参考对话框等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jetbrains.com/resharper/&#34;&gt;ReSharper&lt;/a&gt;：提高.NET开发人员生产力的工具，提高代码质量，通过提供快速修复消除错误，等等&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mztools.com/v8/features.aspx#FindCodeFaster&#34;&gt;MZ-Tools&lt;/a&gt;：它可以在方法、文件、项目、解决方案或项目组、选定的文本，文件组合或项目组合中找到字符串。结果示于下面的结果窗口中，比由Microsoft IDE提供的要更方便。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://visualstudiogallery.msdn.microsoft.com/ee6e6d8c-c837-41fb-886a-6b50ae2d06a2&#34;&gt;Web Essentials&lt;/a&gt;：提高生产力和帮助高效编写CSS，JavaScript，HTML等&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>行走在白昼的夜里</title>
+      <link>/%E6%96%87%E9%9B%86/%E8%A1%8C%E8%B5%B0%E5%9C%A8%E7%99%BD%E8%89%B2%E7%9A%84%E5%A4%9C%E9%87%8C/</link>
+      <pubDate>Tue, 19 Jul 2016 11:11:36 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E8%A1%8C%E8%B5%B0%E5%9C%A8%E7%99%BD%E8%89%B2%E7%9A%84%E5%A4%9C%E9%87%8C/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;　　“我的天空里没有太阳，总是黑夜，但并不暗，因为有东西代替了太阳。虽然没有太阳那么明亮，但对我来说已经足够。凭借着这份光，我便能把黑夜当成白天。我从来就没有太阳，所以不怕失去。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;　　能代替太阳的，只有爱！&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>什么才算是真正的编程能力？</title>
+      <link>/%E6%96%87%E9%9B%86/%E4%BB%80%E4%B9%88%E6%89%8D%E7%AE%97%E6%98%AF%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B/</link>
+      <pubDate>Fri, 25 Mar 2016 22:04:19 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E4%BB%80%E4%B9%88%E6%89%8D%E7%AE%97%E6%98%AF%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B/</guid>
+      <description>&lt;p&gt;转载自&lt;a href=&#34;http://www.imooc.com/article/1097&#34;&gt;慕课网&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;知乎上看到一题主的发问：
+还在读书，也在实验室帮忙做了些东西，自己也搭过几个网站。在周围人看来似乎好像我很厉害，做了那么多东西，但是我发现这些东西虽然是我做的，但是实际上我手把手自己写的代码却并没有多少，很多都是用开源的东西，我写的代码无非是把别人的东西整合下，类似于胶水一样的工作。&lt;/p&gt;
+
+&lt;p&gt;我之前所认为的编程是全手动一行一行敲代码，但是现在我发现哪怕是工程上也有很多人是复制黏贴来解决问题的，并且提倡不要重复造轮子。&lt;/p&gt;
+
+&lt;p&gt;但是靠谷歌和复制别人的轮子，虽然我做出了很多东西，可是我并不觉得自己能力上有提升，倒是利用搜索引擎的能力的确提升了不少。而学校里另外一波搞ACM的人，他们每天刷题练算法，或许倒是的确提升了点编程能力，但是对工程几乎一窍不通。&lt;/p&gt;
+
+&lt;p&gt;所以我现在就很困惑，所谓的编程能力到底是什么，我该如何提升自己的编程能力？&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>我崇拜一个充满激情的鲍尔默</title>
+      <link>/%E6%96%87%E9%9B%86/%E6%88%91%E5%B4%87%E6%8B%9C%E4%B8%80%E4%B8%AA%E5%85%85%E6%BB%A1%E6%BF%80%E6%83%85%E7%9A%84%E9%B2%8D%E5%B0%94%E9%BB%98/</link>
+      <pubDate>Sat, 05 Mar 2016 12:17:59 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E6%88%91%E5%B4%87%E6%8B%9C%E4%B8%80%E4%B8%AA%E5%85%85%E6%BB%A1%E6%BF%80%E6%83%85%E7%9A%84%E9%B2%8D%E5%B0%94%E9%BB%98/</guid>
+      <description>&lt;p&gt;　　我觉得我可以引入一个副标题：我为什么不崇拜乔布斯。
+　　这几年那里见不到用乔布斯熬成的鸡汤，只不过后来多了一碗牛逼哄哄的鸡汤，马云熬的，比较符合人民群众的成功学心理。
+　　对于乔布斯我个人没什么特别的崇拜的感觉，觉得他很聪明、很执着、是个天才，有值得我们学习的人生哲理和经验。但是却被很多人熬成一碗人生必备的鸡汤，喝下去的时候，搭配成功学可能效果更佳。
+　　在网上我断然是不敢说上面这段话的，因为可能被脑残粉喷成一坨翔。
+　　我对乔布斯并不感冒的原因，可能是我个人不太喜欢高冷的人。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>红包的艺术</title>
+      <link>/%E6%96%87%E9%9B%86/%E7%BA%A2%E5%8C%85%E7%9A%84%E8%89%BA%E6%9C%AF/</link>
+      <pubDate>Sat, 13 Feb 2016 00:12:45 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E7%BA%A2%E5%8C%85%E7%9A%84%E8%89%BA%E6%9C%AF/</guid>
+      <description>&lt;p&gt;　　微信的牛逼之处在于人多(用户)，支付宝的牛逼之处在于钱多(银行卡)。
+　　这两家国内的大公司为了圈用户大搞红包的艺术，玩法多样，在微信这个国内爆炸式增长的社交平台上更是如鱼得水。所以这出也没少得了支付宝，这个有钱没人(社交)的平台想了一个绝佳的主意————敬业福，敬业福有多火？来来，看个段子就知道了：
+　　丈母娘：“你有车吗？有房吗？有存款吗？”
+　　准女婿：“没有。”
+　　丈母娘：“那你怎么还有脸来我家提亲？”
+　　准女婿：“我有一张敬业福。”
+　　丈母娘：“来来来，快进来坐，喝茶咱们慢慢聊。”
+　　&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>已去的2015</title>
+      <link>/%E6%96%87%E9%9B%86/%E5%B7%B2%E5%8E%BB%E7%9A%842015/</link>
+      <pubDate>Wed, 27 Jan 2016 00:14:37 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E5%B7%B2%E5%8E%BB%E7%9A%842015/</guid>
+      <description>&lt;p&gt;　　我都不知道怎么感叹时间走的这么快了，不过那些被用烂了的词应该足以表达我想表达的意思，但是我还是想对着天空大喊一声，大海啊全是水，骏马啊四条腿，时间啊过的真他娘的快……
+　　猴年将至，我又要被贴上“本命年”的标签，不过这个标签比较沉重，记得上一次被贴上这玩意的时候，我还是个孩子啊卧槽。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>街角咖啡店</title>
+      <link>/%E6%96%87%E9%9B%86/%E8%A1%97%E8%A7%92%E5%92%96%E5%95%A1%E5%BA%97/</link>
+      <pubDate>Sun, 16 Nov 2014 22:50:42 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E8%A1%97%E8%A7%92%E5%92%96%E5%95%A1%E5%BA%97/</guid>
+      <description>&lt;p&gt;　　新婚后不久她就和婆婆闹了一场别扭。本来是一件正常的小误会，但是没想到的是他竟然当着他母亲的面狠狠的骂了自己一顿。她觉得委屈极了，认为这是他和自己结婚后悔了，他不爱自己了。于是她赌气的离家出走，没有告诉任何人。&lt;/p&gt;
+
+&lt;p&gt;　　在以前上大学的这座城市里漂泊了好几天，她并没有找到一份合适自己的工作，而且糟糕的是她匆忙中带来的银行卡只有几百块钱，再没有着落的话，别说住宿了吃饭都成了问题。莫名的孤独与害怕袭上心头，她越发的埋怨起他来。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>纪念我的火影</title>
+      <link>/%E6%96%87%E9%9B%86/%E7%BA%AA%E5%BF%B5%E6%88%91%E7%9A%84%E7%81%AB%E5%BD%B1/</link>
+      <pubDate>Sat, 08 Nov 2014 22:59:11 +0800</pubDate>
+      
+      <guid>/%E6%96%87%E9%9B%86/%E7%BA%AA%E5%BF%B5%E6%88%91%E7%9A%84%E7%81%AB%E5%BD%B1/</guid>
+      <description>&lt;p&gt;　　不知道怎么下笔，却又感慨万千，就像是送别一个十几年的老朋友，面对面的时候却又把一肚子的话停在了心里，只是拍拍肩膀，当做了一腔的感伤。&lt;/p&gt;
+
+&lt;p&gt;　　只是再也没有勇气去追逐一段十年的故事。虽然它不尽完美，却饱含了青春，又寄托了希望，一个故事的结束往往象征着另一段故事的开始，可是我却留在那段青春里面，害怕回想，却又渴望永久。&lt;/p&gt;
+
+&lt;p&gt;　　好像突然触动了一根心弦，被颤音惊倒，这才知道时光已经过去多少年，又到了说再见的时候，就像这生活，永远在奔波，永远在离别，永远不会停下脚步说一句，我等你！&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

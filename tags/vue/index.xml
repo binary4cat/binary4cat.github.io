@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vue on Haijd&#39;s Blog</title>
+    <link>/tags/vue/</link>
+    <description>Recent content in Vue on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Jun 2018 10:06:13 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vue-ElementUI upload组件的上传文件控制</title>
+      <link>/frontend/vue-elementui-upload%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6/</link>
+      <pubDate>Thu, 14 Jun 2018 10:06:13 +0800</pubDate>
+      
+      <guid>/frontend/vue-elementui-upload%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6/</guid>
+      <description>&lt;h1 id=&#34;1-上传失败文件恢复&#34;&gt;1. 上传失败文件恢复&lt;/h1&gt;
+
+&lt;p&gt;element的上传组件有很多需要自行控制的东西，此次遇到的问题是怎么在上传失败后，保持选择的文件的不变，可以再次尝试上传。&lt;/p&gt;
+
+&lt;p&gt;首先我们有一个事件，是上传失败后的回调事件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;   * 文件上传失败后的事件
+&lt;/span&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;   */&lt;/span&gt;
+  uploadErrorFunc(err, file, fileList){
+      console.log(file)
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

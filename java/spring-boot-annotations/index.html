@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Spring Boot Annotations  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    14 June 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Spring Boot Annotations</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528780019766&amp;di=68e5f2f2eef5b87bf5b5d54455fe994f&amp;imgtype=jpg&amp;src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D2161947716%2C2940818680%26fm%3D214%26gp%3D0.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-概览">1. 概览</a></li>
+<li><a href="#2-springbootapplication">2. <code>@SpringBootApplication</code></a></li>
+<li><a href="#3-enableautoconfiguration">3. <code>@EnableAutoConfiguration</code></a></li>
+<li><a href="#4-auto-configuration条件注解">4. Auto-Configuration条件注解</a>
+<ul>
+<li><a href="#4-1-conditionalonclass-与-conditionalonmissingclass">4.1. <code>@ConditionalOnClass</code>与<code>@ConditionalOnMissingClass</code></a></li>
+<li><a href="#4-2-conditionalonbean-与-conditionalonmissingbean">4.2. <code>@ConditionalOnBean</code>与<code>@ConditionalOnMissingBean</code></a></li>
+<li><a href="#4-3-conditionalonproperty">4.3. <code>@ConditionalOnProperty</code></a></li>
+<li><a href="#4-4-conditionalonresource">4.4. <code>@ConditionalOnResource</code></a></li>
+<li><a href="#4-5-conditionalonwebapplication-与-conditionalonnotwebapplication">4.5. <code>@ConditionalOnWebApplication</code>与<code>@ConditionalOnNotWebApplication</code></a></li>
+<li><a href="#4-6-conditionalexpression">4.6. <code>@ConditionalExpression</code></a></li>
+<li><a href="#4-7-conditional">4.7. <code>@Conditional</code></a></li>
+</ul></li>
+<li><a href="#5-总结">5. 总结</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <blockquote>
+<p>原文地址：<a href="http://www.baeldung.com/spring-boot-annotations">http://www.baeldung.com/spring-boot-annotations</a>
+此篇为译文，由于英语水平有限，可能对原文的理解有误，欢迎指正，不甚感激！</p>
+</blockquote>
+
+<h1 id="1-概览">1. 概览</h1>
+
+<p>Spring Boot的自动配置功能使创建Spring配置变得非常容易。</p>
+
+<p>在这个入门教程，我们将要探讨Spring Boot相关的注解，其注解来自于两个包：<code>org.springframework.boot.autoconfigure</code>和<code>org.springframework.boot.autoconfigure.condition</code>。</p>
+
+<h1 id="2-springbootapplication">2. <code>@SpringBootApplication</code></h1>
+
+<p>我们使用这个注解在Spring Boot应用中创建一个入口类(main class)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@SpringBootApplication
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleFactoryApplication</span><span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">){</span>
+        SpringApplication<span style="color:#ff79c6">.</span><span style="color:#50fa7b">run</span><span style="color:#ff79c6">(</span>VehicleFactoryApplication<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">,</span> args<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>@SpringBootApplication</code>注解封装了<code>@Configuration</code>、<code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code>这三个注解的功能和默认属性。</p>
+
+<h1 id="3-enableautoconfiguration">3. <code>@EnableAutoConfiguration</code></h1>
+
+<p><code>@EnableAutoConfiguration</code>注解就像它的名字一样：启用自动注解。这意味着Spring Boot会在其类路径中查找并且自动配置bean，然后自动应用它们。</p>
+
+<p>Note：我们必须同时使用<code>@Configuration</code>注解：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Configuration
+@EnableAutoConfiguration
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">VehicleFactoryConfig</span><span style="color:#ff79c6">{}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-auto-configuration条件注解">4. Auto-Configuration条件注解</h1>
+
+<p>通常情况下，当我们编写自定义自动配置(auto-configurations)的时候，我们想要Spring有条件的使用它们，我们可以使用本节中介绍的注解来实现这一点。</p>
+
+<p>我们可以将本节中介绍的注释放置在<code>@Configuration</code>类或<code>@Bean</code>方法上。</p>
+
+<p>在接下来的部分中，我将仅仅介绍基础的相关概念，需要更进一步的了解，请查阅<a href="http://www.baeldung.com/spring-boot-custom-auto-configuration">这篇文章</a>。</p>
+
+<h2 id="4-1-conditionalonclass-与-conditionalonmissingclass">4.1. <code>@ConditionalOnClass</code>与<code>@ConditionalOnMissingClass</code></h2>
+
+<p>使用这个条件注解，Spring会根据注解参数中传入的类存在与否，来判断是否使用这个<code>@Configuration</code>类。(博主注：<code>@ConditionalOnClass({Source.class, Data.class})</code>表示当<code>Source</code>和<code>Data</code>这两个类存在的时候，才使用被标记的类，<code>@ConditionalOnMissingClass</code>则正好相反。)</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Configuration
+@ConditionalOnClass<span style="color:#ff79c6">(</span>DataSource<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MySQLAutoconfiguration</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">//...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-2-conditionalonbean-与-conditionalonmissingbean">4.2. <code>@ConditionalOnBean</code>与<code>@ConditionalOnMissingBean</code></h2>
+
+<p>当我们想使用一个具体的bean是否存在作为特定条件的时候，就可以使用这两个注解：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Bean
+@ConditionalOnBean<span style="color:#ff79c6">(</span>name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;dataSource&#34;</span><span style="color:#ff79c6">)</span>
+LocalContainerEntityManagerFactoryBean <span style="color:#50fa7b">entityManagerFactory</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-3-conditionalonproperty">4.3. <code>@ConditionalOnProperty</code></h2>
+
+<p>使用该注解，我们可以为属性(properties)的值设置一个特定条件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Bean
+@ConditionalOnProperty<span style="color:#ff79c6">(</span>
+    name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;usemysql&#34;</span><span style="color:#ff79c6">,</span> 
+    havingValue <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;local&#34;</span>
+<span style="color:#ff79c6">)</span>
+DataSource <span style="color:#50fa7b">dataSource</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-4-conditionalonresource">4.4. <code>@ConditionalOnResource</code></h2>
+
+<p>我们可以使用这个注解，让Spring在指定的资源存在的时候才使用被标注的定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ConditionalOnResource<span style="color:#ff79c6">(</span>resources <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;classpath:mysql.properties&#34;</span><span style="color:#ff79c6">)</span>
+Properties <span style="color:#50fa7b">additionalProperties</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-5-conditionalonwebapplication-与-conditionalonnotwebapplication">4.5. <code>@ConditionalOnWebApplication</code>与<code>@ConditionalOnNotWebApplication</code></h2>
+
+<p>通过这个注解，我们可以设置一个条件，当前的应用是否是一个web应用：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@ConditionalOnWebApplication
+HealthCheckController <span style="color:#50fa7b">healthCheckController</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-6-conditionalexpression">4.6. <code>@ConditionalExpression</code></h2>
+
+<p>在复杂的情况下我们可以使用该注解，当SpEL表达式的结果为<code>true</code>的时候，Spring才会使用被标注的定义：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Bean
+@ConditionalOnExpression<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;${usemysql} &amp;&amp; ${mysqlserver == &#39;local&#39;}&#34;</span><span style="color:#ff79c6">)</span>
+DataSource <span style="color:#50fa7b">dataSource</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-7-conditional">4.7. <code>@Conditional</code></h2>
+
+<p>甚至在更复杂的条件下，我们可以创建一个自定义的条件注解，<code>@Conditional</code>会告诉Spring使用这个自定义的条件：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">@Conditional<span style="color:#ff79c6">(</span>HibernateCondition<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+Properties <span style="color:#50fa7b">additionalProperties</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">//...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-总结">5. 总结</h1>
+
+<p>在本篇中，我们展示了一个概览，如何在微调自动配置，对自动配置设置一个条件。</p>
+
+<p>同样的，本片中的示例代码可以在我们的<a href="https://github.com/eugenp/tutorials/tree/master/spring-mvc-java">GitHub</a>上获取。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+        <a rel="prev" href="/java/spring-web-annotations/" id="prev">
+            <span class="nav-title nav-title-prev">Spring Web Annotations</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

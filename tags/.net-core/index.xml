@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>.Net Core on Haijd&#39;s Blog</title>
+    <link>/tags/.net-core/</link>
+    <description>Recent content in .Net Core on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Feb 2019 21:29:51 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/.net-core/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>初探System.Threading.Channels</title>
+      <link>/csharp/%E5%88%9D%E6%8E%A2system.threading.channels/</link>
+      <pubDate>Tue, 19 Feb 2019 21:29:51 +0800</pubDate>
+      
+      <guid>/csharp/%E5%88%9D%E6%8E%A2system.threading.channels/</guid>
+      <description>最近再次看了一下C#并发编程的一些资料，对其中的Rx产生了一些兴趣和疑问，同时想起对比一下Go语言的并发特性，所以查阅了一些资料，今天谈谈一个新的并发操作类库System.Threading.Channels。
+1. 简介 System.Threading.Channels是.Net Core基础类库中实现的一个多线程相关的库，专门处理数据流相关的操作，用来在生产者和订阅者之间传递数据（不知道可不可以理解为线程间传递数据，我把它类比成了Go语言中的Channel），使用时需要通过NuGet安装。
+这个库的前身是System.Threading.Tasks.Channels，来自实验性质的核心类库项目https://github.com/dotnet/corefxlab，但是在2017年9月就不再更新了，目前使用的话需要用到最新的System.Threading.Channels库，如果你也是第一次接触的话，就直接上手研究System.Threading.Channels就可以了。
+Channel API操作基于Channel对象，其操作主要由ChannelReader和ChannelWriter两部分组成，由Channelt提供的工厂方法创建一个有容量限制（或者无限制、最大容量限制）的channel。这点类似于Go语言中的chan的容量，二者在这里有很多的类似的地方，也有不同的地方。
+1.1. 和Go语言channel的一些比较 Go语言中的channel默认是没有容量的，在使用这个没有容量的channel时，生产者和消费者必须“流动”起来，否则将会阻塞，也就是当生产者写入channel一个数据时，必须同时有一个接收者接收，否则写入操作会停止，等待有一个消费者取走channel中的数据，写入操作才会继续。
+在System.Threading.Channels库中，没有类似Go语言的默认容量的机制，需要按需调用不同的Channel对象：
+ public static Channel&amp;lt;T&amp;gt; CreateBounded&amp;lt;T&amp;gt;(int capacity); ：可以创建一个带有容量限制的Channel实例对象。 public static Channel&amp;lt;T&amp;gt; CreateBounded&amp;lt;T&amp;gt;(BoundedChannelOptions options) ：创建一个自定义配置的Channel实例对象，可配置容量、以及在接收到新数据时的操作模式等等：  BoundedChannelFullMode.Wait：等待当前写入完成 BoundedChannelFullMode.DropNewest：删除并忽略管道中写入的最新的数据 BoundedChannelFullMode.DropOldest：删除并忽略管道中最旧的数据 BoundedChannelFullMode.DropWrite：删除当前正在写的数据，以写入管道中的新数据  public static Channel&amp;lt;T&amp;gt; CreateUnbounded&amp;lt;T&amp;gt;(); ：创建一个没有容量限制的Channel实例对象，在实际使用时应当谨慎使用该创建方式，因为可能会发生OutOfMemoryException。 public static Channel&amp;lt;T&amp;gt; CreateUnbounded&amp;lt;T&amp;gt;(UnboundedChannelOptions options)：创建一个自定义配置的没有容量限制的Channel实例对象。该配置选项因为没有容量限制所以不会有写入等待操作模式，只有默认的一些配置：  public bool SingleWriter { get; set; }：是否需要一个一个读 public bool SingleReader { get; set; }：是否需要一个一个写 public bool AllowSynchronousContinuations { get; set; }：是否需要异步连续操作（我个人理解为异步操作时同时进行读写）   Go语言的channel机制和System.Threading.Channels的不同之处有两个：
+ Go语言没有无限容量的channel，而且就我个人的想法而言，无限容量并不“无限”，因为内存是有限的。 System.Threading.Channels没有单向的channel类型。在Go中可以创建“只读”或者“只写”的channel，但是System.Threading.Channels中没有提供这种操作。  1.</description>
+    </item>
+    
+    <item>
+      <title>在.Net Core中实现一个WebSocket路由</title>
+      <link>/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/</link>
+      <pubDate>Sun, 27 Jan 2019 17:41:16 +0800</pubDate>
+      
+      <guid>/csharp/%E5%9C%A8.net-core%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAwebsocket%E8%B7%AF%E7%94%B1/</guid>
+      <description>.Net Core中使用WebSocket默认是没有路由系统的，只能通过Request.Path==&amp;quot;/xxx&amp;quot;来判断请求，例如：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  app.Use(async (context, next) =&amp;gt; { if (context.Request.Path == &amp;#34;/ws&amp;#34;) { if (context.WebSockets.IsWebSocketRequest) { WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync(); await Echo(context, webSocket); } else { context.Response.StatusCode = 400; } } else { await next(); } });   要使用类似[HttpGet(&amp;quot;/xxx&amp;quot;)]这种特性标签的路由方式，可以自己写一个简单的Attribute来实现。
+1. 实现Attribute特性类 这个Attribute类很简单，只接收一个定义的Path，用来和开头提到的Request.Path对应。
+1 2 3 4 5 6 7 8 9 10 11 12 13  /// &amp;lt;summary&amp;gt;  /// WebSockets执行函数特性标签  /// &amp;lt;/summary&amp;gt; [AttributeUsage(AttributeTargets.</description>
+    </item>
+    
+  </channel>
+</rss>

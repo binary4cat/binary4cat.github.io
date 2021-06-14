@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>4、UmbracoNewsSite：Templates展示内容数据  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    04 January 2016
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">4、UmbracoNewsSite：Templates展示内容数据</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <p>　　接着上一篇博客内容，这一篇我们来看看怎么把设置好的数据展示在网页上面。</p>
+
+<p>　　因为Umbraco是基于MVC编写的软件，我们也最好遵循这个方式，也就是一个模板页(master)，然后再使用部分页(partial view)展示具体的内容。这里的模板需要创建在<strong>Setting&ndash;&gt;Templates</strong>节点下面。我们打开<strong>Templates</strong>节点，可以看到我们创建的Home模板已经在这里了。</p>
+
+<p>点击<strong>Templates</strong>后面的三个小圆点按钮，在弹出的菜单中选择<strong>Create</strong>创建一个新模板，作为master模板。创建之后于可以看到Umbraco已经自动为我们生成了一段代码。</p>
+
+<p><img src="/image/umbraco/backoffice13.png" alt="" /></p>
+
+<p>　　我们将这段Html代码添加到Master模板页中，</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = <span style="color:#ff79c6">null</span>;
+    <span style="color:#8be9fd">var</span> home = @CurrentPage.Site();  <span style="color:#6272a4">//获得当前页面(当前展示的是Home，所以可以拿到Home文档类型设置的数据)
+</span><span style="color:#6272a4"></span>}
+&lt;!DOCTYPE html&gt;
+&lt;html lang=<span style="color:#f1fa8c">&#34;zh-cn&#34;</span>&gt;
+  &lt;head&gt;
+    &lt;!-- Meta tags --&gt;
+    &lt;meta charset=<span style="color:#f1fa8c">&#34;utf-8&#34;</span>&gt;
+    &lt;meta http-equiv=<span style="color:#f1fa8c">&#34;X-UA-Compatible&#34;</span> content=<span style="color:#f1fa8c">&#34;IE=edge&#34;</span>&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;header&gt;
+    &lt;a href=<span style="color:#f1fa8c">&#34;@home.Url&#34;</span>&gt;
+        &lt;image src=<span style="color:#f1fa8c">&#34;@(home.siteLogo)?height=65&amp;width=205&#34;</span>/&gt;
+    &lt;/a&gt;
+	站点名称：&lt;a&gt;@home.siteTitle&lt;/a&gt;
+    &lt;/header&gt;
+	&lt;hr/&gt;
+        @RenderBody()
+	&lt;hr/&gt;
+    &lt;footer style=<span style="color:#f1fa8c">&#34;margin:0&#34;</span>&gt;
+     	&lt;div&gt;&amp;copy;  @DateTime.Now.Year-UmbracoNewsSite&lt;/div&gt;
+    &lt;/footer&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　将下面这段代码添加到<strong>Hemo</strong>模板中：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = <span style="color:#f1fa8c">&#34;Master.cshtml&#34;</span>;
+}
+
+@CurrentPage.GetPropertyValue(<span style="color:#f1fa8c">&#34;content&#34;</span>) &lt;!--该方法获得指定名称的属性的值--&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>　　然后选择<strong>Home</strong>模板，进入<strong>Properties</strong>选项卡，选择母版页(Master template)，将<strong>Home</strong>模板的母版页设置为我们刚刚设置的<strong>Master</strong>。</p>
+
+<p><img src="/image/umbraco/backoffice14.png" alt="" /></p>
+
+<p>　　最后我们访问一下目前为止做的网站，看看效果。</p>
+
+<p><img src="/image/umbraco/backoffice15.png" alt="" /></p>
+
+<p>　　可以看到，我们设置的属性数据已经显示在网页上面了(没有样式很难看，请不要在意这些细节😛)。其中获得当前页面数据的代码会在后面说明，到目前为止，我们已经能感受到Umbraco是如何工作的了，在下一篇，我们引入bootstrap，稍微美化一下我们的网站，然后继续添加其他内容。</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/5umbraconewssite%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AE%B9/" id="next">
+                &larr; <span class="nav-title nav-title-next">5、UmbracoNewsSite：添加css和js文件</span> 
+            </a>  
+        <a rel="prev" href="/csharp/3umbraconewssite-%E4%B8%80/" id="prev">
+            <span class="nav-title nav-title-prev">3、UmbracoNewsSite：文档类型设置</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

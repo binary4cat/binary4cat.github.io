@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>在.Net Core中实现一个WebSocket路由  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    27 January 2019
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">在.Net Core中实现一个WebSocket路由</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-实现-attribute-特性类">1. 实现<code>Attribute</code>特性类</a></li>
+<li><a href="#2-实现一个分发websocket请求的帮助类">2. 实现一个分发WebSocket请求的帮助类</a>
+<ul>
+<li><a href="#2-1-不带缓存的分发函数">2.1. 不带缓存的分发函数</a></li>
+<li><a href="#2-2-带缓存的分发函数">2.2. 带缓存的分发函数</a></li>
+</ul></li>
+<li><a href="#3-在-net-core中调用分发函数">3. 在.Net Core中调用分发函数</a></li>
+<li><a href="#4-使用方式">4. 使用方式</a></li>
+<li><a href="#5-参考资料">5. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<p>.Net Core中使用WebSocket默认是没有路由系统的，只能通过<code>Request.Path==&quot;/xxx&quot;</code>来判断请求，例如：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">app.Use(<span style="color:#ff79c6">async</span> (context, next) =&gt;
+{
+    <span style="color:#ff79c6">if</span> (context.Request.Path == <span style="color:#f1fa8c">&#34;/ws&#34;</span>)
+    {
+        <span style="color:#ff79c6">if</span> (context.WebSockets.IsWebSocketRequest)
+        {
+            WebSocket webSocket = <span style="color:#ff79c6">await</span> context.WebSockets.AcceptWebSocketAsync();
+            <span style="color:#ff79c6">await</span> Echo(context, webSocket);
+        }
+        <span style="color:#ff79c6">else</span>
+        {
+            context.Response.StatusCode = <span style="color:#bd93f9">400</span>;
+        }
+    }
+    <span style="color:#ff79c6">else</span>
+    {
+        <span style="color:#ff79c6">await</span> next();
+    }
+
+});</code></pre></td></tr></table>
+</div>
+</div>
+<p>要使用类似<code>[HttpGet(&quot;/xxx&quot;)]</code>这种特性标签的路由方式，可以自己写一个简单的<code>Attribute</code>来实现。</p>
+
+<h1 id="1-实现-attribute-特性类">1. 实现<code>Attribute</code>特性类</h1>
+
+<p>这个<code>Attribute</code>类很简单，只接收一个定义的Path，用来和开头提到的<code>Request.Path</code>对应。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// WebSockets执行函数特性标签
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span><span style="color:#50fa7b">[AttributeUsage(AttributeTargets.Method,Inherited = false)]</span>
+ <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">WebSocketsAttribute</span>:Attribute
+ {
+     <span style="color:#6272a4">// WebSocket请求的Path
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> Path;
+    <span style="color:#ff79c6">public</span> WebSocketsAttribute(<span style="color:#8be9fd">string</span> path)
+    {
+        Path = path;
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-实现一个分发websocket请求的帮助类">2. 实现一个分发WebSocket请求的帮助类</h1>
+
+<p>使用一个帮助类来根据请求的<code>PATH</code>分发给对应的函数。该类中有两个静态方法，实现同样的功能，区别是一个会缓存请求的<code>Path</code>和处理请求函数，另一个是实时反射解析的，实际使用中当然推荐带缓存的，因为反射对性能的损耗也是很大的。</p>
+
+<h2 id="2-1-不带缓存的分发函数">2.1. 不带缓存的分发函数</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 分发websockets请求(没有缓存)
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;assemblyName&#34;&gt;对应处理程序所在的程序集名称&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;context&#34;&gt;HTTP上下文&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;task&#34;&gt;TASK任务&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">async</span> Task DistributeAsync(<span style="color:#8be9fd">string</span> assemblyName, HttpContext context, Func&lt;Task&gt; task)
+{
+    <span style="color:#ff79c6">try</span>
+    {
+        <span style="color:#6272a4">// 获取在WebSockets下面的websocket处理methods
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">var</span> assembly = Assembly.Load(assemblyName);
+        <span style="color:#6272a4">// 根据特性标签获取对应的执行函数
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">var</span> methods = assembly
+            .GetTypes()
+            .SelectMany(s =&gt; s.GetMethods())
+            .First(f =&gt; f
+                .GetCustomAttributes(<span style="color:#ff79c6">typeof</span>(WebSocketsAttribute), <span style="color:#ff79c6">false</span>)  <span style="color:#6272a4">// 这一步获取打了WebSocketsAttribute特性标签的函数
+</span><span style="color:#6272a4"></span>                .Any(w =&gt; ((WebSocketsAttribute)w).Path == context.Request.Path)); <span style="color:#6272a4">// 过滤找出其中WebSocketsAttribute标签中Path参数对应的执行函数
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> (context.WebSockets.IsWebSocketRequest)
+        {
+            <span style="color:#8be9fd">var</span> webSockt = <span style="color:#ff79c6">await</span> context.WebSockets.AcceptWebSocketAsync();
+            <span style="color:#6272a4">// 异步调用该方法
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">await</span> (Task)methods.Invoke(<span style="color:#ff79c6">null</span>, <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">object</span><span style="color:#50fa7b">[]</span> { context, webSockt });
+        }
+        <span style="color:#ff79c6">else</span>
+        {
+            context.Response.StatusCode = <span style="color:#bd93f9">400</span>;
+        }
+    }
+    <span style="color:#ff79c6">catch</span> (Exception)
+    {
+        <span style="color:#ff79c6">await</span> task();
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-2-带缓存的分发函数">2.2. 带缓存的分发函数</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">// 使用并发安全的字段类型缓存请求Path与处理请求函数
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">private</span> <span style="color:#ff79c6">static</span> ConcurrentDictionary&lt;<span style="color:#8be9fd">string</span>, MethodInfo&gt; ExecuteMethods;
+<span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// 分发websockets请求(缓存执行函数)
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;assemblyName&#34;&gt;对应处理程序所在的程序集名称&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;context&#34;&gt;HTTP上下文&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;param name=&#34;task&#34;&gt;TASK任务&lt;/param&gt;
+</span><span style="color:#6272a4">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">async</span> Task DistributeAsync(<span style="color:#8be9fd">string</span> assemblyName, HttpContext context, Func&lt;Task&gt; task)
+{
+    <span style="color:#ff79c6">if</span> (!ExecuteMethods.Any())
+    {
+        <span style="color:#6272a4">// 获取在WebSockets下面的websocket处理methods
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">var</span> assembly = Assembly.Load(assemblyName);
+        <span style="color:#6272a4">// 根据特性标签获取对应的执行函数
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">var</span> methods = assembly
+            .GetTypes()
+            .SelectMany(s =&gt; s.GetMethods())
+            .Select(s =&gt; <span style="color:#ff79c6">new</span>
+            {
+                ((WebSocketsAttribute) s.GetCustomAttributes(<span style="color:#ff79c6">typeof</span>(WebSocketsAttribute), <span style="color:#ff79c6">false</span>).First()).Path,
+                s
+            }).ToArray();
+        ExecuteMethods =
+            <span style="color:#ff79c6">new</span> ConcurrentDictionary&lt;<span style="color:#8be9fd">string</span>, MethodInfo&gt;(methods.ToDictionary(t =&gt; t.Path, t =&gt; t.s));
+
+        <span style="color:#ff79c6">await</span> task();
+    }
+    <span style="color:#ff79c6">else</span>
+    {
+        <span style="color:#ff79c6">if</span> (context.WebSockets.IsWebSocketRequest)
+        {
+            <span style="color:#8be9fd">var</span> webSockt = <span style="color:#ff79c6">await</span> context.WebSockets.AcceptWebSocketAsync();
+            <span style="color:#6272a4">// 从键值对中获取对应的执行函数
+</span><span style="color:#6272a4"></span>            ExecuteMethods.TryGetValue(context.Request.Path, <span style="color:#ff79c6">out</span> <span style="color:#8be9fd">var</span> method);
+            <span style="color:#ff79c6">if</span> (method != <span style="color:#ff79c6">null</span>)
+                <span style="color:#6272a4">// 异步调用该方法
+</span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">await</span> (Task) method.Invoke(<span style="color:#ff79c6">null</span>, <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">object</span><span style="color:#50fa7b">[]</span> {context, webSockt});
+        }
+        <span style="color:#ff79c6">else</span>
+        {
+            context.Response.StatusCode = <span style="color:#bd93f9">400</span>;
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="3-在-net-core中调用分发函数">3. 在.Net Core中调用分发函数</h1>
+
+<p>在<code>startup.cs</code>中的<code>Config</code>函数中可以使用我们自己创建的分发函数，需要注意的是我们自定义的函数需要传入程序集的名称，也就是真实的请求处理函数所在的程序集。</p>
+
+<p>由此可见，这种方式使用的一些限制，请求处理函数必须写在一个程序集里面，不过我想一般情况下，没有人会把同一类型的处理函数写在不同的程序集，所以这应该不算是问题。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#6272a4">/// &lt;summary&gt;
+</span><span style="color:#6272a4">/// startup.cs
+</span><span style="color:#6272a4">/// &lt;/summary&gt;
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    ...
+    <span style="color:#6272a4">// 增加websocket
+</span><span style="color:#6272a4"></span>    app.Use(<span style="color:#ff79c6">async</span> (context, next) =&gt;
+    {
+        <span style="color:#6272a4">// 将原本的Echo方法换成我们自定义的分发函数
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">await</span> WebSocketsHandler.DistributeAsync(<span style="color:#f1fa8c">&#34;NetCoreFrame.WebSockets&#34;</span>, context, next);
+    });
+    ...
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-使用方式">4. 使用方式</h1>
+
+<p>使用方式很简单，就是一个正常的WebSocket处理函数，只不过标注了我们自己的“路由特性标签”。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">public</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Test</span>
+{<span style="color:#50fa7b">
+</span><span style="color:#50fa7b">    [WebSockets(&#34;/ws&#34;)]</span>
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">static</span> <span style="color:#ff79c6">async</span> Task Echo(HttpContext context, WebSocket webSocket)
+    {
+        <span style="color:#8be9fd">var</span> buffer = <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">byte</span><span style="color:#50fa7b">[1024 * 4]</span>;
+        <span style="color:#8be9fd">var</span> result =
+            <span style="color:#ff79c6">await</span> webSocket.ReceiveAsync(<span style="color:#ff79c6">new</span> ArraySegment&lt;<span style="color:#8be9fd">byte</span>&gt;(buffer), CancellationToken.None);
+        <span style="color:#ff79c6">while</span> (!result.CloseStatus.HasValue)
+        {
+            <span style="color:#ff79c6">await</span> webSocket.SendAsync(
+                    <span style="color:#ff79c6">new</span> ArraySegment&lt;<span style="color:#8be9fd">byte</span>&gt;(buffer, <span style="color:#bd93f9">0</span>, result.Count),
+                    result.MessageType, result.EndOfMessage,
+                    CancellationToken.None
+                );
+            result = <span style="color:#ff79c6">await</span> webSocket.ReceiveAsync(<span style="color:#ff79c6">new</span> ArraySegment&lt;<span style="color:#8be9fd">byte</span>&gt;(buffer), CancellationToken.None);
+        }
+        <span style="color:#ff79c6">await</span> webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-参考资料">5. 参考资料</h1>
+
+<p><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.2">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.2</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%88%9D%E6%8E%A2system.threading.channels/" id="next">
+                &larr; <span class="nav-title nav-title-next">初探System.Threading.Channels</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E5%BE%AE%E4%BF%A1jssdk%E7%9A%84%E4%BD%BF%E7%94%A8/" id="prev">
+            <span class="nav-title nav-title-prev">微信JSSDK的使用</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

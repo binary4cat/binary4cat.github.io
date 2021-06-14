@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go标准库 on Haijd&#39;s Blog</title>
+    <link>/tags/go%E6%A0%87%E5%87%86%E5%BA%93/</link>
+    <description>Recent content in Go标准库 on Haijd&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Oct 2017 16:56:24 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/go%E6%A0%87%E5%87%86%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go标准库笔记Ⅰ：IO</title>
+      <link>/golang/go%E6%A0%87%E5%87%86%E5%BA%93%E7%AC%94%E8%AE%B0io/</link>
+      <pubDate>Sat, 14 Oct 2017 16:56:24 +0800</pubDate>
+      
+      <guid>/golang/go%E6%A0%87%E5%87%86%E5%BA%93%E7%AC%94%E8%AE%B0io/</guid>
+      <description>&lt;h2 id=&#34;io-基本的i-o接口&#34;&gt;&lt;code&gt;io&lt;/code&gt;：基本的I/O接口&lt;/h2&gt;
+
+&lt;h3 id=&#34;reader-接口&#34;&gt;&lt;code&gt;Reader&lt;/code&gt;接口&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;定义：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Golang&#34; data-lang=&#34;Golang&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Golang&#34; data-lang=&#34;Golang&#34;&gt;&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;type&lt;/span&gt; Reader &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;interface&lt;/span&gt;{
+    &lt;span style=&#34;color:#50fa7b&#34;&gt;Read&lt;/span&gt;(p []&lt;span style=&#34;color:#8be9fd&#34;&gt;byte&lt;/span&gt;)(n &lt;span style=&#34;color:#8be9fd&#34;&gt;int&lt;/span&gt;,err &lt;span style=&#34;color:#8be9fd&#34;&gt;error&lt;/span&gt;)
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Read&lt;/code&gt;方法将&lt;code&gt;len(p)&lt;/code&gt;个字节读取到p中，返回值是读取的字节数和任何遇到的错误，这个错误可能是读取中遇到的意外或者EOF(end-of-file)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;当&lt;code&gt;Read&lt;/code&gt;方法返回错误时，不代表没有读取到任何数据。&lt;strong&gt;调用者应该处理返回的任何数据，之后才处理可能的错误&lt;/strong&gt;。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;即使&lt;code&gt;Read&lt;/code&gt;函数返回的的字节数小于&lt;code&gt;p&lt;/code&gt;的长度，函数也会返回完整的p；如果读取的数据不到&lt;code&gt;p&lt;/code&gt;的最大长度，&lt;code&gt;Read&lt;/code&gt;方法会返回当前读取到的可用数据，不会继续等待读取。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;因为所有实现了&lt;code&gt;Read&lt;/code&gt;方法的类型都相当于实现了&lt;code&gt;io.Reader&lt;/code&gt;接口，也就是说，在所有需要&lt;code&gt;io.Reader&lt;/code&gt;的地方，可以传递实现了&lt;code&gt;Read()&lt;/code&gt;方法的类型的实例。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

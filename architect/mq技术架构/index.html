@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>MQ技术架构  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    17 October 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">MQ技术架构</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fkljzphrdkj20cs05o0sx.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-什么时候使用mq">1. 什么时候使用MQ</a>
+<ul>
+<li><a href="#1-1-什么是mq">1.1. 什么是MQ？</a></li>
+<li><a href="#1-2-什么时候不使用mq">1.2. 什么时候不使用MQ</a></li>
+<li><a href="#1-3-什么时候使用mq">1.3. 什么时候使用MQ</a></li>
+</ul></li>
+<li><a href="#2-使用mq削峰填谷-防止流量冲击">2. 使用MQ削峰填谷，防止流量冲击</a></li>
+<li><a href="#3-mq能否实现消息必达">3. MQ能否实现消息必达</a></li>
+<li><a href="#4-使用mq实现-延时消息">4. 使用MQ实现“延时消息”</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-什么时候使用mq">1. 什么时候使用MQ</h1>
+
+<h2 id="1-1-什么是mq">1.1. 什么是MQ？</h2>
+
+<ul>
+<li>消息队列(Message Queue)是一种跨进程的通信机制，用于上下游传递消息。</li>
+<li>使用MQ，消息发送上只需要依赖MQ，逻辑上和物理上都不需要依赖其他的服务，对业务进行了解耦，消息上下游互相不依赖，只需要知道MQ的存在即可。<br /></li>
+<li>MQ的不足之处：</li>
+<li>多了一个MQ组件，使系统更加复杂。</li>
+<li>消息的传递延时会增加(队列处理)</li>
+<li>消息可靠性和重复性互为矛盾(消息丢失后难以保证下次是否会重复执行该消息)</li>
+<li>下游无法知道上游的执行结果(上下游完全解耦，没有互相调用)</li>
+</ul>
+
+<h2 id="1-2-什么时候不使用mq">1.2. 什么时候不使用MQ</h2>
+
+<ul>
+<li><strong>调用者实时依赖执行结果的业务场景，不适合使用MQ</strong>，也就是如果我们的业务中有某个方法需要获得一个返回结果才能继续执行的场景下，不适合使用MQ，因为MQ是一个队列执行的，延迟无法避免。</li>
+</ul>
+
+<h2 id="1-3-什么时候使用mq">1.3. 什么时候使用MQ</h2>
+
+<ul>
+<li>场景一：数据驱动的任务依赖
+
+<ul>
+<li>调用者不需要实时获取返回结果时，可以使用MQ，订阅返回消息即可，受到消息再做下一步处理，不需要实时处理。</li>
+</ul></li>
+<li>场景二：上游不关心执行结果
+
+<ul>
+<li>上游执行输出后，不在关心该输出后续的业务，这时可以使用MQ。</li>
+</ul></li>
+<li>场景三：上游关注执行结果，但执行时间很长
+
+<ul>
+<li>上游关注下游的执行结果，但是下游可能执行时间很长，这时候可以使用MQ，上游调用下游后，在MQ中订阅下游执行的结果，这需要一个跟前面场景颠倒的顺序：<em>上游订阅消息，下游发送消息。</em></li>
+</ul></li>
+</ul>
+
+<h1 id="2-使用mq削峰填谷-防止流量冲击">2. 使用MQ削峰填谷，防止流量冲击</h1>
+
+<ul>
+<li>使用直接调用(RPC)会出现的问题：
+
+<ul>
+<li>上下游业务不一致，复杂性不一致，可能导致一方“无事可做”，另一方系统被流量压垮。</li>
+<li>例如秒杀场景下，上游负责用户下单，下游负责处理订单、检查库存等等，这是就出现流量不平衡的问题，需要借助MQ实现“削峰填谷”。</li>
+</ul></li>
+<li>MQ的能力：
+
+<ul>
+<li>上游将消息发送给MQ，不用管下游的处理情况。</li>
+<li>下游根据自身的能力，依次从MQ中读取消息进行处理即可，不会造成下游处理压力。</li>
+</ul></li>
+<li>问题：
+
+<ul>
+<li>由于MQ作为中间介质的存在，会受到上下游两方的影响，上游发送消息过多、下游处理任务能力不足，都会导致MQ中的消息堆积，造成延迟、超时，这时候我们不能依靠MQ的能力，尽量做好上下游业务的优化，尤其是复杂一方的处理能力，这才是本质。</li>
+</ul></li>
+</ul>
+
+<h1 id="3-mq能否实现消息必达">3. MQ能否实现消息必达</h1>
+
+<p><img src="/image/2017-10-17-21-16-43.png" alt="" /></p>
+
+<ul>
+<li><p>核心的两点：</p>
+
+<ol>
+<li><strong>消息落地</strong>
+
+<ul>
+<li>发布者(上图1-3)：
+
+<ul>
+<li>MQ-Client发送消息给MQ-Server(发送消息)</li>
+<li>MQ-Server将消息落地(保存到数据库)</li>
+<li>MQ-Server将应答发(是否落地成功)送给MQ-Client(回调)</li>
+</ul></li>
+<li>订阅者(上图4-6)：
+
+<ul>
+<li>MQ-Server将消息发送给MQ-Client(回调)</li>
+<li>MQ-Client回复消息给MQ-Service(发送消息，是否执行完)</li>
+<li>MQ-Server收到<code>ack</code>，将之前落地的消息删除(从数据库删除)</li>
+</ul></li>
+</ul></li>
+<li><strong>消息超时重传、确认</strong>
+
+<ul>
+<li>发布者(上图1-3)：
+
+<ul>
+<li>一旦超时或丢失，MQ-Client定时器重发消息，直到收到回调消息，发次重发仍然未收到回调消息，则通知回调接口发送失败。</li>
+</ul></li>
+<li>订阅者(上图4-6)：
+
+<ul>
+<li>一旦超时或丢失，MQ-Server定时器重发消息，直到收到<code>ack</code>，并且落地消息已经删除完成。<br /></li>
+</ul></li>
+</ul></li>
+</ol></li>
+
+<li><p><em>消息必达伴随着可能发生的消息重复</em></p></li>
+
+<li><p><em>消息必达会增加IO操作，影响一些效率，必须权衡信息的可靠性和性能。</em></p></li>
+
+<li><p><strong>保证消息的幂等性，可是从客户端对每条消息生成一个<code>msg-id</code>，在发布者订阅者和MQ之间传递，以保证相同的消息只落地一次，只执行一次。</strong></p></li>
+</ul>
+
+<h1 id="4-使用mq实现-延时消息">4. 使用MQ实现“延时消息”</h1>
+
+<p>延时消息相当于一个定时任务。</p>
+
+<p>普通定时任务轮询的不足：
+    - 轮询效率低
+    - 每次需要扫库，多余数据增加计算负担。
+    - 轮询频率不好控制，频率太高计算负担太大，频率太低时间误差无法保证。
+高效延时消息的实现案例：<strong>环形队列</strong></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">private</span> <span style="color:#ff79c6">void</span> Test(){
+    <span style="color:#8be9fd">var</span> task =<span style="color:#ff79c6">new</span> List&lt;Tasks&gt;(<span style="color:#bd93f9">3600</span>);
+    <span style="color:#8be9fd">var</span> currentIndex = <span style="color:#bd93f9">0</span>;
+    <span style="color:#8be9fd">var</span> timer = <span style="color:#ff79c6">new</span> Timer{
+        Interval = <span style="color:#bd93f9">1000</span>
+    };
+    timer.Elapsed +=<span style="color:#ff79c6">delegate</span>{
+        <span style="color:#ff79c6">if</span> (currentIndex &gt;= <span style="color:#bd93f9">3600</span>){
+            currentIndex = <span style="color:#bd93f9">0</span>;  <span style="color:#6272a4">//复位索引计数器
+</span><span style="color:#6272a4"></span>        }
+        <span style="color:#ff79c6">if</span> (task<span style="color:#50fa7b">[currentIndex]</span>.Cycle_Num == <span style="color:#bd93f9">0</span>){
+            <span style="color:#8be9fd">var</span> executeTask = task<span style="color:#50fa7b">[currentIndex]</span>.TaskName;  <span style="color:#6272a4">//这里专门有一个方法去执行对应的任务
+</span><span style="color:#6272a4"></span>            task.RemoveAt(currentIndex);
+        }
+        <span style="color:#ff79c6">else</span>{
+            task<span style="color:#50fa7b">[currentIndex]</span>.Cycle_Num -= <span style="color:#bd93f9">1</span>;   <span style="color:#6272a4">//将轮询的圈数减一，等待下一轮判断是否为0
+</span><span style="color:#6272a4"></span>        }
+            currentIndex++;
+    };
+    timer.Start();
+}
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Queues</span>{
+    <span style="color:#ff79c6">public</span> List&lt;Tasks&gt; QueueTaskses { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }  
+}
+<span style="color:#6272a4">//具体的任务结构
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Tasks</span>{
+    <span style="color:#6272a4">// 记录环形队列扫描圈数
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">int</span> Cycle_Num { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+    <span style="color:#ff79c6">public</span> <span style="color:#8be9fd">string</span> TaskName { <span style="color:#ff79c6">get</span>; <span style="color:#ff79c6">set</span>; }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>一个简单的实现:</p>
+
+<ul>
+<li>在MQ中应该有这么一个环形队列(数组)，例如有3600长度(代表3600秒)。</li>
+<li>收到的需要延时的任务，都一次加入这个队列中，在加入时需要一些处理：
+
+<ul>
+<li>首先根据任务延时的时长计算出任务在环形队列中的圈数，然后根据余数，将该任务插入队列中具体的索引处。</li>
+<li>将任务的执行封装起来，这里留一个简单的调用标识(例如存储一个方法的指针),这样在执行到的时候，可以拿出来交给另一个线程去执行，避免影响队列的下一步轮询。</li>
+</ul></li>
+<li>创建一个<code>Timer</code>每秒向前执行一次判断，拿出其中保存的Task，判断Task的属性<code>Cycle_Num</code>是否等于0，等于0就应当立即去执行这个Task，不等于0，就将<code>Cycle_Num</code>减1，表示这轮扫描已经结束。</li>
+</ul>
+
+<p>以上是根据沈剑老师讲解的案例写的简单例子，看评论里面有很多读者提出Redis等开源组件有实现延迟消息功能，可以酌情使用，懂得底层实现总是好的。</p>
+
+<p>*参考<a href="https://mp.weixin.qq.com/profile?src=3&amp;timestamp=1508246477&amp;ver=1&amp;signature=eBZBLw*kCBmlIkAx3JC5hr9*kzP049YBGoYXPBjqrtgaxchczxYL2b-4mhGK5V5nsQANBWq-ErYBSPpIVlF5QQ==">58沈剑公众号</a>系列文章。*</p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+         
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

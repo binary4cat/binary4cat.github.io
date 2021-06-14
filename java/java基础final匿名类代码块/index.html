@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Java基础：final&amp;匿名类&amp;代码块  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    23 April 2017
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Java基础：final&amp;匿名类&amp;代码块</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://ww1.sinaimg.cn/large/c55a7aeely1fmbwbz5s71j20et08cjra.jpg">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#final修饰类">final修饰类</a></li>
+<li><a href="#final修饰方法">final修饰方法</a></li>
+<li><a href="#final修饰局部变量">final修饰局部变量</a></li>
+<li><a href="#final修饰成员变量">final修饰成员变量</a></li>
+<li><a href="#匿名对象">匿名对象</a></li>
+<li><a href="#内部类">内部类</a></li>
+<li><a href="#成员内部类的调用格式">成员内部类的调用格式</a></li>
+<li><a href="#成员内部类的同名变量调用">成员内部类的同名变量调用</a></li>
+<li><a href="#局部内部类">局部内部类</a></li>
+<li><a href="#代码块">代码块</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<p># final关键字</p>
+
+<ul>
+<li><p>概述</p>
+
+<ul>
+<li>继承的出现提高了代码的复用性，并方便开发。但随之也有问题，有些类在描述完之后，不想被继承，或者有些类中的部分方法功能是固定的，不想让子类重写。可是当子类继承了这些特殊类之后，就可以对其中的方法进行重写，那怎么解决呢？</li>
+<li>要解决上述的这些问题，需要使用到一个关键字final，final的意思为最终，不可变。</li>
+<li>final是个修饰符，它可以用来修饰类，类的成员，以及局部变量。</li>
+</ul>
+
+<!-- more --></li>
+</ul>
+
+<h1 id="final修饰类">final修饰类</h1>
+
+<ul>
+<li><p><code>final</code> 修饰类</p>
+
+<ul>
+<li><code>final</code>修饰类不可以被继承，但是可以继承其他类。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Obj</span> <span style="color:#ff79c6">{}</span>
+<span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Parent</span> <span style="color:#8be9fd;font-style:italic">extends</span> Obj<span style="color:#ff79c6">{}</span> <span style="color:#6272a4">//可以继承Obj类
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Sub</span> <span style="color:#8be9fd;font-style:italic">extends</span> Parent<span style="color:#ff79c6">{}</span> <span style="color:#ff79c6">//</span>不能继承Parent类</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h1 id="final修饰方法">final修饰方法</h1>
+
+<ul>
+<li><p>final修饰方法</p>
+
+<ul>
+<li>final修饰的方法不可以被覆盖,但父类中没有被final修饰方法，子类覆盖后可以加final。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Parent</span> <span style="color:#ff79c6">{</span>
+<span style="color:#6272a4">// final修饰的方法，不可以被覆盖，但可以继承使用
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method1</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method2</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Sub</span> <span style="color:#8be9fd;font-style:italic">extends</span> Parent <span style="color:#ff79c6">{</span>
+<span style="color:#6272a4">//重写method2方法
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">method2</span><span style="color:#ff79c6">(){}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h1 id="final修饰局部变量">final修饰局部变量</h1>
+
+<ul>
+<li><p>修饰基本数据类型变量</p>
+
+<ul>
+<li>final修饰的变量称为常量，这些变量只能赋值一次</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 20<span style="color:#ff79c6">;</span>
+i <span style="color:#ff79c6">=</span> 30<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">//</span>赋值报错，final修饰的变量只能赋值一次</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>修饰引用数据类型 -引用类型的变量值为对象地址值，地址值不能更改，但是地址内的对象属性值可以修改</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">final</span> Person p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">();</span>
+  Person p1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">();</span>
+  p <span style="color:#ff79c6">=</span> p1<span style="color:#ff79c6">;</span> <span style="color:#6272a4">//错误！ final修饰的变量p，所记录的地址值不能改变
+</span><span style="color:#6272a4"></span>  p<span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span> <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;zhangsan&#34;</span><span style="color:#ff79c6">;</span><span style="color:#6272a4">//可以更改p对象中name属性值
+</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">//</span>p不能为别的对象，而p对象中的name或age属性值可更改。</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="final修饰成员变量">final修饰成员变量</h1>
+
+<ul>
+<li><p>修饰成员变量</p>
+
+<ul>
+<li>修饰成员变量，需要在创建对象前赋值，否则报错。(当没有显式赋值时，多个构造方法均需要为其赋值。)</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Demo</span> <span style="color:#ff79c6">{</span>
+<span style="color:#6272a4">//直接赋值
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> m <span style="color:#ff79c6">=</span> 100<span style="color:#ff79c6">;</span>
+<span style="color:#6272a4">//final修饰的成员变量，需要在创建对象前赋值，否则报错。
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">int</span> n<span style="color:#ff79c6">;</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">Demo</span><span style="color:#ff79c6">(){</span>
+  <span style="color:#6272a4">//可以在创建对象时所调用的构造方法中，为变量n赋值
+</span><span style="color:#6272a4"></span>  n <span style="color:#ff79c6">=</span> 2016<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h1 id="匿名对象">匿名对象</h1>
+
+<ul>
+<li><p>匿名对象的概述</p>
+
+<ul>
+<li>匿名对象是指创建对象时，只有创建对象的语句，却没有把对象地址值赋值给某个变量。</li>
+</ul></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span><span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">eat</span><span style="color:#ff79c6">(){</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+<span style="color:#6272a4">//创建一个普通对象
+</span><span style="color:#6272a4"></span>Person p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">();</span>
+<span style="color:#6272a4">//创建一个匿名对象
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">();</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="内部类">内部类</h1>
+
+<ul>
+<li><p>内部类的概述</p>
+
+<ul>
+<li>将类写在其他类的内部，可以写在其他类的成员位置和局部位置，这时写在其他类内部的类就称为内部类。</li>
+<li>其他类也称为外部类。</li>
+</ul></li>
+
+<li><p>什么时候使用内部类</p>
+
+<ul>
+<li>在描述事物时，若一个事物内部还包含其他可能包含的事物，比如在描述汽车时，汽车中还包含这发动机，</li>
+<li>这时发动机就可以使用内部类来描述。</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Car</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">//外部类
+</span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Engine</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">//内部类
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>内部类的分类</p>
+
+<ul>
+<li>内部类分为成员内部类与局部内部类。</li>
+<li>我们定义内部类时，就是一个正常定义类的过程，同样包含各种修饰符、继承与实现关系等。</li>
+<li>在内部类中可以直接访问外部类的所有成员。</li>
+</ul></li>
+</ul>
+
+<h1 id="成员内部类的调用格式">成员内部类的调用格式</h1>
+
+<ul>
+<li>成员内部类，定义在外部类中的成员位置。与类中的成员变量相似，可通过外部类对象进行访问</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">External</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Internal</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>访问方式</p>
+
+<ul>
+<li>外部类名.内部类名 变量名 = new 外部类名().new 内部类名();</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">External<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Internal</span> ei <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> External<span style="color:#ff79c6">().</span><span style="color:#50fa7b">new</span> Internal<span style="color:#ff79c6">();</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h1 id="成员内部类的同名变量调用">成员内部类的同名变量调用</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Outer</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span> i  <span style="color:#ff79c6">=</span> 1<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Inner</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> i  <span style="color:#ff79c6">=</span> 2<span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">inner</span><span style="color:#ff79c6">(){</span>
+            <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 3<span style="color:#ff79c6">;</span>
+            System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>Outer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">i</span><span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="局部内部类">局部内部类</h1>
+
+<ul>
+<li>局部内部类，定义在外部类方法中的局部位置。与访问方法中的局部变量相似，可通过调用方法进行访问.</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">External</span> <span style="color:#ff79c6">{</span>
+    Public Void <span style="color:#50fa7b">Function</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Internal</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">//TODO
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>访问方式</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#6272a4">//外部类，聚会
+</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Party</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">puffBall</span><span style="color:#ff79c6">(){</span><span style="color:#6272a4">// 吹气球方法
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Ball</span> <span style="color:#ff79c6">{</span><span style="color:#6272a4">// 内部类，气球
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">puff</span><span style="color:#ff79c6">(){</span>
+                System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;气球膨胀了&#34;</span><span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">//创建内部类对象，调用puff方法(只能通过这种方法)
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">new</span> Ball<span style="color:#ff79c6">().</span><span style="color:#50fa7b">puff</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#6272a4">//访问内部类
+</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>    
+    <span style="color:#6272a4">//创建外部类对象
+</span><span style="color:#6272a4"></span>    Party p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Party<span style="color:#ff79c6">();</span>
+    <span style="color:#6272a4">//调用外部类中的puffBall方法
+</span><span style="color:#6272a4"></span>    p<span style="color:#ff79c6">.</span><span style="color:#50fa7b">puffBall</span><span style="color:#ff79c6">();</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="代码块">代码块</h1>
+
+<ul>
+<li><p>概述:</p>
+
+<ul>
+<li>程序中用大括号括起来的代码叫代码块</li>
+</ul></li>
+
+<li><p>分类</p>
+
+<ul>
+<li>局部代码块</li>
+<li>构造代码块</li>
+<li>静态代码块</li>
+<li>同步代码块</li>
+</ul></li>
+
+<li><p>局部代码块:</p>
+
+<ul>
+<li>局部代码块是定义在方法或语句中</li>
+
+<li><p>特点：</p></li>
+
+<li><p>以<code>{}</code>划定的代码区域，此时只需要关注作用域的不同即可，方法和类都是以代码块的方式划定边界的</p></li>
+
+<li><p>局部代码块作用:可以限定变量的声明周期。</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Test</span><span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span>    <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">//代码块
+</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span> x <span style="color:#ff79c6">=</span> 1<span style="color:#ff79c6">;</span>
+    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;普通代码块&#34;</span> <span style="color:#ff79c6">+</span> x<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#8be9fd">int</span> x <span style="color:#ff79c6">=</span> 99<span style="color:#ff79c6">;</span>
+  System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;代码块之外&#34;</span> <span style="color:#ff79c6">+</span> x<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#6272a4">/*
+</span><span style="color:#6272a4">  *结果
+</span><span style="color:#6272a4">  *普通代码块1
+</span><span style="color:#6272a4">  *代码块之外99
+</span><span style="color:#6272a4">  */</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>构造代码块</p>
+
+<ul>
+<li>构造代码块是定义在类中成员位置的代码块</li>
+
+<li><p>特点：</p></li>
+
+<li><p>优先于构造方法执行，构造代码块用于执行所有对象均需要的初始化动作</p></li>
+
+<li><p>每创建一个对象均会执行一次构造代码块</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
+  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
+  <span style="color:#6272a4">//构造代码块
+</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">{</span>
+  System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;构造代码块执行了&#34;</span><span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  Person<span style="color:#ff79c6">(){</span>
+  System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Person无参数的构造函数执行&#34;</span><span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  Person<span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">){</span>
+  <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">age</span> <span style="color:#ff79c6">=</span> age<span style="color:#ff79c6">;</span>
+  System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Person（age）参数的构造函数执行&#34;</span><span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">PersonDemo</span><span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span>    <span style="color:#ff79c6">{</span>
+  Person p <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">();</span>
+  Person p1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Person<span style="color:#ff79c6">(</span>23<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>静态代码块</p>
+
+<ul>
+<li>静态代码块是定义在成员位置，使用static修饰的代码块。</li>
+
+<li><p>特点：</p></li>
+
+<li><p>它<strong>优先于主方法执行、优先于构造代码块执行</strong>，当以任意形式第一次使用到该类时执行。</p></li>
+
+<li><p>该类不管创建多少对象，静态代码块只执行一次。</p></li>
+
+<li><p>可用于给静态变量赋值，用来给类进行初始化。</p></li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Person</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd;font-style:italic">private</span> String name<span style="color:#ff79c6">;</span>
+  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> age<span style="color:#ff79c6">;</span>
+  <span style="color:#6272a4">//静态代码块
+</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd;font-style:italic">static</span><span style="color:#ff79c6">{</span>
+  System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;静态代码块执行了&#34;</span><span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/java/java%E5%9F%BA%E7%A1%80%E4%BF%AE%E9%A5%B0%E7%AC%A6/" id="next">
+                &larr; <span class="nav-title nav-title-next">Java基础：修饰符</span> 
+            </a>  
+        <a rel="prev" href="/java/java%E5%9F%BA%E7%A1%80thissuper%E5%85%B3%E9%94%AE%E5%AD%97/" id="prev">
+            <span class="nav-title nav-title-prev">Java基础：this&amp;super关键字</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

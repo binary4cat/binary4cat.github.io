@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>Angular知识点汇总(1)：起步和项目结构介绍  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    10 October 2018
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">Angular知识点汇总(1)：起步和项目结构介绍</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-起步">1. 起步</a>
+<ul>
+<li><a href="#1-1-安装angular-cli">1.1. 安装angular-cli</a></li>
+<li><a href="#1-2-生成项目">1.2. 生成项目</a></li>
+<li><a href="#1-3-尝试运行生成的项目">1.3. 尝试运行生成的项目</a></li>
+</ul></li>
+<li><a href="#2-项目架构">2. 项目架构</a>
+<ul>
+<li><a href="#2-1-文件结构">2.1. 文件结构</a></li>
+<li><a href="#2-2-组件">2.2. 组件</a>
+<ul>
+<li><a href="#2-2-1-组件">2.2.1. 组件</a>
+<ul>
+<li><a href="#2-2-1-1-angular项目的启动过程">2.2.1.1. angular项目的启动过程</a></li>
+<li><a href="#2-2-1-2-根模块appmodule的内容">2.2.1.2. 根模块AppModule的内容</a></li>
+</ul></li>
+<li><a href="#2-2-2-组件装饰器">2.2.2. 组件装饰器</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#3-基本的项目开发">3. 基本的项目开发</a>
+<ul>
+<li><a href="#3-1-生成一个自定义的组件">3.1. 生成一个自定义的组件</a></li>
+<li><a href="#3-2-怎么引入第三方的库">3.2. 怎么引入第三方的库</a></li>
+<li><a href="#3-3-hello-world">3.3. Hello World</a></li>
+</ul></li>
+<li><a href="#4-参考资料">4. 参考资料</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    
+
+<h1 id="1-起步">1. 起步</h1>
+
+<h2 id="1-1-安装angular-cli">1.1. 安装angular-cli</h2>
+
+<p>首次学习的同学可以进入到<a href="https://github.com/angular/angular-cli/wiki">angular-cli wiki页面</a>，学习关于angular-cli的知识。
+使用npm安装angular-cli(也可以使用cnpm进行安装，避免网络问题造成失败)：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install -g @angular/cli</code></pre></td></tr></table>
+</div>
+</div>
+<p>或者可以使用<a href="https://yarnpkg.com/zh-Hans/">yarn</a>安装，同样可以避免网络问题：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yarn add golbal @angular/cli</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-2-生成项目">1.2. 生成项目</h2>
+
+<p>找一个合适的文件夹，在文件中打开命令行工具，执行生成命令，angular-cli会帮我们生成一个基础项目，避免从0开始搭建的麻烦：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng new my-project
+<span style="color:#8be9fd;font-style:italic">cd</span> my-project</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里可能会因为网络的问题造成<code>ng new my-project</code>命令执行失败，造成生成的基架项目无法运行，可以将<code>ng</code>命令调用的包管理命令改成其他的工具，例如<code>cnpm</code>或者<code>yarn</code>：</p>
+
+<ul>
+<li>首先打开<code>Home_Dir/.angular-config.json</code>文件</li>
+<li>然后修改其中<code>packageManager</code>的内容为指定的工具名：</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#ff79c6">&#34;version&#34;</span>: <span style="color:#bd93f9">1</span>,
+  <span style="color:#ff79c6">&#34;cli&#34;</span>: {
+    <span style="color:#ff79c6">&#34;packageManager&#34;</span>: <span style="color:#f1fa8c">&#34;yarn&#34;</span> // <span style="color:#f1fa8c">&#34;cnpm&#34;</span>
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>然后再执行<code>ng new my-project</code>就不会因为网络问题失败了。</li>
+</ul>
+
+<h2 id="1-3-尝试运行生成的项目">1.3. 尝试运行生成的项目</h2>
+
+<p>在项目文件夹下执行下面的命令：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ng serve</code></pre></td></tr></table>
+</div>
+</div>
+<p>在浏览器中运行<a href="http://localhost:4200">http://localhost:4200</a>，即可看到运行生成的项目。</p>
+
+<h1 id="2-项目架构">2. 项目架构</h1>
+
+<h2 id="2-1-文件结构">2.1. 文件结构</h2>
+
+<p><img src="/image/Snipaste_2018-10-10_22-59-26.png" alt="文件目录" /></p>
+
+<ul>
+<li><code>e2e</code>文件夹中是e2e端到端测试需要的文件。</li>
+<li><code>node_modules</code>文件夹中是项目中所需的npm包。</li>
+<li><code>src</code>文件夹中是项目主要的文件：
+
+<ul>
+<li><code>app</code>文件夹中存放项目中的所有组件，默认生成的项目中会有根组件的几个文件。</li>
+<li><code>assets</code>文件夹中是项目中所需的静态文件的存放目录。</li>
+<li><code>environments</code>文件夹中存放着项目所需的配置文件，具体配置方式会在后面的文章讲到。</li>
+<li><code>index.html</code>是整个项目的根模板，所有的页面都是在这个页面的基础上的。</li>
+<li><code>karma.conf.js</code>是自动化测试karma框架的配置文件。</li>
+<li><code>main.ts</code>是项目的起始文件，项目的启动由此启动。</li>
+<li><code>polyfills.ts</code>该文件导入一些解决浏览器兼容性的包。</li>
+<li><code>tsconfig.app.json</code>/<code>tsconfig.spec.json</code>文件是typescript的配置文件，该文件的配置extends上级目录的<code>tsconfig.json</code>配置。</li>
+<li><code>tsline.json</code>是typescript规范约束的配置文件，该文件的配置extends上级目录的<code>tsline.json</code>配置。</li>
+</ul></li>
+<li><code>angular.json</code>是当前angular项目的一些配置，例如项目的起始文件、编译目录、环境配置等。</li>
+<li><code>package.json</code>是当前项目所用的包，脚本等配置。</li>
+<li><code>tsconfig.json</code>是typescript的配置文件。</li>
+<li><code>tsline.json</code>是typescript的语法规范约束文件。</li>
+</ul>
+
+<h2 id="2-2-组件">2.2. 组件</h2>
+
+<p>angular项目的核心就是组件，可以说angular项目就是一个一个组件组成的；</p>
+
+<h3 id="2-2-1-组件">2.2.1. 组件</h3>
+
+<h4 id="2-2-1-1-angular项目的启动过程">2.2.1.1. angular项目的启动过程</h4>
+
+<p>使用<code>ng new</code>生成的项目，在<code>app</code>文件夹中已经包含了一个默认的组件，就是整个项目的根组件，是其他所有我们自定义组件的父组件，因为angular项目在启动的时候，需要从一个根组件开始进行渲染，我们借助<code>main.ts</code>文件可以看到angular项目的启动过程，并且看到根组件的调用：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { enableProdMode } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+<span style="color:#ff79c6">import</span> { platformBrowserDynamic } from <span style="color:#f1fa8c">&#39;@angular/platform-browser-dynamic&#39;</span>;
+
+<span style="color:#ff79c6">import</span> { AppModule } from <span style="color:#f1fa8c">&#39;./app/app.module&#39;</span>;
+<span style="color:#ff79c6">import</span> { environment } from <span style="color:#f1fa8c">&#39;./environments/environment&#39;</span>;
+
+<span style="color:#ff79c6">if</span> (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .<span style="color:#ff79c6">catch</span>(err <span style="color:#ff79c6">=&gt;</span> console.error(err));</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>首先import了四个对象：
+
+<ul>
+<li><code>enableProdMode</code>是让项目使用生产环境模式运行的一个函数。</li>
+<li><code>platformBrowserDynamic</code>是浏览器模块中的组件，作用是让angular项目在浏览器中运行。</li>
+<li><code>AppModule</code>这个是默认生成的根模块。</li>
+<li><code>environment</code>是项目的环境配置，用来判断当前的项目是以开发/测试/生产那个环境运行的。</li>
+</ul></li>
+<li>if判断当前启动的模式，如果是以生产环境启动，则需要调用<code>enableProdMode</code>函数。</li>
+<li>然后调用<code>platformBrowserDynamic</code>函数的初始化模块方法<code>bootstrapModule</code>，传入根模块<code>AppModule</code>，从根模块开始渲染angular项目。</li>
+</ul>
+
+<h4 id="2-2-1-2-根模块appmodule的内容">2.2.1.2. 根模块AppModule的内容</h4>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { BrowserModule } from <span style="color:#f1fa8c">&#39;@angular/platform-browser&#39;</span>;
+<span style="color:#ff79c6">import</span> { NgModule } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#ff79c6">import</span> { AppComponent } from <span style="color:#f1fa8c">&#39;./app.component&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@NgModule</span>({
+  declarations<span style="color:#ff79c6">:</span> [
+    AppComponent
+  ],
+  imports<span style="color:#ff79c6">:</span> [
+    BrowserModule
+  ],
+  providers<span style="color:#ff79c6">:</span> [],
+  bootstrap<span style="color:#ff79c6">:</span> [AppComponent]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppModule { }</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>@NgModule</code>装饰器接收一些配置：
+
+<ul>
+<li><code>import</code>导入当前angular项目运行需要的一些外部模块。</li>
+<li><code>provides</code>是angular的依赖注入提供器，写在这里面的class，就可以在angular项目的任何构造函数中依赖注入了。</li>
+<li><code>bootstrap</code>传入了初始化的第一个组件，也就是我们的根组件，其他的组件应该包含在这个根组件下面</li>
+</ul></li>
+</ul>
+
+<h3 id="2-2-2-组件装饰器">2.2.2. 组件装饰器</h3>
+
+<p>组件装饰器可以修饰一个普通的typescript类，angular会将被修饰的类当作一个组件渲染。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Component } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Component</span>({
+  selector<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;app-root&#39;</span>,
+  templateUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;./app.component.html&#39;</span>,
+  styleUrls<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;./app.component.css&#39;</span>]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> AppComponent {
+  title <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;my-project&#39;</span>;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><code>selector</code>：选择器，指定当前的组件是通过模板中哪个HTML标签调用的；例如可以在调用该组件的位置写上标签<code>&lt;app-root&gt;&lt;?app-root</code>，就会在此位置渲染该组件的内容了。</li>
+<li><code>templateUrl</code>：当前的组件模板的文件路径，在渲染的时候会将该文件中的HTML替换到<code>selector</code>选择器标签的位置。</li>
+<li><code>styleUrls</code>：当前组件模板用到的样式文件，可以是多个。</li>
+</ul>
+
+<h1 id="3-基本的项目开发">3. 基本的项目开发</h1>
+
+<h2 id="3-1-生成一个自定义的组件">3.1. 生成一个自定义的组件</h2>
+
+<p>可以使用命令<code>ng g component [name]</code>生成一个自定义的命令，在这里我使用<code>ng g component test</code>生成一个<code>testComponent</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">PS E:<span style="color:#f1fa8c">\A</span>ngular<span style="color:#f1fa8c">\m</span>y-project&gt; ng g component <span style="color:#8be9fd;font-style:italic">test</span>
+CREATE src/app/test/test.component.html <span style="color:#ff79c6">(</span><span style="color:#bd93f9">23</span> bytes<span style="color:#ff79c6">)</span>
+CREATE src/app/test/test.component.spec.ts <span style="color:#ff79c6">(</span><span style="color:#bd93f9">614</span> bytes<span style="color:#ff79c6">)</span>
+CREATE src/app/test/test.component.ts <span style="color:#ff79c6">(</span><span style="color:#bd93f9">261</span> bytes<span style="color:#ff79c6">)</span>
+CREATE src/app/test/test.component.css <span style="color:#ff79c6">(</span><span style="color:#bd93f9">0</span> bytes<span style="color:#ff79c6">)</span>
+UPDATE src/app/app.module.ts <span style="color:#ff79c6">(</span><span style="color:#bd93f9">388</span> bytes<span style="color:#ff79c6">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>然后会在<code>app</code>目录下生成一个名为<code>test</code>的文件夹，其中包含组件的四个文件：
+<img src="/image/Snipaste_2018-10-11_22-24-40.png" alt="自定义组件test" /></p>
+
+<ul>
+<li><code>test.component.css</code>该文件是当前组件的样式文件；</li>
+<li><code>test.component.html</code>该文件是当前组件的模板文件；</li>
+<li><code>test.component.spec.ts</code>该文件是组件源文件的单元测试，当使用<code>ng test</code>命令的时候，这个文件会通过Karma任务运行器使用Jasmine javascript测试框架运行。</li>
+<li><code>test.component.ts</code>该文件是组件的“控制器”代码文件。</li>
+</ul>
+
+<h2 id="3-2-怎么引入第三方的库">3.2. 怎么引入第三方的库</h2>
+
+<p>有时候我们需要在项目中用到一些第三方的库，例如样式库bootstrap、搭配bootstrap使用的Jquery等，这些库需要单独的引入angular项目，才可以使用。在这里我使用yarn安装一下这两个库：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8be9fd;font-style:italic">cd</span> my-project
+yarn add bootstrap
+yarn add jquery</code></pre></td></tr></table>
+</div>
+</div>
+<p>安装完成后打开<code>angular.json</code>文件，找到<code>styles</code>和<code>scripts</code>节点，把需要用到的bootstrap和jQuery文件导入项目：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  ...
+  <span style="color:#ff79c6">&#34;projects&#34;</span>: {
+    <span style="color:#ff79c6">&#34;my-project&#34;</span>: {
+      <span style="color:#ff79c6">&#34;architect&#34;</span>: {
+        <span style="color:#ff79c6">&#34;build&#34;</span>: {
+          <span style="color:#ff79c6">&#34;options&#34;</span>: {
+            ...
+            <span style="color:#ff79c6">&#34;styles&#34;</span>: [
+              <span style="color:#f1fa8c">&#34;src/styles.css&#34;</span>,
+              <span style="color:#f1fa8c">&#34;node_modules/bootstrap/dist/css/bootstrap.css&#34;</span>
+            ],
+            <span style="color:#ff79c6">&#34;scripts&#34;</span>: [
+              <span style="color:#f1fa8c">&#34;node_modules/bootstrap/dist/js/bootstrap.js&#34;</span>,
+              <span style="color:#f1fa8c">&#34;node_modules/jquery/dist/jquery.js&#34;</span>
+            ]
+            ...
+          },
+        },
+      }
+    },
+  ...
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后就可以在项目中使用bootstrap库了。</p>
+
+<p>接下来打开<code>test.component.ts</code>看一下组件的基本结构：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Component, OnInit } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Component</span>({
+  selector<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;app-test&#39;</span>,
+  templateUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;./test.component.html&#39;</span>,
+  styleUrls<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;./test.component.css&#39;</span>]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+
+  <span style="color:#ff79c6">constructor</span>() { }
+
+  ngOnInit() {
+  }
+
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>首先从angular的核心库中导入了<code>Component</code>这个装饰器和初始化生命周期接口<code>OnInit</code>。</li>
+<li>要使用初始化方法<code>ngOnInit</code>需要组件类实现<code>OnInit</code>接口。其他的生命周期方法也需要实现各自的接口，在后面会讲到。</li>
+<li><code>constructor</code>构造函数可以用来依赖注入一些服务，避免手动创建类，方便解耦。</li>
+</ul>
+
+<h2 id="3-3-hello-world">3.3. Hello World</h2>
+
+<p>使用一个简单的示例，演示编写组件的工作流程：</p>
+
+<p><code>test.component.ts</code>：</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#ff79c6">import</span> { Component, OnInit } from <span style="color:#f1fa8c">&#39;@angular/core&#39;</span>;
+
+<span style="color:#8be9fd;font-style:italic">@Component</span>({
+  selector<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;app-test&#39;</span>,
+  templateUrl<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;./test.component.html&#39;</span>,
+  styleUrls<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#39;./test.component.css&#39;</span>]
+})
+<span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> TestComponent <span style="color:#ff79c6">implements</span> OnInit {
+  <span style="color:#6272a4">//声明一个消息属性
+</span><span style="color:#6272a4"></span>  msg: <span style="color:#8be9fd">string</span>;
+
+  <span style="color:#ff79c6">constructor</span>() { }
+
+  ngOnInit() {
+    <span style="color:#6272a4">//在初始化时，给消息属性赋值
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">this</span>.msg <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Hello World&#39;</span>;
+  }
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>test.component.html</code>：使用绑定语法<code>{{}}</code>将消息展示在页面上</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">h1</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;display-4 text&#34;</span>&gt;{{msg}}&lt;/<span style="color:#ff79c6">h1</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>test.component.css</code>：将展示的字体修改成白色</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css">.<span style="color:#50fa7b">text</span>{
+    <span style="color:#ff79c6">color</span>: <span style="color:#ff79c6">white</span>;
+}</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>app.component.html</code>：将自定义组件test绑定到根组件<code>app</code>的模板中</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;jumbotron&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">h1</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;display-4&#34;</span>&gt;我是根组件&lt;/<span style="color:#ff79c6">h1</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;lead&#34;</span>&gt;这是一个简单的bootstrap Jumbotron样式组件！&lt;/<span style="color:#ff79c6">p</span>&gt;
+  &lt;<span style="color:#ff79c6">hr</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;my-4&#34;</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span>&gt;下面绑定的是子组件的内容：&lt;/<span style="color:#ff79c6">p</span>&gt;
+  &lt;<span style="color:#ff79c6">p</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;lead&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">app-test</span>&gt;&lt;/<span style="color:#ff79c6">app-test</span>&gt;
+  &lt;/<span style="color:#ff79c6">p</span>&gt;
+&lt;/<span style="color:#ff79c6">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>使用命令<code>ng serve</code>启动服务，并在浏览器浏览：
+<img src="/image/Snipaste_2018-10-11_23-13-09.png" alt="浏览内容" /></p>
+
+<h1 id="4-参考资料">4. 参考资料</h1>
+
+<p><a href="https://github.com/angular/angular-cli/wiki">https://github.com/angular/angular-cli/wiki</a><br />
+<a href="https://medium.com/@beeman/using-yarn-with-angular-cli-v6-7f53a7678b93">https://medium.com/@beeman/using-yarn-with-angular-cli-v6-7f53a7678b93</a></p>
+
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/frontend/angular%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB2%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F/" id="next">
+                &larr; <span class="nav-title nav-title-next">Angular知识点汇总(2)：路由系统</span> 
+            </a>  
+        <a rel="prev" href="/frontend/%E4%BB%A5ajax%E6%96%B9%E5%BC%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E6%B5%81/" id="prev">
+            <span class="nav-title nav-title-prev">以Ajax方式下载文件流</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>

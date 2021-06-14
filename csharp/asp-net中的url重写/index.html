@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>ASP.NET中的Url重写  &middot; Haijd&#39;s Blog </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Haijd">
+    <meta name="description" content="a coder.">
+    <meta name="generator" content="Hugo 0.53" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    
+
+    <style>
+        .posts li {
+            visibility: hidden;
+        }
+    </style> 
+</head>
+
+<body>
+
+    
+
+    <header>
+    <div class="h-wrap">
+        
+        <div class="typewriter">
+            <h1 class="title"><a href="/">Haijd&#39;s Blog</a></h1>
+        </div>
+        
+    </div>
+</header>
+    <div class="site-wrapper" id="full-wrapper">
+
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                        <time datetime="" itemprop="datePublished">
+                    11 February 2015
+                   
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">ASP.NET中的Url重写</h1>
+                <br>
+                
+                <div>
+                    
+                    <img src="http://lorempixel.com/1000/500/technics/">
+                    
+                </div>
+                
+                <div>
+                    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-一-为了页面更有利于seo优化-url重写程序需要做出的不可缺少的手段之一">1. 一. 为了页面更有利于seo优化，url重写程序需要做出的不可缺少的手段之一。</a></li>
+<li><a href="#2-二-目前url重写最常见的两种方法有">2. 二.目前url重写最常见的两种方法有：</a></li>
+<li><a href="#3-三-在请求管道中的第一个请求管道中拦截url并使其完成url重写功能">3. 三、在请求管道中的第一个请求管道中拦截url并使其完成url重写功能：</a></li>
+</ul>
+</nav>
+                </div>
+                <hr>
+                <div itemprop="articleBody">
+                    <h1 id="1-一-为了页面更有利于seo优化-url重写程序需要做出的不可缺少的手段之一">1. 一. 为了页面更有利于seo优化，url重写程序需要做出的不可缺少的手段之一。</h1>
+
+<h1 id="2-二-目前url重写最常见的两种方法有">2. 二.目前url重写最常见的两种方法有：</h1>
+
+<p>　　1. 通过熟悉页面的内部执行流程，也就是asp.net请求管道中的相关知识点，进行url重写。
+　　2. 通过使用微软提供的UrlRewriter.dll实现url重写（简单）；</p>
+
+<h1 id="3-三-在请求管道中的第一个请求管道中拦截url并使其完成url重写功能">3. 三、在请求管道中的第一个请求管道中拦截url并使其完成url重写功能：</h1>
+
+<p>　　1. 熟悉请求管道实现程序运行的全过程：
+　　　　(1)：BeginRequest: 开始处理请求
+　　　　(2)：AuthenticateRequest授权验证请求，获取用户授权信息
+　　　　(3):PostAuthenticateRequest获取成功
+　　　　(4): AunthorizeRequest 授权，一般来检查用户是否获得权限</p>
+
+<p>(5):PostAuthorizeRequest:获得授权
+　　　　(6):ResolveRequestCache:获取页面缓存结果
+　　　　(7):PostResolveRequestCache 已获取缓存
+　　　　(8):PostMapRequestHandler 创建页面对象
+　　　　(9):AcquireRequestState 获取Session&mdash;&ndash;先判断当前页面对象是否实现了IRequiresSessionState接口，如果实现了，则从浏览器发来的请求报文体中获得SessionID,并到服务器的Session池中获得对应的Session对象，最后赋值给HttpContext的Session属性
+　　　　(10)PostAcquireRequestState 获得Session
+　　　　(11)PreRequestHandlerExecute:准备执行页面对象执行页面对象的ProcessRequest方法
+　　　　(12)PostRequestHandlerExecute 执行完页面对象了
+　　　　(13)ReleaseRequestState 释放请求状态
+　　　　(14)PostReleaseRequestState 已释放请求状态
+　　　　(15)UpdateRequestCache 更新缓存
+　　　　(16)PostUpdateRequestCache 已更新缓存
+　　　　(17)LogRequest 日志记录
+　　　　(18)PostLogRequest 已完成日志
+　　　　(19)EndRequest 完成
+<img src="http://ww1.sinaimg.cn/mw690/c55a7aeejw1f1hc5019pej20it0buwhk.jpg" alt="" /></p>
+
+<p>　　2. 直接上代码：
+　　3.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Web;
+<span style="color:#ff79c6">using</span> System.Text;
+<span style="color:#ff79c6">using</span> System.Text.RegularExpressions;
+
+<span style="color:#ff79c6">namespace</span> UrlReWriter
+{
+    <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">UrlWriter</span>:IHttpModule
+    {
+        <span style="color:#ff79c6">#region IHttpModule 成员
+</span><span style="color:#ff79c6"></span>
+     
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Init(HttpApplication context)
+        {
+           context.BeginRequest+=<span style="color:#ff79c6">new</span> EventHandler(context_BeginRequest);
+        }
+
+        <span style="color:#ff79c6">void</span> context_BeginRequest(<span style="color:#8be9fd">object</span> sender, EventArgs e)
+        {
+            <span style="color:#6272a4">//获得当前页面请求管道的HttpApplication对象
+</span><span style="color:#6272a4"></span>            HttpApplication application = sender <span style="color:#ff79c6">as</span> HttpApplication;
+            HttpContext context = application.Context;<span style="color:#6272a4">//获得上下文对象
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">string</span> url = context.Request.Url.LocalPath;<span style="color:#6272a4">//获得URL(不包含域名和路径)
+</span><span style="color:#6272a4"></span>
+            Regex reg1 = <span style="color:#ff79c6">new</span> Regex(<span style="color:#f1fa8c">&#34;/WebForm2/[A-Z0-9a-z_]+&#34;</span>);<span style="color:#6272a4">//注意文件夹与文件名称的大小写.
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">if</span> (reg1.IsMatch(url)) <span style="color:#6272a4">//这种情况是匹配根据ID值来查看某个文章的内容。
+</span><span style="color:#6272a4"></span>            {
+                <span style="color:#8be9fd">string</span> strUserName = url.Substring(url.LastIndexOf(<span style="color:#f1fa8c">&#39;/&#39;</span>)+<span style="color:#bd93f9">1</span>);
+                context.RewritePath(<span style="color:#f1fa8c">&#34;/WebForm2.aspx?id=&#34;</span> + strUserName); <span style="color:#6272a4">//前台的列表页就可以这样写:&lt;a href=&#39;../WebForm2/&lt;%#Eval(&#34;id&#34;)%&gt;&#39;&gt;&lt;/a&gt;
+</span><span style="color:#6272a4"></span>            }
+            <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (url.Contains(<span style="color:#f1fa8c">&#34;/admin&#34;</span>))   <span style="color:#6272a4">//如果url中包含&#34;/admin&#34;字样则转向，实现用户验证，哈哈，不过这里是错的，应为这个请求管道中还获取不到session值呢，这个验证最好在第九个请求管道（AcquireRequestState ）中完成。
+</span><span style="color:#6272a4"></span>            {
+                context.RewritePath(<span style="color:#f1fa8c">&#34;/Error.aspx&#34;</span>); 
+            }
+        }
+        <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">void</span> Dispose()
+        {
+            
+        }
+
+        <span style="color:#ff79c6">#endregion
+</span><span style="color:#ff79c6"></span>    }
+}</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;%@ Page Language=&#34;C#&#34; AutoEventWireup=&#34;true&#34; CodeBehind=&#34;WebForm1.aspx.cs&#34; Inherits=&#34;url重写.WebForm1&#34; %&gt;
+
+<span style="color:#ff79c6">&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Transitional//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&#34;&gt;</span>
+
+&lt;<span style="color:#ff79c6">html</span> <span style="color:#50fa7b">xmlns</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/1999/xhtml&#34;</span>&gt;
+&lt;<span style="color:#ff79c6">head</span> <span style="color:#50fa7b">runat</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;server&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">title</span>&gt;&lt;/<span style="color:#ff79c6">title</span>&gt;
+&lt;/<span style="color:#ff79c6">head</span>&gt;
+&lt;<span style="color:#ff79c6">body</span>&gt;
+    &lt;<span style="color:#ff79c6">form</span> <span style="color:#50fa7b">id</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;form1&#34;</span> <span style="color:#50fa7b">runat</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;server&#34;</span>&gt;
+    &lt;<span style="color:#ff79c6">div</span>&gt;
+       &lt;<span style="color:#ff79c6">a</span> <span style="color:#50fa7b">href</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;WebForm2/12&#34;</span>&gt;重写&lt;/<span style="color:#ff79c6">a</span>&gt;   <span style="color:#6272a4">&lt;!--这里是有利于seo的链接--&gt;</span>
+    &lt;/<span style="color:#ff79c6">div</span>&gt;
+    &lt;/<span style="color:#ff79c6">form</span>&gt;
+&lt;/<span style="color:#ff79c6">body</span>&gt;
+&lt;/<span style="color:#ff79c6">html</span>&gt;</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#ff79c6">using</span> System;
+<span style="color:#ff79c6">using</span> System.Collections.Generic;
+<span style="color:#ff79c6">using</span> System.Linq;
+<span style="color:#ff79c6">using</span> System.Web;
+<span style="color:#ff79c6">using</span> System.Web.UI;
+<span style="color:#ff79c6">using</span> System.Web.UI.WebControls;
+
+<span style="color:#ff79c6">namespace</span> url重写
+{
+    <span style="color:#ff79c6">public</span> <span style="color:#ff79c6">partial</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">WebForm2</span> : System.Web.UI.Page
+    {
+        <span style="color:#ff79c6">protected</span> <span style="color:#ff79c6">void</span> Page_Load(<span style="color:#8be9fd">object</span> sender, EventArgs e)
+        {
+            Response.Write(Request.QueryString<span style="color:#50fa7b">[&#34;id&#34;]</span>);           <span style="color:#6272a4">//在转到的页面输出传过来的参数
+</span><span style="color:#6272a4"></span>        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"> &lt;<span style="color:#ff79c6">httpModules</span>&gt;
+      &lt;<span style="color:#ff79c6">add</span> <span style="color:#50fa7b">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;UrlReWriter&#34;</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;UrlReWriter.UrlWriter,UrlReWriter&#34;</span>/&gt;
+    &lt;/<span style="color:#ff79c6">httpModules</span>&gt;
+    &lt;<span style="color:#ff79c6">pages</span> <span style="color:#50fa7b">controlRenderingCompatibilityVersion</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;3.5&#34;</span> <span style="color:#50fa7b">clientIDMode</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;AutoID&#34;</span>/&gt;
+  &lt;/<span style="color:#ff79c6">system.web</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>Note:</strong>记得在url重写项目中引用UrlReWriter项目。否则httpModules接口没有注册，url重写泡汤是必然的。</p>
+
+<p>原文来自<a href="http://www.cnblogs.com/knowledgesea/archive/2012/10/08/2715350.html">博客园</a>
+作者：<strong>张龙豪</strong></p>
+                </div>
+                <div class="feat share">
+                </div>
+
+                <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = 'https://HaijdBlog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>Haijd</small>
+	
+</footer>
+    </div>
+
+    <div class="next-prev-arrows">
+        
+        <a rel="next" href="/csharp/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" id="next">
+                &larr; <span class="nav-title nav-title-next">存储过程</span> 
+            </a>  
+        <a rel="prev" href="/csharp/%E6%96%87%E4%BB%B6%E6%B5%81%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%E4%BB%A3%E7%A0%81/" id="prev">
+            <span class="nav-title nav-title-prev">文件流操作流程代码</span> &rarr;
+        </a>
+        
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script type='application/javascript' src='/js/smooth-scrollbar.js'></script>
+<script src="/js/baffle.min.js"></script>
+<script src="/js/main.js"></script>
+ 
+</body>
+
+</html>
